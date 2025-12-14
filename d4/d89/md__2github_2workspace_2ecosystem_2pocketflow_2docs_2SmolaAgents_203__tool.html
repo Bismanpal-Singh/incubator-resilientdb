@@ -121,22 +121,22 @@ $(function(){initNavTree('d4/d89/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_tool</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md3034"></a>
-autotoc_md3034</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md3058"></a>
+autotoc_md3058</h2>
 <p>layout: default title: "Tool" parent: "SmolaAgents" </p>
-<h2><a class="anchor" id="autotoc_md3035"></a>
+<h2><a class="anchor" id="autotoc_md3059"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md3036"></a>
+<h1><a class="anchor" id="autotoc_md3060"></a>
 Chapter 3: Tool - Giving Your Agent Superpowers</h1>
 <p>Welcome back! In <a class="el" href="../../dc/db5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_202__model__interface.html">Chapter 2: Model Interface</a>, we learned how our <code>MultiStepAgent</code> uses a "universal remote" (the Model Interface) to talk to its LLM "brain". The LLM thinks and suggests what the agent should do next.</p>
 <p>But how does the agent actually <em>do</em> things? If the LLM suggests "Search the web for the capital of France," how does the agent perform the search? It can't just magically type into Google!</p>
 <p>This is where <b>Tools</b> come in. They are the agent's hands and specialized equipment, allowing it to interact with the world beyond just generating text.</p>
-<h2><a class="anchor" id="autotoc_md3037"></a>
+<h2><a class="anchor" id="autotoc_md3061"></a>
 The Problem: An Agent Trapped in its Mind</h2>
 <p>Imagine a brilliant chef who only knows recipes but is locked in an empty room. They can tell you exactly how to make a perfect soufflé, step-by-step, but they can't actually <em>do</em> any of it. They have no ingredients, no oven, no whisk, no bowls. They're stuck!</p>
 <p><img src="https://img.icons8.com/ios/50/000000/cook-male--v1.png" alt="Chef Thinking" class="inline"/> 🤔 -&gt; 📝 Recipe (Think)</p>
 <p>An agent without tools is like that chef. The LLM brain can reason and plan ("I need to search the web"), but the agent itself has no way to execute that plan ("How do I *actually* search?").</p>
-<h2><a class="anchor" id="autotoc_md3038"></a>
+<h2><a class="anchor" id="autotoc_md3062"></a>
 The Solution: The Agent's Toolbox</h2>
 <p>Tools are specific capabilities we give to our agent. Think of them like the utensils and appliances in a kitchen drawer:</p>
 <ul>
@@ -149,7 +149,7 @@ The Solution: The Agent's Toolbox</h2>
 </ul>
 <p><img src="https://img.icons8.com/plasticine/100/toolbox.png" alt="Toolbox" class="inline"/> -&gt; 🔎 Search, 💻 Code Runner, ☁️ Weather API</p>
 <p>Each tool is a reusable function that the agent can call upon to perform a specific action. The agent acts like the chef, looking at the next step in the recipe (the LLM's suggestion) and picking the right tool from its toolbox.</p>
-<h2><a class="anchor" id="autotoc_md3039"></a>
+<h2><a class="anchor" id="autotoc_md3063"></a>
 What Makes a Tool?</h2>
 <p>Every tool in <code>SmolaAgents</code> needs a few key pieces of information so the agent (and the LLM helping it) can understand it:</p>
 <ol type="1">
@@ -159,7 +159,7 @@ What Makes a Tool?</h2>
 <li><b><code>output_type</code></b>: Describes the type of result the tool will return (e.g., <code>string</code>, <code>number</code>, <code>image</code>).</li>
 <li><b><code>forward</code> method</b>: This is the actual Python code that gets executed when the tool is used. It takes the defined <code>inputs</code> as arguments and performs the tool's action, returning the result.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3040"></a>
+<h2><a class="anchor" id="autotoc_md3064"></a>
 Creating Your First Tool: The <code>GreetingTool</code></h2>
 <p>Let's build a very simple tool. Imagine we want our agent to be able to greet someone by name.</p>
 <p>We'll create a <code>GreetingTool</code> by inheriting from the base <code>Tool</code> class provided by <code>SmolaAgents</code>.</p>
@@ -212,7 +212,7 @@ Creating Your First Tool: The <code>GreetingTool</code></h2>
 <li><b>Testing:</b> We create an instance <code>greeter</code> and call it like a function, passing the required argument <code>name="Alice"</code>. It executes the <code>forward</code> method and returns the result.</li>
 </ol>
 <p>This <code>GreetingTool</code> is now ready to be added to an agent's toolbox!</p>
-<h2><a class="anchor" id="autotoc_md3041"></a>
+<h2><a class="anchor" id="autotoc_md3065"></a>
 Adding the Tool to Your Agent</h2>
 <p>Remember how we created our <code>MultiStepAgent</code> in <a class="el" href="../../dc/d92/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_201__multistepagent.html">Chapter 1</a>? We gave it a model and a list of tools. Let's add our new <code>GreetingTool</code>:</p>
 <div class="fragment"><div class="line"><span class="comment"># --- File: agent_with_greeting.py ---</span></div>
@@ -267,7 +267,7 @@ Adding the Tool to Your Agent</h2>
 <li>When we run the <code>agent</code> with the task "Greet the user named Bob," the LLM (using the tool descriptions provided in the prompt) will likely recognize that the <code>greet_person</code> tool is perfect for this.</li>
 <li>The agent will then execute the <code>greeting_tool.forward(name="Bob")</code> method during its "Act" phase.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3042"></a>
+<h2><a class="anchor" id="autotoc_md3066"></a>
 How the Agent Uses Tools: Under the Hood</h2>
 <p>Let's revisit the <b>Think -&gt; Act -&gt; Observe</b> cycle from <a class="el" href="../../dc/d92/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_201__multistepagent.html">Chapter 1</a> and see exactly where tools fit in.</p>
 <ol type="1">
@@ -341,7 +341,7 @@ How the Agent Uses Tools: Under the Hood</h2>
 <div class="line">        <span class="comment"># ... (handle cases where LLM gives text instead of tool call) ...</span></div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keywordtype">None</span> <span class="comment"># Not the final answer yet</span></div>
 </div><!-- fragment --><p>This shows the core idea: the agent gets the <code>tool_name</code> and <code>arguments</code> from the LLM, finds the corresponding <code>Tool</code> object, and calls its <code>forward</code> method using the arguments.</p>
-<h2><a class="anchor" id="autotoc_md3043"></a>
+<h2><a class="anchor" id="autotoc_md3067"></a>
 Common Built-in Tools</h2>
 <p><code>SmolaAgents</code> comes with several useful tools ready to use (found in <code>default_tools.py</code>):</p>
 <ul>
@@ -360,7 +360,7 @@ Common Built-in Tools</h2>
 <div class="line">    model=llm,</div>
 <div class="line">    tools=[search_tool] <span class="comment"># Agent can now search!</span></div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3044"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3068"></a>
 Conclusion</h2>
 <p>Tools are the bridge between an agent's reasoning and the real world (or specific functionalities like code execution). They are reusable capabilities defined by their <code>name</code>, <code>description</code>, <code>inputs</code>, <code>output_type</code>, and the core logic in their <code>forward</code> method.</p>
 <p>You've learned:</p>

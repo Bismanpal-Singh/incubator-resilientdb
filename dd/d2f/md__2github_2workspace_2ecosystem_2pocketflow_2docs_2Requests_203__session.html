@@ -121,12 +121,12 @@ $(function(){initNavTree('dd/d2f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_session</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2905"></a>
-autotoc_md2905</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2929"></a>
+autotoc_md2929</h2>
 <p>layout: default title: "Session" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2906"></a>
+<h2><a class="anchor" id="autotoc_md2930"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2907"></a>
+<h1><a class="anchor" id="autotoc_md2931"></a>
 Chapter 3: Remembering Things - The Session Object</h1>
 <p>In <a class="el" href="../../d8/da9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_201__functional__api.html">Chapter 1</a>, we learned the easiest way to make web requests using functions like <code>requests.get()</code>. In <a class="el" href="../../dd/d7e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_202__request______response__models.html">Chapter 2</a>, we looked at the <code>Request</code> and <code>Response</code> objects that structure our communication with web servers.</p>
 <p>We also saw that the simple functional API methods like <code>requests.get()</code> are great for single, one-off requests. But what if you need to talk to the <em>same website</em> multiple times? For example, maybe you need to:</p>
@@ -136,7 +136,7 @@ Chapter 3: Remembering Things - The Session Object</h1>
 </ol>
 <p>If you use <code>requests.get()</code> for each step, you'll have a problem. Remember how <code>requests.get()</code> creates a <em>temporary</em> setup for each call and then throws it away? This means it forgets the login cookie immediately after the login request! Your next request will be like visiting the site as a brand new, logged-out user.</p>
 <p>How can we make <code>Requests</code> remember things between requests, just like your web browser does when you navigate around a logged-in site?</p>
-<h2><a class="anchor" id="autotoc_md2908"></a>
+<h2><a class="anchor" id="autotoc_md2932"></a>
 Meet the <code>Session</code> Object: Your Persistent Browser Tab</h2>
 <p>This is where the <code>requests.Session</code> object comes in!</p>
 <p>Think of a <code>Session</code> object as a dedicated browser tab you've opened just for interacting with a specific website or web service. What does a browser tab do?</p>
@@ -151,7 +151,7 @@ Meet the <code>Session</code> Object: Your Persistent Browser Tab</h2>
 <li><b>Connection Pooling:</b> It reuses the underlying TCP connections for requests to the same host, significantly speeding up multiple requests. This is managed by components called <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Transport Adapters</a>.</li>
 <li><b>Default Data:</b> You can set default headers, authentication details, query parameters, or proxy settings directly on the <code>Session</code> object, and they will be applied to all requests made through that session.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2909"></a>
+<h2><a class="anchor" id="autotoc_md2933"></a>
 Using a <code>Session</code></h2>
 <p>Using a <code>Session</code> is almost as easy as using the functional API. Instead of calling <code>requests.get()</code>, you first create a <code>Session</code> object, and then call methods like <code><a class="el" href="../../d7/da6/pybind__kv__service_8cpp.html#abe6524afb3a69dc9a4c314e11f96f29f">get()</a></code> or <code>post()</code> on <em>that object</em>.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> requests</div>
@@ -191,7 +191,7 @@ Using a <code>Session</code></h2>
 <li><code>response3 = s.get(login_required_url)</code>: We made <em>another</em> request using the <em>same</em> session <code>s</code>. This time, the session automatically included the <code>sessioncookie</code> in the request headers. The server received it!</li>
 <li>The last part shows that if we used <code>requests.get()</code> instead, the cookie from <code>response4</code> would be lost, and <code>response5</code> would fail to send it. The <code>Session</code> was crucial for remembering the cookie.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2910"></a>
+<h2><a class="anchor" id="autotoc_md2934"></a>
 Persistent Settings: Headers, Auth, etc.</h2>
 <p>Besides cookies, you can set other things on the <code>Session</code> that will apply to all its requests.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> requests</div>
@@ -241,7 +241,7 @@ Persistent Settings: Headers, Auth, etc.</h2>
 <li>If we had used a real authentication endpoint, the <code>s.auth</code> details would have been used automatically.</li>
 <li>We didn't have to specify these details on each <code>s.get()</code> call! The <code>Session</code> handled it.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2911"></a>
+<h2><a class="anchor" id="autotoc_md2935"></a>
 Using Sessions with <code>with</code> (Context Manager)</h2>
 <p>Sessions manage resources like network connections. It's good practice to explicitly close them when you're done. The easiest way to ensure this happens is to use the <code>Session</code> as a context manager with the <code>with</code> statement.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> requests</div>
@@ -265,7 +265,7 @@ Using Sessions with <code>with</code> (Context Manager)</h2>
 <div class="line"> </div>
 <div class="line">print(<span class="stringliteral">&quot;\nSession automatically closed after &#39;with&#39; block.&quot;</span>)</div>
 </div><!-- fragment --><p>The <code>with</code> statement ensures that <code>s.close()</code> is called automatically at the end of the block, even if errors occur. This cleans up the underlying connections managed by the <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Transport Adapters</a>.</p>
-<h2><a class="anchor" id="autotoc_md2912"></a>
+<h2><a class="anchor" id="autotoc_md2936"></a>
 How It Works Internally</h2>
 <p>So, how does the <code>Session</code> actually achieve this persistence and efficiency?</p>
 <ol type="1">
@@ -417,7 +417,7 @@ How It Works Internally</h2>
 <li><code>send</code> uses a <code>Transport Adapter</code> (like <code>HTTPAdapter</code>) which handles the actual network communication and connection pooling.</li>
 <li>After a response is received, <code>send</code> (and the redirection logic) updates the <code>Session</code>'s cookies.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2913"></a>
+<h2><a class="anchor" id="autotoc_md2937"></a>
 Conclusion</h2>
 <p>You've learned about the <code>requests.Session</code> object, a powerful tool for making multiple requests to the same host efficiently. You saw how it automatically handles <b>cookie persistence</b> and provides significant performance benefits through <b>connection pooling</b> (via <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Transport Adapters</a>). You also learned how to set persistent <code>headers</code>, <code>auth</code>, and other settings on a session. Using a <code>Session</code> is the recommended approach when your script needs to interact with a website more than once.</p>
 <p>We mentioned that the <code>Session</code> stores cookies in a "Cookie Jar". What exactly is that, and can we interact with it more directly? Let's find out.</p>

@@ -121,15 +121,15 @@ $(function(){initNavTree('dc/ddf/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">09_mcp__model_context_protocol_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2671"></a>
-autotoc_md2671</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2695"></a>
+autotoc_md2695</h2>
 <p>layout: default title: "MCP (Model Context Protocol)" parent: "OpenManus" </p>
-<h2><a class="anchor" id="autotoc_md2672"></a>
+<h2><a class="anchor" id="autotoc_md2696"></a>
 nav_order: 9</h2>
-<h1><a class="anchor" id="autotoc_md2673"></a>
+<h1><a class="anchor" id="autotoc_md2697"></a>
 Chapter 9: MCP (Model Context Protocol)</h1>
 <p>Welcome to the final chapter of our core concepts tutorial! In <a class="el" href="../../de/da6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_208__dockersandbox.html">Chapter 8: DockerSandbox</a>, we saw how OpenManus can safely run code in an isolated environment. Now, let's explore a powerful way to extend your agent's capabilities <em>without</em> changing its internal code: the <b>Model Context Protocol (MCP)</b>.</p>
-<h2><a class="anchor" id="autotoc_md2674"></a>
+<h2><a class="anchor" id="autotoc_md2698"></a>
 What Problem Does MCP Solve?</h2>
 <p>Imagine you have an agent running smoothly. Suddenly, you realize you need it to perform a new, specialized task – maybe interacting with a custom company database or using a complex scientific calculation library.</p>
 <p>Normally, you might have to:</p><ol type="1">
@@ -142,7 +142,7 @@ What Problem Does MCP Solve?</h2>
 <p>What if there was a way for the agent to <b>dynamically discover and use tools</b> provided by a completely separate service? Like plugging in a new USB device, and your computer automatically recognizes and uses it?</p>
 <p><b>This is what MCP enables!</b> It defines a standard way for an OpenManus agent (<code>MCPAgent</code>) to connect to an external <b>MCP Server</b>. This server advertises the tools it offers, and the agent can call these tools remotely as if they were built-in.</p>
 <p><b>Use Case:</b> Let's say we want our agent to be able to run basic shell commands (like <code>ls</code> or <code>pwd</code>) using the <code>Bash</code> tool. Instead of building the <code>Bash</code> tool directly into the agent, we can run an <code>MCPServer</code> that <em>offers</em> the <code>Bash</code> tool. Our <code>MCPAgent</code> can connect to this server, discover the <code>Bash</code> tool, and use it when needed, all without having the <code>Bash</code> tool's code inside the agent itself. If we later update the <code>Bash</code> tool on the server, the agent automatically gets the new version without needing changes.</p>
-<h2><a class="anchor" id="autotoc_md2675"></a>
+<h2><a class="anchor" id="autotoc_md2699"></a>
 Key Concepts: The Agent, The Server, and The Rules</h2>
 <p>MCP involves a few key players working together:</p>
 <ol type="1">
@@ -174,7 +174,7 @@ Key Concepts: The Agent, The Server, and The Rules</h2>
 </li>
 </ol>
 <p><em>Analogy:</em> Imagine the <code>MCPServer</code> is a smart TV's App Store, offering apps (tools) like Netflix or YouTube. The <code>MCPAgent</code> is a universal remote control. MCP is the protocol that lets the remote connect to the TV, see the available apps, and tell the TV "Launch Netflix" or "Play this video on YouTube". The actual app logic runs on the TV (the server), not the remote (the agent).</p>
-<h2><a class="anchor" id="autotoc_md2676"></a>
+<h2><a class="anchor" id="autotoc_md2700"></a>
 How Do We Use It?</h2>
 <p>Let's see how to run the server and connect an agent using the simple <code>stdio</code> method.</p>
 <p><b>1. Run the MCPServer:</b></p>
@@ -245,7 +245,7 @@ How Do We Use It?</h2>
 <div class="line">... etc ...</div>
 </div><!-- fragment --><p>Success! The agent used a tool (<code>bash</code>) that wasn't part of its own code, but was provided dynamically by the external <code>MCPServer</code> via the Model Context Protocol. If you added a <em>new</em> tool to the <code>MCPServer</code> code and restarted the server, the agent could potentially discover and use it without needing any changes itself (it periodically refreshes the tool list).</p>
 <p>Type <code>exit</code> in the agent's terminal to stop it, then stop the server (usually Ctrl+C in its terminal).</p>
-<h2><a class="anchor" id="autotoc_md2677"></a>
+<h2><a class="anchor" id="autotoc_md2701"></a>
 Under the Hood: How MCP Communication Flows</h2>
 <p>Let's trace the simplified steps when the agent uses a server tool:</p>
 <ol type="1">
@@ -277,7 +277,7 @@ Under the Hood: How MCP Communication Flows</h2>
 <div class="line">    Server--&gt;&gt;-Agent: Tool Result (output=file list)</div>
 <div class="line">    Agent-&gt;&gt;Agent: Process result, update memory</div>
 <div class="line">    Agent--&gt;&gt;-User: &quot;OK, the files are: ...&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2678"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2702"></a>
 Code Glimpse: Key MCP Components</h2>
 <p>Let's look at simplified parts of the relevant files.</p>
 <p><b>1. <code>MCPServer</code> (<code>app/mcp/server.py</code>): Registering Tools</b> The server uses the <code>fastmcp</code> library to handle the protocol details. It needs to register the tools it wants to offer.</p>
@@ -465,7 +465,7 @@ Code Glimpse: Key MCP Components</h2>
 <div class="line">        <span class="keywordflow">if</span> self.mcp_clients.session:</div>
 <div class="line">            await self.mcp_clients.disconnect()</div>
 </div><!-- fragment --><p><b>Explanation:</b> The <code>MCPAgent</code> holds an instance of <code>MCPClients</code>. In <code>initialize</code>, it tells <code>MCPClients</code> to connect to the server. It sets its own <code>available_tools</code> to point to the <code>MCPClients</code> instance. When the agent's <code>think</code> method (inherited from <code>ToolCallAgent</code>) needs to consider or execute tools, it uses <code>self.available_tools</code>. Because this <em>is</em> the <code>MCPClients</code> object, any tool execution results in a remote call to the <code>MCPServer</code> via the proxy tools. The agent also adds logic to periodically <code>_refresh_tools</code> and <code>cleanup</code> the connection.</p>
-<h2><a class="anchor" id="autotoc_md2679"></a>
+<h2><a class="anchor" id="autotoc_md2703"></a>
 Wrapping Up Chapter 9</h2>
 <p>Congratulations on completing the core concepts tutorial!</p>
 <p>In this final chapter, we explored the <b>Model Context Protocol (MCP)</b>. You learned how MCP allows an <code>MCPAgent</code> to connect to an external <code>MCPServer</code> and dynamically discover and use tools hosted by that server. This provides a powerful way to extend agent capabilities with specialized tools without modifying the agent's core code, enabling a flexible, plug-and-play architecture for agent skills.</p>

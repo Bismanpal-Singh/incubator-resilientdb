@@ -121,12 +121,12 @@ $(function(){initNavTree('dc/d0a/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_teleprompter___optimizer</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1664"></a>
-autotoc_md1664</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1688"></a>
+autotoc_md1688</h2>
 <p>layout: default title: "Teleprompter &amp; Optimizer" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1665"></a>
+<h2><a class="anchor" id="autotoc_md1689"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1666"></a>
+<h1><a class="anchor" id="autotoc_md1690"></a>
 Chapter 8: Teleprompter / Optimizer - Your Program's Coach</h1>
 <p>Welcome to Chapter 8! In <a class="el" href="../../d5/daa/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_207__evaluate.html">Chapter 7: Evaluate</a>, we learned how to grade our DSPy programs using metrics and datasets to see how well they perform. That's great for knowing our score, but what if the score isn't high enough?</p>
 <p>Think about building our <code>BasicQA</code> program from the last chapter. Maybe we tried running it and found it only got 75% accuracy. How do we improve it?</p>
@@ -151,7 +151,7 @@ Chapter 8: Teleprompter / Optimizer - Your Program's Coach</h1>
 <li>The basic idea behind how Teleprompters optimize programs.</li>
 </ul>
 <p>Let's automate the improvement process!</p>
-<h2><a class="anchor" id="autotoc_md1667"></a>
+<h2><a class="anchor" id="autotoc_md1691"></a>
 What is a Teleprompter / Optimizer?</h2>
 <p>A <code>Teleprompter</code> in DSPy is an algorithm that takes your DSPy <a class="el" href="../../d8/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_201__module______program.html">Program</a> (the 'student') and automatically tunes its internal parameters to maximize performance on a given task. These parameters are most often:</p>
 <ol type="1">
@@ -166,7 +166,7 @@ What is a Teleprompter / Optimizer?</h2>
 <li><b>A Metric Function (<code>metric</code>):</b> The same kind of function we used in <a class="el" href="../../d5/daa/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_207__evaluate.html">Chapter 7: Evaluate</a>. It tells the Teleprompter how well the student program is doing on each example in the <code>trainset</code>.</li>
 </ol>
 <p>The Teleprompter uses the <code>metric</code> to guide its search for better instructions or demos, trying different combinations and keeping the ones that yield the highest score on the <code>trainset</code>. The output is an <b>optimized version of your student program</b>.</p>
-<h2><a class="anchor" id="autotoc_md1668"></a>
+<h2><a class="anchor" id="autotoc_md1692"></a>
 Use Case: Automatically Finding Good Few-Shot Examples with <code>BootstrapFewShot</code></h2>
 <p>Let's revisit our <code>BasicQA</code> program and the evaluation setup from Chapter 7.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> dspy</div>
@@ -238,7 +238,7 @@ Use Case: Automatically Finding Good Few-Shot Examples with <code>BootstrapFewSh
 <div class="line"><span class="comment"># If the optimization worked, the score should be higher!</span></div>
 <div class="line"><span class="comment"># Might output: Compiled Score (on trainset): 100.0%</span></div>
 </div><!-- fragment --><p>If <code>BootstrapFewShot</code> found good examples (like the "Mona Lisa" one after the teacher model successfully answered it), the <code>compiled_program</code> now has these examples embedded in its prompts, helping the LM perform better on similar questions. We automated the process of finding effective few-shot examples!</p>
-<h2><a class="anchor" id="autotoc_md1669"></a>
+<h2><a class="anchor" id="autotoc_md1693"></a>
 How Optimization Works (Conceptual)</h2>
 <p>Different Teleprompters use different strategies, but the core idea is usually:</p>
 <ol type="1">
@@ -261,7 +261,7 @@ How Optimization Works (Conceptual)</h2>
 <li><b>Trying Techniques:</b> Generating/selecting different demos or instructions.</li>
 <li><b>Adopting Best Techniques:</b> Creating the <code>compiled_program</code> with the highest-scoring demos/instructions found.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1670"></a>
+<h2><a class="anchor" id="autotoc_md1694"></a>
 How It Works Under the Hood (<code>BootstrapFewShot</code> Peek)</h2>
 <p>Let's briefly look at the internal flow for <code>BootstrapFewShot.compile()</code>:</p>
 <ol type="1">
@@ -381,7 +381,7 @@ How It Works Under the Hood (<code>BootstrapFewShot</code> Peek)</h2>
 <div class="line">            predictor.demos = demos_for_predictor <span class="comment"># Assign the demos!</span></div>
 <div class="line">        <span class="keywordflow">return</span> self.student</div>
 </div><!-- fragment --><p>This simplified view shows the core loop: run the teacher, check the metric, collect successful traces as demos, and finally assign those demos to the student program.</p>
-<h2><a class="anchor" id="autotoc_md1671"></a>
+<h2><a class="anchor" id="autotoc_md1695"></a>
 Conclusion</h2>
 <p>You've now learned about DSPy's <b>Teleprompters / Optimizers</b>, the powerful tools for automating prompt engineering!</p>
 <ul>

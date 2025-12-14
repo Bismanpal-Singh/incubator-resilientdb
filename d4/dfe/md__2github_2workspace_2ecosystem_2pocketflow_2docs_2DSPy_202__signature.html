@@ -121,12 +121,12 @@ $(function(){initNavTree('d4/dfe/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_signature</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1599"></a>
-autotoc_md1599</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1623"></a>
+autotoc_md1623</h2>
 <p>layout: default title: "Signature" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1600"></a>
+<h2><a class="anchor" id="autotoc_md1624"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1601"></a>
+<h1><a class="anchor" id="autotoc_md1625"></a>
 Chapter 2: Signatures - Defining the Task</h1>
 <p>In <a class="el" href="../../d8/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_201__module______program.html">Chapter 1: Modules and Programs</a>, we learned that <code>Module</code>s are like Lego bricks that perform specific tasks, often using Language Models (<a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">LM</a>). We saw how <code>Program</code>s combine these modules.</p>
 <p>But how does a <code>Module</code>, especially one using an LM like <code>dspy.Predict</code>, know <em>exactly</em> what job to do?</p>
@@ -143,7 +143,7 @@ Chapter 2: Signatures - Defining the Task</h1>
 <li><b>Instructions:</b> Natural language guidance (like a recipe!) telling the underlying LM <em>how</em> to transform the inputs into the outputs.</li>
 </ul>
 <p>Think of it as specifying the 'shape' and 'purpose' of a module, making sure everyone (you, DSPy, and the LM) understands the task.</p>
-<h2><a class="anchor" id="autotoc_md1602"></a>
+<h2><a class="anchor" id="autotoc_md1626"></a>
 Why Do We Need Signatures?</h2>
 <p>Without a clear definition, how would a module like <code>dspy.Predict</code> know what to ask the LM?</p>
 <p>Let's say we want a module to translate English text to French. We need to tell it:</p><ul>
@@ -152,7 +152,7 @@ Why Do We Need Signatures?</h2>
 <li>The <em>task</em> is to translate the input sentence into French.</li>
 </ul>
 <p>A <code>Signature</code> bundles all this information together neatly.</p>
-<h2><a class="anchor" id="autotoc_md1603"></a>
+<h2><a class="anchor" id="autotoc_md1627"></a>
 Defining a Signature: The Recipe Card</h2>
 <p>The most common way to define a Signature is by creating a Python class that inherits from <code>dspy.Signature</code>.</p>
 <p>Let's create our English-to-French translation signature:</p>
@@ -175,7 +175,7 @@ Defining a Signature: The Recipe Card</h2>
 <li><b><code>french_sentence = dspy.OutputField(...)</code></b>: We define an output field named <code>french_sentence</code>. <code>dspy.OutputField</code> marks this as the expected output. The <code>desc</code> describes what this field should contain.</li>
 </ol>
 <p>That's it! We've created a reusable "recipe card" that clearly defines our translation task.</p>
-<h2><a class="anchor" id="autotoc_md1604"></a>
+<h2><a class="anchor" id="autotoc_md1628"></a>
 How Modules Use Signatures</h2>
 <p>Now, how does a <code>Module</code> like <code>dspy.Predict</code> use this <code>TranslateToFrench</code> signature?</p>
 <p><code>dspy.Predict</code> is a pre-built module designed to take a signature and use an LM to generate the output fields based on the input fields and instructions.</p>
@@ -202,7 +202,7 @@ How Modules Use Signatures</h2>
 <li><code>result.french_sentence</code>: <code>dspy.Predict</code> uses the LM, guided by the signature's instructions and fields, to generate the output. It then returns an object where you can access the generated French text using the output field name (<code>french_sentence</code>).</li>
 </ol>
 <p>The <code>Signature</code> acts as the bridge, ensuring the <code>Predict</code> module knows its job specification.</p>
-<h2><a class="anchor" id="autotoc_md1605"></a>
+<h2><a class="anchor" id="autotoc_md1629"></a>
 How It Works Under the Hood (A Peek)</h2>
 <p>You don't need to memorize this, but understanding the flow helps! When a module like <code>dspy.Predict</code> uses a <code>Signature</code>:</p>
 <ol type="1">
@@ -283,7 +283,7 @@ How It Works Under the Hood (A Peek)</h2>
 <div class="line">    <span class="comment"># Creates a Pydantic field marked as output for DSPy</span></div>
 <div class="line">    <span class="keywordflow">return</span> pydantic.Field(**move_kwargs(**kwargs, __dspy_field_type=<span class="stringliteral">&quot;output&quot;</span>))</div>
 </div><!-- fragment --><p>The key takeaway is that the <code>Signature</code> class structure (using <code>InputField</code>, <code>OutputField</code>, and the docstring) provides a standardized way for modules to understand the task specification.</p>
-<h2><a class="anchor" id="autotoc_md1606"></a>
+<h2><a class="anchor" id="autotoc_md1630"></a>
 Conclusion</h2>
 <p>You've now learned about <code>Signatures</code>, the essential component for defining <em>what</em> a DSPy module should do!</p>
 <ul>

@@ -121,22 +121,22 @@ $(function(){initNavTree('d8/d12/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_click_exceptions</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1239"></a>
-autotoc_md1239</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1263"></a>
+autotoc_md1263</h2>
 <p>layout: default title: "Click Exceptions" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1240"></a>
+<h2><a class="anchor" id="autotoc_md1264"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md1241"></a>
+<h1><a class="anchor" id="autotoc_md1265"></a>
 Chapter 7: Click Exceptions - Handling Errors Gracefully</h1>
 <p>In the last chapter, <a class="el" href="../../d7/df7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_206__term__ui____terminal__user__interface__.html">Chapter 6: Term UI (Terminal User Interface)</a>, we explored how to make our command-line tools interactive and visually appealing using functions like <code>click.prompt</code>, <code>click.confirm</code>, and <code>click.secho</code>. We learned how to communicate effectively <em>with</em> the user.</p>
 <p>But what happens when the user doesn't communicate effectively with <em>us</em>? What if they type the wrong command, forget a required argument, or enter text when a number was expected? Our programs need a way to handle these errors without just crashing.</p>
 <p>This is where <b>Click Exceptions</b> come in. They are Click's way of signaling that something went wrong, usually because of a problem with the user's input or how they tried to run the command.</p>
-<h2><a class="anchor" id="autotoc_md1242"></a>
+<h2><a class="anchor" id="autotoc_md1266"></a>
 Why Special Exceptions? The Problem with Crashes</h2>
 <p>Imagine you have a command that needs a number, like <code>--count 5</code>. You used <code>type=click.INT</code> like we learned in <a class="el" href="../../d8/d25/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_204__paramtype.html">Chapter 4: ParamType</a>. What happens if the user types <code>--count five</code>?</p>
 <p>If Click didn't handle this specially, the <code>int("five")</code> conversion inside Click would fail, raising a standard Python <code>ValueError</code>. This might cause your program to stop with a long, confusing Python traceback message that isn't very helpful for the end-user. They might not understand what went wrong or how to fix it.</p>
 <p>Click wants to provide a better experience. When something like this happens, Click catches the internal error and raises one of its own <b>custom exception types</b>. These special exceptions tell Click exactly what kind of problem occurred (e.g., bad input, missing argument).</p>
-<h2><a class="anchor" id="autotoc_md1243"></a>
+<h2><a class="anchor" id="autotoc_md1267"></a>
 Meet the Click Exceptions</h2>
 <p>Click has a family of exception classes designed specifically for handling command-line errors. The most important ones inherit from the base class <code>click.ClickException</code>. Here are some common ones you'll encounter (or use):</p>
 <ul>
@@ -156,7 +156,7 @@ Meet the Click Exceptions</h2>
 <li><b>Exits the application cleanly</b> with a non-zero exit code (signaling to the system that an error occurred).</li>
 </ol>
 <p>This gives the user clear feedback about what they did wrong and how to potentially fix it, without seeing scary Python tracebacks.</p>
-<h2><a class="anchor" id="autotoc_md1244"></a>
+<h2><a class="anchor" id="autotoc_md1268"></a>
 Seeing Exceptions in Action (Automatically)</h2>
 <p>You've already seen Click exceptions working! Remember our <code>count_app.py</code> from <a class="el" href="../../d8/d25/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_204__paramtype.html">Chapter 4: ParamType</a>?</p>
 <div class="fragment"><div class="line"><span class="comment"># count_app.py (from Chapter 4)</span></div>
@@ -186,7 +186,7 @@ Seeing Exceptions in Action (Automatically)</h2>
 <div class="line"> </div>
 <div class="line">Error: Missing argument &#39;MESSAGE&#39;.</div>
 </div><!-- fragment --><p>Again, a clear error message! This time, Click caught a <code>MissingParameter</code> exception.</p>
-<h2><a class="anchor" id="autotoc_md1245"></a>
+<h2><a class="anchor" id="autotoc_md1269"></a>
 Raising Exceptions Yourself: Custom Validation</h2>
 <p>Click raises exceptions automatically for many common errors. But sometimes, you have validation logic that's specific to your application. For example, maybe an <code>--age</code> option must be positive.</p>
 <p>The standard way to report these custom validation errors is to <b>raise a <code>click.BadParameter</code> exception</b> yourself, usually from within a callback function.</p>
@@ -235,7 +235,7 @@ Raising Exceptions Yourself: Custom Validation</h2>
 <div class="line"> </div>
 <div class="line">Error: Invalid value for &#39;--count&#39;: Count must be a positive number.</div>
 </div><!-- fragment --><p>It works! Our custom validation logic triggered, we raised <code>click.BadParameter</code>, and Click caught it, displaying our specific error message cleanly. This is the standard way to integrate your own validation rules into Click's error handling.</p>
-<h2><a class="anchor" id="autotoc_md1246"></a>
+<h2><a class="anchor" id="autotoc_md1270"></a>
 How Click Handles Exceptions (Under the Hood)</h2>
 <p>What exactly happens when a Click exception is raised, either by Click itself or by your code?</p>
 <ol type="1">
@@ -320,7 +320,7 @@ How Click Handles Exceptions (Under the Hood)</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Other exceptions like MissingParameter, NoSuchOption follow similar patterns</span></div>
 </div><!-- fragment --><p>By using this structured exception system, Click ensures that user errors are reported consistently and helpfully across any Click application.</p>
-<h2><a class="anchor" id="autotoc_md1247"></a>
+<h2><a class="anchor" id="autotoc_md1271"></a>
 Conclusion</h2>
 <p>Click Exceptions are the standard mechanism for reporting errors related to command usage and user input within Click applications.</p>
 <p>You've learned:</p>

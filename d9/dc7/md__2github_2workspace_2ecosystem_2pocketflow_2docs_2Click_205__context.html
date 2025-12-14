@@ -121,17 +121,17 @@ $(function(){initNavTree('d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_context</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1214"></a>
-autotoc_md1214</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1238"></a>
+autotoc_md1238</h2>
 <p>layout: default title: "Context" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1215"></a>
+<h2><a class="anchor" id="autotoc_md1239"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1216"></a>
+<h1><a class="anchor" id="autotoc_md1240"></a>
 Chapter 5: Context - The Command's Nervous System</h1>
 <p>In the last chapter, <a class="el" href="../../d8/d25/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_204__paramtype.html">ParamType</a>, we saw how Click helps validate and convert user input into the right Python types, making our commands more robust. We used types like <code>click.INT</code> and <code>click.Path</code> to ensure data correctness.</p>
 <p>But what happens <em>while</em> a command is running? How does Click keep track of which command is being executed, what parameters were passed, or even shared information between different commands in a nested structure (like <code>git remote add ...</code>)?</p>
 <p>This is where the <b>Context</b> object, often referred to as <code>ctx</code>, comes into play. Think of the Context as the central nervous system for a single command invocation. It carries all the vital information about the current state of execution.</p>
-<h2><a class="anchor" id="autotoc_md1217"></a>
+<h2><a class="anchor" id="autotoc_md1241"></a>
 Why Do We Need a Context?</h2>
 <p>Imagine you have a command that needs to behave differently based on a global configuration, maybe a <code>--verbose</code> flag set on the main application group. Or perhaps one command needs to call another command within the same application. How do they communicate?</p>
 <p>The Context object solves these problems by providing a central place to:</p>
@@ -143,7 +143,7 @@ Why Do We Need a Context?</h2>
 <li>Invoke other commands programmatically.</li>
 </ul>
 <p>Let's explore how to access and use this powerful object.</p>
-<h2><a class="anchor" id="autotoc_md1218"></a>
+<h2><a class="anchor" id="autotoc_md1242"></a>
 Getting the Context: <code>@pass_context</code></h2>
 <p>Click doesn't automatically pass the Context object to your command function. You need to explicitly ask for it using a special decorator: <code>@click.pass_context</code>.</p>
 <p>When you add <code>@click.pass_context</code> <em>above</em> your function definition (but typically <em>below</em> the <code>@click.command</code> or <code>@click.option</code> decorators), Click will automatically <b>inject</b> the <code>Context</code> object as the <b>very first argument</b> to your function.</p>
@@ -195,7 +195,7 @@ Getting the Context: <code>@pass_context</code></h2>
 <div class="line">Verbose flag (local): True</div>
 <div class="line">Verbose setting (shared): True</div>
 </div><!-- fragment --><p>You can see how <code>@pass_context</code> gives us access to the runtime environment (<code>ctx.command.name</code>) and allows us to use <code>ctx.obj</code> to share state between the parent group (<code>cli</code>) and the subcommand (<code>info</code>).</p>
-<h2><a class="anchor" id="autotoc_md1219"></a>
+<h2><a class="anchor" id="autotoc_md1243"></a>
 Key Context Attributes</h2>
 <p>The <code>Context</code> object has several useful attributes:</p>
 <ul>
@@ -203,15 +203,15 @@ Key Context Attributes</h2>
 <li><code>ctx.parent</code>: The context of the invoking command. If this is the top-level command, <code>ctx.parent</code> will be <code>None</code>. This forms a linked list or chain back to the root context.</li>
 <li><code>ctx.params</code>: A dictionary mapping parameter names to the <em>final</em> values passed to the command, after parsing, type conversion, and defaults have been applied. ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1220"></a>
+<h1><a class="anchor" id="autotoc_md1244"></a>
 access_params.py</h1>
 <p>import click</p>
 <p>@click.command() @click.option('&ndash;name', default='Guest') @click.pass_context def hello(ctx, name): click.echo(f"Hello, {name}!") </p>
-<h1><a class="anchor" id="autotoc_md1221"></a>
+<h1><a class="anchor" id="autotoc_md1245"></a>
 Access the parameter value directly via ctx.params</h1>
 <p>click.echo(f"(Value from ctx.params: {ctx.params['name']})")</p>
 <p>if <b>name</b> == '<b>main</b>': hello() ``<code> Running</code>python access_params.py &ndash;name Alice<code>would show</code>Hello, Alice!<code>and</code>(Value from ctx.params: Alice)<code>. *</code>ctx.obj<code>: As seen before, this is an arbitrary object that gets passed down the context chain. It's commonly used for shared configuration, database connections, or other application-level state. You can also use</code>@click.pass_obj<code>as a shortcut if you *only* need</code>ctx.obj<code>. *</code>ctx.info_name<code>: The name that was used on the command line to invoke this command or group (e.g.,</code>info<code>in</code>python context_basics.py info<code>). *</code>ctx.invoked_subcommand<code>: For groups, this holds the name of the subcommand that was invoked (or</code>None` if no subcommand was called).</p>
-<h2><a class="anchor" id="autotoc_md1222"></a>
+<h2><a class="anchor" id="autotoc_md1246"></a>
 Calling Other Commands</h2>
 <p>Sometimes, you want one command to trigger another. The Context provides methods for this:</p>
 <ul>
@@ -248,7 +248,7 @@ Calling Other Commands</h2>
 <div class="line">Printing: HELLO WORLD</div>
 <div class="line">Finished invoking print_it.</div>
 </div><!-- fragment --><p>The <code>shout</code> command successfully called the <code>print_it</code> command programmatically using <code>ctx.invoke()</code>.</p>
-<h2><a class="anchor" id="autotoc_md1223"></a>
+<h2><a class="anchor" id="autotoc_md1247"></a>
 Resource Management (<code>ctx.call_on_close</code>)</h2>
 <p>Click uses the context internally to manage resources. For instance, when you use &lsquo;type=click.File('w&rsquo;)<code>, Click opens the file and registers a cleanup function using</code>ctx.call_on_close(file.close)`. This ensures the file is closed when the context is finished, even if errors occur.</p>
 <p>You can use this mechanism yourself if you need custom resource cleanup tied to the command's lifecycle.</p>
@@ -279,7 +279,7 @@ Resource Management (<code>ctx.call_on_close</code>)</h2>
 <div class="line">Processing with resource...</div>
 <div class="line">Resource &#39;DataFile&#39; closed.</div>
 </div><!-- fragment --><p>The resource was automatically closed because we registered its <code>close</code> method with <code>ctx.call_on_close</code>.</p>
-<h2><a class="anchor" id="autotoc_md1224"></a>
+<h2><a class="anchor" id="autotoc_md1248"></a>
 How Context Works Under the Hood</h2>
 <ol type="1">
 <li><b>Initial Context:</b> When you run your Click application (e.g., by calling <code>cli()</code>), Click creates the first <code>Context</code> object associated with the top-level command or group (<code>cli</code> in our examples).</li>
@@ -323,7 +323,7 @@ How Context Works Under the Hood</h2>
 <div class="line">    ClickRuntime-&gt;&gt;cli_ctx: Tears down cli_ctx (runs call_on_close)</div>
 <div class="line">    ClickRuntime--&gt;&gt;CLI: Exits</div>
 </div><!-- fragment --><p>The core <code>Context</code> class is defined in <code>click/core.py</code>. The decorators <code>pass_context</code> and <code>pass_obj</code> are in <code>click/decorators.py</code>, and the mechanism for tracking the current context is in <code>click/globals.py</code>.</p>
-<h2><a class="anchor" id="autotoc_md1225"></a>
+<h2><a class="anchor" id="autotoc_md1249"></a>
 Conclusion</h2>
 <p>The <code>Context</code> (<code>ctx</code>) is a cornerstone concept in Click, acting as the runtime carrier of information for a command invocation.</p>
 <p>You've learned:</p>

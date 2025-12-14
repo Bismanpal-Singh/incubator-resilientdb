@@ -121,17 +121,17 @@ $(function(){initNavTree('d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_agentmemory</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md3046"></a>
-autotoc_md3046</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md3070"></a>
+autotoc_md3070</h2>
 <p>layout: default title: "AgentMemory" parent: "SmolaAgents" </p>
-<h2><a class="anchor" id="autotoc_md3047"></a>
+<h2><a class="anchor" id="autotoc_md3071"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md3048"></a>
+<h1><a class="anchor" id="autotoc_md3072"></a>
 Chapter 4: AgentMemory - The Agent's Notepad</h1>
 <p>Welcome back! In <a class="el" href="../../d4/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_203__tool.html">Chapter 3: Tool</a>, we equipped our agent with "superpowers" – tools like web search or calculators that let it interact with the world and perform actions. We saw how the agent's "brain" (the LLM) decides which tool to use, and the agent executes it.</p>
 <p>But wait... how does the agent remember what it has already done? If it searches for the capital of France in Step 1, how does it remember "Paris" when deciding what to do in Step 2 (like finding the weather in Paris)?</p>
 <p>This is where <b>AgentMemory</b> comes in. Think of it as the agent's dedicated notepad or, even better, a <b>ship's logbook</b>.</p>
-<h2><a class="anchor" id="autotoc_md3049"></a>
+<h2><a class="anchor" id="autotoc_md3073"></a>
 The Problem: An Agent with Amnesia</h2>
 <p>Imagine a captain sailing a ship on a long voyage. After each hour, they completely forget everything that happened before – the course they set, the islands they passed, the storms they weathered. How could they possibly reach their destination? They'd be lost!</p>
 <p><img src="https://img.icons8.com/ios/50/000000/confused.png" alt="Confused Captain" class="inline"/> ❓ "Where am I? What was I doing?"</p>
@@ -143,12 +143,12 @@ The Problem: An Agent with Amnesia</h2>
 <li>What errors it might have encountered.</li>
 </ul>
 <p>Without this history, the agent can't make informed decisions about what to do next. It can't build upon previous results or learn from mistakes within the same task.</p>
-<h2><a class="anchor" id="autotoc_md3050"></a>
+<h2><a class="anchor" id="autotoc_md3074"></a>
 The Solution: The Ship's Logbook (<code>AgentMemory</code>)</h2>
 <p>The <code>AgentMemory</code> is the component that solves this problem. It automatically records every significant event during the agent's "voyage" (its execution run).</p>
 <p><img src="https://img.icons8.com/ios/50/000000/scroll.png" alt="Ship's Logbook" class="inline"/> 📜 "Log Entry: Searched 'Capital of France'. Result: 'Paris'."</p>
 <p>Just like a ship's logbook helps the captain navigate, the <code>AgentMemory</code> helps the agent maintain context and proceed effectively.</p>
-<h2><a class="anchor" id="autotoc_md3051"></a>
+<h2><a class="anchor" id="autotoc_md3075"></a>
 What Does the <code>AgentMemory</code> Store?</h2>
 <p>The <code>AgentMemory</code> keeps a chronological record of the agent's journey. For each run, it typically stores:</p>
 <ol type="1">
@@ -164,7 +164,7 @@ What Does the <code>AgentMemory</code> Store?</h2>
 </li>
 </ol>
 <p>This detailed history allows the agent (specifically, the LLM guiding it) to look back at any point and understand the full context before deciding the next move.</p>
-<h2><a class="anchor" id="autotoc_md3052"></a>
+<h2><a class="anchor" id="autotoc_md3076"></a>
 How is <code>AgentMemory</code> Used? (Mostly Automatic!)</h2>
 <p>The good news is that you, as the user, usually don't need to interact directly with <code>AgentMemory</code>. The <code>MultiStepAgent</code> manages it automatically behind the scenes!</p>
 <p>Here's the key interaction:</p>
@@ -174,7 +174,7 @@ How is <code>AgentMemory</code> Used? (Mostly Automatic!)</h2>
 <li><b>After "Acting" and "Observing":</b> Once the agent performs an action and gets an observation (or an error), the <code>MultiStepAgent</code> records this new information as a new step in the <code>AgentMemory</code>.</li>
 </ol>
 <p>So, the memory is constantly being read from (to inform the LLM) and written to (to record new events).</p>
-<h2><a class="anchor" id="autotoc_md3053"></a>
+<h2><a class="anchor" id="autotoc_md3077"></a>
 Example Revisited: Capital and Weather Logbook</h2>
 <p>Let's trace our "Capital of France and Weather" example from <a class="el" href="../../dc/d92/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_201__multistepagent.html">Chapter 1: MultiStepAgent</a> and see what the <code>AgentMemory</code> logbook might look like (simplified):</p>
 <p><b>(Start of Run)</b></p>
@@ -199,7 +199,7 @@ Example Revisited: Capital and Weather Logbook</h2>
 </ol>
 <p><b>(End of Run)</b></p>
 <p>Now, before Step 2 started, the agent would read entries 1-4 from memory to give context to the LLM. Before Step 3, it would read entries 1-6. This prevents the agent from forgetting what it's doing!</p>
-<h2><a class="anchor" id="autotoc_md3054"></a>
+<h2><a class="anchor" id="autotoc_md3078"></a>
 Under the Hood: Memory Structure</h2>
 <p>How does <code>SmolaAgents</code> actually implement this?</p>
 <p><b>Core Idea:</b> The <code>AgentMemory</code> object holds a list called <code>steps</code>. Each item in this list represents one distinct event or phase in the agent's run. These items are usually instances of specific "Step" classes.</p>
@@ -259,39 +259,39 @@ Under the Hood: Memory Structure</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3055"></a>
+<h1><a class="anchor" id="autotoc_md3079"></a>
 &mdash; File: memory.py (Simplified Step Structures) &mdash;</h1>
 <p>from dataclasses import dataclass from typing import List, Any, Dict</p>
 <p>@dataclass class ToolCall: # Represents a tool invocation request name: str arguments: Any id: str # Unique ID for matching responses</p>
 <p>@dataclass class MemoryStep: # Base class for all memory entries def to_messages(self, **kwargs) -&gt; List[Dict[str, Any]]: </p>
-<h1><a class="anchor" id="autotoc_md3056"></a>
+<h1><a class="anchor" id="autotoc_md3080"></a>
 Each step type knows how to format itself for the LLM</h1>
 <p>raise NotImplementedError</p>
 <p>@dataclass class TaskStep(MemoryStep): task: str </p>
-<h1><a class="anchor" id="autotoc_md3057"></a>
+<h1><a class="anchor" id="autotoc_md3081"></a>
 ... (potentially images)</h1>
 <p>def to_messages(self, **kwargs) -&gt; List[Dict[str, Any]]: </p>
-<h1><a class="anchor" id="autotoc_md3058"></a>
+<h1><a class="anchor" id="autotoc_md3082"></a>
 Format: {"role": "user", "content": [{"type": "text", "text": "New task: ..."}]}</h1>
-<h1><a class="anchor" id="autotoc_md3059"></a>
+<h1><a class="anchor" id="autotoc_md3083"></a>
 ... simplified ...</h1>
 <p>return [{"role": "user", "content": f"New task:\n{self.task}"}]</p>
 <p>@dataclass class ActionStep(MemoryStep): step_number: int </p>
-<h1><a class="anchor" id="autotoc_md3060"></a>
+<h1><a class="anchor" id="autotoc_md3084"></a>
 model_input_messages: List = None # What was sent to LLM</h1>
 <p>model_output: str | None = None # LLM's thought/action text tool_calls: List[ToolCall] | None = None # Parsed tool calls observations: str | None = None # Tool results or code output error: Any | None = None # Any error encountered </p>
-<h1><a class="anchor" id="autotoc_md3061"></a>
+<h1><a class="anchor" id="autotoc_md3085"></a>
 ... other fields like timing ...</h1>
 <p>def to_messages(self, **kwargs) -&gt; List[Dict[str, Any]]: </p>
-<h1><a class="anchor" id="autotoc_md3062"></a>
+<h1><a class="anchor" id="autotoc_md3086"></a>
 Formats the LLM output, tool calls, observations/errors</h1>
-<h1><a class="anchor" id="autotoc_md3063"></a>
+<h1><a class="anchor" id="autotoc_md3087"></a>
 into messages for the next LLM call.</h1>
 <p>messages = [] if self.model_output: messages.append({"role": "assistant", "content": self.model_output}) if self.tool_calls: </p>
-<h1><a class="anchor" id="autotoc_md3064"></a>
+<h1><a class="anchor" id="autotoc_md3088"></a>
 Simplified representation</h1>
 <p>messages.append({"role": "tool_call", "content": f"Calling: {self.tool_calls[0].name}(...)"}) if self.observations: messages.append({"role": "tool_response", "content": f"Observation:\n{self.observations}"}) if self.error: messages.append({"role": "tool_response", "content": f"Error:\n{self.error}"}) return messages</p>
-<h1><a class="anchor" id="autotoc_md3065"></a>
+<h1><a class="anchor" id="autotoc_md3089"></a>
 ... potentially other step types like SystemPromptStep, PlanningStep ...</h1>
 <p>```</p>
 <ul>
@@ -299,20 +299,20 @@ Simplified representation</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3066"></a>
+<h1><a class="anchor" id="autotoc_md3090"></a>
 &mdash; File: memory.py (Simplified AgentMemory) &mdash;</h1>
 <p>from typing import List, Union</p>
 <p>@dataclass class SystemPromptStep(MemoryStep): # Simplified system_prompt: str def to_messages(self, **kwargs): # Simplified return [{"role": "system", "content": self.system_prompt}]</p>
 <p>class AgentMemory: def <b>init</b>(self, system_prompt: str): </p>
-<h1><a class="anchor" id="autotoc_md3067"></a>
+<h1><a class="anchor" id="autotoc_md3091"></a>
 Initialize with the system prompt</h1>
 <p>self.system_prompt = SystemPromptStep(system_prompt=system_prompt) </p>
-<h1><a class="anchor" id="autotoc_md3068"></a>
+<h1><a class="anchor" id="autotoc_md3092"></a>
 The main logbook - a list of steps taken</h1>
 <p>self.steps: List[Union[TaskStep, ActionStep, PlanningStep]] = []</p>
 <p>def reset(self): """Clears the memory for a new run.""" self.steps = []</p>
 <p>def replay(self, logger, detailed: bool = False): """Utility to print the memory steps nicely.""" </p>
-<h1><a class="anchor" id="autotoc_md3069"></a>
+<h1><a class="anchor" id="autotoc_md3093"></a>
 ... implementation uses logger to print each step ...</h1>
 <p>pass ```</p>
 <ul>
@@ -320,63 +320,63 @@ The main logbook - a list of steps taken</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3070"></a>
+<h1><a class="anchor" id="autotoc_md3094"></a>
 &mdash; File: agents.py (Simplified MultiStepAgent interactions) &mdash;</h1>
 <p>from .memory import AgentMemory, TaskStep, ActionStep, ToolCall # Import memory components</p>
 <p>class MultiStepAgent: def <b>init</b>(self, ..., memory: Optional[AgentMemory] = None): </p>
-<h1><a class="anchor" id="autotoc_md3071"></a>
+<h1><a class="anchor" id="autotoc_md3095"></a>
 ... setup model, tools ...</h1>
 <p>self.system_prompt = self.initialize_system_prompt() # Define system prompt </p>
-<h1><a class="anchor" id="autotoc_md3072"></a>
+<h1><a class="anchor" id="autotoc_md3096"></a>
 Create the memory instance</h1>
 <p>self.memory = memory if memory is not None else AgentMemory(self.system_prompt) </p>
-<h1><a class="anchor" id="autotoc_md3073"></a>
+<h1><a class="anchor" id="autotoc_md3097"></a>
 ... setup logger, monitor ...</h1>
 <p>def run(self, task: str, ...): </p>
-<h1><a class="anchor" id="autotoc_md3074"></a>
+<h1><a class="anchor" id="autotoc_md3098"></a>
 ... setup ...</h1>
 <p>if reset: # Option to clear memory before a new run self.memory.reset()</p>
-<h1><a class="anchor" id="autotoc_md3075"></a>
+<h1><a class="anchor" id="autotoc_md3099"></a>
 Record the initial task in memory</h1>
 <p>self.memory.steps.append(TaskStep(task=self.task))</p>
-<h1><a class="anchor" id="autotoc_md3076"></a>
+<h1><a class="anchor" id="autotoc_md3100"></a>
 Start the internal execution loop (_run)</h1>
-<h1><a class="anchor" id="autotoc_md3077"></a>
+<h1><a class="anchor" id="autotoc_md3101"></a>
 ... calls _run ...</h1>
 <p>final_result = # ... get result from _run ... return final_result</p>
 <p>def _run(self, task: str, max_steps: int, ...) -&gt; Generator: </p>
-<h1><a class="anchor" id="autotoc_md3078"></a>
+<h1><a class="anchor" id="autotoc_md3102"></a>
 ... loop initialization ...</h1>
 <p>while final_answer is None and self.step_number &lt;= max_steps: </p>
-<h1><a class="anchor" id="autotoc_md3079"></a>
+<h1><a class="anchor" id="autotoc_md3103"></a>
 ... (handle planning steps if enabled) ...</h1>
-<h1><a class="anchor" id="autotoc_md3080"></a>
+<h1><a class="anchor" id="autotoc_md3104"></a>
 Create a placeholder for the current step's data</h1>
 <p>action_step = self._create_action_step(...)</p>
 <p>try: </p>
-<h1><a class="anchor" id="autotoc_md3081"></a>
+<h1><a class="anchor" id="autotoc_md3105"></a>
 === Execute one step (Think -&gt; Act -&gt; Observe) ===</h1>
-<h1><a class="anchor" id="autotoc_md3082"></a>
+<h1><a class="anchor" id="autotoc_md3106"></a>
 This method internally calls write_memory_to_messages,</h1>
-<h1><a class="anchor" id="autotoc_md3083"></a>
+<h1><a class="anchor" id="autotoc_md3107"></a>
 calls the model, executes the tool, and populates</h1>
-<h1><a class="anchor" id="autotoc_md3084"></a>
+<h1><a class="anchor" id="autotoc_md3108"></a>
 the 'action_step' object with results.</h1>
 <p>final_answer = self._execute_step(task, action_step)</p>
 <p>except AgentError as e: </p>
-<h1><a class="anchor" id="autotoc_md3085"></a>
+<h1><a class="anchor" id="autotoc_md3109"></a>
 Record errors in the memory step</h1>
 <p>action_step.error = e finally: </p>
-<h1><a class="anchor" id="autotoc_md3086"></a>
+<h1><a class="anchor" id="autotoc_md3110"></a>
 Finalize timing etc. for the step</h1>
 <p>self._finalize_step(action_step, ...) </p>
-<h1><a class="anchor" id="autotoc_md3087"></a>
+<h1><a class="anchor" id="autotoc_md3111"></a>
 === Store the completed step in memory ===</h1>
 <p>self.memory.steps.append(action_step) </p>
-<h1><a class="anchor" id="autotoc_md3088"></a>
+<h1><a class="anchor" id="autotoc_md3112"></a>
 ... yield step details ...</h1>
 <p>self.step_number += 1 </p>
-<h1><a class="anchor" id="autotoc_md3089"></a>
+<h1><a class="anchor" id="autotoc_md3113"></a>
 ... handle finish ...</h1>
 <p>yield FinalAnswerStep(final_answer)</p>
 <pre class="fragment">    def write_memory_to_messages(self, summary_mode: Optional[bool] = False) -&gt; List[Dict[str, str]]:
@@ -427,7 +427,7 @@ Finalize timing etc. for the step</h1>
 <li>Before calling the LLM, <code>write_memory_to_messages</code> iterates through <code>self.memory.steps</code>, calling <code>to_messages()</code> on each step to build the history.</li>
 <li>Each step (like <code>ActionStep</code>) stores details like the LLM's output (<code>model_output</code>), tool calls (<code>tool_calls</code>), and results (<code>observations</code> or <code>error</code>).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3090"></a>
+<h2><a class="anchor" id="autotoc_md3114"></a>
 Conclusion</h2>
 <p><code>AgentMemory</code> is the agent's essential logbook, providing the context needed to navigate complex, multi-step tasks. It diligently records the initial task, system instructions, and every action, observation, and error along the way.</p>
 <p>You've learned:</p>

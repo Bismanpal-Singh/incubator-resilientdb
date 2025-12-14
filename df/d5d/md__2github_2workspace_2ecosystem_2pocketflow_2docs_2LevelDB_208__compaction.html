@@ -121,16 +121,16 @@ $(function(){initNavTree('df/d5d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_compaction</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2300"></a>
-autotoc_md2300</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2324"></a>
+autotoc_md2324</h2>
 <p>layout: default title: "Compaction" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2301"></a>
+<h2><a class="anchor" id="autotoc_md2325"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md2302"></a>
+<h1><a class="anchor" id="autotoc_md2326"></a>
 Chapter 8: Compaction - Keeping the Library Tidy</h1>
 <p>In <a class="el" href="../../d8/dd9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_207__iterator.html">Chapter 7: Iterator</a>, we saw how LevelDB provides iterators to give us a unified, sorted view of our data, cleverly merging information from the in-memory <a class="el" href="../../d4/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_202__memtable.html">MemTable</a> and the various <a class="el" href="../../d2/dbb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_201__table______sstable______tablecache.html">SSTable</a> files on disk.</p>
 <p>This works great, but think about what happens over time. Every time a MemTable fills up, it gets flushed to a <em>new</em> SSTable file in Level-0. If you have lots of writes, you'll quickly accumulate many small files in Level-0. Also, when you update or delete a key, LevelDB doesn't modify old SSTables; it just writes a <em>new</em> entry (a new value or a deletion marker) in a newer MemTable or SSTable. This means older files contain outdated or deleted data that's just taking up space.</p>
-<h2><a class="anchor" id="autotoc_md2303"></a>
+<h2><a class="anchor" id="autotoc_md2327"></a>
 What's the Problem? A Messy, Inefficient Library</h2>
 <p>Imagine our library again. New notes and pamphlets (MemTable flushes) keep arriving and get dumped in a temporary pile (Level-0). Meanwhile, older books on the main shelves (higher levels) contain crossed-out paragraphs (deleted data) or outdated information (overwritten data).</p>
 <p>This leads to several problems:</p>
@@ -140,7 +140,7 @@ What's the Problem? A Messy, Inefficient Library</h2>
 <li><b>Growing Number of Files:</b> The temporary pile (Level-0) just keeps growing, making it harder and harder to manage.</li>
 </ol>
 <p>We need a process to periodically tidy up this library, organize the temporary pile into the main shelves, and remove the outdated information.</p>
-<h2><a class="anchor" id="autotoc_md2304"></a>
+<h2><a class="anchor" id="autotoc_md2328"></a>
 Compaction: The Background Tidy-Up Crew</h2>
 <p><b>Compaction</b> is LevelDB's background process that solves these problems. It's like the library staff who work quietly behind the scenes to keep the library organized and efficient.</p>
 <p>Here's what compaction does:</p>
@@ -159,7 +159,7 @@ Compaction: The Background Tidy-Up Crew</h2>
 </ol>
 <p><b>Analogy:</b> The library staff takes a batch of pamphlets from the temporary pile (Level-0) and finds the corresponding books on the main shelves (Level-1). They go through both, creating a new, clean edition of the book (new Level-1 SSTable) that incorporates the new information from the pamphlets, removes any crossed-out entries, and keeps only the latest version of each topic. Then, they discard the original pamphlets and the old version of the book.</p>
 <p>This process happens continuously in the background, keeping the database structure efficient.</p>
-<h2><a class="anchor" id="autotoc_md2305"></a>
+<h2><a class="anchor" id="autotoc_md2329"></a>
 Triggering Compaction: When to Tidy Up?</h2>
 <p>How does LevelDB decide when to run a compaction? The <a class="el" href="../../df/dc9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_204__dbimpl.html">DBImpl</a> checks if compaction is needed after writes or reads, or when background work finishes. It uses the <a class="el" href="../../d2/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_206__version______versionset.html">VersionSet</a> to determine this, primarily based on two conditions:</p>
 <ol type="1">
@@ -201,7 +201,7 @@ Triggering Compaction: When to Tidy Up?</h2>
 <div class="line">  <span class="comment">// Check score (size trigger) OR if a file needs compaction due to seeks</span></div>
 <div class="line">  <span class="keywordflow">return</span> (v-&gt;compaction_score_ &gt;= 1) || (v-&gt;file_to_compact_ != <span class="keyword">nullptr</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2306"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2330"></a>
 The Compaction Process: A Closer Look</h2>
 <p>Let's break down the steps involved when a background compaction runs (specifically a major compaction between levels N and N+1):</p>
 <p><b>1. Picking the Compaction (<code>VersionSet::PickCompaction</code>)</b></p>
@@ -403,7 +403,7 @@ The Compaction Process: A Closer Look</h2>
 <div class="line">    VS--&gt;&gt;DBImplBG: OK</div>
 <div class="line">    DBImplBG-&gt;&gt;DBImplBG: RemoveObsoleteFiles()</div>
 <div class="line">    DBImplBG-&gt;&gt;FS: Delete old input SSTables</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2307"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2331"></a>
 Conclusion</h2>
 <p>Compaction is the essential background process that keeps LevelDB performant and prevents space usage from growing indefinitely due to old data. It intelligently merges files between levels, filtering out deleted and overwritten entries while preserving a consistent view for readers.</p>
 <ul>

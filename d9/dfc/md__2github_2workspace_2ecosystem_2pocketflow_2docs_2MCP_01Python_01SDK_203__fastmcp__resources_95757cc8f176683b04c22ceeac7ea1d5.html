@@ -121,17 +121,17 @@ $(function(){initNavTree('d9/dfc/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_fastmcp_resources___resource____resourcemanager__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2343"></a>
-autotoc_md2343</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2367"></a>
+autotoc_md2367</h2>
 <p>layout: default title: "FastMCP Resources (Resource, ResourceManager)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2344"></a>
+<h2><a class="anchor" id="autotoc_md2368"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2345"></a>
+<h1><a class="anchor" id="autotoc_md2369"></a>
 Chapter 3: Sharing Data - FastMCP Resources (<code>Resource</code>, <code>ResourceManager</code>)</h1>
 <p>In <a class="el" href="../../d8/d5c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_202__fastmcp__server______fastmcp____.html">Chapter 2: Easier Server Building with <code>FastMCP</code></a>, we saw how <code>FastMCP</code> and the <code>@server.tool()</code> decorator make it easy to create servers that can <em>perform actions</em> for clients, like our <code>echo</code> tool.</p>
 <p>But what if your server just needs to share some <em>data</em>? Maybe it has a configuration file the client needs, a list of available items, or some text generated on the fly. You <em>could</em> make a tool for each piece of data, but that feels clunky. Isn't there a way for clients to just browse and read data sources directly?</p>
 <p>Yes, there is! Welcome to <b>FastMCP Resources</b>.</p>
-<h2><a class="anchor" id="autotoc_md2346"></a>
+<h2><a class="anchor" id="autotoc_md2370"></a>
 The Digital Library: Resources and the Resource Manager</h2>
 <p>Imagine your <code>FastMCP</code> server is like a <b>digital library</b>. Inside this library, you have various pieces of information:</p><ul>
 <li>Simple text notes (like a welcome message).</li>
@@ -147,7 +147,7 @@ The Digital Library: Resources and the Resource Manager</h2>
 <li><b>URI</b>: The unique address used to find and access a <code>Resource</code>. (The call number)</li>
 </ul>
 <p>Clients can ask the <code>ResourceManager</code> (via <code>FastMCP</code>) to list all available resources (<code>listResources</code>) and then request the content of a specific resource using its URI (<code>readResource</code>).</p>
-<h2><a class="anchor" id="autotoc_md2347"></a>
+<h2><a class="anchor" id="autotoc_md2371"></a>
 Adding Books to the Library: Using <code>@server.resource()</code></h2>
 <p>Just like <code>@server.tool()</code> made it easy to add actions, <code>FastMCP</code> provides a simple decorator, <code>@server.resource()</code>, to add data resources to your server's library (its <code>ResourceManager</code>).</p>
 <p>Let's add a simple, static welcome message to our server.</p>
@@ -222,7 +222,7 @@ Adding Books to the Library: Using <code>@server.resource()</code></h2>
 <li>Call <code>readResource</code> with the URI <code>data://greeting</code>.</li>
 <li><code>FastMCP</code> would ask the <code>ResourceManager</code>, find the registered function (<code>welcome_message</code>), run it, get the string <code>"Welcome..."</code>, and send it back to the client.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2348"></a>
+<h2><a class="anchor" id="autotoc_md2372"></a>
 Dynamic Data: Resources Generated on the Fly</h2>
 <p>Resources don't have to be static text. The function you decorate can do calculations, read files, or anything else to generate the data <em>when it's requested</em>. This is great for information that changes.</p>
 <p>Let's add a resource that tells the current time.</p>
@@ -253,7 +253,7 @@ Dynamic Data: Resources Generated on the Fly</h2>
 <div class="line">    server.run()</div>
 <div class="line">    print(f<span class="stringliteral">&quot;{server.name} finished.&quot;</span>)</div>
 </div><!-- fragment --><p>Now, every time a client reads <code>time://current</code>, the <code>current_time</code> function will execute, get the <em>latest</em> time, format it, and return it.</p>
-<h2><a class="anchor" id="autotoc_md2349"></a>
+<h2><a class="anchor" id="autotoc_md2373"></a>
 Parameterized Data: Resource Templates</h2>
 <p>What if you have data related to specific items, like weather information for different cities? You wouldn't want to create a separate resource function for every city (<code>weather_london</code>, <code>weather_paris</code>, etc.).</p>
 <p>Resource URIs can contain parameters, indicated by curly braces <code>{}</code>. When you define a resource with a parameterized URI and a function that accepts arguments matching those parameters, <code>FastMCP</code> creates a <b>Resource Template</b>.</p>
@@ -305,7 +305,7 @@ Parameterized Data: Resource Templates</h2>
 </li>
 </ol>
 <p>This template approach is very powerful for providing structured data without writing repetitive code. Clients would use <code>listResourceTemplates</code> to discover templates like this.</p>
-<h2><a class="anchor" id="autotoc_md2350"></a>
+<h2><a class="anchor" id="autotoc_md2374"></a>
 How Resources Work Under the Hood</h2>
 <p>Using <code>@server.resource()</code> feels simple, but what's happening inside <code>FastMCP</code>?</p>
 <ol type="1">
@@ -357,7 +357,7 @@ How Resources Work Under the Hood</h2>
 <div class="line">    FuncResource--&gt;&gt;-FastMCP_Server: Return &quot;Welcome...&quot;</div>
 <div class="line">    FastMCP_Server-&gt;&gt;-Client: Send MCP Response: content=&quot;Welcome...&quot;</div>
 </div><!-- fragment --><p>While <code>@server.resource()</code> is the easiest way, the SDK also provides classes like <code>TextResource</code>, <code>BinaryResource</code>, <code>FileResource</code> (see <code>server/fastmcp/resources/types.py</code>) that you could potentially instantiate and add directly using <code>server.add_resource(MyTextResource(...))</code>, but the decorator handles wrapping your functions nicely.</p>
-<h2><a class="anchor" id="autotoc_md2351"></a>
+<h2><a class="anchor" id="autotoc_md2375"></a>
 Conclusion</h2>
 <p>You've learned about FastMCP Resources – the way to share data from your server like items in a digital library.</p>
 <ul>

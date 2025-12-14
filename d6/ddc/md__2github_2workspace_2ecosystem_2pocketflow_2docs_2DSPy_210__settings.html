@@ -121,12 +121,12 @@ $(function(){initNavTree('d6/ddc/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">10_settings</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1684"></a>
-autotoc_md1684</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1708"></a>
+autotoc_md1708</h2>
 <p>layout: default title: "Settings" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1685"></a>
+<h2><a class="anchor" id="autotoc_md1709"></a>
 nav_order: 10</h2>
-<h1><a class="anchor" id="autotoc_md1686"></a>
+<h1><a class="anchor" id="autotoc_md1710"></a>
 Chapter 10: Settings - Your Program's Control Panel</h1>
 <p>Welcome to the final chapter of our introductory DSPy tutorial! In <a class="el" href="../../d3/dc3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_209__adapter.html">Chapter 9: Adapter</a>, we saw how Adapters act as translators, allowing our DSPy programs to communicate seamlessly with different types of Language Models (LMs).</p>
 <p>Throughout the previous chapters, we've seen snippets like <code>dspy.settings.configure(lm=...)</code> and <code>dspy.settings.configure(rm=...)</code>. We mentioned that modules like <code>dspy.Predict</code> or <code>dspy.Retrieve</code> automatically find and use these configured components. But how does this central configuration work? How do we manage these important defaults for our entire project?</p>
@@ -144,7 +144,7 @@ Chapter 10: Settings - Your Program's Control Panel</h1>
 <li>How to temporarily override settings for specific parts of your code using <code>dspy.context</code>.</li>
 </ul>
 <p>Let's learn how to manage our program's defaults!</p>
-<h2><a class="anchor" id="autotoc_md1687"></a>
+<h2><a class="anchor" id="autotoc_md1711"></a>
 Why Use <code>dspy.settings</code>?</h2>
 <p>Imagine building a complex DSPy <a class="el" href="../../d8/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_201__module______program.html">Program</a> with many sub-modules that need to call an LM or an RM. Without a central settings object, you might have to pass the LM and RM instances explicitly to every single module during initialization or when calling them. This would be tedious and make your code harder to manage.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- WITHOUT dspy.settings (Conceptual - DON&#39;T DO THIS) ---</span></div>
@@ -174,7 +174,7 @@ Why Use <code>dspy.settings</code>?</h2>
 <div class="line">        <span class="comment"># ... use sub-modules ...</span></div>
 </div><!-- fragment --><p> This gets complicated quickly!</p>
 <p><code>dspy.settings</code> solves this by providing a single, global place to store these configurations. You configure it once, and all DSPy modules can access the defaults they need automatically.</p>
-<h2><a class="anchor" id="autotoc_md1688"></a>
+<h2><a class="anchor" id="autotoc_md1712"></a>
 Configuring Global Defaults</h2>
 <p>The primary way to set defaults is using the <code>dspy.settings.configure</code> method. You typically do this once near the beginning of your script or application.</p>
 <p>Let's set up a default LM and RM:</p>
@@ -213,7 +213,7 @@ Configuring Global Defaults</h2>
 <div class="fragment"><div class="line">Default LM: LM(model=&#39;openai/gpt-3.5-turbo-instruct&#39;, temperature=0.0, max_tokens=100, ...) # Or DummyLM</div>
 <div class="line">Default RM: Retrieve(k=3) # Or DummyRM</div>
 </div><!-- fragment --><p>Now, any <code>dspy.Predict</code>, <code>dspy.ChainOfThought</code>, or <code>dspy.Retrieve</code> module created <em>after</em> this configuration will automatically use <code>turbo</code> as the LM and <code>my_rm</code> as the RM, unless told otherwise explicitly.</p>
-<h2><a class="anchor" id="autotoc_md1689"></a>
+<h2><a class="anchor" id="autotoc_md1713"></a>
 How Modules Use the Settings</h2>
 <p>Modules like <code>dspy.Predict</code> and <code>dspy.Retrieve</code> are designed to look for their required components (LM or RM) in <code>dspy.settings</code> if they aren't provided directly.</p>
 <p>Consider <code>dspy.Predict</code>:</p>
@@ -254,7 +254,7 @@ How Modules Use the Settings</h2>
 </div><!-- fragment --><p><b>Output (using DummyRM):</b></p>
 <div class="fragment"><div class="line">[&quot;Dummy passage 1 for &#39;DSPy benefits&#39;&quot;, &quot;Dummy passage 2 for &#39;DSPy benefits&#39;&quot;, &quot;Dummy passage 3 for &#39;DSPy benefits&#39;&quot;]</div>
 </div><!-- fragment --><p>This automatic lookup makes your program code much cleaner, as you don't need to thread the <code>lm</code> and <code>rm</code> objects through every part of your application.</p>
-<h2><a class="anchor" id="autotoc_md1690"></a>
+<h2><a class="anchor" id="autotoc_md1714"></a>
 Temporary Overrides with <code>dspy.context</code></h2>
 <p>Sometimes, you might want to use a <em>different</em> LM or RM for just a specific part of your code, without changing the global default. For example, maybe you want to use a more powerful (and expensive) LM like GPT-4 for a critical reasoning step, while using a cheaper LM like GPT-3.5 for the rest of the program.</p>
 <p>You can achieve this using the <code>dspy.settings.context</code> context manager. Changes made inside a <code>with dspy.settings.context(...)</code> block are <b>thread-local</b> and only last until the block exits.</p>
@@ -298,7 +298,7 @@ Temporary Overrides with <code>dspy.context</code></h2>
 <div class="line">Outside context again (RM): Retrieve(k=3) # Or DummyRM</div>
 </div><!-- fragment --><p>Inside the <code>with</code> block, <code>dspy.settings.lm</code> temporarily pointed to <code>gpt4_dummy</code>, and <code>dspy.settings.rm</code> was temporarily <code>None</code>. The <code>predictor_in_context</code> used the temporary LM. Once the block ended, the settings automatically reverted to the global defaults.</p>
 <p>This is crucial for writing clean code where different parts might need different configurations, and also essential for how DSPy's optimizers (<a class="el" href="../../dc/d0a/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_208__teleprompter______optimizer.html">Chapter 8: Teleprompter / Optimizer</a>) work internally to manage different model configurations during optimization.</p>
-<h2><a class="anchor" id="autotoc_md1691"></a>
+<h2><a class="anchor" id="autotoc_md1715"></a>
 How It Works Under the Hood</h2>
 <p><code>dspy.settings</code> uses a combination of global variables and thread-local storage to manage configurations.</p>
 <ol type="1">
@@ -406,7 +406,7 @@ How It Works Under the Hood</h2>
 <div class="line"><span class="comment"># The global instance you use</span></div>
 <div class="line">settings = Settings()</div>
 </div><!-- fragment --><p>This structure elegantly handles both global defaults and safe, temporary, thread-specific overrides.</p>
-<h2><a class="anchor" id="autotoc_md1692"></a>
+<h2><a class="anchor" id="autotoc_md1716"></a>
 Conclusion</h2>
 <p>Congratulations! You've reached the end of this introductory DSPy tutorial and learned about <code>dspy.settings</code>, the central control panel.</p>
 <ul>

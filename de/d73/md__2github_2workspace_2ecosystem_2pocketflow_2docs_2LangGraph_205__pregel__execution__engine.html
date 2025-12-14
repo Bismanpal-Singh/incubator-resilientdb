@@ -121,17 +121,17 @@ $(function(){initNavTree('de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_pregel_execution_engine</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2160"></a>
-autotoc_md2160</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2184"></a>
+autotoc_md2184</h2>
 <p>layout: default title: "Pregel Execution Engine" parent: "LangGraph" </p>
-<h2><a class="anchor" id="autotoc_md2161"></a>
+<h2><a class="anchor" id="autotoc_md2185"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2162"></a>
+<h1><a class="anchor" id="autotoc_md2186"></a>
 Chapter 5: Pregel Execution Engine - The Engine Room</h1>
 <p>In the previous chapters, we learned how to build the blueprint of our application using <a class="el" href="../../df/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_201__graph______stategraph.html"><code>StateGraph</code></a>, define the workers with <a class="el" href="../../dc/d09/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_202__nodes______pregelnode____.html"><code>Nodes</code></a>, manage the shared state with <a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html"><code>Channels</code></a>, and direct the traffic using <a class="el" href="../../d0/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_204__control__flow__primitives___bda35fdc89636f8ab61738c1940513a5.html">Control Flow Primitives</a>.</p>
 <p>But what actually takes all these pieces – the blueprint, the workers, the communication rules, the traffic signals – and makes them <em>run</em>? What ensures Node A runs, its output updates the state correctly via channels, and then Node B (or maybe Node C based on a Branch) runs with that updated state?</p>
 <p>Meet the <b>Pregel Execution Engine</b>. This is the heart of LangGraph, the engine room that drives your graph forward.</p>
-<h2><a class="anchor" id="autotoc_md2163"></a>
+<h2><a class="anchor" id="autotoc_md2187"></a>
 What Problem Does Pregel Solve?</h2>
 <p>Imagine you've designed a complex assembly line (your <code>StateGraph</code>). You have different stations (Nodes) where specific tasks are done, conveyor belts (Channels) moving parts between stations, and switches (Branches) directing parts down different paths.</p>
 <p>How do you ensure the line runs smoothly? You need a manager! Someone who:</p>
@@ -146,7 +146,7 @@ What Problem Does Pregel Solve?</h2>
 <li>Keeps track of progress and can save the state (Checkpointing).</li>
 </ol>
 <p>The <b>Pregel Execution Engine</b> is this assembly line manager for your LangGraph application. It takes your compiled graph definition and orchestrates its execution step-by-step.</p>
-<h2><a class="anchor" id="autotoc_md2164"></a>
+<h2><a class="anchor" id="autotoc_md2188"></a>
 Key Concepts: How Pregel Manages the Flow</h2>
 <p>Pregel is inspired by a system developed at Google for processing large graphs. LangGraph adapts these ideas for executing AI agents and multi-step workflows. Here's how it works conceptually:</p>
 <ol type="1">
@@ -160,7 +160,7 @@ Key Concepts: How Pregel Manages the Flow</h2>
 <li><b>Checkpointing:</b> At configurable points (often after each step), Pregel interacts with the <a class="el" href="../../d8/d4c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_206__checkpointer______basecheckpointsaver____.html">Checkpointer (<code>BaseCheckpointSaver</code>)</a> to save the current state of all channels. This allows the graph to be paused and resumed later.</li>
 </ol>
 <p>Essentially, Pregel is the <b>orchestrator</b> that manages the entire lifecycle of a graph's execution.</p>
-<h2><a class="anchor" id="autotoc_md2165"></a>
+<h2><a class="anchor" id="autotoc_md2189"></a>
 How Pregel Executes Our Simple Graph</h2>
 <p>Let's revisit the simple <code>adder -&gt; multiplier</code> graph from <a class="el" href="../../df/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_201__graph______stategraph.html">Chapter 1: Graph / StateGraph</a> and see how Pregel runs it when you call <code>app.invoke({"value": 5})</code>.</p>
 <p><b>Graph:</b></p>
@@ -242,7 +242,7 @@ How Pregel Executes Our Simple Graph</h2>
 <div class="line">    PregelEngine-&gt;&gt;App: Return final state {&#39;value&#39;: 12}</div>
 <div class="line">    App-&gt;&gt;User: Return {&#39;value&#39;: 12}</div>
 </div><!-- fragment --><p>Pregel acts as the hidden conductor ensuring each part plays at the right time with the right information.</p>
-<h2><a class="anchor" id="autotoc_md2166"></a>
+<h2><a class="anchor" id="autotoc_md2190"></a>
 Internal Implementation: A Glimpse Under the Hood</h2>
 <p>You don't typically interact with the Pregel engine directly; it's encapsulated within the compiled graph object you get from <code>graph.compile()</code>. However, understanding its core components helps clarify how LangGraph works. The main logic resides in the <code>langgraph/pregel/</code> directory.</p>
 <ol type="1">
@@ -274,50 +274,50 @@ Internal Implementation: A Glimpse Under the Hood</h2>
 <ul>
 <li><b>Task Preparation (Conceptual):</b> ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2167"></a>
+<h1><a class="anchor" id="autotoc_md2191"></a>
 pregel/algo.py (Simplified Concept)</h1>
 <p>def prepare_next_tasks(checkpoint, processes, channels, config, step, ...): tasks = {} </p>
-<h1><a class="anchor" id="autotoc_md2168"></a>
+<h1><a class="anchor" id="autotoc_md2192"></a>
 Check PUSH tasks (from Send)</h1>
 <p>for packet in checkpoint["pending_sends"]: </p>
-<h1><a class="anchor" id="autotoc_md2169"></a>
+<h1><a class="anchor" id="autotoc_md2193"></a>
 ... create task if node exists ...</h1>
 <p>task = create_task_for_send(packet, ...) tasks[task.id] = task</p>
-<h1><a class="anchor" id="autotoc_md2170"></a>
+<h1><a class="anchor" id="autotoc_md2194"></a>
 Check PULL tasks (from edges/triggers)</h1>
 <p>for name, proc in processes.items(): </p>
-<h1><a class="anchor" id="autotoc_md2171"></a>
+<h1><a class="anchor" id="autotoc_md2195"></a>
 Check if any trigger channel for 'proc' was updated since last seen</h1>
 <p>if _triggers(channels, checkpoint["channel_versions"], proc): </p>
-<h1><a class="anchor" id="autotoc_md2172"></a>
+<h1><a class="anchor" id="autotoc_md2196"></a>
 ... read input for the node ...</h1>
 <p>task = create_task_for_pull(name, proc, ...) tasks[task.id] = task return tasks ``<code> This function checks both explicit</code>Send` commands and regular node triggers based on updated channels to build the list of tasks for the next step.</p>
 <ul>
 <li><b>Applying Writes (Conceptual):</b> ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2173"></a>
+<h1><a class="anchor" id="autotoc_md2197"></a>
 pregel/algo.py (Simplified Concept)</h1>
 <p>def apply_writes(checkpoint, channels, tasks: list[PregelExecutableTask], get_next_version): </p>
-<h1><a class="anchor" id="autotoc_md2174"></a>
+<h1><a class="anchor" id="autotoc_md2198"></a>
 ... (sort tasks for determinism, update seen versions) ...</h1>
 <p>pending_writes_by_channel = defaultdict(list) for task in tasks: for chan, val in task.writes: # task.writes is the dict returned by the node if chan in channels: pending_writes_by_channel[chan].append(val) </p>
-<h1><a class="anchor" id="autotoc_md2175"></a>
+<h1><a class="anchor" id="autotoc_md2199"></a>
 ... (handle TASKS, PUSH, managed values etc.) ...</h1>
 <p>updated_channels = <a class="el" href="../../d7/da6/pybind__kv__service_8cpp.html#a26ae8807a2b3217bb2339bd18aaaa4e6">set()</a> </p>
-<h1><a class="anchor" id="autotoc_md2176"></a>
+<h1><a class="anchor" id="autotoc_md2200"></a>
 Apply writes to channels</h1>
 <p>for chan_name, values_to_update in pending_writes_by_channel.items(): channel_obj = channels[chan_name] if channel_obj.update(values_to_update): # Channel applies its logic here! </p>
-<h1><a class="anchor" id="autotoc_md2177"></a>
+<h1><a class="anchor" id="autotoc_md2201"></a>
 If updated, bump the version in the checkpoint</h1>
 <p>checkpoint["channel_versions"][chan_name] = get_next_version(...) updated_channels.add(chan_name)</p>
-<h1><a class="anchor" id="autotoc_md2178"></a>
+<h1><a class="anchor" id="autotoc_md2202"></a>
 ... (handle channels that weren't written to but need bumping) ...</h1>
 <p>return updated_channels ``<code> This function takes the results from all nodes in a step and uses the</code>channel.update()` method to modify the state according to each channel's rules.</p>
 <ul>
-<li><b>The Main Loop (Conceptual):</b> <code>python @section autotoc_md2179 pregel/loop.py (Simplified Concept - SyncPregelLoop/AsyncPregelLoop) class PregelLoop: def run(self): # Simplified invoke/stream logic with self: # Enters context (loads checkpoint, sets up channels) while self.tick(): # tick executes one step @section autotoc_md2180 Start tasks for the current step using PregelRunner runner = PregelRunner(...) for _ in runner.tick(self.tasks): @section autotoc_md2181 Yield control back, allowing writes/outputs to be streamed pass # (actual stream logic happens via callbacks) return self.output # Return final result </code> The loop repeatedly calls <code>tick()</code>. Inside <code>tick()</code>, it prepares tasks, runs them using <code>PregelRunner</code>, applies the resulting writes, handles checkpoints/interrupts, and determines if another step is needed.</li>
+<li><b>The Main Loop (Conceptual):</b> <code>python @section autotoc_md2203 pregel/loop.py (Simplified Concept - SyncPregelLoop/AsyncPregelLoop) class PregelLoop: def run(self): # Simplified invoke/stream logic with self: # Enters context (loads checkpoint, sets up channels) while self.tick(): # tick executes one step @section autotoc_md2204 Start tasks for the current step using PregelRunner runner = PregelRunner(...) for _ in runner.tick(self.tasks): @section autotoc_md2205 Yield control back, allowing writes/outputs to be streamed pass # (actual stream logic happens via callbacks) return self.output # Return final result </code> The loop repeatedly calls <code>tick()</code>. Inside <code>tick()</code>, it prepares tasks, runs them using <code>PregelRunner</code>, applies the resulting writes, handles checkpoints/interrupts, and determines if another step is needed.</li>
 </ul>
 <p>You don't need to know the deep implementation details, but understanding this step-by-step process managed by Pregel helps visualize how your graph comes alive.</p>
-<h2><a class="anchor" id="autotoc_md2182"></a>
+<h2><a class="anchor" id="autotoc_md2206"></a>
 Conclusion</h2>
 <p>The <b>Pregel Execution Engine</b> is the powerful, yet hidden, coordinator that runs your LangGraph graphs.</p>
 <ul>

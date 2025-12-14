@@ -14,5 +14,6 @@ var searchData=
   ['async_5facceptor_5ftest_2ecpp_11',['async_acceptor_test.cpp',['../db/dc1/async__acceptor__test_8cpp.html',1,'']]],
   ['async_5freplica_5fclient_2ecpp_12',['async_replica_client.cpp',['../d7/d71/async__replica__client_8cpp.html',1,'']]],
   ['async_5freplica_5fclient_2eh_13',['async_replica_client.h',['../d6/ddf/async__replica__client_8h.html',1,'']]],
-  ['async_5freplica_5fclient_5ftest_2ecpp_14',['async_replica_client_test.cpp',['../d1/d14/async__replica__client__test_8cpp.html',1,'']]]
+  ['async_5freplica_5fclient_5ftest_2ecpp_14',['async_replica_client_test.cpp',['../d1/d14/async__replica__client__test_8cpp.html',1,'']]],
+  ['automated_5fworkflow_2emd_15',['AUTOMATED_WORKFLOW.md',['../d8/d4c/AUTOMATED__WORKFLOW_8md.html',1,'']]]
 ];

@@ -121,21 +121,21 @@ $(function(){initNavTree('d2/dbb/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_table___sstable___tablecache</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2225"></a>
-autotoc_md2225</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2249"></a>
+autotoc_md2249</h2>
 <p>layout: default title: "Table, SSTable &amp; TableCache" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2226"></a>
+<h2><a class="anchor" id="autotoc_md2250"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2227"></a>
+<h1><a class="anchor" id="autotoc_md2251"></a>
 Chapter 1: Table / SSTable &amp; TableCache</h1>
 <p>Welcome to your LevelDB journey! This is the first chapter where we'll start exploring the fundamental building blocks of LevelDB.</p>
 <p>Imagine you're building a system to store a massive amount of data, like user profiles or product information. You need a way to save this data permanently (so it doesn't disappear when the computer turns off) and retrieve it quickly. How does LevelDB handle this?</p>
 <p>The core idea we'll explore in this chapter is how LevelDB stores the bulk of its data on disk in special files and how it accesses them efficiently.</p>
-<h2><a class="anchor" id="autotoc_md2228"></a>
+<h2><a class="anchor" id="autotoc_md2252"></a>
 What's the Problem? Storing Lots of Data Permanently</h2>
 <p>Databases need to store key-value pairs (like <code>user_id</code> -&gt; <code>user_data</code>) persistently. This means writing the data to disk. However, disks are much slower than computer memory (RAM). If we just wrote every tiny change directly to a file, it would be very slow. Also, how do we organize the data on disk so we can find a specific key quickly without reading <em>everything</em>?</p>
 <p>LevelDB's solution involves files called <b>SSTables</b> (Sorted String Tables), often just called <b>Tables</b> in the code.</p>
-<h2><a class="anchor" id="autotoc_md2229"></a>
+<h2><a class="anchor" id="autotoc_md2253"></a>
 SSTable: The Sorted, Immutable Book on the Shelf</h2>
 <p>Think of an SSTable as a <b>permanently bound book</b> in a library.</p>
 <ol type="1">
@@ -155,7 +155,7 @@ SSTable: The Sorted, Immutable Book on the Shelf</h2>
 <div class="line">  <span class="keywordflow">return</span> MakeFileName(dbname, number, <span class="stringliteral">&quot;ldb&quot;</span>); <span class="comment">// or &quot;sst&quot;</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This simple function takes the database name (e.g., <code>/path/to/my/db</code>) and a unique number and creates the actual filename used on disk. The <code>.ldb</code> or <code>.sst</code> extension helps identify it as a LevelDB table file.</p>
-<h2><a class="anchor" id="autotoc_md2230"></a>
+<h2><a class="anchor" id="autotoc_md2254"></a>
 Creating SSTables: <code>BuildTable</code></h2>
 <p>How do these sorted, immutable files get created? This happens during processes like "flushing" data from memory or during "compaction" (which we'll cover in later chapters: <a class="el" href="../../d4/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_202__memtable.html">MemTable</a> and <a class="el" href="../../df/d5d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_208__compaction.html">Compaction</a>).</p>
 <p>The function responsible for writing a new SSTable file is <code>BuildTable</code>. Think of <code>BuildTable</code> as the <b>printing press and binding machine</b> for our book analogy. It takes data (often from memory, represented by an <code>Iterator</code>) and writes it out to a new, sorted SSTable file on disk.</p>
@@ -216,7 +216,7 @@ Creating SSTables: <code>BuildTable</code></h2>
 <li><b>Finishing Up:</b> It calls <code>builder-&gt;Finish()</code> to write out the final pieces of the SSTable (like the index). Then it <code>Sync</code>s the file to ensure the data is safely on disk and <code>Close</code>s it.</li>
 <li><b>Output:</b> If successful, a new <code>.ldb</code> file exists on disk containing the sorted key-value pairs, and the <code>meta</code> object is filled with details about this file.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2231"></a>
+<h2><a class="anchor" id="autotoc_md2255"></a>
 Accessing SSTables Efficiently: <code>TableCache</code></h2>
 <p>Okay, so we have these SSTable files on disk. But reading from disk is slow. If we need to read from the same SSTable file multiple times (which is common), opening and closing it repeatedly, or re-reading its internal index structure, would be inefficient.</p>
 <p>This is where the <code>TableCache</code> comes in. Think of the <code>TableCache</code> as a <b>smart librarian</b>.</p>
@@ -334,7 +334,7 @@ Accessing SSTables Efficiently: <code>TableCache</code></h2>
 <div class="line">        TableObject--&gt;&gt;TableCache: Return value / not found</div>
 <div class="line">        TableCache--&gt;&gt;Client: Return value / not found</div>
 <div class="line">    end</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2232"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2256"></a>
 Conclusion</h2>
 <p>In this chapter, we learned about two fundamental concepts in LevelDB:</p>
 <ol type="1">

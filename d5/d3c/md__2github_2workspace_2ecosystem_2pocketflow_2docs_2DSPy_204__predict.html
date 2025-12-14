@@ -121,12 +121,12 @@ $(function(){initNavTree('d5/d3c/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_predict</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1620"></a>
-autotoc_md1620</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1644"></a>
+autotoc_md1644</h2>
 <p>layout: default title: "Predict" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1621"></a>
+<h2><a class="anchor" id="autotoc_md1645"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1622"></a>
+<h1><a class="anchor" id="autotoc_md1646"></a>
 Chapter 4: Predict - The Basic LM Caller</h1>
 <p>In <a class="el" href="../../dc/db9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_203__example.html">Chapter 3: Example</a>, we learned how to create <code>dspy.Example</code> objects to represent our data points – like flashcards holding an input and its corresponding desired output. We also saw in <a class="el" href="../../d4/dfe/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_202__signature.html">Chapter 2: Signature</a> how to define the <em>task</em> itself using <code>dspy.Signature</code>.</p>
 <p>Now, we have the recipe (<code>Signature</code>) and some sample dishes (<code>Example</code>s). How do we actually get the chef (our Language Model or LM) to cook? How do we combine the instructions from the <code>Signature</code> and maybe some <code>Example</code>s to prompt the LM and get a result back?</p>
@@ -145,7 +145,7 @@ Chapter 4: Predict - The Basic LM Caller</h1>
 <li>How to get the generated output.</li>
 </ul>
 <p>Let's make our first LM call!</p>
-<h2><a class="anchor" id="autotoc_md1623"></a>
+<h2><a class="anchor" id="autotoc_md1647"></a>
 What is <code>dspy.Predict</code>?</h2>
 <p><code>dspy.Predict</code> is a DSPy <a class="el" href="../../d8/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_201__module______program.html">Module</a>. Its job is simple but essential:</p>
 <ol type="1">
@@ -157,7 +157,7 @@ What is <code>dspy.Predict</code>?</h2>
 <li><b>Returns a <code>Prediction</code>:</b> It gives you back a structured object (a <code>dspy.Prediction</code>) containing the extracted output fields.</li>
 </ol>
 <p>It's the core mechanism for executing a single, defined prediction task using an LM.</p>
-<h2><a class="anchor" id="autotoc_md1624"></a>
+<h2><a class="anchor" id="autotoc_md1648"></a>
 Using <code>dspy.Predict</code></h2>
 <p>Let's use our <code>TranslateToFrench</code> signature from Chapter 2 to see <code>dspy.Predict</code> in action.</p>
 <p><b>1. Define the Signature (Recap):</b></p>
@@ -200,7 +200,7 @@ Using <code>dspy.Predict</code></h2>
 <div class="fragment"><div class="line">English: Hello, how are you?</div>
 <div class="line">French: Bonjour, comment ça va?</div>
 </div><!-- fragment --><p>It worked! <code>dspy.Predict</code> successfully used the LM to perform the translation task defined by our signature.</p>
-<h2><a class="anchor" id="autotoc_md1625"></a>
+<h2><a class="anchor" id="autotoc_md1649"></a>
 Giving Examples (Few-Shot Learning)</h2>
 <p>Sometimes, just instructions aren't enough for the LM to understand the <em>exact format</em> or style you want. You can provide a few examples (<code>dspy.Example</code> objects from <a class="el" href="../../dc/db9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_203__example.html">Chapter 3: Example</a>) to guide it better. This is called "few-shot learning".</p>
 <p>You pass these examples using the <code>demos</code> argument when calling the <code>Predict</code> module.</p>
@@ -231,7 +231,7 @@ Giving Examples (Few-Shot Learning)</h2>
 <p><b>Expected Output (likely similar, but potentially more consistent):</b></p>
 <div class="fragment"><div class="line">English: See you later.</div>
 <div class="line">French (with demos): À plus tard.</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1626"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1650"></a>
 How It Works Under the Hood</h2>
 <p>What actually happens when you call <code>translator(english_sentence=...)</code>?</p>
 <ol type="1">
@@ -314,7 +314,7 @@ How It Works Under the Hood</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># (Helper functions format_prompt and parse_output would exist elsewhere)</span></div>
 </div><!-- fragment --><p>This simplified code shows the key steps: initialize with a signature, and in the <code>forward</code> method, use the signature, demos, and inputs to format a prompt, call the LM, parse the output, and return a <code>Prediction</code>. The <code>dspy.Prediction</code> object itself (defined in <code>dspy/primitives/prediction.py</code>) is essentially a specialized container holding the results corresponding to the signature's output fields.</p>
-<h2><a class="anchor" id="autotoc_md1627"></a>
+<h2><a class="anchor" id="autotoc_md1651"></a>
 Conclusion</h2>
 <p>You've now learned about <code>dspy.Predict</code>, the fundamental building block in DSPy for making a single call to a Language Model!</p>
 <ul>

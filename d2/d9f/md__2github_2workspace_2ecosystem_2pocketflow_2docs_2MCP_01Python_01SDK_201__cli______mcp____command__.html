@@ -121,22 +121,22 @@ $(function(){initNavTree('d2/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_cli___mcp__command_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2322"></a>
-autotoc_md2322</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2346"></a>
+autotoc_md2346</h2>
 <p>layout: default title: "CLI (mcp command)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2323"></a>
+<h2><a class="anchor" id="autotoc_md2347"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2324"></a>
+<h1><a class="anchor" id="autotoc_md2348"></a>
 Chapter 1: Your Control Panel - The <code>mcp</code> Command-Line Interface</h1>
 <p>Welcome to the MCP Python SDK! This is your starting point for building powerful, interactive AI tools.</p>
 <p>Imagine you've just built an amazing new tool using the SDK – maybe a helpful assistant that can answer questions about your documents. How do you actually <em>run</em> this tool? How do you test it? How do you connect it to applications like Claude Desktop?</p>
 <p>This is where the <code>mcp</code> command-line interface (CLI) comes in. Think of it as your <b>developer control panel</b> or <b>toolkit</b> for managing your MCP creations right from your terminal (that black window where you type commands). It helps you run, test, and integrate your MCP servers.</p>
 <p>In this chapter, we'll explore the basic commands you'll use most often. Our main goal is to learn how to take a simple server written in a Python file and get it running.</p>
-<h2><a class="anchor" id="autotoc_md2325"></a>
+<h2><a class="anchor" id="autotoc_md2349"></a>
 What is the <code>mcp</code> Command?</h2>
 <p>The <code>mcp</code> command is a tool you run in your terminal. After installing the <code>MCP Python SDK</code> (specifically with the <code>cli</code> extras, like <code>pip install mcp[cli]</code>), you gain access to this command. It provides several sub-commands to help you manage your MCP development workflow.</p>
 <p>Let's look at the most important ones.</p>
-<h3><a class="anchor" id="autotoc_md2326"></a>
+<h3><a class="anchor" id="autotoc_md2350"></a>
 Checking Your Setup: <code>mcp version</code></h3>
 <p>First things first, let's make sure everything is installed correctly. You can check the installed version of the MCP SDK using this command:</p>
 <div class="fragment"><div class="line">mcp version</div>
@@ -145,7 +145,7 @@ Checking Your Setup: <code>mcp version</code></h3>
 <p><b>Example Output:</b></p>
 <div class="fragment"><div class="line">MCP version 0.1.0</div>
 </div><!-- fragment --><p>If you see a version number, you're good to go! If you get an error, double-check that you've installed the SDK correctly (<code>pip install mcp[cli]</code>).</p>
-<h3><a class="anchor" id="autotoc_md2327"></a>
+<h3><a class="anchor" id="autotoc_md2351"></a>
 Running Your Server: <code>mcp run</code></h3>
 <p>This is the command you'll use to execute your MCP server directly. Let's say you have a Python file named <code>my_first_server.py</code> that contains your server code.</p>
 <p><b>Minimal Server Example (<code>my_first_server.py</code>):</b></p>
@@ -172,7 +172,7 @@ Running Your Server: <code>mcp run</code></h3>
 <li>Tell that server object to start running (by calling its <code>.run()</code> method).</li>
 </ol>
 <p>Your terminal will likely show output like "Starting MyFirstServer..." and then wait for connections or instructions, depending on how the server is configured. To stop it, you usually press <code>Ctrl+C</code>.</p>
-<h3><a class="anchor" id="autotoc_md2328"></a>
+<h3><a class="anchor" id="autotoc_md2352"></a>
 Developing and Inspecting: <code>mcp dev</code></h3>
 <p>When you're building your server, you often want to see what's happening inside – what messages are being sent and received? The <code>mcp dev</code> command is perfect for this. It runs your server <em>and</em> launches the <b>MCP Inspector</b>, a web-based tool that lets you monitor and debug your server in real-time.</p>
 <div class="fragment"><div class="line">mcp dev my_first_server.py</div>
@@ -185,7 +185,7 @@ Developing and Inspecting: <code>mcp dev</code></h3>
 </ol>
 <p>This is incredibly useful during development for understanding the flow of information.</p>
 <p><em>(Note: <code>mcp dev</code> might require Node.js and npx to be installed on your system to run the Inspector tool.)</em></p>
-<h3><a class="anchor" id="autotoc_md2329"></a>
+<h3><a class="anchor" id="autotoc_md2353"></a>
 Integrating with Apps: <code>mcp install</code></h3>
 <p>Once your server is working, you might want to use it from another application, like the Claude Desktop app. The <code>mcp install</code> command helps you register your server with Claude so it appears in the app's list of available tools.</p>
 <div class="fragment"><div class="line">mcp install my_first_server.py --name &quot;My Awesome Tool&quot;</div>
@@ -201,7 +201,7 @@ Integrating with Apps: <code>mcp install</code></h3>
 </li>
 </ol>
 <p>Now, when you open Claude Desktop, "My Awesome Tool" should be available for use! This command essentially automates the process of telling Claude how to find and execute your custom server.</p>
-<h2><a class="anchor" id="autotoc_md2330"></a>
+<h2><a class="anchor" id="autotoc_md2354"></a>
 How Does <code>mcp run</code> Work Under the Hood?</h2>
 <p>Let's peek behind the curtain when you execute <code>mcp run my_first_server.py</code>. It might seem like magic, but it's a well-defined sequence of steps:</p>
 <ol type="1">
@@ -231,7 +231,7 @@ How Does <code>mcp run</code> Work Under the Hood?</h2>
 <div class="line">    ServerCode--&gt;&gt;MCP_CLI: Return server object</div>
 <div class="line">    MCP_CLI-&gt;&gt;ServerCode: server.run()</div>
 <div class="line">    ServerCode-&gt;&gt;ServerCode: Start listening/processing...</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2331"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2355"></a>
 Diving into the Code (Briefly!)</h2>
 <p>You don't need to memorize this, but seeing snippets can help understand the structure.</p>
 <p><b>Inside <code>cli/cli.py</code> (Simplified):</b></p>
@@ -311,7 +311,7 @@ Diving into the Code (Briefly!)</h2>
 <div class="line">        print(f<span class="stringliteral">&quot;Error updating Claude config: {e}&quot;</span>)</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
 </div><!-- fragment --><p>This snippet shows the core logic of <code>mcp install</code>: find the Claude config file, construct the command needed to run <em>your</em> server using <code>uv</code> and <code>mcp run</code>, and save this information into the JSON configuration file.</p>
-<h2><a class="anchor" id="autotoc_md2332"></a>
+<h2><a class="anchor" id="autotoc_md2356"></a>
 Conclusion</h2>
 <p>You've learned about the <code>mcp</code> command-line interface – your essential toolkit for managing MCP servers. You now know how to:</p>
 <ul>

@@ -121,16 +121,16 @@ $(function(){initNavTree('dc/db0/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_response___tool_call_handling</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1293"></a>
-autotoc_md1293</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1317"></a>
+autotoc_md1317</h2>
 <p>layout: default title: "Response &amp; Tool Call Handling" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1294"></a>
+<h2><a class="anchor" id="autotoc_md1318"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1295"></a>
+<h1><a class="anchor" id="autotoc_md1319"></a>
 Chapter 5: Response &amp; Tool Call Handling</h1>
 <p>In the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">previous chapter</a>, we learned how Codex decides <em>if</em> it's allowed to perform an action suggested by the AI, acting like a security guard based on the rules you set. But how does Codex understand the AI's response in the first place, especially when the AI wants to do something specific, like run a command or change a file?</p>
 <p>That's where <b>Response &amp; Tool Call Handling</b> comes in. Think of this part of Codex as its "ears" and "hands." It listens carefully to the instructions coming back from the AI model (the "response") and, if the AI asks to perform an action (a "tool call"), it figures out <em>exactly</em> what the AI wants to do (like which command to run or what file change to make) and gets ready to do it.</p>
-<h2><a class="anchor" id="autotoc_md1296"></a>
+<h2><a class="anchor" id="autotoc_md1320"></a>
 What's the Big Idea? Listening to the AI Assistant</h2>
 <p>Imagine you ask your super-smart assistant (the AI model) to do something like:</p>
 <p><code>codex "What's the status of my project? Use git status."</code></p>
@@ -153,7 +153,7 @@ What's the Big Idea? Listening to the AI Assistant</h2>
 </li>
 </ol>
 <p>This system is crucial because it translates the AI's intent into something Codex can actually act upon.</p>
-<h2><a class="anchor" id="autotoc_md1297"></a>
+<h2><a class="anchor" id="autotoc_md1321"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><p class="startli"><b>Structured Responses:</b> The OpenAI API doesn't just return a single block of text. It sends back data structured often like JSON. This allows the AI to clearly separate regular conversation text from requests to perform actions.</p>
@@ -170,7 +170,7 @@ Key Concepts</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1298"></a>
+<h2><a class="anchor" id="autotoc_md1322"></a>
 How It Works: Decoding the AI's Message</h2>
 <p>When the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> receives a response from the OpenAI API, it goes through these steps:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -201,10 +201,10 @@ How It Works: Decoding the AI's Message</h2>
 </li>
 <li><b>Prepare for Action:</b> The Agent Loop now knows the specific tool and its arguments. It packages this information (tool name + parsed arguments) and prepares for the next stage: checking the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a> and, if approved, proceeding to <a class="el" href="../../dd/deb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_206__command__execution______sandboxing.html">Command Execution &amp; Sandboxing</a>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1299"></a>
+<h2><a class="anchor" id="autotoc_md1323"></a>
 Under the Hood: Parsing the Details</h2>
 <p>Let's look at simplified code snippets showing how this parsing happens.</p>
-<h3><a class="anchor" id="autotoc_md1300"></a>
+<h3><a class="anchor" id="autotoc_md1324"></a>
 In the Agent Loop (<code>agent-loop.ts</code>)</h3>
 <p>The <code>AgentLoop</code> processes events streamed from the OpenAI API. When a complete response arrives or a specific tool call item is identified, it needs handling.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/agent/agent-loop.ts (Simplified)</div>
@@ -289,7 +289,7 @@ In the Agent Loop (<code>agent-loop.ts</code>)</h3>
 <li>It crucially calls <code>parseToolCallArguments</code> (from <code>utils/parsers.ts</code>) to turn the JSON string <code>arguments</code> into a usable object.</li>
 <li>Based on the <code>name</code> (<code>shell</code>, <code>apply_patch</code>), it calls the appropriate execution handler (like <code>handleExecCommand</code>), passing the parsed arguments. This handler coordinates with the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a> and <a class="el" href="../../dd/deb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_206__command__execution______sandboxing.html">Command Execution &amp; Sandboxing</a> systems.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1301"></a>
+<h3><a class="anchor" id="autotoc_md1325"></a>
 In the Parsers (<code>parsers.ts</code>)</h3>
 <p>This file contains helpers to decode the tool call details.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/parsers.ts (Simplified)</div>
@@ -375,7 +375,7 @@ In the Parsers (<code>parsers.ts</code>)</h3>
 <li>It returns a structured object (<code>ExecInput</code>) containing the validated arguments, or <code>undefined</code> if parsing fails.</li>
 <li><code>parseToolCall</code> uses <code>parseToolCallArguments</code> and then formats the command nicely for display using <code>formatCommandForDisplay</code>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1302"></a>
+<h3><a class="anchor" id="autotoc_md1326"></a>
 Handling Patches (<code>parse-apply-patch.ts</code>)</h3>
 <p>When the tool is <code>apply_patch</code>, the arguments contain a multi-line string describing the changes. Codex has specific logic to parse this format.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/agent/parse-apply-patch.ts (Conceptual)</div>
@@ -414,7 +414,7 @@ Handling Patches (<code>parse-apply-patch.ts</code>)</h3>
 <div class="line">  return operations; // Return the list of parsed operations</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This parser specifically understands the <code>*** Add File:</code>, <code>*** Delete File:</code>, <code>*** Update File:</code> markers and the <code>+</code>/<code>-</code> lines within patches to figure out exactly which files to change and how.</p>
-<h3><a class="anchor" id="autotoc_md1303"></a>
+<h3><a class="anchor" id="autotoc_md1327"></a>
 Displaying Tool Calls (<code>terminal-chat-response-item.tsx</code>)</h3>
 <p>The UI needs to show tool calls differently from regular messages.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/components/chat/terminal-chat-response-item.tsx (Simplified)</div>
@@ -455,7 +455,7 @@ Displaying Tool Calls (<code>terminal-chat-response-item.tsx</code>)</h3>
 <li>If it's <code>function_call</code>, it renders a specific component (<code>TerminalChatResponseToolCall</code>).</li>
 <li>This component uses <code>parseToolCall</code> (from <code>utils/parsers.ts</code>) to get the details and displays the command in a distinct style (e.g., with a <code>$</code> prefix and magenta color).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1304"></a>
+<h2><a class="anchor" id="autotoc_md1328"></a>
 Conclusion</h2>
 <p>You've now seen how Codex acts as an interpreter for the AI. It doesn't just receive text; it receives structured instructions. The <b>Response &amp; Tool Call Handling</b> system is responsible for parsing these instructions, figuring out if the AI wants to use a tool (like <code>shell</code> or <code>apply_patch</code>), and extracting the precise arguments needed for that tool. This crucial step translates the AI's intentions into actionable details that Codex can then use to interact with your system, always respecting the rules set by the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a>.</p>
 <p>Now that Codex understands <em>what</em> command the AI wants to run (e.g., <code>git status</code>), how does it actually <em>execute</em> that command safely, especially if running in <code>full-auto</code> mode? That's the topic of our next chapter.</p>

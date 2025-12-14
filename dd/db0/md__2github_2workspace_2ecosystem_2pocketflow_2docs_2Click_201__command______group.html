@@ -121,12 +121,12 @@ $(function(){initNavTree('dd/db0/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_command___group</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1169"></a>
-autotoc_md1169</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1193"></a>
+autotoc_md1193</h2>
 <p>layout: default title: "Command &amp; Group" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1170"></a>
+<h2><a class="anchor" id="autotoc_md1194"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1171"></a>
+<h1><a class="anchor" id="autotoc_md1195"></a>
 Chapter 1: Commands and Groups: The Building Blocks</h1>
 <p>Welcome to your first step in learning Click! Imagine you want to create your own command-line tool, maybe something like <code>git</code> or <code>docker</code>. How do you tell your program what to do when someone types <code>git commit</code> or <code>docker build</code>? That's where <b>Commands</b> and <b>Groups</b> come in. They are the fundamental building blocks for any Click application.</p>
 <p>Think about a simple tool. Maybe you want a program that can greet someone. You'd type <code>greet Alice</code> in your terminal, and it would print "Hello Alice!". In Click, this single action, "greet", would be represented by a <code>Command</code>.</p>
@@ -137,7 +137,7 @@ Chapter 1: Commands and Groups: The Building Blocks</h1>
 <li><code>Group</code>: Represents a collection of related actions (Commands or other Groups).</li>
 </ul>
 <p>Let's dive in and see how to create them!</p>
-<h2><a class="anchor" id="autotoc_md1172"></a>
+<h2><a class="anchor" id="autotoc_md1196"></a>
 Your First Command</h2>
 <p>Creating a command in Click is surprisingly simple. You basically write a normal Python function and then "decorate" it to tell Click it's a command-line command.</p>
 <p>Let's make a command that just prints "Hello World!".</p>
@@ -173,7 +173,7 @@ Your First Command</h2>
 <div class="line">Options:</div>
 <div class="line">  --help  Show this message and exit.</div>
 </div><!-- fragment --><p>See? Click used the docstring we wrote (<code>A simple command that says Hello World</code>) and added a standard <code>--help</code> option for free!</p>
-<h2><a class="anchor" id="autotoc_md1173"></a>
+<h2><a class="anchor" id="autotoc_md1197"></a>
 Grouping Commands</h2>
 <p>Okay, one command is nice, but real tools often have multiple commands. Like <code>git</code> has <code>commit</code>, <code>pull</code>, <code>push</code>, etc. Let's say we want our tool to have two commands: <code>hello</code> and <code>goodbye</code>.</p>
 <p>We need a way to group these commands together. That's what <code>click.group()</code> is for. A <code>Group</code> acts as the main entry point and can have other commands attached to it.</p>
@@ -233,7 +233,7 @@ Grouping Commands</h2>
 <div class="line">Goodbye World!</div>
 </div><!-- fragment --><p>You've successfully created a multi-command CLI tool!</p>
 <p><em>(Self-promotion: There's an even shorter way to attach commands using decorators directly on the group, which we'll see in <a class="el" href="../../db/d5f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_202__decorators.html">Decorators</a>!)</em></p>
-<h2><a class="anchor" id="autotoc_md1174"></a>
+<h2><a class="anchor" id="autotoc_md1198"></a>
 How It Works Under the Hood</h2>
 <p>What's really happening when you use <code>@click.command()</code> or <code>@click.group()</code>?</p>
 <ol type="1">
@@ -262,7 +262,7 @@ How It Works Under the Hood</h2>
 <div class="line">    PythonScript--&gt;&gt;Terminal: Shows output</div>
 <div class="line">    Terminal--&gt;&gt;User: Displays &quot;Hello World!&quot;</div>
 </div><!-- fragment --><p>This process of parsing arguments and calling the right function based on the command structure is the core job of Click, making it easy for <em>you</em> to just focus on writing the functions for each command.</p>
-<h2><a class="anchor" id="autotoc_md1175"></a>
+<h2><a class="anchor" id="autotoc_md1199"></a>
 Conclusion</h2>
 <p>You've learned about the two most fundamental concepts in Click:</p>
 <ul>

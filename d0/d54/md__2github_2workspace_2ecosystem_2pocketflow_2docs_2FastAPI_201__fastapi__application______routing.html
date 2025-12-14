@@ -121,22 +121,22 @@ $(function(){initNavTree('d0/d54/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_fastapi_application___routing</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1697"></a>
-autotoc_md1697</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1721"></a>
+autotoc_md1721</h2>
 <p>layout: default title: "FastAPI Application &amp; Routing" parent: "FastAPI" </p>
-<h2><a class="anchor" id="autotoc_md1698"></a>
+<h2><a class="anchor" id="autotoc_md1722"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1699"></a>
+<h1><a class="anchor" id="autotoc_md1723"></a>
 Chapter 1: FastAPI Application &amp; Routing</h1>
 <p>Welcome to your first adventure with FastAPI! 👋</p>
 <p>Imagine you want to build a small website or an API (Application Programming Interface) - a way for computers to talk to each other. How do you tell your program, "When someone visits this specific web address, run this specific piece of Python code"? That's where FastAPI comes in!</p>
 <p><b>Our Goal Today:</b> We'll build the simplest possible web application. When you visit the main page in your web browser, it will just say "Hello, World!". This tiny example will teach us the absolute basics of FastAPI.</p>
-<h2><a class="anchor" id="autotoc_md1700"></a>
+<h2><a class="anchor" id="autotoc_md1724"></a>
 What Problem Does This Solve?</h2>
 <p>Think about a big airport. There's a central control tower that manages all the planes landing and taking off. It knows which runway corresponds to which flight number.</p>
 <p>In the world of web applications, the <code>FastAPI</code> application object is like that <b>control tower</b>. It's the central piece of your project. You need a way to tell this control tower: "Hey, if a request comes in for the main web address (`/`) using the `GET` method (which browsers use when you just visit a page), please run *this* specific Python function."</p>
 <p>This process of connecting URLs (web addresses) and HTTP methods (like <code>GET</code>, <code>POST</code>) to your Python functions is called <b>Routing</b>. FastAPI makes this super easy and efficient.</p>
-<h2><a class="anchor" id="autotoc_md1701"></a>
+<h2><a class="anchor" id="autotoc_md1725"></a>
 Your First FastAPI Application</h2>
 <p>Let's start with the absolute minimum code needed.</p>
 <ol type="1">
@@ -172,7 +172,7 @@ Your First FastAPI Application</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1702"></a>
+<h2><a class="anchor" id="autotoc_md1726"></a>
 Running Your Application</h2>
 <p>Okay, we have the code, but how do we actually <em>run</em> it so we can see "Hello, World!" in our browser? We need a web server. FastAPI applications are served by ASGI servers like <b>Uvicorn</b>.</p>
 <ol type="1">
@@ -199,7 +199,7 @@ Running Your Application</h2>
 <p><b>Result:</b> You should see this JSON response in your browser:</p>
 <div class="fragment"><div class="line">{&quot;message&quot;:&quot;Hello World&quot;}</div>
 </div><!-- fragment --><p>Congratulations! You've just created and run your first FastAPI application! 🎉</p>
-<h2><a class="anchor" id="autotoc_md1703"></a>
+<h2><a class="anchor" id="autotoc_md1727"></a>
 Organizing Your Routes with <code>APIRouter</code></h2>
 <p>Our "Hello World" example is tiny. Real applications have many different routes (like <code>/users/</code>, <code>/items/</code>, <code>/orders/</code>, etc.). Putting <em>all</em> of them in the single <code><a class="el" href="../../dc/dba/main_8py.html">main.py</a></code> file using <code>@app.get(...)</code>, <code>@app.post(...)</code> would quickly become messy and hard to manage.</p>
 <p>Imagine our airport analogy again. Instead of one giant control tower managing <em>everything</em>, large airports have different terminals (Terminal A for domestic flights, Terminal B for international, etc.) to organize things.</p>
@@ -211,24 +211,24 @@ Organizing Your Routes with <code>APIRouter</code></h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1704"></a>
+<h1><a class="anchor" id="autotoc_md1728"></a>
 routers/items.py</h1>
 <p>from fastapi import APIRouter</p>
-<h1><a class="anchor" id="autotoc_md1705"></a>
+<h1><a class="anchor" id="autotoc_md1729"></a>
 Create an APIRouter instance</h1>
-<h1><a class="anchor" id="autotoc_md1706"></a>
+<h1><a class="anchor" id="autotoc_md1730"></a>
 This is like a mini-FastAPI app for item-related routes</h1>
 <p>router = APIRouter()</p>
-<h1><a class="anchor" id="autotoc_md1707"></a>
+<h1><a class="anchor" id="autotoc_md1731"></a>
 Define a route on the router, not the main app</h1>
 <p>@router.get("/items/") async def read_items(): </p>
-<h1><a class="anchor" id="autotoc_md1708"></a>
+<h1><a class="anchor" id="autotoc_md1732"></a>
 A simple example returning a list of items</h1>
 <p>return [{"name": "Item Foo"}, {"name": "Item Bar"}]</p>
 <p>@router.get("/items/{item_id}") async def read_item(item_id: str): </p>
-<h1><a class="anchor" id="autotoc_md1709"></a>
+<h1><a class="anchor" id="autotoc_md1733"></a>
 We'll learn about path parameters like {item_id} later!</h1>
-<h1><a class="anchor" id="autotoc_md1710"></a>
+<h1><a class="anchor" id="autotoc_md1734"></a>
 See <a class="el" href="../../d0/d13/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_202__path__operations______parameter__declaration.html">Path Operations &amp; Parameter Declaration</a></h1>
 <p>return {"item_id": item_id, "name": f"Item {item_id}"} ```</p>
 <p><b>Explanation:</b></p><ul>
@@ -238,18 +238,18 @@ See <a class="el" href="../../d0/d13/md__2github_2workspace_2ecosystem_2pocketfl
 </ul>
 <p><b>Modify <code><a class="el" href="../../dc/dba/main_8py.html">main.py</a></code> to include the router:</b></p>
 <p>```python </p>
-<h1><a class="anchor" id="autotoc_md1711"></a>
+<h1><a class="anchor" id="autotoc_md1735"></a>
 main.py</h1>
 <p>from fastapi import FastAPI from routers import items # Import the items router</p>
-<h1><a class="anchor" id="autotoc_md1712"></a>
+<h1><a class="anchor" id="autotoc_md1736"></a>
 Create the main FastAPI application</h1>
 <p>app = FastAPI()</p>
-<h1><a class="anchor" id="autotoc_md1713"></a>
+<h1><a class="anchor" id="autotoc_md1737"></a>
 Include the router from the items module</h1>
-<h1><a class="anchor" id="autotoc_md1714"></a>
+<h1><a class="anchor" id="autotoc_md1738"></a>
 All routes defined in items.router will now be part of the main app</h1>
 <p>app.include_router(items.router)</p>
-<h1><a class="anchor" id="autotoc_md1715"></a>
+<h1><a class="anchor" id="autotoc_md1739"></a>
 You can still define routes directly on the app if needed</h1>
 <p>@app.get("/") async def read_root(): return {"message": "Hello Main App!"}</p>
 <p>```</p>
@@ -264,7 +264,7 @@ You can still define routes directly on the app if needed</h1>
 <li>Visiting <code><a href="http://127.0.0.1:8000/items/abc">http://127.0.0.1:8000/items/abc</a></code> will show <code>{"item_id":"abc","name":"Item abc"}</code>. (We'll cover <code>{item_id}</code> properly in the <a class="el" href="../../d0/d13/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_202__path__operations______parameter__declaration.html">next chapter</a>).</li>
 </ul>
 <p>Using <code>APIRouter</code> helps keep your project organized as it grows!</p>
-<h2><a class="anchor" id="autotoc_md1716"></a>
+<h2><a class="anchor" id="autotoc_md1740"></a>
 How it Works Under the Hood (Simplified)</h2>
 <p>What actually happens when you visit <code><a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a></code>?</p>
 <ol type="1">
@@ -300,7 +300,7 @@ How it Works Under the Hood (Simplified)</h2>
 <div class="line">    FastAPI App--&gt;&gt;-ASGI Server (Uvicorn): Send HTTP Response</div>
 <div class="line">    ASGI Server (Uvicorn)--&gt;&gt;-User Browser: HTTP/1.1 200 OK\nContent-Type: application/json\n\n{&quot;message&quot;:&quot;Hello World&quot;}</div>
 </div><!-- fragment --><p>Internally, FastAPI uses (and builds upon) the routing capabilities of the Starlette framework. When you use <code>@app.get()</code> or <code>@router.get()</code>, these functions register the path, method, and your handler function into a list of <code>Route</code> objects (defined conceptually in <code>fastapi/routing.py</code> and <code>starlette/routing.py</code>). When <code>app.include_router()</code> is called, the routes from the router are added to the main app's list, often with a path prefix if specified. When a request arrives, FastAPI iterates through this list, performs pattern matching on the path, checks the method, and calls the first matching handler.</p>
-<h2><a class="anchor" id="autotoc_md1717"></a>
+<h2><a class="anchor" id="autotoc_md1741"></a>
 Conclusion</h2>
 <p>You've taken your first steps into the world of FastAPI!</p>
 <ul>

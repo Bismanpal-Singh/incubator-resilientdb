@@ -121,12 +121,12 @@ $(function(){initNavTree('d8/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_module___program</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1590"></a>
-autotoc_md1590</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1614"></a>
+autotoc_md1614</h2>
 <p>layout: default title: "Module &amp; Program" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1591"></a>
+<h2><a class="anchor" id="autotoc_md1615"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1592"></a>
+<h1><a class="anchor" id="autotoc_md1616"></a>
 Chapter 1: Modules and Programs: Building Blocks of DSPy</h1>
 <p>Welcome to the first chapter of our journey into DSPy! We're excited to have you here.</p>
 <p>Imagine you want to build something cool with AI, like a smart assistant that can answer questions based on your documents. This involves several steps: understanding the question, finding the right information in the documents, and then crafting a clear answer. How do you organize all these steps in your code?</p>
@@ -143,7 +143,7 @@ Chapter 1: Modules and Programs: Building Blocks of DSPy</h1>
 <li>How they create structure and manage the flow of information.</li>
 </ul>
 <p>Let's start building!</p>
-<h2><a class="anchor" id="autotoc_md1593"></a>
+<h2><a class="anchor" id="autotoc_md1617"></a>
 What is a <code>Module</code>?</h2>
 <p>A <code>dspy.Module</code> is the most basic building block in DSPy. Think of it as:</p>
 <ul>
@@ -190,7 +190,7 @@ What is a <code>Module</code>?</h2>
 <li><code>forward</code> defines the core task: combining instructions and input, (conceptually) calling an LM, and returning the result.</li>
 </ul>
 <p>Don't worry about the LM details yet! The key takeaway is that a <code>Module</code> wraps a specific piece of work, defined in its <code>forward</code> method. DSPy provides useful pre-built modules like <code>dspy.Predict</code> and <code>dspy.ChainOfThought</code> (which encourages step-by-step reasoning), and you can also build your own.</p>
-<h2><a class="anchor" id="autotoc_md1594"></a>
+<h2><a class="anchor" id="autotoc_md1618"></a>
 What is a <code>Program</code>?</h2>
 <p>Now, what if your task is more complex than a single LM call? For instance, answering a question based on documents might involve:</p>
 <ol type="1">
@@ -264,7 +264,7 @@ What is a <code>Program</code>?</h2>
 <li>In <code>__init__</code>, it creates instances of the smaller modules it needs (<code>GenerateSearchQuery</code>, <code>RetrieveContext</code>, <code>GenerateAnswer</code>).</li>
 <li>In <code>forward</code>, it calls these modules <em>in order</em>, passing the output of one as the input to the next. It defines the workflow!</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1595"></a>
+<h2><a class="anchor" id="autotoc_md1619"></a>
 Hierarchical Structure</h2>
 <p>Modules can contain other modules, which can contain <em>even more</em> modules! This allows you to build complex systems by breaking them down into manageable, hierarchical parts.</p>
 <p>Imagine our <code>GenerateAnswer</code> module was actually quite complex. Maybe it first summarizes the context, then drafts an answer, then refines it. We could implement <code>GenerateAnswer</code> as <em>another</em> program containing these sub-modules!</p>
@@ -276,7 +276,7 @@ Hierarchical Structure</h2>
 <div class="line">    D --&gt; D2(DraftAnswer Module);</div>
 <div class="line">    D --&gt; D3(RefineAnswer Module);</div>
 </div><!-- fragment --><p>This diagram shows how the <code>RAG</code> program uses <code>GenerateAnswer</code>, which itself could be composed of smaller modules like <code>SummarizeContext</code>, <code>DraftAnswer</code>, and <code>RefineAnswer</code>. This nesting makes complex systems easier to design, understand, and debug.</p>
-<h2><a class="anchor" id="autotoc_md1596"></a>
+<h2><a class="anchor" id="autotoc_md1620"></a>
 How It Works Under the Hood (A Tiny Peek)</h2>
 <p>You don't need to know the deep internals right now, but it's helpful to have a basic mental model.</p>
 <ol type="1">
@@ -335,7 +335,7 @@ How It Works Under the Hood (A Tiny Peek)</h2>
 <div class="line">        result = ...</div>
 <div class="line">        <span class="keywordflow">return</span> result</div>
 </div><!-- fragment --><p>The important part is the pattern: inherit from <code>dspy.Module</code>, set things up in <code>__init__</code>, and define the core logic in <code>forward</code>.</p>
-<h2><a class="anchor" id="autotoc_md1597"></a>
+<h2><a class="anchor" id="autotoc_md1621"></a>
 Conclusion</h2>
 <p>Congratulations! You've learned about the fundamental organizing principle in DSPy: <b>Modules</b> and <b>Programs</b>.</p>
 <ul>

@@ -121,15 +121,15 @@ $(function(){initNavTree('dd/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_terminal_ui__ink_components_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1252"></a>
-autotoc_md1252</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1276"></a>
+autotoc_md1276</h2>
 <p>layout: default title: "Terminal UI (Ink Components)" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1253"></a>
+<h2><a class="anchor" id="autotoc_md1277"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1254"></a>
+<h1><a class="anchor" id="autotoc_md1278"></a>
 Chapter 1: Terminal UI (Ink Components)</h1>
 <p>Welcome to the Codex tutorial! We're excited to have you explore how Codex works under the hood. This first chapter dives into how Codex creates its chat interface right inside your terminal window.</p>
-<h2><a class="anchor" id="autotoc_md1255"></a>
+<h2><a class="anchor" id="autotoc_md1279"></a>
 What's the Big Idea?</h2>
 <p>Imagine you want <code>Codex</code> to write a simple script. You type something like <code>codex "write a python script that prints hello world"</code> into your terminal. How does Codex show you the conversation – your request, its response, maybe questions it asks, or commands it suggests running – all without opening a separate window? And how do you type your next message?</p>
 <p>That's where the <b>Terminal UI</b> comes in. It's the system responsible for drawing the entire chat interface you see and interact with directly in your command line.</p>
@@ -139,7 +139,7 @@ What's the Big Idea?</h2>
 <li><b>Controls (Steering Wheel, Pedals):</b> Let you interact (like the input field where you type messages, or menus to approve commands).</li>
 </ul>
 <p>Just like the car's dashboard lets you see what the engine is doing and control it, the Terminal UI lets you see what the core <code>Codex</code> logic (the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a>) is doing and provide input to it.</p>
-<h2><a class="anchor" id="autotoc_md1256"></a>
+<h2><a class="anchor" id="autotoc_md1280"></a>
 Key Concepts: Ink &amp; React</h2>
 <p>How does Codex build this terminal interface? It uses two main technologies:</p>
 <ol type="1">
@@ -154,7 +154,7 @@ Key Concepts: Ink &amp; React</h2>
 </li>
 </ol>
 <p>These components work together, managed by React, to create the dynamic interface you see.</p>
-<h2><a class="anchor" id="autotoc_md1257"></a>
+<h2><a class="anchor" id="autotoc_md1281"></a>
 How You See It: Rendering the Chat</h2>
 <p>When you run <code>Codex</code>, the main application component (<code>App</code> in <code>app.tsx</code>) kicks things off. It might first check if you're in a safe directory (like a Git repository) and ask for confirmation if not.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/app.tsx (Simplified)</div>
@@ -226,7 +226,7 @@ How You See It: Rendering the Chat</h2>
 <li><code>&lt;TerminalMessageHistory&gt;</code> takes the list of <code>items</code> (messages) and renders them.</li>
 <li><code>&lt;TerminalChatInput&gt;</code> (or its multiline sibling <code>&lt;TerminalChatNewInput&gt;</code>) displays the input box when <code>loading</code> is false and there's no <code>confirmationPrompt</code>. If there <em>is</em> a <code>confirmationPrompt</code>, it shows the command review UI instead.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1258"></a>
+<h3><a class="anchor" id="autotoc_md1282"></a>
 Showing Messages</h3>
 <p>How does <code>&lt;TerminalMessageHistory&gt;</code> actually display the messages? It uses a special Ink component called <code>&lt;Static&gt;</code> for efficiency and maps each message <code>item</code> to a <code>&lt;TerminalChatResponseItem&gt;</code>.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/components/chat/terminal-message-history.tsx (Simplified)</div>
@@ -289,7 +289,7 @@ Showing Messages</h3>
 <div class="line">      return &lt;Text&gt;Unknown message type&lt;/Text&gt;;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1259"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1283"></a>
 Getting Your Input</h3>
 <p>The <code>&lt;TerminalChatInput&gt;</code> (or <code>&lt;TerminalChatNewInput&gt;</code>) component uses specialized input components (like <code>&lt;TextInput&gt;</code> from <code>ink-text-input</code> or our custom <code>&lt;MultilineTextEditor&gt;</code>) to capture your keystrokes. When you press Enter, it calls the <code>onSubmit</code> or <code>submitInput</code> function provided by <code>&lt;TerminalChat&gt;</code>.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/components/chat/terminal-chat-new-input.tsx (Simplified)</div>
@@ -331,7 +331,7 @@ Getting Your Input</h3>
 <div class="line">  );</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This component manages the text you type and uses Ink's <code>useInput</code> hook to handle special keys like arrow keys for command history. The details of text editing are handled in the next chapter: <a class="el" href="../../d3/dac/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_202__input__handling____textbuffer__editor__.html">Input Handling (TextBuffer/Editor)</a>.</p>
-<h3><a class="anchor" id="autotoc_md1260"></a>
+<h3><a class="anchor" id="autotoc_md1284"></a>
 Reviewing Commands</h3>
 <p>If the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> decides it needs to run a command and requires your approval, <code>&lt;TerminalChat&gt;</code> will receive a <code>confirmationPrompt</code>. This prompt (which is itself a React element, often <code>&lt;TerminalChatToolCallCommand&gt;</code>) is passed down to <code>&lt;TerminalChatInput&gt;</code>, which then renders <code>&lt;TerminalChatCommandReview&gt;</code> instead of the regular input box.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/components/chat/terminal-chat-command-review.tsx (Simplified)</div>
@@ -378,7 +378,7 @@ Reviewing Commands</h3>
 <div class="line">  );</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This component shows the command passed in (<code>confirmationPrompt</code>), presents options using Ink's <code>&lt;Select&gt;</code> component (or a <code>&lt;TextInput&gt;</code> if you choose to edit/give feedback), listens for your choice (via keyboard shortcuts or the selection list), and finally calls <code>onReviewCommand</code> with your decision.</p>
-<h2><a class="anchor" id="autotoc_md1261"></a>
+<h2><a class="anchor" id="autotoc_md1285"></a>
 Under the Hood: How It All Connects</h2>
 <p>Let's trace the flow from starting Codex to seeing an AI response:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -413,7 +413,7 @@ Under the Hood: How It All Connects</h2>
 <li>Ink updates the terminal display.</li>
 </ol>
 <p>The process for handling command confirmations is similar, involving the <code>getCommandConfirmation</code> and <code>submitConfirmation</code> callbacks between <code>&lt;TerminalChat&gt;</code> and the Agent Loop, rendering <code>&lt;TerminalChatCommandReview&gt;</code> in the UI when needed.</p>
-<h2><a class="anchor" id="autotoc_md1262"></a>
+<h2><a class="anchor" id="autotoc_md1286"></a>
 Conclusion</h2>
 <p>You've now seen how Codex uses the power of React and the Ink library to build a fully interactive chat interface directly within your terminal. This "Terminal UI" layer acts as the visual front-end, displaying messages, capturing your input, and presenting choices like command approvals, all while coordinating with the core <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> behind the scenes.</p>
 <p>But how exactly does that input box capture your keystrokes, handle multi-line editing, and manage command history? We'll explore that in the next chapter.</p>

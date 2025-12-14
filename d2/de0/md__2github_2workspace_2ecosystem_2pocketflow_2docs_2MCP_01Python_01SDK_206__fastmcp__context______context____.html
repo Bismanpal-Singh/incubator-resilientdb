@@ -121,17 +121,17 @@ $(function(){initNavTree('d2/de0/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_fastmcp_context___context__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2400"></a>
-autotoc_md2400</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2424"></a>
+autotoc_md2424</h2>
 <p>layout: default title: "FastMCP Context (Context)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2401"></a>
+<h2><a class="anchor" id="autotoc_md2425"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md2402"></a>
+<h1><a class="anchor" id="autotoc_md2426"></a>
 Chapter 6: Talking Back - FastMCP Context (<code>Context</code>)</h1>
 <p>In <a class="el" href="../../d5/de9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_205__fastmcp__prompts___e380d8fca08b641e7632fcc5814680b7.html">Chapter 5: Reusable Chat Starters - FastMCP Prompts (<code>Prompt</code>, <code>PromptManager</code>)</a>, we learned how to create reusable message templates for interacting with AI models. We've seen how to build servers with data resources (<a class="el" href="../../d9/dfc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_203__fastmcp__resources_95757cc8f176683b04c22ceeac7ea1d5.html">Chapter 3</a>) and action tools (<a class="el" href="../../dc/df6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_204__fastmcp__tools______tool________toolmanager____.html">Chapter 4</a>).</p>
 <p>But imagine you have a tool that takes a while to run, like processing a large file or making a complex calculation. How does your tool communicate back to the user <em>while</em> it's running? How can it say "I'm 50% done!" or log important steps? Or what if a tool needs to read some data from one of the server's resources to do its job?</p>
 <p>This is where the <b><code>Context</code></b> object comes in. It's like giving your tool function a temporary <b>backstage pass</b> for the specific request it's handling. This pass grants it access to special features like sending logs, reporting progress, or accessing other parts of the server environment related to that request.</p>
-<h2><a class="anchor" id="autotoc_md2403"></a>
+<h2><a class="anchor" id="autotoc_md2427"></a>
 What is <code>Context</code>?</h2>
 <p>The <code>Context</code> object is a special helper object provided by the <code>FastMCP</code> framework. If you define a tool function (or a resource function) that includes a parameter specifically typed as <code>Context</code>, <code>FastMCP</code> will automatically create and pass this object to your function when it's called.</p>
 <p>Think of it this way:</p><ul>
@@ -146,7 +146,7 @@ What is <code>Context</code>?</h2>
 </li>
 </ul>
 <p>It's your function's way of communicating out or accessing shared server capabilities during its execution for a particular request.</p>
-<h2><a class="anchor" id="autotoc_md2404"></a>
+<h2><a class="anchor" id="autotoc_md2428"></a>
 Getting Access: Asking for the <code>Context</code></h2>
 <p>How do you tell <code>FastMCP</code> that your function needs this backstage pass? You simply add a parameter to your function definition and use a <b>type hint</b> to mark it as <code>Context</code>.</p>
 <p>Let's create a tool that simulates a long-running task and uses <code>Context</code> to report progress and log messages.</p>
@@ -208,7 +208,7 @@ Getting Access: Asking for the <code>Context</code></h2>
 <li>Call your <code>run_long_task</code> function, passing the duration and the newly created <code>ctx</code> object.</li>
 <li>Your function runs, and calls like <code>ctx.info</code> or <code>ctx.report_progress</code> send messages back to the client <em>during</em> the execution of the tool.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2405"></a>
+<h2><a class="anchor" id="autotoc_md2429"></a>
 Using <code>Context</code> to Access Resources</h2>
 <p>The <code>Context</code> object isn't just for sending information <em>out</em>; it can also be used to access other parts of the server, like reading resources defined using <code>@server.resource</code>.</p>
 <p>Let's modify our example. Imagine our long task needs some configuration data stored in a resource.</p>
@@ -273,7 +273,7 @@ Using <code>Context</code> to Access Resources</h2>
 <li><b>Processing Content</b>: The <code>read_resource</code> method returns an iterable of <code>ReadResourceContents</code> objects (often just one). We extracted the string content to use it.</li>
 </ol>
 <p>Now, our tool can both communicate outwards (logs, progress) and interact inwards (read resources) using the same <code>Context</code> object, all within the scope of the single request it's handling.</p>
-<h2><a class="anchor" id="autotoc_md2406"></a>
+<h2><a class="anchor" id="autotoc_md2430"></a>
 How <code>Context</code> Works Under the Hood</h2>
 <p>It feels like magic that just adding <code>: Context</code> gives your function these powers, but it's a well-defined process within <code>FastMCP</code>.</p>
 <ol type="1">
@@ -319,19 +319,19 @@ How <code>Context</code> Works Under the Hood</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2407"></a>
+<h1><a class="anchor" id="autotoc_md2431"></a>
 Inside server/fastmcp/server.py (Simplified FastMCP.get_context)</h1>
 <p>from mcp.shared.context import RequestContext # Low-level context</p>
 <p>class FastMCP: </p>
-<h1><a class="anchor" id="autotoc_md2408"></a>
+<h1><a class="anchor" id="autotoc_md2432"></a>
 ... (other methods) ...</h1>
 <p>def get_context(self) -&gt; Context[ServerSession, object]: """Returns a Context object.""" try: </p>
-<h1><a class="anchor" id="autotoc_md2409"></a>
+<h1><a class="anchor" id="autotoc_md2433"></a>
 Get the low-level context for the current request</h1>
 <p>request_context: RequestContext | None = self._mcp_server.request_context except LookupError: request_context = None # Not available outside a request</p>
-<h1><a class="anchor" id="autotoc_md2410"></a>
+<h1><a class="anchor" id="autotoc_md2434"></a>
 Create our high-level Context, passing the low-level one</h1>
-<h1><a class="anchor" id="autotoc_md2411"></a>
+<h1><a class="anchor" id="autotoc_md2435"></a>
 and a reference to this FastMCP instance ('self')</h1>
 <p>return Context(request_context=request_context, fastmcp=self) ```</p>
 <ul>
@@ -339,38 +339,38 @@ and a reference to this FastMCP instance ('self')</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2412"></a>
+<h1><a class="anchor" id="autotoc_md2436"></a>
 Inside server/fastmcp/tools/base.py (Simplified Tool.from_function)</h1>
 <p>class Tool(BaseModel): </p>
-<h1><a class="anchor" id="autotoc_md2413"></a>
+<h1><a class="anchor" id="autotoc_md2437"></a>
 ... fields ...</h1>
 <p>context_kwarg: str | None = Field(...)</p>
 <p>@classmethod def from_function(cls, fn, ...) -&gt; Tool: </p>
-<h1><a class="anchor" id="autotoc_md2414"></a>
+<h1><a class="anchor" id="autotoc_md2438"></a>
 ... other inspection ...</h1>
 <p>context_param_name = None sig = inspect.signature(fn) for param_name, param in sig.parameters.items(): </p>
-<h1><a class="anchor" id="autotoc_md2415"></a>
+<h1><a class="anchor" id="autotoc_md2439"></a>
 Check if the type hint is Context</h1>
 <p>if param.annotation is Context: context_param_name = param_name break </p>
-<h1><a class="anchor" id="autotoc_md2416"></a>
+<h1><a class="anchor" id="autotoc_md2440"></a>
 ... create FuncMetadata, skipping context arg ...</h1>
 <p>return cls( </p>
-<h1><a class="anchor" id="autotoc_md2417"></a>
+<h1><a class="anchor" id="autotoc_md2441"></a>
 ...,</h1>
 <p>context_kwarg=context_param_name, </p>
-<h1><a class="anchor" id="autotoc_md2418"></a>
+<h1><a class="anchor" id="autotoc_md2442"></a>
 ...</h1>
 <p>)</p>
-<h1><a class="anchor" id="autotoc_md2419"></a>
+<h1><a class="anchor" id="autotoc_md2443"></a>
 Inside Tool.run (simplified concept)</h1>
 <p>async def run(self, arguments, context=None): </p>
-<h1><a class="anchor" id="autotoc_md2420"></a>
+<h1><a class="anchor" id="autotoc_md2444"></a>
 ... validate args ...</h1>
 <p>kwargs_for_fn = validated_args if self.context_kwarg and context: </p>
-<h1><a class="anchor" id="autotoc_md2421"></a>
+<h1><a class="anchor" id="autotoc_md2445"></a>
 Add the context object to the arguments passed to the function</h1>
 <p>kwargs_for_fn[self.context_kwarg] = context</p>
-<h1><a class="anchor" id="autotoc_md2422"></a>
+<h1><a class="anchor" id="autotoc_md2446"></a>
 Call the original function (self.fn)</h1>
 <p>result = await self.fn(**kwargs_for_fn) # Or sync call return result ```</p>
 <ul>
@@ -378,31 +378,31 @@ Call the original function (self.fn)</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2423"></a>
+<h1><a class="anchor" id="autotoc_md2447"></a>
 Inside server/fastmcp/server.py (Simplified Context methods)</h1>
 <p>class Context(BaseModel, Generic[ServerSessionT, LifespanContextT]): _request_context: RequestContext[...] | None _fastmcp: FastMCP | None </p>
-<h1><a class="anchor" id="autotoc_md2424"></a>
+<h1><a class="anchor" id="autotoc_md2448"></a>
 ... (init, properties) ...</h1>
 <p>async def report_progress(self, progress, total=None): </p>
-<h1><a class="anchor" id="autotoc_md2425"></a>
+<h1><a class="anchor" id="autotoc_md2449"></a>
 Get progress token from low-level context meta if available</h1>
 <p>progress_token = self.request_context.meta.progressToken if self.request_context.meta else None if progress_token: </p>
-<h1><a class="anchor" id="autotoc_md2426"></a>
+<h1><a class="anchor" id="autotoc_md2450"></a>
 Use the session object from the low-level context</h1>
 <p>await self.request_context.session.send_progress_notification(...)</p>
 <p>async def read_resource(self, uri): </p>
-<h1><a class="anchor" id="autotoc_md2427"></a>
+<h1><a class="anchor" id="autotoc_md2451"></a>
 Use the stored FastMCP instance</h1>
 <p>assert self._fastmcp is not None return await self._fastmcp.read_resource(uri)</p>
 <p>async def log(self, level, message, ...): </p>
-<h1><a class="anchor" id="autotoc_md2428"></a>
+<h1><a class="anchor" id="autotoc_md2452"></a>
 Use the session object from the low-level context</h1>
 <p>await self.request_context.session.send_log_message(...)</p>
 <p>async def info(self, message, **extra): await self.log("info", message, **extra) </p>
-<h1><a class="anchor" id="autotoc_md2429"></a>
+<h1><a class="anchor" id="autotoc_md2453"></a>
 ... (debug, warning, error methods) ...</h1>
 <p>```</p>
-<h2><a class="anchor" id="autotoc_md2430"></a>
+<h2><a class="anchor" id="autotoc_md2454"></a>
 Conclusion</h2>
 <p>You've learned about the <code>Context</code> object in <code>FastMCP</code> – your function's essential backstage pass during a request.</p>
 <ul>

@@ -121,12 +121,12 @@ $(function(){initNavTree('d5/d05/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_configuration__config_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2647"></a>
-autotoc_md2647</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2671"></a>
+autotoc_md2671</h2>
 <p>layout: default title: "Configuration (config)" parent: "OpenManus" </p>
-<h2><a class="anchor" id="autotoc_md2648"></a>
+<h2><a class="anchor" id="autotoc_md2672"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2649"></a>
+<h1><a class="anchor" id="autotoc_md2673"></a>
 Chapter 7: Configuration (Config)</h1>
 <p>Welcome to Chapter 7! In <a class="el" href="../../d6/d4f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_206__schema.html">Chapter 6: Schema</a>, we learned how OpenManus uses schemas to define the structure of data passed between different components, like official forms ensuring everyone fills them out correctly.</p>
 <p>Now, think about setting up a new application. You often need to tell it <em>how</em> to behave.</p><ul>
@@ -136,18 +136,18 @@ Chapter 7: Configuration (Config)</h1>
 <li>Which search engine should it prefer?</li>
 </ul>
 <p>These are all <b>settings</b> or <b>configurations</b>. This chapter explores how OpenManus manages these settings using the <code>Config</code> system.</p>
-<h2><a class="anchor" id="autotoc_md2650"></a>
+<h2><a class="anchor" id="autotoc_md2674"></a>
 What Problem Does Config Solve?</h2>
 <p>Imagine you're building a simple app that uses an AI service. You need an API key to access it. Where do you put this key?</p>
 <ul>
-<li><b>Option 1: Hardcode it directly in the code.</b> <code>python @section autotoc_md2651 Bad idea! Don't do this! api_key = "MY_SUPER_SECRET_API_KEY_12345" @section autotoc_md2652 ... rest of the code uses api_key ... </code> This is a terrible idea! Your secret key is exposed in the code. Sharing the code means sharing your secret. Changing the key means editing the code. What if multiple parts of the code need the key? You'd have it scattered everywhere!</li>
+<li><b>Option 1: Hardcode it directly in the code.</b> <code>python @section autotoc_md2675 Bad idea! Don't do this! api_key = "MY_SUPER_SECRET_API_KEY_12345" @section autotoc_md2676 ... rest of the code uses api_key ... </code> This is a terrible idea! Your secret key is exposed in the code. Sharing the code means sharing your secret. Changing the key means editing the code. What if multiple parts of the code need the key? You'd have it scattered everywhere!</li>
 <li><b>Option 2: Use a Configuration System.</b> Keep all settings in a separate, easy-to-read file. The application reads this file when it starts and makes the settings available wherever they're needed.</li>
 </ul>
 <p>OpenManus uses Option 2. It keeps settings in a file named <code>config.toml</code> and uses a special <code>Config</code> object to manage them.</p>
 <p><b>Use Case:</b> Let's say we want our <a class="el" href="../../db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_201__llm.html">LLM</a> component to use the "gpt-4o" model and a specific API key. Instead of writing "gpt-4o" and the key directly into the <code>LLM</code> class code, the <code>LLM</code> class will <em>ask</em> the <code>Config</code> system: "What model should I use?" and "What's the API key?". The <code>Config</code> system provides the answers it read from <code>config.toml</code>.</p>
-<h2><a class="anchor" id="autotoc_md2653"></a>
+<h2><a class="anchor" id="autotoc_md2677"></a>
 Key Concepts: The Settings File and Manager</h2>
-<h3><a class="anchor" id="autotoc_md2654"></a>
+<h3><a class="anchor" id="autotoc_md2678"></a>
 1. The Settings File (<code>config.toml</code>)</h3>
 <p>This is a simple text file located in the <code>config/</code> directory of your OpenManus project. It uses the TOML format (Tom's Obvious, Minimal Language), which is designed to be easy for humans to read.</p>
 <p>It contains sections for different parts of the application. Here's a highly simplified snippet:</p>
@@ -176,7 +176,7 @@ Key Concepts: The Settings File and Manager</h2>
 <li><code>use_sandbox = true</code> sets a boolean (true/false) value.</li>
 </ul>
 <p>This file acts as the central "control panel" list for the application's behavior.</p>
-<h3><a class="anchor" id="autotoc_md2655"></a>
+<h3><a class="anchor" id="autotoc_md2679"></a>
 2. The Settings Manager (<code>Config</code> class in <code>app/config.py</code>)</h3>
 <p>Okay, we have the settings file. How does the application <em>use</em> it?</p>
 <p>OpenManus has a special Python class called <code>Config</code> (defined in <code>app/config.py</code>). Think of this class as the <b>Settings Manager</b>. Its job is:</p>
@@ -185,12 +185,12 @@ Key Concepts: The Settings File and Manager</h2>
 <li><b>Parse and Store:</b> It understands the TOML format and stores the settings internally, often using the Pydantic <a class="el" href="../../d6/d4f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_206__schema.html">Schemas</a> we learned about (like <code>LLMSettings</code>, <code>SandboxSettings</code>) to validate the data.</li>
 <li><b>Provide Access:</b> It offers a way for any other part of the application to easily ask for a specific setting (e.g., "Give me the LLM model name").</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md2656"></a>
+<h3><a class="anchor" id="autotoc_md2680"></a>
 3. The Singleton Pattern: One Manager to Rule Them All</h3>
 <p>The <code>Config</code> class uses a special design pattern called a <b>Singleton</b>. This sounds fancy, but the idea is simple: <b>There is only ever <em>one</em> instance (object) of the <code>Config</code> manager in the entire application.</b></p>
 <p><em>Analogy:</em> Think of the principal's office in a school. There's only one principal's office. If any teacher or student needs official school-wide information (like the date of the next holiday), they go to that single, central office. They don't each have their own separate, potentially conflicting, information source.</p>
 <p>The <code>Config</code> object is like that principal's office. When any part of OpenManus (like the <a class="el" href="../../db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_201__llm.html">LLM</a> class or the <a class="el" href="../../de/da6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_208__dockersandbox.html">DockerSandbox</a> class) needs a setting, it asks the <em>same</em>, single <code>Config</code> instance. This ensures everyone is using the same configuration values that were loaded at the start.</p>
-<h2><a class="anchor" id="autotoc_md2657"></a>
+<h2><a class="anchor" id="autotoc_md2681"></a>
 How Do We Use It? (Accessing Settings)</h2>
 <p>Because <code>Config</code> is a singleton, accessing settings is straightforward. You import the pre-created instance and ask for the setting you need.</p>
 <p>The single instance is created automatically when <code>app/config.py</code> is first loaded and is made available as <code>config</code>.</p>
@@ -267,7 +267,7 @@ How Do We Use It? (Accessing Settings)</h2>
 <li>It then uses these retrieved values to configure itself and the underlying API client.</li>
 </ul>
 <p>This way, the <code>LLM</code> class doesn't need the actual values hardcoded inside it. It just asks the central <code>Config</code> manager. If you want to change the model or API key, you only need to update <code>config.toml</code> and restart the application!</p>
-<h2><a class="anchor" id="autotoc_md2658"></a>
+<h2><a class="anchor" id="autotoc_md2682"></a>
 Under the Hood: Loading and Providing Settings</h2>
 <p>What happens when the application starts and the <code>config</code> object is first used?</p>
 <ol type="1">
@@ -397,7 +397,7 @@ Under the Hood: Loading and Providing Settings</h2>
 <li><code>@property</code> decorators provide clean access (e.g., <code>config.llm</code>) to the stored settings.</li>
 <li><code>config = Config()</code> at the end creates the actual singleton instance that gets imported elsewhere.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2659"></a>
+<h2><a class="anchor" id="autotoc_md2683"></a>
 Wrapping Up Chapter 7</h2>
 <p>We've learned that the <code>Config</code> system is OpenManus's way of managing application settings. It reads configurations from the <code>config.toml</code> file at startup, validates them using Pydantic <a class="el" href="../../d6/d4f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_206__schema.html">Schemas</a>, and makes them available throughout the application via a single, shared <code>config</code> object (using the singleton pattern). This keeps settings separate from code, making the application more flexible, secure, and easier to manage.</p>
 <p>Many components rely on these configurations. For instance, when an agent needs to execute code safely, it might use a <code>DockerSandbox</code>. The settings for this sandbox – like which Docker image to use or how much memory to allow – are read directly from the configuration we just discussed.</p>

@@ -121,16 +121,16 @@ $(function(){initNavTree('de/d16/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_ndarray__n_dimensional_array_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2479"></a>
-autotoc_md2479</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2503"></a>
+autotoc_md2503</h2>
 <p>layout: default title: "ndarray (N-dimensional array)" parent: "NumPy Core" </p>
-<h2><a class="anchor" id="autotoc_md2480"></a>
+<h2><a class="anchor" id="autotoc_md2504"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2481"></a>
+<h1><a class="anchor" id="autotoc_md2505"></a>
 Chapter 1: ndarray (N-dimensional array)</h1>
 <p>Welcome to the NumPy Core tutorial! If you're interested in how NumPy works under the hood, you're in the right place. NumPy is the foundation for scientific computing in Python, and its core strength comes from a special object called the <code>ndarray</code>.</p>
 <p>Imagine you have a huge list of numbers, maybe temperatures recorded every second for a year, or the pixel values of a large image. Doing math with standard Python lists can be quite slow for these large datasets. This is the problem NumPy, and specifically the <code>ndarray</code>, is designed to solve.</p>
-<h2><a class="anchor" id="autotoc_md2482"></a>
+<h2><a class="anchor" id="autotoc_md2506"></a>
 What is an ndarray?</h2>
 <p>Think of an <code>ndarray</code> (which stands for N-dimensional array) as a powerful grid or table designed to hold items <b>of the same type</b>, usually numbers (like integers or decimals). It's the fundamental building block of NumPy.</p>
 <ul>
@@ -172,7 +172,7 @@ What is an ndarray?</h2>
 <div class="line">    L1R1C2 --- L2R1C2</div>
 <div class="line">    L1R2C1 --- L2R2C1</div>
 <div class="line">    L1R2C2 --- L2R2C2</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2483"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2507"></a>
 Why ndarrays? The Magic of Vectorization</h2>
 <p>Let's say you have two lists of numbers and you want to add them element by element. In standard Python, you'd use a loop:</p>
 <div class="fragment"><div class="line"><span class="comment"># Using standard Python lists</span></div>
@@ -203,7 +203,7 @@ Why ndarrays? The Magic of Vectorization</h2>
 <li><b>Readability:</b> The code is cleaner and looks more like standard mathematical notation.</li>
 </ol>
 <p>This ability to perform operations on entire arrays at once is a core reason why NumPy is so powerful and widely used.</p>
-<h2><a class="anchor" id="autotoc_md2484"></a>
+<h2><a class="anchor" id="autotoc_md2508"></a>
 Creating Your First ndarrays</h2>
 <p>Let's create some arrays. First, we always import NumPy, usually as <code>np</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
@@ -241,7 +241,7 @@ Creating Your First ndarrays</h2>
 <div class="line">print(range_arr)</div>
 <div class="line"><span class="comment"># Output: [0 1 2 3 4]</span></div>
 </div><!-- fragment --><p>There are many other ways to create arrays, but these are fundamental.</p>
-<h2><a class="anchor" id="autotoc_md2485"></a>
+<h2><a class="anchor" id="autotoc_md2509"></a>
 Exploring Your ndarray: Basic Attributes</h2>
 <p>Once you have an array, you can easily check its properties:</p>
 <div class="fragment"><div class="line">arr = np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])</div>
@@ -262,7 +262,7 @@ Exploring Your ndarray: Basic Attributes</h2>
 <div class="line">print(f<span class="stringliteral">&quot;Data Type: {arr.dtype}&quot;</span>)</div>
 <div class="line"><span class="comment"># Output: Data Type: float64</span></div>
 </div><!-- fragment --><p> These attributes are crucial for understanding the structure of your data. The <code>dtype</code> tells you what kind of data is stored (e.g., <code>int32</code>, <code>float64</code>, <code>bool</code>). We'll dive much deeper into this in <a class="el" href="../../d6/d31/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_202__dtype____data__type__object__.html">Chapter 2: dtype (Data Type Object)</a>.</p>
-<h2><a class="anchor" id="autotoc_md2486"></a>
+<h2><a class="anchor" id="autotoc_md2510"></a>
 A Glimpse Under the Hood</h2>
 <p>So, how does NumPy achieve its speed? The <code>ndarray</code> you manipulate in Python is actually a clever wrapper around a highly efficient data structure implemented in the <b>C programming language</b>.</p>
 <p>When you perform an operation like <code>array1 + array2</code>, Python doesn't slowly loop through the elements. Instead, NumPy:</p>
@@ -297,7 +297,7 @@ A Glimpse Under the Hood</h2>
 <div class="line"><span class="comment"># The `array` function seen in multiarray.py is often a wrapper</span></div>
 <div class="line"><span class="comment"># that calls the actual C implementation.</span></div>
 </div><!-- fragment --><p> This setup gives you the ease of Python with the speed of C. The <code>ndarray</code> object itself stores metadata (like shape, dtype, strides) and a pointer to the actual raw data block in memory. We will see more details about the Python modules involved in <a class="el" href="../../db/d8b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_206__multiarray__module.html">Chapter 6: multiarray Module</a> and <a class="el" href="../../d0/db5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_207__umath__module.html">Chapter 7: umath Module</a>.</p>
-<h2><a class="anchor" id="autotoc_md2487"></a>
+<h2><a class="anchor" id="autotoc_md2511"></a>
 Conclusion</h2>
 <p>You've met the <code>ndarray</code>, the heart of NumPy! You learned:</p>
 <ul>

@@ -121,15 +121,15 @@ $(function(){initNavTree('d7/d22/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_basemodel</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2794"></a>
-autotoc_md2794</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2818"></a>
+autotoc_md2818</h2>
 <p>layout: default title: "BaseModel" parent: "Pydantic Core" </p>
-<h2><a class="anchor" id="autotoc_md2795"></a>
+<h2><a class="anchor" id="autotoc_md2819"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2796"></a>
+<h1><a class="anchor" id="autotoc_md2820"></a>
 Chapter 1: BaseModel - Your Data Blueprint</h1>
 <p>Welcome to the Pydantic tutorial! We're excited to guide you through the powerful features of Pydantic, starting with the absolute core concept: <code>BaseModel</code>.</p>
-<h2><a class="anchor" id="autotoc_md2797"></a>
+<h2><a class="anchor" id="autotoc_md2821"></a>
 Why Do We Need Structured Data?</h2>
 <p>Imagine you're building a web application. You receive data from users – maybe their name and age when they sign up. This data might come as JSON, form data, or just plain Python dictionaries.</p>
 <div class="fragment"><div class="line">// Example user data from an API</div>
@@ -140,7 +140,7 @@ Why Do We Need Structured Data?</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p>How do you make sure this data is correct? Is <code>username</code> always provided? Is <code>age</code> actually a number, or could it be text like <code>"twenty-eight"</code>? Handling all these checks manually can be tedious and error-prone.</p>
 <p>This is where Pydantic and <code>BaseModel</code> come in!</p>
-<h2><a class="anchor" id="autotoc_md2798"></a>
+<h2><a class="anchor" id="autotoc_md2822"></a>
 Introducing <code>BaseModel</code>: The Blueprint</h2>
 <p>Think of <code>BaseModel</code> as a <b>blueprint</b> for your data. You define the structure you expect – what fields should exist and what their types should be (like <code>string</code>, <code>integer</code>, <code>boolean</code>, etc.). Pydantic then uses this blueprint to automatically:</p>
 <ol type="1">
@@ -149,7 +149,7 @@ Introducing <code>BaseModel</code>: The Blueprint</h2>
 <li><b>Serialize:</b> Convert your structured data back into simple formats (like a dictionary or JSON) when you need to send it somewhere else.</li>
 </ol>
 <p>It's like having an automatic quality checker and translator for your data!</p>
-<h2><a class="anchor" id="autotoc_md2799"></a>
+<h2><a class="anchor" id="autotoc_md2823"></a>
 Defining Your First Model</h2>
 <p>Let's create a blueprint for a simple <code>User</code>. We want each user to have a <code>name</code> (which should be text) and an <code>age</code> (which should be a whole number).</p>
 <p>In Pydantic, you do this by creating a class that inherits from <code>BaseModel</code> and using standard Python type hints:</p>
@@ -161,10 +161,10 @@ Defining Your First Model</h2>
 <div class="line">    name: str  <span class="comment"># The user&#39;s name must be a string</span></div>
 <div class="line">    age: int   <span class="comment"># The user&#39;s age must be an integer</span></div>
 </div><!-- fragment --><p>That's it! This simple class <code>User</code> is now a Pydantic model. It acts as the blueprint for creating user objects.</p>
-<h2><a class="anchor" id="autotoc_md2800"></a>
+<h2><a class="anchor" id="autotoc_md2824"></a>
 Using Your <code>BaseModel</code> Blueprint</h2>
 <p>Now that we have our <code>User</code> blueprint, let's see how to use it.</p>
-<h3><a class="anchor" id="autotoc_md2801"></a>
+<h3><a class="anchor" id="autotoc_md2825"></a>
 Creating Instances (Parsing and Validation)</h3>
 <p>You create instances of your model just like any regular Python class, passing the data as keyword arguments. Pydantic automatically parses and validates the data against your type hints (<code>name: str</code>, <code>age: int</code>).</p>
 <p><b>1. Valid Data:</b></p>
@@ -221,7 +221,7 @@ Creating Instances (Parsing and Validation)</h3>
 <div class="line">print(type(user_charlie.age))</div>
 <div class="line"><span class="comment"># Expected Output: &lt;class &#39;int&#39;&gt;</span></div>
 </div><!-- fragment --><p>Pydantic automatically <em>coerced</em> the string &lsquo;'35&rsquo;<code>into the integer</code>35<code>because the blueprint specified</code>age: int`. This leniency is often very convenient.</p>
-<h3><a class="anchor" id="autotoc_md2802"></a>
+<h3><a class="anchor" id="autotoc_md2826"></a>
 Accessing Data</h3>
 <p>Once you have a valid model instance, you access its data using standard attribute access:</p>
 <div class="fragment"><div class="line"><span class="comment"># Continuing from the user_alice example:</span></div>
@@ -230,7 +230,7 @@ Accessing Data</h3>
 <div class="line"> </div>
 <div class="line">print(f<span class="stringliteral">&quot;User&#39;s Age: {user_alice.age}&quot;</span>)</div>
 <div class="line"><span class="comment"># Expected Output: User&#39;s Age: 30</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2803"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2827"></a>
 Serialization (Converting Back)</h3>
 <p>Often, you'll need to convert your model instance back into a basic Python dictionary (e.g., to send it as JSON over a network). <code>BaseModel</code> provides easy ways to do this:</p>
 <p><b>1. <code>model_dump()</code>:</b> Converts the model to a dictionary.</p>
@@ -254,7 +254,7 @@ Serialization (Converting Back)</h3>
 <div class="line">print(type(user_json))</div>
 <div class="line"><span class="comment"># Expected Output: &lt;class &#39;str&#39;&gt;</span></div>
 </div><!-- fragment --><p>These methods allow you to easily share your structured data.</p>
-<h2><a class="anchor" id="autotoc_md2804"></a>
+<h2><a class="anchor" id="autotoc_md2828"></a>
 Under the Hood: How Does <code>BaseModel</code> Work?</h2>
 <p>You don't <em>need</em> to know the internals to use Pydantic effectively, but a little insight can be helpful!</p>
 <p><b>High-Level Steps:</b></p>
@@ -319,7 +319,7 @@ Under the Hood: How Does <code>BaseModel</code> Work?</h2>
 <div class="line"><span class="comment"># class BaseModel(metaclass=ModelMetaclass):</span></div>
 <div class="line"><span class="comment">#    ... rest of BaseModel implementation ...</span></div>
 </div><!-- fragment --><p>This setup ensures that validation and serialization are defined <em>once</em> when the class is created, making instance creation (<code>User(...)</code>) and dumping (<code>model_dump()</code>) very fast.</p>
-<h2><a class="anchor" id="autotoc_md2805"></a>
+<h2><a class="anchor" id="autotoc_md2829"></a>
 Conclusion</h2>
 <p>You've learned the fundamentals of <code>pydantic.BaseModel</code>:</p>
 <ul>

@@ -121,17 +121,17 @@ $(function(){initNavTree('d0/d59/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_control_flow_primitives___branch____send____interrupt__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2151"></a>
-autotoc_md2151</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2175"></a>
+autotoc_md2175</h2>
 <p>layout: default title: "Control Flow Primitives" parent: "LangGraph" </p>
-<h2><a class="anchor" id="autotoc_md2152"></a>
+<h2><a class="anchor" id="autotoc_md2176"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2153"></a>
+<h1><a class="anchor" id="autotoc_md2177"></a>
 Chapter 4: Control Flow Primitives (<code>Branch</code>, <code>Send</code>, <code>Interrupt</code>)</h1>
 <p>In <a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Chapter 3: Channels</a>, we saw how information is stored and updated in our graph's shared state using Channels. We have the blueprint (<a class="el" href="../../df/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_201__graph______stategraph.html"><code>StateGraph</code></a>), the workers (<a class="el" href="../../dc/d09/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_202__nodes______pregelnode____.html"><code>Nodes</code></a>), and the communication system (<a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>).</p>
 <p>But what if we don't want our graph to follow a single, fixed path? What if we need it to make decisions? For example, imagine a chatbot: sometimes it needs to use a tool (like a search engine), and other times it can answer directly. How do we tell the graph <em>which</em> path to take based on the current situation?</p>
 <p>This is where <b>Control Flow Primitives</b> come in. They are special mechanisms that allow you to dynamically direct the execution path of your graph, making it much more flexible and powerful.</p>
-<h2><a class="anchor" id="autotoc_md2154"></a>
+<h2><a class="anchor" id="autotoc_md2178"></a>
 What Problem Do Control Flow Primitives Solve?</h2>
 <p>Think of our graph like a train system. So far, we've only built tracks that go in a straight line from one station (node) to the next. Control flow primitives are like the <b>switches</b> and <b>signals</b> that allow the train (our execution flow) to:</p>
 <ol type="1">
@@ -146,7 +146,7 @@ What Problem Do Control Flow Primitives Solve?</h2>
 <li><b><code>Interrupt</code></b>: Pauses the graph execution, usually to wait for external input (like a human clicking "Approve") before continuing.</li>
 </ul>
 <p>Let's explore each one.</p>
-<h2><a class="anchor" id="autotoc_md2155"></a>
+<h2><a class="anchor" id="autotoc_md2179"></a>
 1. <code>Branch</code> - The Conditional Router</h2>
 <p>Imagine our chatbot needs to decide: "Should I use the search tool, or can I answer from my knowledge?" This decision depends on the conversation history or the user's specific question stored in the graph's state.</p>
 <p>The <code>Branch</code> primitive allows us to implement this kind of conditional logic. You add it using the <code>graph.add_conditional_edges()</code> method.</p>
@@ -311,7 +311,7 @@ What Problem Do Control Flow Primitives Solve?</h2>
 <div class="line">        <span class="comment"># Create and store the Branch object</span></div>
 <div class="line">        self.branches[source][name] = Branch.from_path(runnable_path, path_map, ...)</div>
 <div class="line">        <span class="keywordflow">return</span> self</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2156"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2180"></a>
 2. <code>Send</code> - Directing Specific Traffic</h2>
 <p>Sometimes, you don't just want to choose <em>one</em> path, but you want to trigger a <em>specific</em> node with <em>specific</em> data, possibly multiple times. This is common in "map-reduce" patterns where you split a task into smaller pieces, process each piece independently, and then combine the results.</p>
 <p>The <code>Send</code> primitive allows a node (or a conditional edge function) to directly "send" a piece of data to another node, telling the engine: "Run *this* node next, and give it *this* input."</p>
@@ -441,7 +441,7 @@ What Problem Do Control Flow Primitives Solve?</h2>
 <div class="line"><span class="comment">#   packet = write_value # This is the Send object</span></div>
 <div class="line"><span class="comment">#   # Schedule packet.node to run in the next step with packet.arg</span></div>
 <div class="line"><span class="comment">#   schedule_task(node=packet.node, input=packet.arg, ...)</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2157"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2181"></a>
 3. <code>Interrupt</code> - Pausing for Instructions</h2>
 <p>Sometimes, your graph needs to stop and wait for external input before proceeding. A common case is Human-in-the-Loop (HITL), where an AI agent proposes a plan or an action, and a human needs to approve it.</p>
 <p>The <code>Interrupt</code> primitive allows a node to pause the graph's execution and wait. This requires a <a class="el" href="../../d8/d4c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_206__checkpointer______basecheckpointsaver____.html">Checkpointer</a> to be configured, as the graph needs to save its state to be resumable later.</p>
@@ -614,7 +614,7 @@ What Problem Do Control Flow Primitives Solve?</h2>
 <div class="line"><span class="comment"># errors.py (Simplified view)</span></div>
 <div class="line"><span class="keyword">class </span>GraphInterrupt(Exception): <span class="comment"># Base class for interrupts</span></div>
 <div class="line">    <span class="keywordflow">pass</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2158"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2182"></a>
 Conclusion</h2>
 <p>You've learned about the essential tools for controlling the flow of execution in your LangGraph applications:</p>
 <ul>

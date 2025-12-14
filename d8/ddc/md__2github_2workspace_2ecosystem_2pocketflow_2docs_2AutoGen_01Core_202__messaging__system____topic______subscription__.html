@@ -121,16 +121,16 @@ $(function(){initNavTree('d8/ddc/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_messaging_system__topic___subscription_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md663"></a>
-autotoc_md663</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md687"></a>
+autotoc_md687</h2>
 <p>layout: default title: "Messaging System" parent: "AutoGen Core" </p>
-<h2><a class="anchor" id="autotoc_md664"></a>
+<h2><a class="anchor" id="autotoc_md688"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md665"></a>
+<h1><a class="anchor" id="autotoc_md689"></a>
 Chapter 2: Messaging System (Topic &amp; Subscription)</h1>
 <p>In <a class="el" href="../../d6/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_201__agent.html">Chapter 1: Agent</a>, we learned about Agents as individual workers. But how do they coordinate when one agent doesn't know exactly <em>who</em> needs the information it produces? Imagine our Researcher finds some facts. Maybe the Writer needs them, but maybe a Fact-Checker agent or a Summary agent also needs them later. How can the Researcher just announce "Here are the facts!" without needing a specific mailing list?</p>
 <p>This is where the <b>Messaging System</b>, specifically <b>Topics</b> and <b>Subscriptions</b>, comes in. It allows agents to broadcast messages to anyone interested, like posting on a company announcement board.</p>
-<h2><a class="anchor" id="autotoc_md666"></a>
+<h2><a class="anchor" id="autotoc_md690"></a>
 Motivation: Broadcasting Information</h2>
 <p>Let's refine our blog post example:</p>
 <ol type="1">
@@ -140,7 +140,7 @@ Motivation: Broadcasting Information</h2>
 <li>The system sees the new message on the Topic and delivers it to the <code>Writer</code> (and any other subscribers).</li>
 </ol>
 <p>This way, the <code>Researcher</code> doesn't need to know who the <code>Writer</code> is, or even if a <code>Writer</code> exists! It just broadcasts the results. If we later add a <code>FactChecker</code> agent that also needs the results, it simply subscribes to the same Topic.</p>
-<h2><a class="anchor" id="autotoc_md667"></a>
+<h2><a class="anchor" id="autotoc_md691"></a>
 Key Concepts: Topics and Subscriptions</h2>
 <p>Let's break down the components of this broadcasting system:</p>
 <ol type="1">
@@ -155,12 +155,12 @@ Key Concepts: Topics and Subscriptions</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md668"></a>
+<h1><a class="anchor" id="autotoc_md692"></a>
 From: _topic.py (Simplified)</h1>
 <p>from dataclasses import dataclass</p>
 <p>@dataclass(frozen=True) # Immutable: can't change after creation class TopicId: type: str source: str</p>
 <p>def <b>str</b>(self) -&gt; str: </p>
-<h1><a class="anchor" id="autotoc_md669"></a>
+<h1><a class="anchor" id="autotoc_md693"></a>
 Creates an id like "research.completed/autogen-agents-blog-post"</h1>
 <p>return f"{self.type}/{self.source}" ``<code> This structure allows for flexible filtering. Agents might subscribe to all topics of a certain</code>type<code>, regardless of the</code>source<code>, or only to topics with a specific</code>source`.</p>
 <ol type="1">
@@ -182,7 +182,7 @@ Creates an id like "research.completed/autogen-agents-blog-post"</h1>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md670"></a>
+<h2><a class="anchor" id="autotoc_md694"></a>
 Use Case Example: Researcher Publishes, Writer Subscribes</h2>
 <p>Let's see how our Researcher and Writer can use this system.</p>
 <p><b>Goal:</b> Researcher publishes facts to a topic, Writer receives them via subscription.</p>
@@ -245,7 +245,7 @@ Use Case Example: Researcher Publishes, Writer Subscribes</h2>
 <div class="line"><span class="comment"># Output: Writer subscription created for topic type: research.facts.available</span></div>
 </div><!-- fragment --><p> When the <code>Researcher</code> publishes to <code>TopicId(type="research.facts.available", source="blog-post-autogen")</code>, the <code>AgentRuntime</code> will see that <code>writer_subscription</code> matches the <code>topic_type</code>. It will then use the rule: "Find (or create) an agent with `AgentId(type='writer', key='blog-post-autogen')` and deliver the message."</p>
 <p><b>Benefit:</b> Decoupling! The Researcher just broadcasts. The Writer just listens for relevant broadcasts. We can add more listeners (like a <code>FactChecker</code> subscribing to the same <code>topic_type</code>) without changing the <code>Researcher</code> at all.</p>
-<h2><a class="anchor" id="autotoc_md671"></a>
+<h2><a class="anchor" id="autotoc_md695"></a>
 Under the Hood: How Publishing Works</h2>
 <p>Let's trace the journey of a published message.</p>
 <p><b>Conceptual Flow:</b></p>
@@ -279,15 +279,15 @@ Under the Hood: How Publishing Works</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md672"></a>
+<h1><a class="anchor" id="autotoc_md696"></a>
 From: _topic.py</h1>
 <p>@dataclass(eq=True, frozen=True) class TopicId: type: str source: str </p>
-<h1><a class="anchor" id="autotoc_md673"></a>
+<h1><a class="anchor" id="autotoc_md697"></a>
 ... validation and <b>str</b> ...</h1>
 <p>@classmethod def from_str(cls, topic_id: str) -&gt; Self: </p>
-<h1><a class="anchor" id="autotoc_md674"></a>
+<h1><a class="anchor" id="autotoc_md698"></a>
 Helper to parse "type/source" string</h1>
-<h1><a class="anchor" id="autotoc_md675"></a>
+<h1><a class="anchor" id="autotoc_md699"></a>
 ... implementation ...</h1>
 <p>```</p>
 <ul>
@@ -295,10 +295,10 @@ Helper to parse "type/source" string</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md676"></a>
+<h1><a class="anchor" id="autotoc_md700"></a>
 From: _subscription.py (Simplified Protocol)</h1>
 <p>from typing import Protocol </p>
-<h1><a class="anchor" id="autotoc_md677"></a>
+<h1><a class="anchor" id="autotoc_md701"></a>
 ... other imports</h1>
 <p>class Subscription(Protocol): </p>
 </div></div><!-- contents -->

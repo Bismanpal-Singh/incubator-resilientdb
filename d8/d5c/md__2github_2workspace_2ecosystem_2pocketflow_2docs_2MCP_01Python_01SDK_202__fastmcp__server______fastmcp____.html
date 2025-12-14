@@ -121,17 +121,17 @@ $(function(){initNavTree('d8/d5c/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_fastmcp_server___fastmcp__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2334"></a>
-autotoc_md2334</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2358"></a>
+autotoc_md2358</h2>
 <p>layout: default title: "FastMCP Server (FastMCP)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2335"></a>
+<h2><a class="anchor" id="autotoc_md2359"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2336"></a>
+<h1><a class="anchor" id="autotoc_md2360"></a>
 Chapter 2: Easier Server Building with <code>FastMCP</code></h1>
 <p>In <a class="el" href="../../d2/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_201__cli______mcp____command__.html">Chapter 1: Your Control Panel - The <code>mcp</code> Command-Line Interface</a>, we learned how to use the <code>mcp</code> command to run, test, and install MCP servers. We even saw a tiny example of a server file. But how do we <em>build</em> that server code without getting lost in complex details?</p>
 <p>Imagine you want to build a simple AI assistant that can just echo back whatever you type. Writing all the code to handle connections, interpret messages according to the MCP protocol, manage capabilities – it sounds like a lot of work just for an echo!</p>
 <p>This is where <code>FastMCP</code> comes in. It's designed to make building MCP servers much, much easier.</p>
-<h2><a class="anchor" id="autotoc_md2337"></a>
+<h2><a class="anchor" id="autotoc_md2361"></a>
 What is <code>FastMCP</code>?</h2>
 <p>Think of the low-level parts of the MCP protocol like individual kitchen tools: a pot, a pan, a knife, a whisk. You <em>could</em> use them all individually to cook a meal, but you'd need to know exactly when and how to use each one.</p>
 <p><code>FastMCP</code> is like a fancy <b>kitchen multi-cooker</b>. It bundles many common functions together in an easy-to-use package. You provide the ingredients (your Python functions and data) and press simple buttons (special markers called <b>decorators</b> like <code>@tool</code>, <code>@resource</code>, <code>@prompt</code>), and <code>FastMCP</code> handles the complex cooking process (managing the low-level MCP details) for you.</p>
@@ -142,7 +142,7 @@ What is <code>FastMCP</code>?</h2>
 <li><b>Less Boilerplate:</b> Reduces the amount of repetitive setup code you need to write.</li>
 <li><b>Built-in Features:</b> Includes easy ways to manage settings, automatically tell clients what your server can do (capability generation), and handle common tasks.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2338"></a>
+<h2><a class="anchor" id="autotoc_md2362"></a>
 Your First <code>FastMCP</code> Server: The Foundation</h2>
 <p>Let's start with the absolute minimum needed to create a <code>FastMCP</code> server.</p>
 <p><b>File: <code>my_simple_server.py</code></b></p>
@@ -176,7 +176,7 @@ Your First <code>FastMCP</code> Server: The Foundation</h2>
 <li><b><code>server.run()</code></b>: This is the command that actually starts the server. It tells <code>FastMCP</code> to begin listening for incoming connections and handling MCP messages. By default, it uses the "stdio" transport (reading/writing from the terminal), which we discussed briefly in Chapter 1.</li>
 </ol>
 <p>If you save this code as <code>my_simple_server.py</code> and run it using <code>mcp run my_simple_server.py</code> (as learned in Chapter 1), it will start! It won't <em>do</em> much yet, because we haven't added any specific capabilities, but it's a functioning MCP server.</p>
-<h2><a class="anchor" id="autotoc_md2339"></a>
+<h2><a class="anchor" id="autotoc_md2363"></a>
 Adding Features with Decorators: The "Buttons"</h2>
 <p>Our multi-cooker (<code>FastMCP</code>) is running, but it doesn't have any cooking programs yet. How do we add features, like our "echo" tool? We use <b>decorators</b>.</p>
 <p>Decorators in Python are special markers starting with <code>@</code> that you place above a function definition. They modify or enhance the function in some way. <code>FastMCP</code> uses decorators like <code>@server.tool()</code>, <code>@server.resource()</code>, and <code>@server.prompt()</code> to easily register your Python functions as capabilities that clients can use.</p>
@@ -227,7 +227,7 @@ Adding Features with Decorators: The "Buttons"</h2>
 <li><a class="el" href="../../d9/dfc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_203__fastmcp__resources_95757cc8f176683b04c22ceeac7ea1d5.html">Chapter 3: FastMCP Resources (<code>Resource</code>, <code>ResourceManager</code>)</a></li>
 <li><a class="el" href="../../d5/de9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_205__fastmcp__prompts___e380d8fca08b641e7632fcc5814680b7.html">Chapter 5: FastMCP Prompts (<code>Prompt</code>, <code>PromptManager</code>)</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2340"></a>
+<h2><a class="anchor" id="autotoc_md2364"></a>
 How <code>FastMCP</code> Works Under the Hood (Simplified)</h2>
 <p>It feels simple to use, but what's <code>FastMCP</code> actually doing?</p>
 <ol type="1">
@@ -357,7 +357,7 @@ How <code>FastMCP</code> Works Under the Hood (Simplified)</h2>
 <div class="line">        self._mcp_server.call_tool()(self.call_tool)</div>
 <div class="line">        <span class="comment"># (...) other handlers for listTools, readResource etc. (...)</span></div>
 </div><!-- fragment --><p>This shows how an incoming <code>callTool</code> message gets routed to the <code>call_tool</code> method, which then uses the <code>_tool_manager</code> to run your registered function.</p>
-<h2><a class="anchor" id="autotoc_md2341"></a>
+<h2><a class="anchor" id="autotoc_md2365"></a>
 Conclusion</h2>
 <p>You've now seen how <code>FastMCP</code> provides a much simpler way to build MCP servers compared to handling the low-level protocol directly. Like a multi-cooker, it offers convenient "buttons" (decorators like <code>@server.tool()</code>) to add features (like tools) to your server using standard Python functions. It handles the underlying complexity of receiving requests, calling your code, and sending responses.</p>
 <p>You learned how to:</p><ul>

@@ -121,17 +121,17 @@ $(function(){initNavTree('dc/d09/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_nodes___pregelnode__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2090"></a>
-autotoc_md2090</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2114"></a>
+autotoc_md2114</h2>
 <p>layout: default title: "Nodes (PregelNode)" parent: "LangGraph" </p>
-<h2><a class="anchor" id="autotoc_md2091"></a>
+<h2><a class="anchor" id="autotoc_md2115"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2092"></a>
+<h1><a class="anchor" id="autotoc_md2116"></a>
 Chapter 2: Nodes (<code>PregelNode</code>) - The Workers of Your Graph</h1>
 <p>In <a class="el" href="../../df/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_201__graph______stategraph.html">Chapter 1: Graph / StateGraph</a>, we learned how <code>StateGraph</code> acts as a blueprint or a flowchart for our application. It defines the overall structure and the shared "whiteboard" (the State) that holds information.</p>
 <p>But who actually does the work? If the <code>StateGraph</code> is the assembly line blueprint, who are the workers on the line?</p>
 <p>That's where <b>Nodes</b> come in!</p>
-<h2><a class="anchor" id="autotoc_md2093"></a>
+<h2><a class="anchor" id="autotoc_md2117"></a>
 What Problem Do Nodes Solve?</h2>
 <p>Think back to our cake baking analogy from Chapter 1. We had steps like "mix dry ingredients," "mix wet ingredients," "combine," etc. Each of these distinct actions needs to be performed by someone or something.</p>
 <p>In LangGraph, <b>Nodes</b> represent these individual units of work or computation steps within your graph.</p>
@@ -139,7 +139,7 @@ What Problem Do Nodes Solve?</h2>
 <li><b>Analogy:</b> Imagine chefs in a kitchen (the graph). Each chef (node) has a specific task: one chops vegetables, another mixes the sauce, another cooks the main course. They all work with shared ingredients (the state) from the pantry and fridge, and they put their finished components back for others to use.</li>
 </ul>
 <p>Nodes are the core building blocks that perform the actual logic of your application.</p>
-<h2><a class="anchor" id="autotoc_md2094"></a>
+<h2><a class="anchor" id="autotoc_md2118"></a>
 Key Concepts: What Makes a Node?</h2>
 <ol type="1">
 <li><b>The Action:</b> At its heart, a node is usually a Python function or a LangChain Runnable. This is the code that gets executed when the node runs.</li>
@@ -147,7 +147,7 @@ Key Concepts: What Makes a Node?</h2>
 <li><b>Execution:</b> The node runs its defined logic (the function or Runnable).</li>
 <li><b>Output:</b> After executing, a node in a <code>StateGraph</code> returns a dictionary. This dictionary specifies <em>which parts</em> of the shared state the node wants to <em>update</em> and what the new values should be. LangGraph takes care of merging these updates back into the main state.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2095"></a>
+<h2><a class="anchor" id="autotoc_md2119"></a>
 Adding Nodes to Your Graph (<code>add_node</code>)</h2>
 <p>How do we tell our <code>StateGraph</code> about these workers? We use the <code>add_node</code> method.</p>
 <p>Let's revisit the code from Chapter 1:</p>
@@ -198,7 +198,7 @@ Adding Nodes to Your Graph (<code>add_node</code>)</h2>
 <li><code>workflow.add_node("multiplier", multiply_by_two)</code>: Similarly, this registers the <code>multiply_by_two</code> function under the name <code>"multiplier"</code>.</li>
 </ul>
 <p>It's that simple! You define what a step does (the function) and then register it with <code>add_node</code>, giving it a name so you can connect it using edges later.</p>
-<h2><a class="anchor" id="autotoc_md2096"></a>
+<h2><a class="anchor" id="autotoc_md2120"></a>
 How Do Nodes Actually Run? (Under the Hood)</h2>
 <p>You've defined the functions and added them as nodes. What happens internally when the graph executes?</p>
 <ol type="1">
@@ -224,73 +224,73 @@ How Do Nodes Actually Run? (Under the Hood)</h2>
 <div class="line">    Engine-&gt;&gt;State (via Channels): Write update: &#39;value&#39; = 6</div>
 <div class="line">    State (via Channels)--&gt;&gt;Engine: Acknowledge (state is now {&#39;value&#39;: 6})</div>
 <div class="line">    Engine-&gt;&gt;Engine: Find next node based on edge from &quot;adder&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2097"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2121"></a>
 A Peek at the Code (<code>graph/state.py</code>, <code>pregel/read.py</code>)</h2>
 <p>Let's look at simplified snippets to see how this maps to the code:</p>
 <ul>
 <li><b><code>StateGraph.add_node</code> (<code>graph/state.py</code>)</b>: ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2098"></a>
+<h1><a class="anchor" id="autotoc_md2122"></a>
 Simplified view</h1>
 <p>class StateGraph(Graph): </p>
-<h1><a class="anchor" id="autotoc_md2099"></a>
+<h1><a class="anchor" id="autotoc_md2123"></a>
 ... (other methods) ...</h1>
 <p>def add_node( self, node: str, # The name you give the node (e.g., "adder") action: RunnableLike, # The function or Runnable (e.g., add_one) *, </p>
-<h1><a class="anchor" id="autotoc_md2100"></a>
+<h1><a class="anchor" id="autotoc_md2124"></a>
 ... other optional parameters ...</h1>
 <p>input: Optional[Type[Any]] = None, # Optional: specific input type for this node ) -&gt; Self: </p>
-<h1><a class="anchor" id="autotoc_md2101"></a>
+<h1><a class="anchor" id="autotoc_md2125"></a>
 ... (checks for valid name, etc.) ...</h1>
 <p>if node in self.channels: # Can't use a state key name as a node name raise ValueError(...)</p>
-<h1><a class="anchor" id="autotoc_md2102"></a>
+<h1><a class="anchor" id="autotoc_md2126"></a>
 Converts your function into a standard LangChain Runnable if needed</h1>
 <p>runnable = coerce_to_runnable(action, ...)</p>
-<h1><a class="anchor" id="autotoc_md2103"></a>
+<h1><a class="anchor" id="autotoc_md2127"></a>
 Stores the node's details, including the runnable and input schema</h1>
 <p>self.nodes[node] = StateNodeSpec( runnable=runnable, metadata=None, # Optional metadata input=input or self.schema, # Default to graph's main state schema </p>
-<h1><a class="anchor" id="autotoc_md2104"></a>
+<h1><a class="anchor" id="autotoc_md2128"></a>
 ... other details ...</h1>
 <p>) return self ``<code> When you call</code>add_node<code>, LangGraph stores your function (</code>action<code>) under the given</code>node<code>name. It wraps your function into a standard</code>Runnable<code>object (</code>coerce_to_runnable<code>) and keeps track of what input schema it expects (usually the graph's main state schema). This stored information is a</code>StateNodeSpec`.</p>
 <ul>
 <li><b><code>CompiledStateGraph.attach_node</code> (<code>graph/state.py</code>)</b>: ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2105"></a>
+<h1><a class="anchor" id="autotoc_md2129"></a>
 Simplified view (during graph.compile())</h1>
 <p>class CompiledStateGraph(CompiledGraph): </p>
-<h1><a class="anchor" id="autotoc_md2106"></a>
+<h1><a class="anchor" id="autotoc_md2130"></a>
 ... (other methods) ...</h1>
 <p>def attach_node(self, key: str, node: Optional[StateNodeSpec]) -&gt; None: </p>
-<h1><a class="anchor" id="autotoc_md2107"></a>
+<h1><a class="anchor" id="autotoc_md2131"></a>
 ... (handles START node specially) ...</h1>
 <p>if node is not None: </p>
-<h1><a class="anchor" id="autotoc_md2108"></a>
+<h1><a class="anchor" id="autotoc_md2132"></a>
 Determine what parts of the state this node needs to read</h1>
 <p>input_schema = node.input input_values = list(self.builder.schemas[input_schema]) # Keys to read</p>
-<h1><a class="anchor" id="autotoc_md2109"></a>
+<h1><a class="anchor" id="autotoc_md2133"></a>
 Create the internal representation: PregelNode</h1>
 <p>self.nodes[key] = PregelNode( triggers=[f"branch:to:{key}"], # When should this node run? (Connected via Channels) channels=input_values, # What state keys does it read? mapper=_pick_mapper(...), # How to format the input state for the function writers=[ChannelWrite(...)], # How to write the output back to state (via Channels) bound=node.runnable, # The actual function/Runnable to execute! </p>
-<h1><a class="anchor" id="autotoc_md2110"></a>
+<h1><a class="anchor" id="autotoc_md2134"></a>
 ... other internal details ...</h1>
 <p>) </p>
-<h1><a class="anchor" id="autotoc_md2111"></a>
+<h1><a class="anchor" id="autotoc_md2135"></a>
 ...</h1>
 <p>``<code> During the</code>compile()<code>step, the information stored in</code>StateNodeSpec<code>is used to create the actual operational node object, which is internally called</code>PregelNode<code>. This</code>PregelNode` is the real "worker" managed by the execution engine.</p>
 <ul>
 <li><b><code>PregelNode</code> (<code>pregel/read.py</code>)</b>: ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2112"></a>
+<h1><a class="anchor" id="autotoc_md2136"></a>
 Simplified view</h1>
 <p>class PregelNode(Runnable): channels: Union[list[str], Mapping[str, str]] # State keys to read as input triggers: list[str] # Channel updates that activate this node mapper: Optional[Callable[[Any], Any]] # Function to format input state writers: list[Runnable] # Runnables to write output back to Channels bound: Runnable[Any, Any] # &lt;&lt; THE ACTUAL FUNCTION/RUNNABLE YOU PROVIDED &gt;&gt; </p>
-<h1><a class="anchor" id="autotoc_md2113"></a>
+<h1><a class="anchor" id="autotoc_md2137"></a>
 ... other attributes like retry policy, tags, etc. ...</h1>
 <p>def <b>init</b>(self, *, channels, triggers, writers, bound, ...) -&gt; None: self.channels = channels self.triggers = list(triggers) self.writers = writers or [] self.bound = bound # Your code lives here! </p>
-<h1><a class="anchor" id="autotoc_md2114"></a>
+<h1><a class="anchor" id="autotoc_md2138"></a>
 ... initialize other attributes ...</h1>
-<h1><a class="anchor" id="autotoc_md2115"></a>
+<h1><a class="anchor" id="autotoc_md2139"></a>
 ... (methods for execution, handled by the Pregel engine) ...</h1>
 <p>``<code> The</code>PregelNode<code>object encapsulates everything needed to run your node: *</code>bound<code>: This holds the actual function or Runnable you passed to</code>add_node<code>. *</code>channels<code>: Specifies which parts of the state (managed by [Channels](<a class="el" href="../../d5/d9b/03__channels_8md.html">03_channels.md</a>)) to read as input. *</code>triggers<code>: Specifies which [Channels](<a class="el" href="../../d5/d9b/03__channels_8md.html">03_channels.md</a>) must be updated to make this node eligible to run. *</code>writers<code>: Defines how the output of</code>bound` should be written back to the state using <a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>.</p>
 <p>Don't worry too much about <code>PregelNode</code> details right now. The key idea is that <code>add_node</code> registers your function, and <code>compile</code> turns it into an executable component (<code>PregelNode</code>) that the graph engine can manage, telling it when to run, what state to read, and how to write results back.</p>
-<h2><a class="anchor" id="autotoc_md2116"></a>
+<h2><a class="anchor" id="autotoc_md2140"></a>
 Conclusion</h2>
 <p>You've now learned about the "workers" in your LangGraph application: <b>Nodes</b>.</p>
 <ul>

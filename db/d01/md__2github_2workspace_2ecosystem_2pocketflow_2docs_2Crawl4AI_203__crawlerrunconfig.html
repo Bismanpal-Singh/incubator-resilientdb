@@ -121,12 +121,12 @@ $(function(){initNavTree('db/d01/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_crawlerrunconfig</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1376"></a>
-autotoc_md1376</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1400"></a>
+autotoc_md1400</h2>
 <p>layout: default title: "CrawlerRunConfig" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1377"></a>
+<h2><a class="anchor" id="autotoc_md1401"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1378"></a>
+<h1><a class="anchor" id="autotoc_md1402"></a>
 Chapter 3: Giving Instructions - CrawlerRunConfig</h1>
 <p>In <a class="el" href="../../d8/dc9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_202__asyncwebcrawler.html">Chapter 2: Meet the General Manager - AsyncWebCrawler</a>, we met the <code>AsyncWebCrawler</code>, the central coordinator for our web crawling tasks. We saw how to tell it <em>what</em> URL to crawl using the <code>arun</code> method.</p>
 <p>But what if we want to tell the crawler <em>how</em> to crawl that URL? Maybe we want it to take a picture (screenshot) of the page? Or perhaps we only care about a specific section of the page? Or maybe we want to ignore the cache and get the very latest version?</p>
@@ -141,11 +141,11 @@ Chapter 3: Giving Instructions - CrawlerRunConfig</h1>
 <div class="line"><span class="comment">#     # ... maybe many more settings ...</span></div>
 <div class="line"><span class="comment"># )</span></div>
 </div><!-- fragment --><p>That's where <code>CrawlerRunConfig</code> comes in!</p>
-<h2><a class="anchor" id="autotoc_md1379"></a>
+<h2><a class="anchor" id="autotoc_md1403"></a>
 What Problem Does <code>CrawlerRunConfig</code> Solve?</h2>
 <p>Think of <code>CrawlerRunConfig</code> as the <b>Instruction Manual</b> for a <em>specific</em> crawl job. Instead of giving the <code>AsyncWebCrawler</code> manager lots of separate instructions each time, you bundle them all neatly into a single <code>CrawlerRunConfig</code> object.</p>
 <p>This object tells the <code>AsyncWebCrawler</code> exactly <em>how</em> to handle a particular URL or set of URLs for that specific run. It makes your code cleaner and easier to manage.</p>
-<h2><a class="anchor" id="autotoc_md1380"></a>
+<h2><a class="anchor" id="autotoc_md1404"></a>
 What is <code>CrawlerRunConfig</code>?</h2>
 <p><code>CrawlerRunConfig</code> is a configuration class that holds all the settings for a single crawl operation initiated by <code>AsyncWebCrawler.arun()</code> or <code>arun_many()</code>.</p>
 <p>It allows you to customize various aspects of the crawl, such as:</p>
@@ -157,7 +157,7 @@ What is <code>CrawlerRunConfig</code>?</h2>
 <li><b>Caching:</b> How should the crawler interact with previously saved results? (<a class="el" href="../../d1/dcd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_209__cachecontext______cachemode.html">CacheMode</a>)</li>
 <li><b>And much more!</b> (like handling JavaScript, filtering links, etc.)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1381"></a>
+<h2><a class="anchor" id="autotoc_md1405"></a>
 Using <code>CrawlerRunConfig</code></h2>
 <p>Let's see how to use it. Remember our basic crawl from Chapter 2?</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter3_example_1.py</span></div>
@@ -226,7 +226,7 @@ Using <code>CrawlerRunConfig</code></h2>
 <li><b>Pass Config:</b> We pass this <code>my_instructions</code> object to <code>crawler.arun</code> using the <code>config=</code> parameter.</li>
 </ol>
 <p>Now, when <code>AsyncWebCrawler</code> runs this job, it will look inside <code>my_instructions</code> and follow those specific settings for <em>this run only</em>.</p>
-<h2><a class="anchor" id="autotoc_md1382"></a>
+<h2><a class="anchor" id="autotoc_md1406"></a>
 Some Common <code>CrawlerRunConfig</code> Parameters</h2>
 <p><code>CrawlerRunConfig</code> has many options, but here are a few common ones you might use:</p>
 <ul>
@@ -275,7 +275,7 @@ Some Common <code>CrawlerRunConfig</code> Parameters</h2>
 <div class="line"><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
 <div class="line">    asyncio.run(<a class="code hl_namespace" href="../../d2/dc1/namespacemain.html">main</a>())</div>
 </div><!-- fragment --><p>This time, the <code>result.markdown</code> should only contain the text from the <code>&lt;h1&gt;</code> tag on that page, because we used <code>css_selector="h1"</code> in our <code>CrawlerRunConfig</code>.</p>
-<h2><a class="anchor" id="autotoc_md1383"></a>
+<h2><a class="anchor" id="autotoc_md1407"></a>
 How <code>AsyncWebCrawler</code> Uses the Config (Under the Hood)</h2>
 <p>You don't need to know the exact internal code, but it helps to understand the flow. When you call <code>crawler.arun(url, config=my_config)</code>, the <code>AsyncWebCrawler</code> essentially does this:</p>
 <ol type="1">
@@ -355,7 +355,7 @@ How <code>AsyncWebCrawler</code> Uses the Config (Under the Hood)</h2>
 <div class="line">    <span class="comment"># Helper methods like &#39;clone&#39;, &#39;to_dict&#39;, &#39;from_kwargs&#39; might exist too</span></div>
 <div class="line">    <span class="comment"># ...</span></div>
 </div><!-- fragment --><p>The key idea is that it's a class designed to hold various settings together. When you create an instance <code>CrawlerRunConfig(...)</code>, you're essentially creating an object that stores your choices for these parameters.</p>
-<h2><a class="anchor" id="autotoc_md1384"></a>
+<h2><a class="anchor" id="autotoc_md1408"></a>
 Conclusion</h2>
 <p>You've learned about <code>CrawlerRunConfig</code>, the "Instruction Manual" for individual crawl jobs in Crawl4AI!</p>
 <ul>

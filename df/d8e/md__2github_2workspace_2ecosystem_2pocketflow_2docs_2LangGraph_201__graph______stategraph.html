@@ -121,17 +121,17 @@ $(function(){initNavTree('df/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_graph___stategraph</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2056"></a>
-autotoc_md2056</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2080"></a>
+autotoc_md2080</h2>
 <p>layout: default title: "Graph &amp; StateGraph" parent: "LangGraph" </p>
-<h2><a class="anchor" id="autotoc_md2057"></a>
+<h2><a class="anchor" id="autotoc_md2081"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2058"></a>
+<h1><a class="anchor" id="autotoc_md2082"></a>
 Chapter 1: Graph / StateGraph - The Blueprint of Your Application</h1>
 <p>Welcome to the LangGraph tutorial! We're excited to help you learn how to build powerful, stateful applications with Large Language Models (LLMs).</p>
 <p>Imagine you're building an application, maybe a chatbot, an agent that performs tasks, or something that processes data in multiple steps. As these applications get more complex, just calling an LLM once isn't enough. You need a way to structure the flow – maybe call an LLM, then a tool, then another LLM based on the result. How do you manage this sequence of steps and the information passed between them?</p>
 <p>That's where <b>Graphs</b> come in!</p>
-<h2><a class="anchor" id="autotoc_md2059"></a>
+<h2><a class="anchor" id="autotoc_md2083"></a>
 What Problem Do Graphs Solve?</h2>
 <p>Think of a complex task like baking a cake. You don't just throw all the ingredients in the oven. There's a sequence: mix dry ingredients, mix wet ingredients, combine them, pour into a pan, bake, cool, frost. Each step depends on the previous one.</p>
 <p>LangGraph helps you define these steps and the order they should happen in. It provides a way to create a <b>flowchart</b> or a <b>blueprint</b> for your application's logic.</p>
@@ -141,7 +141,7 @@ What Problem Do Graphs Solve?</h2>
 <li><b>Edges:</b> These are the connections or transitions between the steps, defining the order (after mixing dry ingredients, mix wet ingredients).</li>
 </ol>
 <p>LangGraph provides different types of graphs, but the most common and useful one for building stateful applications is the <code>StateGraph</code>.</p>
-<h2><a class="anchor" id="autotoc_md2060"></a>
+<h2><a class="anchor" id="autotoc_md2084"></a>
 Core Concepts: <code>Graph</code>, <code>StateGraph</code>, and <code>MessageGraph</code></h2>
 <p>Let's look at the main types of graphs you'll encounter:</p>
 <ol type="1">
@@ -154,23 +154,23 @@ Core Concepts: <code>Graph</code>, <code>StateGraph</code>, and <code>MessageGra
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2061"></a>
+<h1><a class="anchor" id="autotoc_md2085"></a>
 This is a conceptual example - we usually use StateGraph</h1>
 <p>from langgraph.graph import Graph</p>
-<h1><a class="anchor" id="autotoc_md2062"></a>
+<h1><a class="anchor" id="autotoc_md2086"></a>
 Define simple functions or Runnables as nodes</h1>
 <p>def step_one(input_data): print("Running Step 1") return input_data * 2</p>
 <p>def step_two(processed_data): print("Running Step 2") return processed_data + 5</p>
-<h1><a class="anchor" id="autotoc_md2063"></a>
+<h1><a class="anchor" id="autotoc_md2087"></a>
 Create a basic graph</h1>
 <p>basic_graph_builder = Graph()</p>
-<h1><a class="anchor" id="autotoc_md2064"></a>
+<h1><a class="anchor" id="autotoc_md2088"></a>
 Add nodes</h1>
 <p>basic_graph_builder.add_node("A", step_one) basic_graph_builder.add_node("B", step_two)</p>
-<h1><a class="anchor" id="autotoc_md2065"></a>
+<h1><a class="anchor" id="autotoc_md2089"></a>
 Add edges (connections)</h1>
 <p>basic_graph_builder.add_edge("A", "B") # Run B after A basic_graph_builder.set_entry_point("A") # Start at A </p>
-<h1><a class="anchor" id="autotoc_md2066"></a>
+<h1><a class="anchor" id="autotoc_md2090"></a>
 basic_graph_builder.set_finish_point("B") # Not needed for this simple Graph type</h1>
 <p>```</p>
 <ol type="1">
@@ -191,7 +191,7 @@ basic_graph_builder.set_finish_point("B") # Not needed for this simple Graph typ
 </li>
 </ol>
 <p>For the rest of this chapter, we'll focus on <code>StateGraph</code> as it introduces the core concepts most clearly.</p>
-<h2><a class="anchor" id="autotoc_md2067"></a>
+<h2><a class="anchor" id="autotoc_md2091"></a>
 Building a Simple <code>StateGraph</code></h2>
 <p>Let's build a tiny application that takes a number, adds 1 to it, and then multiplies it by 2.</p>
 <p><b>Step 1: Define the State</b></p>
@@ -273,7 +273,7 @@ Building a Simple <code>StateGraph</code></h2>
 <div class="line">--- Final State ---</div>
 <div class="line">{&#39;value&#39;: 12}</div>
 </div><!-- fragment --><p>As you can see, the graph executed the nodes in the defined order (<code>adder</code> then <code>multiplier</code>), automatically passing the updated state between them!</p>
-<h2><a class="anchor" id="autotoc_md2068"></a>
+<h2><a class="anchor" id="autotoc_md2092"></a>
 How Does <code>StateGraph</code> Work Under the Hood?</h2>
 <p>You defined the nodes and edges, but what actually happens when you call <code>invoke()</code>?</p>
 <ol type="1">
@@ -308,16 +308,16 @@ How Does <code>StateGraph</code> Work Under the Hood?</h2>
 <div class="line">    App-&gt;&gt;State: Update state = {&quot;value&quot;: 12}</div>
 <div class="line">    App-&gt;&gt;User: Return final state {&quot;value&quot;: 12}</div>
 </div><!-- fragment --><p>Don't worry too much about the details of Pregel or Channels yet – we'll cover them in later chapters. The key takeaway is that <code>StateGraph</code> manages the state and orchestrates the execution based on your defined nodes and edges.</p>
-<h2><a class="anchor" id="autotoc_md2069"></a>
+<h2><a class="anchor" id="autotoc_md2093"></a>
 A Peek at the Code (<code>graph/state.py</code>, <code>graph/graph.py</code>)</h2>
 <p>Let's briefly look at the code snippets provided to see how these concepts map to the implementation:</p>
 <ul>
-<li><b><code>StateGraph.__init__</code> (<code>graph/state.py</code>)</b>: <code>python @section autotoc_md2070 Simplified view class StateGraph(Graph): def __init__(self, state_schema: Optional[Type[Any]] = None, ...): super().__init__() @section autotoc_md2071 ... stores the state_schema ... self.schema = state_schema @section autotoc_md2072 ... analyzes the schema to understand state keys and how to update them ... self._add_schema(state_schema) @section autotoc_md2073 ... sets up internal dictionaries for channels, nodes etc. ... </code> This code initializes the graph, crucially storing the <code>state_schema</code> you provide. It analyzes this schema to figure out the "keys" on your whiteboard (like <code>"value"</code>) and sets up the internal structures (<a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>) needed to manage updates to each key.</li>
-<li><b><code>StateGraph.add_node</code> (<code>graph/state.py</code>)</b>: <code>python @section autotoc_md2074 Simplified view def add_node(self, node: str, action: RunnableLike, ...): @section autotoc_md2075 ... basic checks for name conflicts, reserved names (START, END) ... if node in self.channels: # Cannot use a state key name as a node name raise ValueError(...) @section autotoc_md2076 ... wrap the provided action (function/runnable) ... runnable = coerce_to_runnable(action, ...) @section autotoc_md2077 ... store the node details (runnable, input type etc.) ... self.nodes[node] = StateNodeSpec(runnable, ..., input=input or self.schema, ...) return self </code> When you add a node, it stores the associated function (<code>action</code>) and links it to the provided <code>node</code> name. It also figures out what input schema the node expects (usually the main graph state schema).</li>
-<li><b><code>Graph.add_edge</code> (<code>graph/graph.py</code>)</b>: <code>python @section autotoc_md2078 Simplified view from the base Graph class def add_edge(self, start_key: str, end_key: str): @section autotoc_md2079 ... checks for invalid edges (e.g., starting from END) ... @section autotoc_md2080 ... basic validation ... @section autotoc_md2081 Stores the connection as a simple pair self.edges.add((start_key, end_key)) return self </code> Adding an edge is relatively simple – it just records the <code>(start_key, end_key)</code> pair in a set, representing the connection.</li>
-<li><b><code>StateGraph.compile</code> (<code>graph/state.py</code>)</b>: <code>python @section autotoc_md2082 Simplified view def compile(self, ...): @section autotoc_md2083 ... validation checks ... self.validate(...) @section autotoc_md2084 ... create the CompiledStateGraph instance ... compiled = CompiledStateGraph(builder=self, ...) @section autotoc_md2085 ... add nodes, edges, branches to the compiled version ... for key, node in self.nodes.items(): compiled.attach_node(key, node) for start, end in self.edges: compiled.attach_edge(start, end) @section autotoc_md2086 ... more setup for branches, entry/exit points ... @section autotoc_md2087 ... finalize and return the compiled graph ... return compiled.validate() </code> Compilation takes your defined nodes and edges and builds the final, executable <code>CompiledStateGraph</code>. It sets up the internal machinery (<a class="el" href="../../de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_205__pregel__execution__engine.html">Pregel</a>, <a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>) based on your blueprint.</li>
+<li><b><code>StateGraph.__init__</code> (<code>graph/state.py</code>)</b>: <code>python @section autotoc_md2094 Simplified view class StateGraph(Graph): def __init__(self, state_schema: Optional[Type[Any]] = None, ...): super().__init__() @section autotoc_md2095 ... stores the state_schema ... self.schema = state_schema @section autotoc_md2096 ... analyzes the schema to understand state keys and how to update them ... self._add_schema(state_schema) @section autotoc_md2097 ... sets up internal dictionaries for channels, nodes etc. ... </code> This code initializes the graph, crucially storing the <code>state_schema</code> you provide. It analyzes this schema to figure out the "keys" on your whiteboard (like <code>"value"</code>) and sets up the internal structures (<a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>) needed to manage updates to each key.</li>
+<li><b><code>StateGraph.add_node</code> (<code>graph/state.py</code>)</b>: <code>python @section autotoc_md2098 Simplified view def add_node(self, node: str, action: RunnableLike, ...): @section autotoc_md2099 ... basic checks for name conflicts, reserved names (START, END) ... if node in self.channels: # Cannot use a state key name as a node name raise ValueError(...) @section autotoc_md2100 ... wrap the provided action (function/runnable) ... runnable = coerce_to_runnable(action, ...) @section autotoc_md2101 ... store the node details (runnable, input type etc.) ... self.nodes[node] = StateNodeSpec(runnable, ..., input=input or self.schema, ...) return self </code> When you add a node, it stores the associated function (<code>action</code>) and links it to the provided <code>node</code> name. It also figures out what input schema the node expects (usually the main graph state schema).</li>
+<li><b><code>Graph.add_edge</code> (<code>graph/graph.py</code>)</b>: <code>python @section autotoc_md2102 Simplified view from the base Graph class def add_edge(self, start_key: str, end_key: str): @section autotoc_md2103 ... checks for invalid edges (e.g., starting from END) ... @section autotoc_md2104 ... basic validation ... @section autotoc_md2105 Stores the connection as a simple pair self.edges.add((start_key, end_key)) return self </code> Adding an edge is relatively simple – it just records the <code>(start_key, end_key)</code> pair in a set, representing the connection.</li>
+<li><b><code>StateGraph.compile</code> (<code>graph/state.py</code>)</b>: <code>python @section autotoc_md2106 Simplified view def compile(self, ...): @section autotoc_md2107 ... validation checks ... self.validate(...) @section autotoc_md2108 ... create the CompiledStateGraph instance ... compiled = CompiledStateGraph(builder=self, ...) @section autotoc_md2109 ... add nodes, edges, branches to the compiled version ... for key, node in self.nodes.items(): compiled.attach_node(key, node) for start, end in self.edges: compiled.attach_edge(start, end) @section autotoc_md2110 ... more setup for branches, entry/exit points ... @section autotoc_md2111 ... finalize and return the compiled graph ... return compiled.validate() </code> Compilation takes your defined nodes and edges and builds the final, executable <code>CompiledStateGraph</code>. It sets up the internal machinery (<a class="el" href="../../de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_205__pregel__execution__engine.html">Pregel</a>, <a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>) based on your blueprint.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2088"></a>
+<h2><a class="anchor" id="autotoc_md2112"></a>
 Conclusion</h2>
 <p>You've learned the fundamental concept in LangGraph: the <b>Graph</b>.</p>
 <ul>

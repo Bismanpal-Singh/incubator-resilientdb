@@ -121,17 +121,17 @@ $(function(){initNavTree('da/de3/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_blueprints</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1922"></a>
-autotoc_md1922</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1946"></a>
+autotoc_md1946</h2>
 <p>layout: default title: "Blueprints" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1923"></a>
+<h2><a class="anchor" id="autotoc_md1947"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1924"></a>
+<h1><a class="anchor" id="autotoc_md1948"></a>
 Chapter 8: Blueprints</h1>
 <p>Welcome back! In <a class="el" href="../../d6/da8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_207__application__and__request__contexts.html">Chapter 7: Application and Request Contexts</a>, we explored the "magic" behind Flask's context system, understanding how variables like <code>request</code> and <code>current_app</code> work reliably even with multiple concurrent requests.</p>
 <p>Now, imagine your simple "Hello, World!" application starts growing. You add user profiles, an admin section, maybe a blog. Putting all your routes, view functions, and related logic into a single Python file (like our <code>hello.py</code>) quickly becomes messy and hard to manage. How can we organize our growing Flask application into smaller, more manageable pieces?</p>
 <p>That's where <b>Blueprints</b> come in!</p>
-<h2><a class="anchor" id="autotoc_md1925"></a>
+<h2><a class="anchor" id="autotoc_md1949"></a>
 What Problem Do They Solve? Organizing a Growing House</h2>
 <p>Think about building a house. You wouldn't try to build the kitchen, bathroom, and bedrooms all mixed together in one big pile. Instead, you might have separate plans or even pre-fabricated modules for each section. The kitchen module has its specific plumbing and electrical needs, the bathroom has its fixtures, etc. Once these modules are ready, you assemble them into the main structure of the house.</p>
 <p>Similarly, as your Flask application grows, you want to group related features together. For example:</p>
@@ -148,7 +148,7 @@ What Problem Do They Solve? Organizing a Growing House</h2>
 </ul>
 <p><b>Blueprints</b> provide Flask's solution for this. They let you define collections of routes, view functions, templates, and static files as separate modules. You can develop these modules independently and then "register" them with your main Flask application, potentially multiple times or under different URL prefixes.</p>
 <p>They are like the <b>prefabricated sections of your house</b>. You build the "user authentication module" (a blueprint) separately, then plug it into your main application structure.</p>
-<h2><a class="anchor" id="autotoc_md1926"></a>
+<h2><a class="anchor" id="autotoc_md1950"></a>
 Creating and Using a Simple Blueprint</h2>
 <p>Let's see how this works. Imagine we want to create a separate section for user-related pages.</p>
 <ol type="1">
@@ -257,7 +257,7 @@ Creating and Using a Simple Blueprint</h2>
 <li>Visit <code><a href="http://127.0.0.1:5000/users/profile/charlie">http://127.0.0.1:5000/users/profile/charlie</a></code>. You'll get a 404 Not Found error, as handled by <code>profile()</code> in <code>user.py</code>.</li>
 </ol>
 <p>Notice how the blueprint allowed us to neatly separate the user-related code into <code>blueprints/user.py</code>, keeping <code><a class="el" href="../../de/d0e/app_8py.html">app.py</a></code> cleaner. The <code>url_prefix</code> made it easy to group all user routes under <code>/users/</code>.</p>
-<h2><a class="anchor" id="autotoc_md1927"></a>
+<h2><a class="anchor" id="autotoc_md1951"></a>
 Generating URLs with <code>url_for</code> and Blueprints</h2>
 <p>How does <code>url_for</code> work when routes are defined in blueprints? You need to prefix the endpoint name with the <b>blueprint name</b>, followed by a dot (<code>.</code>).</p>
 <p>Look back at the <code>profile.html</code> template:</p>
@@ -280,7 +280,7 @@ Generating URLs with <code>url_for</code> and Blueprints</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> f<span class="stringliteral">&#39;Alice profile: {alice_url}&lt;br&gt;Homepage: {home_url}&#39;</span></div>
 </div><!-- fragment --><p>Using the blueprint name (<code>user.profile</code>) or the relative dot (<code>.profile</code>) ensures <code>url_for</code> finds the correct endpoint, even if multiple blueprints happen to use the same view function name (like <code>index</code>).</p>
-<h2><a class="anchor" id="autotoc_md1928"></a>
+<h2><a class="anchor" id="autotoc_md1952"></a>
 Blueprint Resources: Templates and Static Files</h2>
 <p>As we saw, you can specify <code>template_folder</code> when creating a <code>Blueprint</code>. When &lsquo;render_template('profile.html&rsquo;)<code>is called from within the</code>user_bp<code>'s</code>profile<code>view, Flask (via Jinja2's</code>DispatchingJinjaLoader<code>, see [Chapter 4](<a class="el" href="../../d6/dc9/04__templating____jinja2__integration___8md.html">04_templating__jinja2_integration_.md</a>)) will look for</code>profile.html` in this order:</p>
 <ol type="1">
@@ -301,7 +301,7 @@ Blueprint Resources: Templates and Static Files</h2>
 <div class="fragment"><div class="line">&lt;!-- Inside an admin blueprint template --&gt;</div>
 <div class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for(&#39;admin.static&#39;, filename=&#39;style.css&#39;) }}&quot;&gt;</div>
 <div class="line">&lt;!-- Generates a URL like: /admin-static/style.css --&gt;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1929"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1953"></a>
 Under the Hood: How Registration Works</h2>
 <p>What actually happens when you call <code>app.register_blueprint(bp)</code>?</p>
 <ol type="1">
@@ -352,7 +352,7 @@ Under the Hood: How Registration Works</h2>
 <div class="line">    State--&gt;&gt;-BP: add_url_rule finished</div>
 <div class="line">    BP--&gt;&gt;App: Deferred function finished</div>
 </div><!-- fragment --><p>The key idea is <b>deferral</b>. Blueprints record actions but don't apply them until they are registered on an actual application, using the <code>BlueprintSetupState</code> to correctly prefix routes and endpoints.</p>
-<h2><a class="anchor" id="autotoc_md1930"></a>
+<h2><a class="anchor" id="autotoc_md1954"></a>
 Conclusion</h2>
 <p>Blueprints are Flask's powerful solution for organizing larger applications. They allow you to group related routes, views, templates, and static files into modular, reusable components.</p>
 <ul>

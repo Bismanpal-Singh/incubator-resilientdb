@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blog_0',['blog',['../dc/d4a/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2docs_2blog.html',1,'']]]
+  ['automated_20documentation_20workflow_0',['Automated Documentation Workflow',['../d3/d32/md__2github_2workspace_2ecosystem_2pocketflow_2AUTOMATED__WORKFLOW.html',1,'']]]
 ];

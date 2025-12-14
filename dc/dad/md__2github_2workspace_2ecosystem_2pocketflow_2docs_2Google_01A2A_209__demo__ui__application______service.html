@@ -121,17 +121,17 @@ $(function(){initNavTree('dc/dad/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">09_demo_ui_application___service</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2025"></a>
-autotoc_md2025</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2049"></a>
+autotoc_md2049</h2>
 <p>layout: default title: "Demo UI Application &amp; Service" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md2026"></a>
+<h2><a class="anchor" id="autotoc_md2050"></a>
 nav_order: 9</h2>
-<h1><a class="anchor" id="autotoc_md2027"></a>
+<h1><a class="anchor" id="autotoc_md2051"></a>
 Chapter 9: Demo UI Application &amp; Service</h1>
 <p>In the <a class="el" href="../../dc/ddf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_208__multi__agent__orchestration____host__agent__.html">previous chapter</a>, we explored how a <b>Host Agent</b> can act like a project manager, coordinating multiple specialized agents using the A2A protocol to achieve complex goals. We've learned about Agent Cards, Tasks, the protocol itself, servers, clients, task logic, streaming, and orchestration. That's a lot of building blocks!</p>
 <p>But how do we see all these pieces working together in a real, interactive way? Just reading about protocols and servers is like reading the blueprints for a car. Wouldn't it be more helpful to actually <em>see</em> the car drive?</p>
 <p>That's where the <b>Demo UI Application &amp; Service</b> comes in. It solves the problem: <b>How can we visualize and interact with the A2A protocol and multi-agent systems in action?</b></p>
-<h2><a class="anchor" id="autotoc_md2028"></a>
+<h2><a class="anchor" id="autotoc_md2052"></a>
 What is the Demo UI Application &amp; Service? The Control Room</h2>
 <p>Imagine a space mission control room. You have:</p>
 <ul>
@@ -145,10 +145,10 @@ What is the Demo UI Application &amp; Service? The Control Room</h2>
 <li><b>Backend Service (<code>ConversationServer</code>):</b> This is the "flight controller" software running behind the scenes. It's a backend web service (built using FastAPI in Python) that the UI application talks to. It's <em>not</em> the main <a class="el" href="../../dc/ddf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_208__multi__agent__orchestration____host__agent__.html">Host Agent</a> itself, but rather an <b>intermediary</b>. It manages the user's conversations, receives events from the UI (like sending a message), communicates with the actual agent logic (like the Host Agent), and sends state updates back to the UI so the screens stay current.</li>
 </ol>
 <p>Think of it as a user-friendly window into the world of A2A, letting you watch and participate as agents collaborate.</p>
-<h2><a class="anchor" id="autotoc_md2029"></a>
+<h2><a class="anchor" id="autotoc_md2053"></a>
 Key Components</h2>
 <p>Let's break down the two main parts:</p>
-<h3><a class="anchor" id="autotoc_md2030"></a>
+<h3><a class="anchor" id="autotoc_md2054"></a>
 1. Frontend (Mesop UI Application)</h3>
 <p>This is what you see and interact with in your web browser. Mesop allows building UIs purely in Python. Key features include:</p>
 <ul>
@@ -203,7 +203,7 @@ Key Components</h2>
 <li>It renders an <code>me.input</code> field. When the user presses Enter (<code>on_enter</code>), the <code>send_message_enter</code> function is called.</li>
 <li><code>send_message_enter</code> gets the user's text, updates the state to show a "Processing..." indicator, and then calls <code>send_message</code> (defined in <code>demo/ui/state/host_agent_service.py</code>) which actually communicates with the backend <code>ConversationServer</code>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md2031"></a>
+<h3><a class="anchor" id="autotoc_md2055"></a>
 2. Backend (<code>ConversationServer</code>)</h3>
 <p>This FastAPI server acts as the bridge between the simple HTTP/JSON communication from the UI and the potentially more complex agent interactions (which might involve A2A or frameworks like Google ADK).</p>
 <ul>
@@ -257,23 +257,23 @@ Key Components</h2>
 <li>It calls <code>self.manager.process_message(message)</code>. The <code>manager</code> (here, <code>ADKHostManager</code>) is responsible for actually interacting with the underlying agent system (<a class="el" href="../../dc/ddf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_208__multi__agent__orchestration____host__agent__.html">Host Agent</a>).</li>
 <li>Crucially, <code>process_message</code> is run in a separate thread so the API can respond quickly, acknowledging receipt, while the potentially long-running agent work happens in the background.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2032"></a>
+<h2><a class="anchor" id="autotoc_md2056"></a>
 How It Works: The Flow of a Message</h2>
 <p>Let's trace what happens when you type "Hello" and press Enter in the Demo UI:</p>
 <ol type="1">
 <li><b>UI (Mesop):</b> The <code>on_enter</code> event triggers <code>send_message_enter</code> in <code>conversation.py</code>.</li>
 <li><b>UI State:</b> <code>send_message_enter</code> updates the <code>AppState</code> to show a "Processing" indicator.</li>
-<li><b>UI Client (<code>host_agent_service.py</code>):</b> <code>send_message_enter</code> calls <code>SendMessage(message)</code>. This function uses the <code>ConversationClient</code> to make an HTTP POST request to the <code>ConversationServer</code>'s <code>/message/send</code> endpoint, sending the user's message as JSON. <code>python @section autotoc_md2033 File: demo/ui/state/host_agent_service.py (Simplified Snippet) async def SendMessage(message: Message) -&gt; str | None: client = ConversationClient(server_url) # Backend server URL try: @section autotoc_md2034 Make HTTP POST request to backend API response = await client.send_message(SendMessageRequest(params=message)) return response.result # Contains confirmation IDs except Exception as e: print("Failed to send message: ", e) </code></li>
+<li><b>UI Client (<code>host_agent_service.py</code>):</b> <code>send_message_enter</code> calls <code>SendMessage(message)</code>. This function uses the <code>ConversationClient</code> to make an HTTP POST request to the <code>ConversationServer</code>'s <code>/message/send</code> endpoint, sending the user's message as JSON. <code>python @section autotoc_md2057 File: demo/ui/state/host_agent_service.py (Simplified Snippet) async def SendMessage(message: Message) -&gt; str | None: client = ConversationClient(server_url) # Backend server URL try: @section autotoc_md2058 Make HTTP POST request to backend API response = await client.send_message(SendMessageRequest(params=message)) return response.result # Contains confirmation IDs except Exception as e: print("Failed to send message: ", e) </code></li>
 <li><b>Backend Service (<code>server.py</code>):</b> The <code>_send_message</code> method on the <code>ConversationServer</code> receives the POST request.</li>
-<li><b>Backend Service Logic (<code>adk_host_manager.py</code>):</b> <code>_send_message</code> calls <code>self.manager.process_message(message)</code> (running in a background thread). <code>python @section autotoc_md2035 File: demo/ui/service/server/adk_host_manager.py (Simplified Snippet) async def process_message(self, message: Message): @section autotoc_md2036 ... (Store message, add event) ... @section autotoc_md2037 Get conversation context conversation_id = message.metadata.get('conversation_id') @section autotoc_md2038 --- Interact with the actual agent (e.g., Google ADK Runner) --- async for event in self._host_runner.run_async( user_id=self.user_id, session_id=conversation_id, new_message=self.adk_content_from_message(message) # Convert to agent format ): @section autotoc_md2039 Process events coming *back* from the agent self.add_event(...) # Store for UI event log @section autotoc_md2040 ... potentially update task status via task_callback ... @section autotoc_md2041 ... (Store final response message) ... @section autotoc_md2042 Remove pending indicator self._pending_message_ids.remove(get_message_id(message)) </code></li>
+<li><b>Backend Service Logic (<code>adk_host_manager.py</code>):</b> <code>_send_message</code> calls <code>self.manager.process_message(message)</code> (running in a background thread). <code>python @section autotoc_md2059 File: demo/ui/service/server/adk_host_manager.py (Simplified Snippet) async def process_message(self, message: Message): @section autotoc_md2060 ... (Store message, add event) ... @section autotoc_md2061 Get conversation context conversation_id = message.metadata.get('conversation_id') @section autotoc_md2062 --- Interact with the actual agent (e.g., Google ADK Runner) --- async for event in self._host_runner.run_async( user_id=self.user_id, session_id=conversation_id, new_message=self.adk_content_from_message(message) # Convert to agent format ): @section autotoc_md2063 Process events coming *back* from the agent self.add_event(...) # Store for UI event log @section autotoc_md2064 ... potentially update task status via task_callback ... @section autotoc_md2065 ... (Store final response message) ... @section autotoc_md2066 Remove pending indicator self._pending_message_ids.remove(get_message_id(message)) </code></li>
 <li><b>Agent Processing:</b> <code>process_message</code> uses the ADK <code>Runner</code> (<code>self._host_runner</code>) to send the message to the configured agent (our <a class="el" href="../../dc/ddf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_208__multi__agent__orchestration____host__agent__.html">Host Agent</a>). The Host Agent might then use its own <a class="el" href="../../dd/d41/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_205__a2a__client__implementation.html">A2A Client</a> logic to talk to downstream agents via A2A.</li>
 <li><b>Agent Response/Updates:</b> As the agent system works, it sends back events (potentially via <a class="el" href="../../d0/d60/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_207__streaming__communication____sse__.html">Streaming Communication (SSE)</a> if using A2A, or via ADK callbacks). The <code>ADKHostManager</code>'s <code>task_callback</code> or the <code>run_async</code> loop processes these updates, storing new messages, updating task statuses, and storing artifacts.</li>
-<li><b>UI Polling (<code>page_scaffold.py</code>):</b> Meanwhile, the Mesop UI periodically polls the <code>ConversationServer</code> for state updates using an <code>async_poller</code> component. This poller triggers <code>UpdateAppState</code> in <code>host_agent_service.py</code>. <code>python @section autotoc_md2043 File: demo/ui/components/page_scaffold.py (Simplified Snippet) async def refresh_app_state(e: mel.WebEvent): # Triggered by poller yield app_state = me.state(AppState) @section autotoc_md2044 Call backend service to get the latest state await UpdateAppState(app_state, app_state.current_conversation_id) yield @section autotoc_md2045 ... in page_scaffold component setup ... async_poller(action=..., trigger_event=refresh_app_state) </code></li>
+<li><b>UI Polling (<code>page_scaffold.py</code>):</b> Meanwhile, the Mesop UI periodically polls the <code>ConversationServer</code> for state updates using an <code>async_poller</code> component. This poller triggers <code>UpdateAppState</code> in <code>host_agent_service.py</code>. <code>python @section autotoc_md2067 File: demo/ui/components/page_scaffold.py (Simplified Snippet) async def refresh_app_state(e: mel.WebEvent): # Triggered by poller yield app_state = me.state(AppState) @section autotoc_md2068 Call backend service to get the latest state await UpdateAppState(app_state, app_state.current_conversation_id) yield @section autotoc_md2069 ... in page_scaffold component setup ... async_poller(action=..., trigger_event=refresh_app_state) </code></li>
 <li><b>Backend State Request (<code>host_agent_service.py</code>):</b> <code>UpdateAppState</code> calls various <code>ConversationServer</code> endpoints (like <code>/conversation/list</code>, <code>/message/list</code>, <code>/task/list</code>) to get the latest messages, tasks, etc.</li>
 <li><b>Backend Response:</b> The <code>ConversationServer</code> returns the current state data from its <code>manager</code>.</li>
 <li><b>UI Update:</b> <code>UpdateAppState</code> updates the global <code>AppState</code> in Mesop with the fresh data. Because Mesop automatically re-renders when state changes, the UI updates to show the agent's response, remove the "Processing" indicator, and update task lists.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2046"></a>
+<h2><a class="anchor" id="autotoc_md2070"></a>
 Under the Hood: Sequence Diagram</h2>
 <p>This diagram shows the high-level flow for sending a message and getting a response, involving the UI, the Backend Service, and the Agent Logic (like the Host Agent).</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -305,7 +305,7 @@ Under the Hood: Sequence Diagram</h2>
 <div class="line">        BClient-&gt;&gt;UI: Update Mesop AppState</div>
 <div class="line">        Note over UI: Mesop re-renders with new data (agent response)</div>
 <div class="line">    end</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2047"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2071"></a>
 Conclusion</h2>
 <p>The Demo UI Application and its associated <code>ConversationServer</code> backend provide a crucial, practical tool for the Google A2A project. They act as an interactive "control room" allowing you to:</p>
 <ul>

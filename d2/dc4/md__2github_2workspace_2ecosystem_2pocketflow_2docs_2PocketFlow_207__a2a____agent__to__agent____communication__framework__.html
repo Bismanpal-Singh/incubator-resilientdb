@@ -121,15 +121,15 @@ $(function(){initNavTree('d2/dc4/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_a2a__agent_to_agent__communication_framework_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2773"></a>
-autotoc_md2773</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2797"></a>
+autotoc_md2797</h2>
 <p>layout: default title: "A2A (Agent-to-Agent) Communication Framework" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2774"></a>
+<h2><a class="anchor" id="autotoc_md2798"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2775"></a>
+<h1><a class="anchor" id="autotoc_md2799"></a>
 Chapter 7: A2A (Agent-to-Agent) Communication Framework</h1>
 <p>Welcome to the final chapter of our PocketFlow journey! In <a class="el" href="../../d5/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_206__batch__processing______batc450c527fc70ac874b2a5e6905704e4f6.html">Chapter 6: Batch Processing (<code>BatchNode</code>, <code>BatchFlow</code>, <code>AsyncParallelBatchNode</code>)</a>, we saw how to process multiple items or run workflows repeatedly. Now, we'll explore how to make your PocketFlow agents available to the wider world, allowing them to communicate with other systems or agents using a standard "language."</p>
-<h2><a class="anchor" id="autotoc_md2776"></a>
+<h2><a class="anchor" id="autotoc_md2800"></a>
 The Challenge: Making Your Agent a Team Player</h2>
 <p>Imagine you've built a fantastic PocketFlow agent that can research topics and answer questions. It's great for your own use, but what if:</p><ul>
 <li>Another team in your company wants their AI system to ask questions of your agent?</li>
@@ -139,7 +139,7 @@ The Challenge: Making Your Agent a Team Player</h2>
 <p>These scenarios require a <b>standardized way for agents to talk to each other</b>. Simply sharing Python code or relying on custom integrations isn't scalable or interoperable. This is where the <b>A2A (Agent-to-Agent) Communication Framework</b> comes in.</p>
 <p><b>Our Use Case:</b> We want to take the PocketFlow-based research agent we've been conceptualizing (which uses <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> and a <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a>) and make it accessible via a standard A2A interface. Another program (a client) should be able to send it a question (e.g., "What is PocketFlow?") and receive an answer, all using this A2A standard.</p>
 <p>The A2A framework in PocketFlow provides components that wrap your agent, allowing it to understand and speak the A2A JSON-RPC specification. Think of it like giving your agent a universal translator and a public phone line.</p>
-<h2><a class="anchor" id="autotoc_md2777"></a>
+<h2><a class="anchor" id="autotoc_md2801"></a>
 Key Components of the A2A Framework</h2>
 <p>The A2A framework in <code>PocketFlow</code> consists of a few main parts that work together:</p>
 <ol type="1">
@@ -165,7 +165,7 @@ Key Components of the A2A Framework</h2>
 </li>
 </ol>
 <p>Let's see how to use these to make our PocketFlow research agent accessible.</p>
-<h2><a class="anchor" id="autotoc_md2778"></a>
+<h2><a class="anchor" id="autotoc_md2802"></a>
 Making Your PocketFlow Agent A2A-Compatible</h2>
 <p>Let's assume you've already built your core PocketFlow agent using <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> and a <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a>, perhaps similar to the one in <code>cookbook/pocketflow-a2a/flow.py</code> that can take a question and produce an answer. The main function in <code><a class="el" href="../../d8/d10/flow_8py.html">flow.py</a></code> to get this flow is <code>create_agent_flow()</code>.</p>
 <p><b>Step 1: Create Your <code>TaskManager</code></b></p>
@@ -334,7 +334,7 @@ Making Your PocketFlow Agent A2A-Compatible</h2>
 <li>Client receives the response and might print: <code>Agent Answer: PocketFlow is a minimalist LLM framework...</code></li>
 </ol>
 <p>Your PocketFlow agent is now communicating via a standard A2A interface!</p>
-<h2><a class="anchor" id="autotoc_md2779"></a>
+<h2><a class="anchor" id="autotoc_md2803"></a>
 Under the Hood: The A2A Conversation Flow</h2>
 <p>Let's trace a request from client to server and back:</p>
 <ol type="1">
@@ -393,25 +393,25 @@ Under the Hood: The A2A Conversation Flow</h2>
 <div class="line">    Client-&gt;&gt;UserApp: Displays answer from A2A Task</div>
 </div><!-- fragment --><p><b>Key Code Snippets (Highly Simplified):</b></p>
 <ul>
-<li><b><code>A2AClient</code> sending request (from <code>common/client/client.py</code>):</b> <code>python @section autotoc_md2780 Inside A2AClient async def _send_request(self, request_model: JSONRPCRequest) -&gt; dict: @section autotoc_md2781 request_model is e.g., SendTaskRequest payload = request_model.model_dump(exclude_none=True) @section autotoc_md2782 self.fetchImpl is an httpx.AsyncClient http_response = await self.fetchImpl.post(self.url, json=payload) http_response.raise_for_status() # Check for HTTP errors return http_response.json() # Return parsed JSON response </code> This shows the client converting a Pydantic model to a dictionary (<code>payload</code>) and sending it via HTTP.</li>
+<li><b><code>A2AClient</code> sending request (from <code>common/client/client.py</code>):</b> <code>python @section autotoc_md2804 Inside A2AClient async def _send_request(self, request_model: JSONRPCRequest) -&gt; dict: @section autotoc_md2805 request_model is e.g., SendTaskRequest payload = request_model.model_dump(exclude_none=True) @section autotoc_md2806 self.fetchImpl is an httpx.AsyncClient http_response = await self.fetchImpl.post(self.url, json=payload) http_response.raise_for_status() # Check for HTTP errors return http_response.json() # Return parsed JSON response </code> This shows the client converting a Pydantic model to a dictionary (<code>payload</code>) and sending it via HTTP.</li>
 <li><b><code>A2AServer</code> processing request (from <code>common/server/server.py</code>):</b> ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2783"></a>
+<h1><a class="anchor" id="autotoc_md2807"></a>
 Inside A2AServer</h1>
 <p>async def _process_request(self, http_request: Request): raw_body = await http_request.body() parsed_body = json.loads(raw_body) </p>
-<h1><a class="anchor" id="autotoc_md2784"></a>
+<h1><a class="anchor" id="autotoc_md2808"></a>
 A2ARequest.validate_python converts dict to Pydantic model</h1>
 <p>a2a_request_model = A2ARequest.validate_python(parsed_body)</p>
 <p>if isinstance(a2a_request_model, SendTaskRequest): </p>
-<h1><a class="anchor" id="autotoc_md2785"></a>
+<h1><a class="anchor" id="autotoc_md2809"></a>
 self.task_manager is your PocketFlowTaskManager</h1>
 <p>result_model = await self.task_manager.on_send_task(a2a_request_model) </p>
-<h1><a class="anchor" id="autotoc_md2786"></a>
+<h1><a class="anchor" id="autotoc_md2810"></a>
 ... (other request types like GetTaskRequest) ...</h1>
-<h1><a class="anchor" id="autotoc_md2787"></a>
+<h1><a class="anchor" id="autotoc_md2811"></a>
 result_model is e.g., SendTaskResponse</h1>
 <p>return JSONResponse(result_model.model_dump(exclude_none=True)) ``<code> This shows the server parsing the incoming JSON, converting it to a Pydantic model, and calling the appropriate</code>TaskManager` method.</p>
-<h2><a class="anchor" id="autotoc_md2788"></a>
+<h2><a class="anchor" id="autotoc_md2812"></a>
 Conclusion: Your Agent is Now a Global Citizen!</h2>
 <p>You've reached the end of our PocketFlow tutorial series! With the <b>A2A (Agent-to-Agent) Communication Framework</b>, you've learned how to:</p><ul>
 <li>Understand the roles of <code>A2AServer</code>, <code>A2AClient</code>, and <code>TaskManager</code>.</li>

@@ -121,17 +121,17 @@ $(function(){initNavTree('d5/d1b/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_single_pass_mode</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1329"></a>
-autotoc_md1329</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1353"></a>
+autotoc_md1353</h2>
 <p>layout: default title: "Single-Pass Mode" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1330"></a>
+<h2><a class="anchor" id="autotoc_md1354"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1331"></a>
+<h1><a class="anchor" id="autotoc_md1355"></a>
 Chapter 8: Single-Pass Mode</h1>
 <p>In the <a class="el" href="../../d2/d53/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_207__configuration__management.html">previous chapter</a>, we explored how Codex uses configuration files to remember your preferences and follow custom instructions. We've mostly seen Codex operate in its default interactive mode, like having a conversation in the <a class="el" href="../../dd/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_201__terminal__ui____ink__components__.html">Terminal UI</a> where the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> goes back and forth with the AI.</p>
 <p>But what if you have a task that's very clearly defined? Imagine you want to rename a function across your entire project. You know exactly what needs to be done, and you don't really need a back-and-forth chat. Wouldn't it be faster if you could just give Codex the instructions and have it figure out <em>all</em> the necessary changes at once?</p>
 <p>That's exactly the idea behind <b>Single-Pass Mode</b>.</p>
-<h2><a class="anchor" id="autotoc_md1332"></a>
+<h2><a class="anchor" id="autotoc_md1356"></a>
 What's the Big Idea? The Architect Analogy</h2>
 <p>Think about building a house. The normal, interactive mode of Codex is like having a conversation with your architect room by room: "Let's design the kitchen." "Okay, now how about the living room?" "Should we add a window here?". It's collaborative and allows for adjustments along the way.</p>
 <p><b>Single-Pass Mode</b> is different. It's like giving the architect the complete blueprints, all the requirements, and the site survey <em>upfront</em>, and asking them to come back with the <em>final, complete building plan</em> in one go.</p>
@@ -144,7 +144,7 @@ What's the Big Idea? The Architect Analogy</h2>
 <li>If you approve, apply all the changes and exit.</li>
 </ol>
 <p>This mode aims for efficiency, especially on larger, well-defined tasks where you're reasonably confident the AI can generate the full solution without needing clarification.</p>
-<h2><a class="anchor" id="autotoc_md1333"></a>
+<h2><a class="anchor" id="autotoc_md1357"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b>Full Context (Within Limits):</b> Instead of just looking at one or two files, Codex gathers the content of many files in your project (respecting ignore rules from <a class="el" href="../../d2/d53/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_207__configuration__management.html">Configuration Management</a> and size limits like <code>MAX_CONTEXT_CHARACTER_LIMIT</code>). This gives the AI a broader view of your codebase.</li>
@@ -152,7 +152,7 @@ Key Concepts</h2>
 <li><b>All-or-Nothing Confirmation:</b> You are presented with a summary and a diff (showing additions and deletions) of <em>all</em> the proposed changes across all affected files. You then give a single "Yes" or "No" to apply everything or nothing.</li>
 <li><b>Efficiency for Defined Tasks:</b> This mode shines when your instructions are clear and the task doesn't likely require interactive refinement (e.g., "Rename function X to Y everywhere", "Add logging to every public method in class Z").</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1334"></a>
+<h2><a class="anchor" id="autotoc_md1358"></a>
 How to Use It</h2>
 <p>You typically invoke single-pass mode using a specific command-line flag when running Codex (the exact flag might vary, but let's assume <code>--single-pass</code>).</p>
 <p><b>Example:</b></p>
@@ -165,17 +165,17 @@ How to Use It</h2>
 <li><b>AI Thinking:</b> It sends your prompt and the file contents to the AI, asking for the complete set of changes. You'll likely see a spinner.</li>
 <li><b>Review:</b> Codex receives the proposed file operations from the AI. It calculates the differences (diffs) and shows you a summary: ``` Summary: Modified: src/utils.py (+1/-1) Modified: tests/test_utils.py (+1/-1) Modified: main_app.py (+1/-1)</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1335"></a>
+<h1><a class="anchor" id="autotoc_md1359"></a>
 Proposed Diffs:</h1>
-<h2><a class="anchor" id="autotoc_md1336"></a>
+<h2><a class="anchor" id="autotoc_md1360"></a>
 Changes for: src/utils.py</h2>
 <p>@ -10,7 +10,7 @ </p>
-<h1><a class="anchor" id="autotoc_md1337"></a>
+<h1><a class="anchor" id="autotoc_md1361"></a>
 ... code ...</h1>
 <p>-def calculate_total(items): +def compute_grand_total(items): </p>
-<h1><a class="anchor" id="autotoc_md1338"></a>
+<h1><a class="anchor" id="autotoc_md1362"></a>
 ... implementation ...</h1>
-<h1><a class="anchor" id="autotoc_md1339"></a>
+<h1><a class="anchor" id="autotoc_md1363"></a>
 ... (more diffs for other files) ...</h1>
 <p>Apply these changes? [y/N] ``<code></p><ol type="1">
 <li>**Confirmation:** You type</li>
@@ -187,7 +187,7 @@ Changes for: src/utils.py</h2>
 <li><b>Exit:</b> The Codex process finishes.</li>
 </ol>
 <p>If you had typed <code>n</code>, no files would have been changed.</p>
-<h2><a class="anchor" id="autotoc_md1340"></a>
+<h2><a class="anchor" id="autotoc_md1364"></a>
 Under the Hood: The Single-Pass Flow</h2>
 <p>Let's trace the journey when you run <code>codex --single-pass "prompt"</code>:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -224,10 +224,10 @@ Under the Hood: The Single-Pass Flow</h2>
 <li><b>Application:</b> If confirmed, the <code>applyFileOps</code> function iterates through the parsed operations and uses Node.js's <code>fs.promises</code> module (<code>fsPromises.writeFile</code>, <code>fsPromises.unlink</code>, etc.) to modify the files on disk.</li>
 <li><b>Exit:</b> The application cleans up and exits.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1341"></a>
+<h2><a class="anchor" id="autotoc_md1365"></a>
 Diving into Code</h2>
 <p>Let's look at the key parts involved.</p>
-<h3><a class="anchor" id="autotoc_md1342"></a>
+<h3><a class="anchor" id="autotoc_md1366"></a>
 Starting Single-Pass Mode (<code>cli_singlepass.tsx</code>)</h3>
 <p>This module likely provides the entry point function called by the main CLI when the <code>--single-pass</code> flag is detected.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/cli_singlepass.tsx (Simplified)</div>
@@ -257,7 +257,7 @@ Starting Single-Pass Mode (<code>cli_singlepass.tsx</code>)</h3>
 </div><!-- fragment --><ul>
 <li><b>Explanation:</b> This function simply renders the main React component (<code>SinglePassApp</code>) responsible for the entire single-pass UI and logic, passing along the user's prompt and configuration. It uses a Promise to signal when the process is complete.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1343"></a>
+<h3><a class="anchor" id="autotoc_md1367"></a>
 The Main UI and Logic (<code>singlepass-cli-app.tsx</code>)</h3>
 <p>This component manages the state (loading, thinking, confirming, etc.) and orchestrates the single-pass flow.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/components/singlepass-cli-app.tsx (Simplified Snippets)</div>
@@ -361,7 +361,7 @@ The Main UI and Logic (<code>singlepass-cli-app.tsx</code>)</h3>
 </div><!-- fragment --><ul>
 <li><b>Explanation:</b> This component uses <code>useEffect</code> to load files initially. The <code>runSinglePassTask</code> function orchestrates calling the AI (using <code>zodResponseFormat</code> to enforce the <code>EditedFilesSchema</code>) and generating diffs. <code>applyFileOps</code> performs the actual file system changes if the user confirms via the <code>ConfirmationPrompt</code>. The UI rendered depends heavily on the current <code>state</code>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1344"></a>
+<h3><a class="anchor" id="autotoc_md1368"></a>
 Defining the AI's Output: <code>file_ops.ts</code></h3>
 <p>This file defines the exact structure Codex expects the AI to return in single-pass mode.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/singlepass/file_ops.ts (Simplified)</div>
@@ -388,13 +388,13 @@ Defining the AI's Output: <code>file_ops.ts</code></h3>
 </div><!-- fragment --><ul>
 <li><b>Explanation:</b> This uses the Zod library to define a strict schema. <code>FileOperationSchema</code> describes a single change (update, delete, or move), emphasizing that <code>updated_full_content</code> must be the <em>entire</em> file content. <code>EditedFilesSchema</code> wraps this in a list called <code>ops</code>. This schema is given to the OpenAI API (via <code>zodResponseFormat</code>) to ensure the AI's response is structured correctly.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1345"></a>
+<h3><a class="anchor" id="autotoc_md1369"></a>
 Generating Context and Diffs</h3>
 <ul>
 <li><b><code>context.ts</code> (<code>renderTaskContext</code>):</b> Takes the user prompt and file contents and formats them into the large string sent to the AI, including instructions and often wrapping file content in XML-like tags (<code>&lt;file&gt;&lt;path&gt;...&lt;/path&gt;&lt;content&gt;...&lt;/content&gt;&lt;/file&gt;</code>).</li>
 <li><b><code>code_diff.ts</code> (<code>generateDiffSummary</code>, <code>generateEditSummary</code>):</b> Takes the <code>ops</code> returned by the AI and compares the <code>updated_full_content</code> with the original content read from disk. It uses a library (like <code>diff</code>) to generate standard diff text and then formats it (often with colors) and creates a short summary list for display.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1346"></a>
+<h2><a class="anchor" id="autotoc_md1370"></a>
 Conclusion</h2>
 <p>Single-Pass Mode offers a different, potentially faster way to use Codex for well-defined tasks. By providing extensive context upfront and asking the AI for a complete set of structured file operations in one response, it minimizes back-and-forth. You gather context, send one big request, review the complete proposed solution, and either accept or reject it entirely. While still experimental, it's a powerful approach for streamlining larger refactoring or generation tasks where the requirements are clear.</p>
 <p>This concludes our tour through the core concepts of Codex! We've journeyed from the <a class="el" href="../../dd/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_201__terminal__ui____ink__components__.html">Terminal UI</a> and <a class="el" href="../../d3/dac/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_202__input__handling____textbuffer__editor__.html">Input Handling</a>, through the central <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a>, into the crucial aspects of <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a>, <a class="el" href="../../dc/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_205__response______tool__call__handling.html">Response &amp; Tool Call Handling</a>, and safe <a class="el" href="../../dd/deb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_206__command__execution______sandboxing.html">Command Execution &amp; Sandboxing</a>, learned about <a class="el" href="../../d2/d53/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_207__configuration__management.html">Configuration Management</a>, and finally explored the alternative <a class="el" href="../../d5/d1b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_208__single__pass__mode.html">Single-Pass Mode</a>.</p>

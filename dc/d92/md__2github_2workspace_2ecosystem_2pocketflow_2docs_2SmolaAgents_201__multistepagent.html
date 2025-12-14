@@ -121,17 +121,17 @@ $(function(){initNavTree('dc/d92/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_multistepagent</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2975"></a>
-autotoc_md2975</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2999"></a>
+autotoc_md2999</h2>
 <p>layout: default title: "MultiStepAgent" parent: "SmolaAgents" </p>
-<h2><a class="anchor" id="autotoc_md2976"></a>
+<h2><a class="anchor" id="autotoc_md3000"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2977"></a>
+<h1><a class="anchor" id="autotoc_md3001"></a>
 Chapter 1: The MultiStepAgent - Your Task Orchestrator</h1>
 <p>Welcome to the SmolaAgents library! If you're looking to build smart AI agents that can tackle complex problems, you're in the right place.</p>
 <p>Imagine you have a complex task, like "Research the pros and cons of electric cars and write a short summary." A single request to a simple AI might not be enough. It needs to search the web, read different articles, synthesize the information, and then write the summary. How does an AI manage such a multi-step process?</p>
 <p>This is where the <code>MultiStepAgent</code> comes in! Think of it as the <b>project manager</b> for your AI task. It doesn't do all the work itself, but it directs the process, decides what needs to happen next, uses specialized helpers (called "Tools"), and keeps track of everything until the task is done.</p>
-<h2><a class="anchor" id="autotoc_md2978"></a>
+<h2><a class="anchor" id="autotoc_md3002"></a>
 The Core Idea: Think, Act, Observe</h2>
 <p>The <code>MultiStepAgent</code> works by following a cycle, much like how humans solve problems. This cycle is often called <b>ReAct</b> (Reasoning and Acting):</p>
 <ol type="1">
@@ -140,7 +140,7 @@ The Core Idea: Think, Act, Observe</h2>
 <li><b>Observe:</b> The agent looks at the result of its action. What did the web search return? What was the output of the code? This new information ("observation") helps it decide what to do in the next "Think" phase.</li>
 </ol>
 <p>The agent repeats this <b>Think -&gt; Act -&gt; Observe</b> cycle over and over, step-by-step, until it believes it has fully completed the task and has a final answer.</p>
-<h2><a class="anchor" id="autotoc_md2979"></a>
+<h2><a class="anchor" id="autotoc_md3003"></a>
 How It Works: Coordinating the Team</h2>
 <p>The <code>MultiStepAgent</code> doesn't work in isolation. It coordinates several key components:</p>
 <ol type="1">
@@ -148,7 +148,7 @@ How It Works: Coordinating the Team</h2>
 <li><b>Tools:</b> These are specialized functions the agent can use to perform actions. Examples include searching the web, running Python code, fetching weather information, or even generating images. The agent chooses which tool to use (if any) during the "Act" phase based on the LLM's suggestion. Learn all about them in <a class="el" href="../../d4/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_203__tool.html">Chapter 3: Tool</a>.</li>
 <li><b>Memory:</b> This is like the agent's notepad. It keeps track of the original task, the plan (if any), every action taken, and every observation received. This history is crucial for the agent (and the LLM) to understand the progress and decide the next steps. We'll dive into this in <a class="el" href="../../d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_204__agentmemory.html">Chapter 4: AgentMemory</a>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2980"></a>
+<h2><a class="anchor" id="autotoc_md3004"></a>
 A Simple Example: Getting the Capital and Weather</h2>
 <p>Let's revisit our simple task: <b>"What is the capital of France, and what is its current weather?"</b></p>
 <p>Here's how a <code>MultiStepAgent</code>, equipped with a <code>search</code> tool and a <code>weather</code> tool, might handle it:</p>
@@ -163,7 +163,7 @@ A Simple Example: Getting the Capital and Weather</h2>
 <li><b>Step 3 (Act):</b> It decides it's finished and uses a special built-in tool called <code>final_answer</code> to provide the complete result.</li>
 <li><b>Step 3 (Observe):</b> The <code>final_answer</code> tool packages the result, like "The capital of France is Paris, and the current weather there is Sunny, 25°C." The cycle ends.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2981"></a>
+<h2><a class="anchor" id="autotoc_md3005"></a>
 Let's See Some Code (Basic Setup)</h2>
 <p>Okay, enough theory! How does this look in code? Setting up a basic <code>MultiStepAgent</code> involves giving it its "brain" (the model) and its "helpers" (the tools).</p>
 <div class="fragment"><div class="line"><span class="comment"># --- File: basic_agent.py ---</span></div>
@@ -214,7 +214,7 @@ Let's See Some Code (Basic Setup)</h2>
 <li><b>Output:</b> The <code>run</code> method continues executing steps until the <code>final_answer</code> tool is called or a limit is reached. It then returns the content provided to <code>final_answer</code>.</li>
 </ol>
 <p><em>(Note: Running the code above requires setting up API keys for the chosen LLM and potentially the tools).</em></p>
-<h2><a class="anchor" id="autotoc_md2982"></a>
+<h2><a class="anchor" id="autotoc_md3006"></a>
 Under the Hood: The <code>run</code> Process</h2>
 <p>When you call <code>agent.run(task)</code>, a sequence of internal steps takes place:</p>
 <ol type="1">
@@ -269,61 +269,61 @@ Under the Hood: The <code>run</code> Process</h2>
 <div class="line">        MSA--&gt;&gt;User: Return &quot;Capital: Paris, Weather: Sunny, 25°C&quot;</div>
 <div class="line">        Note right of MSA: Loop completes when final answer is ready</div>
 <div class="line">    end</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2983"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3007"></a>
 Diving Deeper (Code References)</h2>
 <p>Let's peek at some relevant code snippets from <code>agents.py</code> to see how this is implemented (simplified for clarity):</p>
 <ul>
-<li><b>Initialization (<code>__init__</code>)</b>: Stores the essential components. <code>python @section autotoc_md2984 --- File: agents.py (Simplified __init__) --- class MultiStepAgent: def __init__( self, tools: List[Tool], # List of available tools model: Callable, # The language model function max_steps: int = 20, # Max cycles allowed @section autotoc_md2985 ... other parameters like memory, prompts, etc. ): self.model = model self.tools = {tool.name: tool for tool in tools} @section autotoc_md2986 Add the essential final_answer tool self.tools.setdefault("final_answer", FinalAnswerTool()) self.max_steps = max_steps self.memory = AgentMemory(...) # Initialize memory @section autotoc_md2987 ... setup logging, etc. </code></li>
+<li><b>Initialization (<code>__init__</code>)</b>: Stores the essential components. <code>python @section autotoc_md3008 --- File: agents.py (Simplified __init__) --- class MultiStepAgent: def __init__( self, tools: List[Tool], # List of available tools model: Callable, # The language model function max_steps: int = 20, # Max cycles allowed @section autotoc_md3009 ... other parameters like memory, prompts, etc. ): self.model = model self.tools = {tool.name: tool for tool in tools} @section autotoc_md3010 Add the essential final_answer tool self.tools.setdefault("final_answer", FinalAnswerTool()) self.max_steps = max_steps self.memory = AgentMemory(...) # Initialize memory @section autotoc_md3011 ... setup logging, etc. </code></li>
 <li><b>Starting the process (<code>run</code>)</b>: Sets up the task and calls the internal loop. ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2988"></a>
+<h1><a class="anchor" id="autotoc_md3012"></a>
 &mdash; File: agents.py (Simplified run) &mdash;</h1>
 <p>class MultiStepAgent: def run(self, task: str, ...): self.task = task </p>
-<h1><a class="anchor" id="autotoc_md2989"></a>
+<h1><a class="anchor" id="autotoc_md3013"></a>
 ... maybe handle additional arguments ...</h1>
-<h1><a class="anchor" id="autotoc_md2990"></a>
+<h1><a class="anchor" id="autotoc_md3014"></a>
 Reset memory if needed</h1>
 <p>self.memory.reset() self.memory.steps.append(TaskStep(task=self.task)) # Record the task</p>
-<h1><a class="anchor" id="autotoc_md2991"></a>
+<h1><a class="anchor" id="autotoc_md3015"></a>
 Start the internal execution loop</h1>
-<h1><a class="anchor" id="autotoc_md2992"></a>
+<h1><a class="anchor" id="autotoc_md3016"></a>
 The deque gets the <em>last</em> item yielded, which is the final answer</h1>
 <p>return deque(self._run(task=self.task, max_steps=self.max_steps), maxlen=1)[0].final_answer ```</p>
 <ul>
 <li><b>The Core Loop (<code>_run</code>)</b>: Implements the Think-Act-Observe cycle. ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2993"></a>
+<h1><a class="anchor" id="autotoc_md3017"></a>
 &mdash; File: agents.py (Simplified _run) &mdash;</h1>
 <p>class MultiStepAgent: def _run(self, task: str, max_steps: int, ...) -&gt; Generator: final_answer = None self.step_number = 1 while final_answer is None and self.step_number &lt;= max_steps: action_step = self._create_action_step(...) # Prepare memory for this step</p>
 <p>try: </p>
-<h1><a class="anchor" id="autotoc_md2994"></a>
+<h1><a class="anchor" id="autotoc_md3018"></a>
 This is where the agent type decides how to act</h1>
-<h1><a class="anchor" id="autotoc_md2995"></a>
+<h1><a class="anchor" id="autotoc_md3019"></a>
 (e.g., call LLM, parse, execute tool/code)</h1>
 <p>final_answer = self._execute_step(task, action_step) except AgentError as e: action_step.error = e # Record errors finally: self._finalize_step(action_step, ...) # Record timing, etc. self.memory.steps.append(action_step) # Save step to memory yield action_step # Yield step details (for streaming) self.step_number += 1</p>
 <p>if final_answer is None: </p>
-<h1><a class="anchor" id="autotoc_md2996"></a>
+<h1><a class="anchor" id="autotoc_md3020"></a>
 Handle reaching max steps</h1>
 <p>... yield FinalAnswerStep(handle_agent_output_types(final_answer)) # Yield final answer ```</p>
 <ul>
 <li><b>Executing a Step (<code>_execute_step</code>)</b>: This calls the <code>step</code> method which specific agent types (like <code>CodeAgent</code> or <code>ToolCallingAgent</code>) implement differently. ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2997"></a>
+<h1><a class="anchor" id="autotoc_md3021"></a>
 &mdash; File: agents.py (Simplified _execute_step) &mdash;</h1>
 <p>class MultiStepAgent: def _execute_step(self, task: str, memory_step: ActionStep) -&gt; Union[None, Any]: </p>
-<h1><a class="anchor" id="autotoc_md2998"></a>
+<h1><a class="anchor" id="autotoc_md3022"></a>
 Calls the specific logic for the agent type</h1>
-<h1><a class="anchor" id="autotoc_md2999"></a>
+<h1><a class="anchor" id="autotoc_md3023"></a>
 This method will interact with the model, tools, memory</h1>
 <p>final_answer = self.step(memory_step) </p>
-<h1><a class="anchor" id="autotoc_md3000"></a>
+<h1><a class="anchor" id="autotoc_md3024"></a>
 ... (optional checks on final answer) ...</h1>
 <p>return final_answer</p>
-<h1><a class="anchor" id="autotoc_md3001"></a>
+<h1><a class="anchor" id="autotoc_md3025"></a>
 step() is implemented by subclasses like CodeAgent or ToolCallingAgent</h1>
 <p>def step(self, memory_step: ActionStep) -&gt; Union[None, Any]: raise NotImplementedError("Subclasses must implement the step method.") ```</p>
 <p>These snippets show how <code>MultiStepAgent</code> orchestrates the process, relying on its <code>model</code>, <code>tools</code>, and <code>memory</code>, and delegating the specific "how-to-act" logic to subclasses via the <code>step</code> method (more on this in <a class="el" href="../../d6/df3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_207__agenttype.html">Chapter 7: AgentType</a>).</p>
-<h2><a class="anchor" id="autotoc_md3002"></a>
+<h2><a class="anchor" id="autotoc_md3026"></a>
 Conclusion</h2>
 <p>The <code>MultiStepAgent</code> is the heart of the SmolaAgents library. It provides the framework for agents to tackle complex tasks by breaking them down into a <b>Think -&gt; Act -&gt; Observe</b> cycle. It acts as the central coordinator, managing interactions between the language model (the brain), the tools (the specialized helpers), and the memory (the notepad).</p>
 <p>You've learned:</p>

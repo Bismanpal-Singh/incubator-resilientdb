@@ -121,17 +121,17 @@ $(function(){initNavTree('d6/dcb/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_a2a_server_implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1964"></a>
-autotoc_md1964</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1988"></a>
+autotoc_md1988</h2>
 <p>layout: default title: "A2A Server Implementation" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md1965"></a>
+<h2><a class="anchor" id="autotoc_md1989"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1966"></a>
+<h1><a class="anchor" id="autotoc_md1990"></a>
 Chapter 4: A2A Server Implementation</h1>
 <p>In the <a class="el" href="../../d8/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_203__a2a__protocol______core__types.html">previous chapter</a>, we learned the "language" and "grammar" that AI agents use to talk to each other – the <b>A2A Protocol</b> based on JSON-RPC and its <b>Core Types</b> like <code>Task</code> and <code>Message</code>. Think of it like learning the rules of diplomacy and the standard format for official documents.</p>
 <p>But just knowing the rules isn't enough. If one country (an AI agent) wants to send a diplomatic message (a <a class="el" href="../../d2/d9c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_202__task.html">Task</a>) to another, it needs an official reception point – an embassy. How does an AI agent set up its "embassy" to receive and handle these official A2A communications?</p>
 <p>That's the role of the <b>A2A Server Implementation</b>. It solves the problem of <b>hosting an agent</b> and making it <b>accessible</b> according to the A2A protocol rules.</p>
-<h2><a class="anchor" id="autotoc_md1967"></a>
+<h2><a class="anchor" id="autotoc_md1991"></a>
 What is an A2A Server? The Agent's Embassy</h2>
 <p>Imagine our AI agent is like a skilled expert (a translator, a coder, an image generator) working inside a building. How do people from the outside world reach this expert and give them work? They can't just barge into the building!</p>
 <p>They need to go through the official <b>reception desk</b> or <b>front office</b>. This office:</p>
@@ -144,7 +144,7 @@ What is an A2A Server? The Agent's Embassy</h2>
 <li>Provides basic information about the building and its services (the <a class="el" href="../../d7/d4e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_201__agent__card.html">Agent Card</a>).</li>
 </ol>
 <p>An <b>A2A Server</b> is exactly like that front office or embassy for your AI agent. It's the software component that runs on a server, listens for incoming network requests, and acts as the official gateway for all A2A communication.</p>
-<h2><a class="anchor" id="autotoc_md1968"></a>
+<h2><a class="anchor" id="autotoc_md1992"></a>
 Why Do We Need It?</h2>
 <p>Without a server, our AI agent is isolated. It might be brilliant at its job, but no other agent or application can interact with it using the standard A2A protocol. The A2A Server provides the necessary "infrastructure" to:</p>
 <ul>
@@ -156,7 +156,7 @@ Why Do We Need It?</h2>
 <li><b>Advertise:</b> Serve the agent's <code>agent.json</code> (<a class="el" href="../../d7/d4e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_201__agent__card.html">Agent Card</a>) so others can discover it.</li>
 </ul>
 <p>Think of it as the bridge connecting your agent's internal world to the external world of A2A communication.</p>
-<h2><a class="anchor" id="autotoc_md1969"></a>
+<h2><a class="anchor" id="autotoc_md1993"></a>
 Setting Up a Basic Server</h2>
 <p>Luckily, the <code>Google A2A</code> project provides helper libraries to make setting up a server much easier! You don't need to build the entire "embassy" from scratch. You mainly need to provide:</p>
 <ol type="1">
@@ -164,7 +164,7 @@ Setting Up a Basic Server</h2>
 <li>The agent's <a class="el" href="../../d7/d4e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_201__agent__card.html">Agent Card</a> details.</li>
 </ol>
 <p>Let's look at simplified examples in JavaScript (Node.js) and Python.</p>
-<h3><a class="anchor" id="autotoc_md1970"></a>
+<h3><a class="anchor" id="autotoc_md1994"></a>
 JavaScript Example (using <code>A2AServer</code> from the library)</h3>
 <p>Imagine we have a very simple "Echo Agent" that just sends back whatever text it receives.</p>
 <div class="fragment"><div class="line">// File: simple-agent/index.ts (Conceptual Example)</div>
@@ -212,7 +212,7 @@ JavaScript Example (using <code>A2AServer</code> from the library)</h3>
 <li><b>Server Setup:</b> We create an instance of <code>A2AServer</code>, passing our agent's logic function and its card. Then, we call <code>server.start()</code> to make it listen for requests on the specified port (4000).</li>
 </ol>
 <p>That's it! With this code, we have a running A2A server ready to accept <code>tasks/send</code> requests for our Echo Agent.</p>
-<h3><a class="anchor" id="autotoc_md1971"></a>
+<h3><a class="anchor" id="autotoc_md1995"></a>
 Python Example (using <code>A2AServer</code> from the library)</h3>
 <p>Let's do the same for Python.</p>
 <div class="fragment"><div class="line"><span class="comment"># File: simple_agent/main.py (Conceptual Example)</span></div>
@@ -281,7 +281,7 @@ Python Example (using <code>A2AServer</code> from the library)</h3>
 <li><b>Server Setup:</b> We create an <code>A2AServer</code> instance, providing the card and our custom <code>EchoTaskManager</code>. We then call <code>server.start()</code>.</li>
 </ol>
 <p>Both examples achieve the same goal: they use the library's <code>A2AServer</code> class to quickly stand up a web server that listens for A2A requests, delegates the work to the provided agent logic, and handles the communication details.</p>
-<h2><a class="anchor" id="autotoc_md1972"></a>
+<h2><a class="anchor" id="autotoc_md1996"></a>
 Under the Hood: How a Request is Processed</h2>
 <p>What happens when a client sends a <code>tasks/send</code> request to our running A2A server?</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -334,7 +334,7 @@ Under the Hood: How a Request is Processed</h2>
 <li><b>Serve Agent Card:</b> Separately, if a client sends a GET request to <code>/.well-known/agent.json</code>, the <code>A2AServer</code> simply responds with the content of the <code>AgentCard</code> you provided during setup.</li>
 </ol>
 <p>The <code>A2AServer</code> libraries (<code>samples/js/src/server/server.ts</code>, <code>samples/python/common/server/server.py</code>) handle the complexities of HTTP, JSON-RPC parsing, routing, and response formatting, letting you focus on implementing your agent's specific capabilities within the task handler (<a class="el" href="../../d7/d27/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_206__task__handling__logic____server__side__.html">Chapter 6</a>).</p>
-<h2><a class="anchor" id="autotoc_md1973"></a>
+<h2><a class="anchor" id="autotoc_md1997"></a>
 Conclusion</h2>
 <p>The <b>A2A Server Implementation</b> is the crucial component that brings your AI agent to life on the network, acting as its official "embassy" for A2A communication. It listens for requests, understands the A2A protocol, manages tasks, interacts with your agent's core logic, and sends back responses.</p>
 <p>By using the provided <code>A2AServer</code> libraries, you can quickly set up a compliant server without worrying about the low-level details of web servers and JSON-RPC, allowing you to concentrate on building your agent's unique skills.</p>

@@ -121,12 +121,12 @@ $(function(){initNavTree('dc/d53/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_asynccrawlerstrategy</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1351"></a>
-autotoc_md1351</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1375"></a>
+autotoc_md1375</h2>
 <p>layout: default title: "AsyncCrawlerStrategy" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1352"></a>
+<h2><a class="anchor" id="autotoc_md1376"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1353"></a>
+<h1><a class="anchor" id="autotoc_md1377"></a>
 Chapter 1: How We Fetch Webpages - AsyncCrawlerStrategy</h1>
 <p>Welcome to the Crawl4AI tutorial series! Our goal is to build intelligent agents that can understand and extract information from the web. The very first step in this process is actually <em>getting</em> the content from a webpage. This chapter explains how Crawl4AI handles that fundamental task.</p>
 <p>Imagine you need to pick up a package from a specific address. How do you get there and retrieve it?</p><ul>
@@ -134,11 +134,11 @@ Chapter 1: How We Fetch Webpages - AsyncCrawlerStrategy</h1>
 <li>Or, you could send a <b>full delivery truck with a driver</b>. The driver can ring the bell, wait, sign for the package, and even handle complex instructions. This is more versatile but takes more time and resources.</li>
 </ul>
 <p>In Crawl4AI, the <code>AsyncCrawlerStrategy</code> is like choosing your delivery vehicle. It defines <em>how</em> the crawler fetches the raw content (like the HTML, CSS, and maybe JavaScript results) of a webpage.</p>
-<h2><a class="anchor" id="autotoc_md1354"></a>
+<h2><a class="anchor" id="autotoc_md1378"></a>
 What Exactly is AsyncCrawlerStrategy?</h2>
 <p><code>AsyncCrawlerStrategy</code> is a core concept in Crawl4AI that represents the <b>method</b> or <b>technique</b> used to download the content of a given URL. Think of it as a blueprint: it specifies <em>that</em> we need a way to fetch content, but the specific <em>details</em> of how it's done can vary.</p>
 <p>This "blueprint" approach is powerful because it allows us to swap out the fetching mechanism depending on our needs, without changing the rest of our crawling logic.</p>
-<h2><a class="anchor" id="autotoc_md1355"></a>
+<h2><a class="anchor" id="autotoc_md1379"></a>
 The Default: AsyncPlaywrightCrawlerStrategy (The Delivery Truck)</h2>
 <p>By default, Crawl4AI uses <code>AsyncPlaywrightCrawlerStrategy</code>. This strategy uses a real, automated web browser engine (like Chrome, Firefox, or WebKit) behind the scenes.</p>
 <p><b>Why use a full browser?</b></p>
@@ -149,7 +149,7 @@ The Default: AsyncPlaywrightCrawlerStrategy (The Delivery Truck)</h2>
 </ul>
 <p>This is our "delivery truck" – powerful and capable of handling complex websites. However, like a real truck, it's slower and uses more memory and CPU compared to simpler methods.</p>
 <p>You generally don't need to <em>do</em> anything to use it, as it's the default! When you start Crawl4AI, it picks this strategy automatically.</p>
-<h2><a class="anchor" id="autotoc_md1356"></a>
+<h2><a class="anchor" id="autotoc_md1380"></a>
 Another Option: AsyncHTTPCrawlerStrategy (The Delivery Drone)</h2>
 <p>Crawl4AI also offers <code>AsyncHTTPCrawlerStrategy</code>. This strategy is much simpler. It directly requests the URL and downloads the <em>initial</em> HTML source code that the web server sends back.</p>
 <p><b>Why use this simpler strategy?</b></p>
@@ -164,7 +164,7 @@ Another Option: AsyncHTTPCrawlerStrategy (The Delivery Drone)</h2>
 <li><b>Basic HTML Only:</b> You get the raw HTML source, not necessarily what a user <em>sees</em> after the browser processes everything.</li>
 </ul>
 <p>This strategy is great for websites with simple, static HTML content or when you only need the basic structure and metadata very quickly.</p>
-<h2><a class="anchor" id="autotoc_md1357"></a>
+<h2><a class="anchor" id="autotoc_md1381"></a>
 Why Have Different Strategies? (The Power of Abstraction)</h2>
 <p>Having <code>AsyncCrawlerStrategy</code> as a distinct concept offers several advantages:</p>
 <ol type="1">
@@ -172,7 +172,7 @@ Why Have Different Strategies? (The Power of Abstraction)</h2>
 <li><b>Maintainability:</b> The logic for <em>fetching</em> content is kept separate from the logic for <em>processing</em> it.</li>
 <li><b>Extensibility:</b> Advanced users could even create their <em>own</em> custom strategies for specialized fetching needs (though that's beyond this beginner tutorial).</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1358"></a>
+<h2><a class="anchor" id="autotoc_md1382"></a>
 How It Works Conceptually</h2>
 <p>When you ask Crawl4AI to crawl a URL, the main <code>AsyncWebCrawler</code> doesn't fetch the content itself. Instead, it delegates the task to the currently selected <code>AsyncCrawlerStrategy</code>.</p>
 <p>Here's a simplified flow:</p>
@@ -187,7 +187,7 @@ How It Works Conceptually</h2>
 <div class="line">    W--&gt;&gt;S: Return Raw Content (HTML, etc.)</div>
 <div class="line">    S--&gt;&gt;C: Here&#39;s the result (AsyncCrawlResponse)</div>
 </div><!-- fragment --><p>The <code>AsyncWebCrawler</code> only needs to know how to talk to <em>any</em> strategy through a common interface (the <code>crawl</code> method). The strategy handles the specific details of the fetching process.</p>
-<h2><a class="anchor" id="autotoc_md1359"></a>
+<h2><a class="anchor" id="autotoc_md1383"></a>
 Using the Default Strategy (You're Already Doing It!)</h2>
 <p>Let's see how you use the default <code>AsyncPlaywrightCrawlerStrategy</code> without even needing to specify it.</p>
 <div class="fragment"><div class="line"><span class="comment"># main_example.py</span></div>
@@ -226,7 +226,7 @@ Using the Default Strategy (You're Already Doing It!)</h2>
 <li>We call <code>crawler.arun()</code> to crawl the URL. Under the hood, the <code>AsyncPlaywrightCrawlerStrategy</code> starts a browser, navigates to the page, gets the content, and returns it.</li>
 <li>We print the first part of the fetched HTML from the <code>result</code>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1360"></a>
+<h2><a class="anchor" id="autotoc_md1384"></a>
 Explicitly Choosing the HTTP Strategy</h2>
 <p>What if you know the page is simple and want the speed of the "delivery drone"? You can explicitly tell <code>AsyncWebCrawler</code> to use <code>AsyncHTTPCrawlerStrategy</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># http_strategy_example.py</span></div>
@@ -266,7 +266,7 @@ Explicitly Choosing the HTTP Strategy</h2>
 <li>The rest of the code is the same, but now <code>crawler.arun()</code> will use the faster, simpler HTTP GET request method defined by <code>AsyncHTTPCrawlerStrategy</code>.</li>
 </ol>
 <p>For a simple page like <code>httpbin.org/html</code>, both strategies will likely return the same HTML content, but the HTTP strategy would generally be faster and use fewer resources. On a complex JavaScript-heavy site, the HTTP strategy might fail to get the full content, while the Playwright strategy would handle it correctly.</p>
-<h2><a class="anchor" id="autotoc_md1361"></a>
+<h2><a class="anchor" id="autotoc_md1385"></a>
 A Glimpse Under the Hood</h2>
 <p>You don't <em>need</em> to know the deep internals to use the strategies, but it helps to understand the structure. Inside the <code>crawl4ai</code> library, you'd find a file like <code>async_crawler_strategy.py</code>.</p>
 <p>It defines the "blueprint" (an Abstract Base Class):</p>
@@ -316,7 +316,7 @@ A Glimpse Under the Hood</h2>
 <div class="line">        <span class="comment"># ... implementation details ...</span></div>
 <div class="line">        <span class="keywordflow">pass</span></div>
 </div><!-- fragment --><p>The key takeaway is that both strategies implement the same <code>crawl</code> method, allowing <code>AsyncWebCrawler</code> to use them interchangeably.</p>
-<h2><a class="anchor" id="autotoc_md1362"></a>
+<h2><a class="anchor" id="autotoc_md1386"></a>
 Conclusion</h2>
 <p>You've learned about <code>AsyncCrawlerStrategy</code>, the core concept defining <em>how</em> Crawl4AI fetches webpage content.</p>
 <ul>

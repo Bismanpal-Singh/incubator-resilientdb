@@ -121,12 +121,12 @@ $(function(){initNavTree('dc/d59/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_canvas__signatures___primitives_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1068"></a>
-autotoc_md1068</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1092"></a>
+autotoc_md1092</h2>
 <p>layout: default title: "Canvas (Signatures &amp; Primitives)" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md1069"></a>
+<h2><a class="anchor" id="autotoc_md1093"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1070"></a>
+<h1><a class="anchor" id="autotoc_md1094"></a>
 Chapter 8: Canvas (Signatures &amp; Primitives) - Building Task Workflows</h1>
 <p>In the previous chapter, <a class="el" href="../../dd/d67/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_207__beat____scheduler__.html">Chapter 7: Beat (Scheduler)</a>, we learned how to schedule tasks to run automatically at specific times using Celery Beat. This is great for recurring jobs. But what if you need to run a sequence of tasks, where one task depends on the result of another? Or run multiple tasks in parallel and then collect their results?</p>
 <p>Imagine you're building a feature where a user uploads an article, and you need to:</p><ol type="1">
@@ -137,7 +137,7 @@ Chapter 8: Canvas (Signatures &amp; Primitives) - Building Task Workflows</h1>
 </ol>
 <p>Simply running these tasks independently won't work. Keyword extraction and language detection can happen at the same time, but only <em>after</em> the content is fetched. Saving can only happen <em>after</em> both processing steps are complete. How do you orchestrate this multi-step workflow?</p>
 <p>This is where <b>Celery Canvas</b> comes in. It provides the building blocks to design complex task workflows.</p>
-<h2><a class="anchor" id="autotoc_md1071"></a>
+<h2><a class="anchor" id="autotoc_md1095"></a>
 What Problem Does Canvas Solve?</h2>
 <p>Canvas helps you connect individual <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Task</a>s together to form more sophisticated processes. It solves the problem of defining dependencies and flow control between tasks. Instead of just firing off tasks one by one and hoping they complete in the right order or manually checking results, Canvas lets you declare the desired workflow structure directly.</p>
 <p>Think of it like having different types of Lego bricks:</p><ul>
@@ -147,7 +147,7 @@ What Problem Does Canvas Solve?</h2>
 <li>Others let you build a structure where several parallel steps must finish before the next piece is added.</li>
 </ul>
 <p>Canvas gives you these connecting bricks for your Celery tasks.</p>
-<h2><a class="anchor" id="autotoc_md1072"></a>
+<h2><a class="anchor" id="autotoc_md1096"></a>
 Key Concepts: Signatures and Primitives</h2>
 <p>The core ideas in Canvas are <b>Signatures</b> and <b>Workflow Primitives</b>.</p>
 <ol type="1">
@@ -159,19 +159,19 @@ Key Concepts: Signatures and Primitives</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1073"></a>
+<h1><a class="anchor" id="autotoc_md1097"></a>
 tasks.py</h1>
 <p>from celery_app import app # Assuming app is defined in celery_app.py</p>
 <p>@app.task def add(x, y): return x + y</p>
-<h1><a class="anchor" id="autotoc_md1074"></a>
+<h1><a class="anchor" id="autotoc_md1098"></a>
 Create a signature for add(2, 3)</h1>
 <p>add_sig = add.s(2, 3)</p>
-<h1><a class="anchor" id="autotoc_md1075"></a>
+<h1><a class="anchor" id="autotoc_md1099"></a>
 add_sig now holds the 'plan' to run add(2, 3)</h1>
 <p>print(f"Signature: {add_sig}") print(f"Task name: {add_sig.task}") print(f"Arguments: {add_sig.args}")</p>
-<h1><a class="anchor" id="autotoc_md1076"></a>
+<h1><a class="anchor" id="autotoc_md1100"></a>
 To actually run it, you call .delay() or .apply_async() ON the signature</h1>
-<h1><a class="anchor" id="autotoc_md1077"></a>
+<h1><a class="anchor" id="autotoc_md1101"></a>
 result_promise = add_sig.delay()</h1>
 <p>```</p>
 <p><b>Output:</b> <code>text Signature: tasks.add(2, 3) Task name: tasks.add Arguments: (2, 3) </code></p>
@@ -196,7 +196,7 @@ result_promise = add_sig.delay()</h1>
 </li>
 </ol>
 <p>There are other primitives like <code>chunks</code>, <code>xmap</code>, and <code>starmap</code>, but <code>chain</code>, <code>group</code>, and <code>chord</code> are the most fundamental ones for building workflows.</p>
-<h2><a class="anchor" id="autotoc_md1078"></a>
+<h2><a class="anchor" id="autotoc_md1102"></a>
 How to Use Canvas: Building the Article Processing Workflow</h2>
 <p>Let's build the workflow we described earlier: Fetch -&gt; (Process Keywords &amp; Detect Language in parallel) -&gt; Save.</p>
 <p><b>1. Define the Tasks</b></p>
@@ -288,7 +288,7 @@ How to Use Canvas: Building the Article Processing Workflow</h2>
 <li><code>workflow.apply_async()</code>: This sends the <em>first</em> task (<code>fetch_data</code>) to the broker. The rest of the workflow is encoded in the task's options (like <code>link</code> or <code>chord</code> information) so that Celery knows what to do next after each step completes.</li>
 </ul>
 <p>If you run this script (and have a <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a> running), you'll see the tasks execute in the worker logs, respecting the defined dependencies and parallelism. <code>fetch_data</code> runs first, then <code>process_part_a</code> and <code>process_part_b</code> run concurrently, and finally <code>combine_results</code> runs after both A and B are done.</p>
-<h2><a class="anchor" id="autotoc_md1079"></a>
+<h2><a class="anchor" id="autotoc_md1103"></a>
 How It Works Internally (Simplified Walkthrough)</h2>
 <p>Let's trace a simpler workflow: <code>my_chain = (add.s(2, 2) | add.s(4))</code></p>
 <ol type="1">
@@ -350,7 +350,7 @@ How It Works Internally (Simplified Walkthrough)</h2>
 <div class="line">    Worker-&gt;&gt;Worker: Execute add(4, 4) -&gt; returns 8</div>
 <div class="line">    Note over Worker: Store result 8 for T2 in Backend</div>
 <div class="line">    Worker-&gt;&gt;Broker: Ack Task 2 msg complete</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1080"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1104"></a>
 Code Dive: Canvas Implementation</h2>
 <p>The logic for signatures and primitives resides primarily in <code>celery/canvas.py</code>.</p>
 <ul>
@@ -364,27 +364,27 @@ Code Dive: Canvas Implementation</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1081"></a>
+<h1><a class="anchor" id="autotoc_md1105"></a>
 Simplified from celery/canvas.py</h1>
 <p>class Signature(dict): </p>
-<h1><a class="anchor" id="autotoc_md1082"></a>
+<h1><a class="anchor" id="autotoc_md1106"></a>
 ... methods like <b>init</b>, clone, set, apply_async ...</h1>
 <p>def link(self, callback): </p>
-<h1><a class="anchor" id="autotoc_md1083"></a>
+<h1><a class="anchor" id="autotoc_md1107"></a>
 Appends callback signature to the 'link' list in options</h1>
 <p>return self.append_to_list_option('link', callback)</p>
 <p>def link_error(self, errback): </p>
-<h1><a class="anchor" id="autotoc_md1084"></a>
+<h1><a class="anchor" id="autotoc_md1108"></a>
 Appends errback signature to the 'link_error' list in options</h1>
 <p>return self.append_to_list_option('link_error', errback)</p>
 <p>def <b>or</b>(self, other): </p>
-<h1><a class="anchor" id="autotoc_md1085"></a>
+<h1><a class="anchor" id="autotoc_md1109"></a>
 Called when you use the pipe '|' operator</h1>
 <p>if isinstance(other, Signature): </p>
-<h1><a class="anchor" id="autotoc_md1086"></a>
+<h1><a class="anchor" id="autotoc_md1110"></a>
 task | task -&gt; chain</h1>
 <p>return _chain(self, other, app=self._app) </p>
-<h1><a class="anchor" id="autotoc_md1087"></a>
+<h1><a class="anchor" id="autotoc_md1111"></a>
 ... other cases for group, chain ...</h1>
 <p>return NotImplemented ```</p>
 <ul>
@@ -394,37 +394,37 @@ task | task -&gt; chain</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1088"></a>
+<h1><a class="anchor" id="autotoc_md1112"></a>
 Simplified concept from celery/canvas.py (chain execution)</h1>
 <p>class _chain(Signature): </p>
-<h1><a class="anchor" id="autotoc_md1089"></a>
+<h1><a class="anchor" id="autotoc_md1113"></a>
 ... <b>init</b>, <b>or</b> ...</h1>
 <p>def apply_async(self, args=None, kwargs=None, **options): </p>
-<h1><a class="anchor" id="autotoc_md1090"></a>
+<h1><a class="anchor" id="autotoc_md1114"></a>
 ... handle always_eager ...</h1>
 <p>return self.run(args, kwargs, app=self.app, **options)</p>
 <p>def run(self, args=None, kwargs=None, app=None, **options): </p>
-<h1><a class="anchor" id="autotoc_md1091"></a>
+<h1><a class="anchor" id="autotoc_md1115"></a>
 ... setup ...</h1>
 <p>tasks, results = self.prepare_steps(...) # Unroll and freeze tasks</p>
 <p>if results: # If there are tasks to run first_task = tasks.pop() # Get the first task (list is reversed) remaining_chain = tasks if tasks else None</p>
-<h1><a class="anchor" id="autotoc_md1092"></a>
+<h1><a class="anchor" id="autotoc_md1116"></a>
 Determine how to pass the chain info (link vs. message field)</h1>
 <p>use_link = self._use_link # ... logic to decide ...</p>
 <p>if use_link: </p>
-<h1><a class="anchor" id="autotoc_md1093"></a>
+<h1><a class="anchor" id="autotoc_md1117"></a>
 Protocol 1: Link first task to the second task</h1>
 <p>if remaining_chain: first_task.link(remaining_chain.pop()) </p>
-<h1><a class="anchor" id="autotoc_md1094"></a>
+<h1><a class="anchor" id="autotoc_md1118"></a>
 (Worker handles subsequent links)</h1>
 <p>options_to_apply = options # Pass original options else: </p>
-<h1><a class="anchor" id="autotoc_md1095"></a>
+<h1><a class="anchor" id="autotoc_md1119"></a>
 Protocol 2: Embed the rest of the reversed chain in options</h1>
 <p>options_to_apply = ChainMap({'chain': remaining_chain}, options)</p>
-<h1><a class="anchor" id="autotoc_md1096"></a>
+<h1><a class="anchor" id="autotoc_md1120"></a>
 Send the <em>first</em> task only</h1>
 <p>result_from_apply = first_task.apply_async(**options_to_apply) </p>
-<h1><a class="anchor" id="autotoc_md1097"></a>
+<h1><a class="anchor" id="autotoc_md1121"></a>
 Return AsyncResult of the <em>last</em> task in the original chain</h1>
 <p>return results[0] ```</p>
 <ul>
@@ -437,7 +437,7 @@ Return AsyncResult of the <em>last</em> task in the original chain</h1>
 </ul>
 </code>celery/canvas.py<code>. Its</code>task<code>name is</code>'celery.chord'<code>. *</code>apply_async<code>/</code>run<code>: Coordinates with the result backend (</code>backend.apply_chord<code>). It typically runs the header</code>group<code>first, configuring it to notify the backend upon completion. The backend then triggers the</code>body` task once the count is reached.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1098"></a>
+<h2><a class="anchor" id="autotoc_md1122"></a>
 Conclusion</h2>
 <p>Celery Canvas transforms simple tasks into powerful workflow components.</p>
 <ul>

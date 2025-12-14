@@ -121,12 +121,12 @@ $(function(){initNavTree('d0/d13/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_path_operations___parameter_declaration</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1719"></a>
-autotoc_md1719</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1743"></a>
+autotoc_md1743</h2>
 <p>layout: default title: "Path Operations &amp; Parameter Declaration" parent: "FastAPI" </p>
-<h2><a class="anchor" id="autotoc_md1720"></a>
+<h2><a class="anchor" id="autotoc_md1744"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1721"></a>
+<h1><a class="anchor" id="autotoc_md1745"></a>
 Chapter 2: Path Operations &amp; Parameter Declaration</h1>
 <p>Welcome back! In <a class="el" href="../../d0/d54/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_201__fastapi__application______routing.html">Chapter 1: FastAPI Application &amp; Routing</a>, we learned how to set up a basic FastAPI application and organize our code using <code>APIRouter</code>. We saw how to connect a URL like <code>/</code> to a Python function using <code>@app.get("/")</code>.</p>
 <p>But what if we need more information from the user? Imagine you're building an API for an online store. You don't just want a single "hello" page; you want users to be able to:</p>
@@ -138,7 +138,7 @@ Chapter 2: Path Operations &amp; Parameter Declaration</h1>
 <p>How do we tell FastAPI to expect this extra information (like the item ID <code>5</code>, the search query <code>"socks"</code>, or the new item's details) and make it available inside our Python function?</p>
 <p>That's exactly what <b>Path Operations</b> and <b>Parameter Declaration</b> are for!</p>
 <p><b>Our Goal Today:</b> Learn how FastAPI uses function parameters and type hints to automatically handle data coming from different parts of the web request (URL path, query string, request body) and even validate it!</p>
-<h2><a class="anchor" id="autotoc_md1722"></a>
+<h2><a class="anchor" id="autotoc_md1746"></a>
 What Problem Does This Solve?</h2>
 <p>Think of your API endpoint (like <code>/items/</code>) as a specific room in a building. To get into the room or ask for something specific within it, you often need to provide information:</p>
 <ul>
@@ -147,7 +147,7 @@ What Problem Does This Solve?</h2>
 <li>Maybe you need to hand over a detailed document with instructions or data (like the specs for a new item). This is like the <b>Request Body</b>.</li>
 </ul>
 <p>FastAPI needs a way to understand these different types of information, extract them from the incoming request, check if they are the correct type (e.g., is the item ID <em>really</em> a number?), and give them to your Python function in a clean, easy-to-use way. It does this magic using standard Python type hints and special functions we'll learn about.</p>
-<h2><a class="anchor" id="autotoc_md1723"></a>
+<h2><a class="anchor" id="autotoc_md1747"></a>
 Path Operations: More Than Just GET</h2>
 <p>In Chapter 1, we used <code>@app.get("/")</code>. The <code>get</code> part refers to the HTTP <b>method</b>. Browsers use <code>GET</code> when you simply visit a URL. But there are other common methods for different actions:</p>
 <ul>
@@ -181,7 +181,7 @@ Path Operations: More Than Just GET</h2>
 <li><code>@app.get("/items/")</code> handles requests to <em>get</em> the list of items.</li>
 <li><code>@app.post("/items/")</code> handles requests to <em>create</em> a new item. FastAPI knows which function to call based on the HTTP method used in the request.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1724"></a>
+<h2><a class="anchor" id="autotoc_md1748"></a>
 Path Parameters: Getting Data from the URL Path</h2>
 <p>Let's say you want an endpoint to get a <em>single</em> item by its ID. The URL might look like <code><a href="http://127.0.0.1:8000/items/5">http://127.0.0.1:8000/items/5</a></code>. Here, <code>5</code> is the ID we want to capture.</p>
 <p>You define this in FastAPI by putting the variable name in curly braces <code>{}</code> within the path string:</p>
@@ -216,7 +216,7 @@ Path Parameters: Getting Data from the URL Path</h2>
 <li>Visit <code><a href="http://127.0.0.1:8000/items/abc">http://127.0.0.1:8000/items/abc</a></code>. You should see an error like: <code>json { "detail": [ { "type": "int_parsing", "loc": [ "path", "item_id" ], "msg": "Input should be a valid integer, unable to parse string as an integer", "input": "abc", "url": "..." } ] } </code> See? Automatic validation!</li>
 </ol>
 <p>Path parameters are <em>required</em> parts of the path. The URL simply won't match the route if that part is missing.</p>
-<h2><a class="anchor" id="autotoc_md1725"></a>
+<h2><a class="anchor" id="autotoc_md1749"></a>
 Query Parameters: Optional Info After "?"</h2>
 <p>What if you want to provide optional filtering or configuration in the URL? Like getting items, but maybe skipping the first 10 and limiting the results to 5: <code><a href="http://127.0.0.1:8000/items/?skip=10">http://127.0.0.1:8000/items/?skip=10</a>&amp;limit=5</code>.</p>
 <p>These <code>key=value</code> pairs after the <code>?</code> are called <b>Query Parameters</b>.</p>
@@ -270,7 +270,7 @@ Query Parameters: Optional Info After "?"</h2>
 <div class="line">):</div>
 <div class="line">    <span class="comment"># ... function logic ...</span></div>
 <div class="line">    <span class="keywordflow">return</span> {<span class="stringliteral">&quot;user_id&quot;</span>: user_id, <span class="stringliteral">&quot;show_details&quot;</span>: show_details, <span class="stringliteral">&quot;category&quot;</span>: category}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1726"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1750"></a>
 Request Body: Sending Complex Data</h2>
 <p>Sometimes, the data you need to send is too complex for the URL path or query string (like the name, description, price, tax, and tags for a new item). For <code>POST</code>, <code>PUT</code>, and <code>PATCH</code> requests, data is usually sent in the <b>Request Body</b>, often as JSON.</p>
 <p>FastAPI uses <b>Pydantic models</b> to define the structure of the data you expect in the request body. We'll dive deep into Pydantic in <a class="el" href="../../d5/df9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_203__data__validation______serialization____pydantic__.html">Chapter 3: Data Validation &amp; Serialization (Pydantic)</a>, but here's a sneak peek:</p>
@@ -312,7 +312,7 @@ Request Body: Sending Complex Data</h2>
 <li>FastAPI handles all the parsing and validation. If the incoming JSON doesn't match the <code>Item</code> structure, the client gets an error. If it matches, your function receives a ready-to-use <code>item</code> object.</li>
 </ul>
 <p>You typically use request bodies for <code>POST</code>, <code>PUT</code>, and <code>PATCH</code> requests. You can only declare <em>one</em> body parameter per function (though that body can contain nested structures, as defined by your Pydantic model).</p>
-<h2><a class="anchor" id="autotoc_md1727"></a>
+<h2><a class="anchor" id="autotoc_md1751"></a>
 Fine-tuning Parameters with <code>Path</code>, <code>Query</code>, <code>Body</code>, etc.</h2>
 <p>Type hints are great for basic validation (like <code>int</code>, <code>str</code>, <code>bool</code>). But what if you need more specific rules?</p>
 <ul>
@@ -388,7 +388,7 @@ Fine-tuning Parameters with <code>Path</code>, <code>Query</code>, <code>Body</c
 <li><b>Others</b>: <code>Header()</code>, <code>Cookie()</code>, <code>File()</code> work similarly for data from request headers, cookies, or uploaded files.</li>
 </ul>
 <p>Using <code>Path</code>, <code>Query</code>, etc., gives you fine-grained control over data validation and adds useful information to your API documentation automatically.</p>
-<h2><a class="anchor" id="autotoc_md1728"></a>
+<h2><a class="anchor" id="autotoc_md1752"></a>
 How it Works Under the Hood (Simplified)</h2>
 <p>How does FastAPI magically connect URL parts and request data to your function arguments and validate them?</p>
 <ol type="1">
@@ -443,7 +443,7 @@ How it Works Under the Hood (Simplified)</h2>
 <div class="line">    FastAPI App--&gt;&gt;-ASGI Server (Uvicorn): Send HTTP Response</div>
 <div class="line">    ASGI Server (Uvicorn)--&gt;&gt;-Client: HTTP 200 OK Response</div>
 </div><!-- fragment --><p>FastAPI cleverly uses Python's type hinting system, Pydantic, and Starlette's request handling to automate the tedious tasks of parsing, validation, and documentation.</p>
-<h2><a class="anchor" id="autotoc_md1729"></a>
+<h2><a class="anchor" id="autotoc_md1753"></a>
 Conclusion</h2>
 <p>You've now learned the core mechanics of defining API endpoints (Path Operations) and extracting data from requests in FastAPI!</p>
 <ul>

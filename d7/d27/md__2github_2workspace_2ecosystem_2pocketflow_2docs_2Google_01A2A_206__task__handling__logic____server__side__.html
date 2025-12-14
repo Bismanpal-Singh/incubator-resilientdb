@@ -121,17 +121,17 @@ $(function(){initNavTree('d7/d27/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_task_handling_logic__server_side_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1986"></a>
-autotoc_md1986</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2010"></a>
+autotoc_md2010</h2>
 <p>layout: default title: "Task Handling Logic (Server-side)" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md1987"></a>
+<h2><a class="anchor" id="autotoc_md2011"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1988"></a>
+<h1><a class="anchor" id="autotoc_md2012"></a>
 Chapter 6: Task Handling Logic (Server-side)</h1>
 <p>Welcome back! In <a class="el" href="../../dd/d41/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_205__a2a__client__implementation.html">Chapter 5: A2A Client Implementation</a>, we learned how to build the "customer" side – the <b>A2A Client</b> – that sends requests to an agent's server. We saw how it formats messages and talks to the agent's "embassy" (<a class="el" href="../../d6/dcb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_204__a2a__server__implementation.html">A2A Server Implementation</a>).</p>
 <p>But what happens <em>inside</em> the embassy once a request arrives? Who actually reads the request, does the work, and prepares the response?</p>
 <p>This chapter focuses on the <b>Task Handling Logic</b>. It solves the problem: <b>What is the core "brain" inside the A2A Server that performs the requested work?</b></p>
-<h2><a class="anchor" id="autotoc_md1989"></a>
+<h2><a class="anchor" id="autotoc_md2013"></a>
 The Agent's "Brain" - The Chef in the Kitchen</h2>
 <p>Imagine our A2A Server (<a class="el" href="../../d6/dcb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_204__a2a__server__implementation.html">Chapter 4</a>) is like a restaurant's front desk. It takes orders (<a class="el" href="../../d2/d9c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_202__task.html">Tasks</a>) from customers (<a class="el" href="../../dd/d41/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_205__a2a__client__implementation.html">A2A Clients</a>) using the standard A2A language (<a class="el" href="../../d8/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_203__a2a__protocol______core__types.html">A2A Protocol &amp; Core Types</a>).</p>
 <p>But the front desk doesn't cook the food! It passes the order to the <b>kitchen</b>, where the <b>chef</b> takes over. The chef:</p>
@@ -143,7 +143,7 @@ The Agent's "Brain" - The Chef in the Kitchen</h2>
 <li><b>Plates the Dish:</b> Packages the result (<code>Artifacts</code>) and signals completion (<code>completed</code> state).</li>
 </ol>
 <p>The <b>Task Handling Logic</b> is the "chef" inside your A2A Server. It's the core piece of code that contains the agent's specific skills and business logic.</p>
-<h2><a class="anchor" id="autotoc_md1990"></a>
+<h2><a class="anchor" id="autotoc_md2014"></a>
 What Does the Task Handler Do?</h2>
 <p>When the A2A Server receives a request like <code>tasks/send</code>, it hands off the details to the Task Handling Logic. This logic is responsible for:</p>
 <ul>
@@ -158,10 +158,10 @@ What Does the Task Handler Do?</h2>
 <li><b>Generating Output:</b> Creating the final results (<code>Artifacts</code>) or intermediate updates.</li>
 <li><b>Handling Errors:</b> Reporting back if something goes wrong (<code>failed</code> state).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1991"></a>
+<h2><a class="anchor" id="autotoc_md2015"></a>
 Implementing the "Brain"</h2>
 <p>The <code>Google A2A</code> libraries provide structures to help you implement this logic. Let's look at simplified examples.</p>
-<h3><a class="anchor" id="autotoc_md1992"></a>
+<h3><a class="anchor" id="autotoc_md2016"></a>
 JavaScript Example (Async Generator Handler)</h3>
 <p>In JavaScript, the task handler is often an <code>async function*</code> (an asynchronous generator). It receives <code>TaskContext</code> and uses <code>yield</code> to send back updates.</p>
 <p>Imagine a simple agent that pretends to call an AI to greet the user.</p>
@@ -208,7 +208,7 @@ JavaScript Example (Async Generator Handler)</h3>
 <li><b>Do Work:</b> It simulates calling an AI to generate a greeting. In real agents (like <code>samples/js/src/agents/coder/index.ts</code> or <code>samples/js/src/agents/movie-agent/index.ts</code>), this is where you'd interact with Genkit, external APIs, or other tools.</li>
 <li><b>Signal Completion:</b> It <code>yield</code>s the final update, setting the <code>state</code> to <code>completed</code> and including the greeting in the agent's <code>message</code>.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1993"></a>
+<h3><a class="anchor" id="autotoc_md2017"></a>
 Python Example (TaskManager with Streaming)</h3>
 <p>In Python, you typically subclass <code>TaskManager</code> and implement methods like <code>on_send_task</code> or <code>on_send_task_subscribe</code>. For streaming responses, <code>on_send_task_subscribe</code> can also be an async generator.</p>
 <p>Let's create a similar Greeter Agent.</p>
@@ -297,7 +297,7 @@ Python Example (TaskManager with Streaming)</h3>
 <li><b>Error Handling:</b> A <code>try...except</code> block handles potential errors and yields a <code>failed</code> state event.</li>
 </ol>
 <p>Real-world Python agents might use frameworks like CrewAI (<code>samples/python/agents/crewai/agent.py</code>) or LangGraph (<code>samples/python/agents/langgraph/agent.py</code>) within these handler methods to orchestrate more complex logic.</p>
-<h2><a class="anchor" id="autotoc_md1994"></a>
+<h2><a class="anchor" id="autotoc_md2018"></a>
 Key Inputs to the Handler</h2>
 <p>The handler needs information to do its job. The context typically includes:</p>
 <ul>
@@ -307,7 +307,7 @@ Key Inputs to the Handler</h2>
 <li><b>Cancellation Check:</b> A way to see if the client has requested to cancel the task.</li>
 </ul>
 <p>These inputs are bundled in <code>TaskContext</code> (JS) or passed as parameters to the <code>TaskManager</code> methods (Python).</p>
-<h2><a class="anchor" id="autotoc_md1995"></a>
+<h2><a class="anchor" id="autotoc_md2019"></a>
 Signaling Progress and Delivering Results</h2>
 <ul>
 <li><b>Status Updates:</b> Yielding status changes (<code>working</code>, <code>input-required</code>, <code>completed</code>, <code>failed</code>) keeps the client informed, especially for long-running tasks. This often includes a <code>Message</code> from the agent (e.g., "Looking up information...", "Please provide the city name.").</li>
@@ -317,7 +317,7 @@ Signaling Progress and Delivering Results</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1996"></a>
+<h2><a class="anchor" id="autotoc_md2020"></a>
 Connecting to the Server</h2>
 <p>As shown in <a class="el" href="../../d6/dcb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_204__a2a__server__implementation.html">Chapter 4</a>, you connect your Task Handling Logic to the <code>A2AServer</code> during its setup:</p>
 <ul>
@@ -325,7 +325,7 @@ Connecting to the Server</h2>
 <li><b>Python:</b> Pass an instance of your <code>TaskManager</code> subclass (<code>GreeterTaskManager()</code>) to the <code>A2AServer</code> constructor.</li>
 </ul>
 <p>The server then knows exactly which "chef" to call when an order comes in.</p>
-<h2><a class="anchor" id="autotoc_md1997"></a>
+<h2><a class="anchor" id="autotoc_md2021"></a>
 Under the Hood: Server Invoking the Handler</h2>
 <p>Let's visualize how the server uses the handler when a streaming <code>tasks/sendSubscribe</code> request arrives:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -384,7 +384,7 @@ Under the Hood: Server Invoking the Handler</h2>
 <li><b>Python Base Manager:</b> <code>samples/python/common/server/task_manager.py</code> (defines <code>TaskManager</code>, <code>InMemoryTaskManager</code>)</li>
 <li><b>Python Agent Examples:</b> <code>samples/python/agents/crewai/agent.py</code>, <code>samples/python/agents/langgraph/agent.py</code>, <code>demo/ui/service/server/adk_host_manager.py</code> (more complex, uses ADK)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1998"></a>
+<h2><a class="anchor" id="autotoc_md2022"></a>
 Conclusion</h2>
 <p>The <b>Task Handling Logic</b> is the heart of your A2A agent – the "chef" that actually does the work. It receives requests via the <code>A2AServer</code>, interacts with AI models or tools, manages the task's state transitions, and generates the final response or intermediate updates.</p>
 <p>By implementing this logic (often as an async generator in JS or a <code>TaskManager</code> subclass in Python) and connecting it to your server, you define your agent's unique capabilities and how it fulfills the tasks requested by clients.</p>

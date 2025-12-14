@@ -121,12 +121,12 @@ $(function(){initNavTree('d3/dc3/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">09_adapter</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1673"></a>
-autotoc_md1673</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1697"></a>
+autotoc_md1697</h2>
 <p>layout: default title: "Adapter" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1674"></a>
+<h2><a class="anchor" id="autotoc_md1698"></a>
 nav_order: 9</h2>
-<h1><a class="anchor" id="autotoc_md1675"></a>
+<h1><a class="anchor" id="autotoc_md1699"></a>
 Chapter 9: Adapter - The Universal Translator</h1>
 <p>Welcome to Chapter 9! In <a class="el" href="../../dc/d0a/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_208__teleprompter______optimizer.html">Chapter 8: Teleprompter / Optimizer</a>, we saw how DSPy can automatically optimize our programs by finding better prompts or few-shot examples. We ended up with a <code>compiled_program</code> that should perform better.</p>
 <p>Now, this optimized program needs to communicate with a Language Model (<a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">LM</a>) to actually do its work. But here's a potential challenge: different types of LMs expect different kinds of input!</p><ul>
@@ -148,7 +148,7 @@ Chapter 9: Adapter - The Universal Translator</h1>
 <li>How they work behind the scenes (mostly automatically!).</li>
 </ul>
 <p>Let's meet the translator!</p>
-<h2><a class="anchor" id="autotoc_md1676"></a>
+<h2><a class="anchor" id="autotoc_md1700"></a>
 The Problem: Different LMs, Different Languages</h2>
 <p>Imagine you have a DSPy Signature for summarizing text:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> dspy</div>
@@ -184,7 +184,7 @@ The Problem: Different LMs, Different Languages</h2>
 <div class="line">]</div>
 </div><!-- fragment --><p> <em>(Simplified - actual chat formatting can be more complex)</em></p>
 <p>How does <code>dspy.Predict</code> know which format to use? And how does it extract the <code>summary</code> from the potentially differently formatted responses? It doesn't! That's the job of the <b>Adapter</b>.</p>
-<h2><a class="anchor" id="autotoc_md1677"></a>
+<h2><a class="anchor" id="autotoc_md1701"></a>
 What Does an Adapter Do?</h2>
 <p>An <code>Adapter</code> is a component that sits between your DSPy module (like <code>dspy.Predict</code>) and the <a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">LM Client</a>. Its main tasks are:</p>
 <ol type="1">
@@ -192,7 +192,7 @@ What Does an Adapter Do?</h2>
 <li><b>Parsing:</b> After the LM generates its response (which is usually just raw text), the <code>Adapter</code> <b>parses</b> this text to extract the values for the output fields defined in the <code>Signature</code> (like extracting the generated <code>summary</code> text).</li>
 </ol>
 <p>The most common adapter is the <code>dspy.adapters.ChatAdapter</code>, which is specifically designed to translate between the DSPy format and the message list format expected by chat models.</p>
-<h2><a class="anchor" id="autotoc_md1678"></a>
+<h2><a class="anchor" id="autotoc_md1702"></a>
 Why Use Adapters? Flexibility!</h2>
 <p>The main benefit of using Adapters is <b>flexibility</b>.</p>
 <ul>
@@ -200,7 +200,7 @@ Why Use Adapters? Flexibility!</h2>
 <li><b>Easy Switching:</b> You can switch the underlying <a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">LM Client</a> (e.g., from OpenAI GPT-3 to Anthropic Claude 3) in <code>dspy.settings</code>, and the appropriate Adapter (usually the default <code>ChatAdapter</code>) handles the communication differences automatically.</li>
 <li><b>Standard Interface:</b> Adapters ensure that modules like <code>dspy.Predict</code> have a consistent way to interact with LMs, hiding the complexities of different API formats.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1679"></a>
+<h2><a class="anchor" id="autotoc_md1703"></a>
 How Adapters Work: Format and Parse</h2>
 <p>Let's look conceptually at what the <code>ChatAdapter</code> does:</p>
 <p><b>1. Formatting (<code>format</code> method):</b></p>
@@ -240,7 +240,7 @@ How Adapters Work: Format and Parse</h2>
 <div class="line">  <span class="stringliteral">&quot;summary&quot;</span>: <span class="stringliteral">&quot;DSPy helps build and optimize language model pipelines.&quot;</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p> This dictionary is then packaged into the <code>dspy.Prediction</code> object (as <code>result.summary</code>) that your <code>summarizer</code> module returns.</p>
-<h2><a class="anchor" id="autotoc_md1680"></a>
+<h2><a class="anchor" id="autotoc_md1704"></a>
 Using Adapters (It's Often Automatic!)</h2>
 <p>The good news is that you usually don't interact with Adapters directly. Modules like <code>dspy.Predict</code> are designed to use the currently configured adapter automatically.</p>
 <p>DSPy sets a default adapter (usually <code>ChatAdapter</code>) in its global <code>dspy.settings</code>. When you configure your <a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">LM Client</a> like this:</p>
@@ -259,7 +259,7 @@ Using Adapters (It's Often Automatic!)</h2>
 <div class="line">result = summarizer(text=long_text) <span class="comment"># Adapter works its magic here!</span></div>
 <div class="line">print(result.summary)</div>
 </div><!-- fragment --><p>You write your DSPy code at a higher level of abstraction, and the Adapter handles the translation details for you.</p>
-<h2><a class="anchor" id="autotoc_md1681"></a>
+<h2><a class="anchor" id="autotoc_md1705"></a>
 How It Works Under the Hood</h2>
 <p>Let's trace the flow when <code>summarizer(text=long_text)</code> is called, assuming a chat LM and the <code>ChatAdapter</code> are configured:</p>
 <ol type="1">
@@ -416,7 +416,7 @@ How It Works Under the Hood</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># ... helper methods: format_turn, format_fields, _split_completion_by_markers ...</span></div>
 </div><!-- fragment --><p>The key takeaway is that <code>Adapter</code> subclasses provide concrete implementations for <code>format</code> (DSPy -&gt; LM format) and <code>parse</code> (LM output -&gt; DSPy format), enabling smooth communication.</p>
-<h2><a class="anchor" id="autotoc_md1682"></a>
+<h2><a class="anchor" id="autotoc_md1706"></a>
 Conclusion</h2>
 <p>You've now met the <b><code>Adapter</code></b>, DSPy's universal translator!</p>
 <ul>

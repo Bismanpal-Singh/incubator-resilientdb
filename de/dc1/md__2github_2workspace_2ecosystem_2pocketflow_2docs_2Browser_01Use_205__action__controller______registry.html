@@ -121,17 +121,17 @@ $(function(){initNavTree('de/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_action_controller___registry</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md900"></a>
-autotoc_md900</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md924"></a>
+autotoc_md924</h2>
 <p>layout: default title: "Action Controller &amp; Registry" parent: "Browser Use" </p>
-<h2><a class="anchor" id="autotoc_md901"></a>
+<h2><a class="anchor" id="autotoc_md925"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md902"></a>
+<h1><a class="anchor" id="autotoc_md926"></a>
 Chapter 5: Action Controller &amp; Registry - The Agent's Hands and Toolbox</h1>
 <p>In the <a class="el" href="../../d0/df8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_204__dom__representation.html">previous chapter</a>, we saw how the <code>DomService</code> creates a simplified map (<code>DOMState</code>) of the webpage, allowing the Agent and its LLM planner to identify interactive elements like buttons and input fields using unique numbers (<code>highlight_index</code>). The LLM uses this map to decide <em>what</em> specific action to take next, like "click element [5]" or "type 'hello world' into element [12]".</p>
 <p>But how does the program actually <em>do</em> that? How does the abstract idea "click element [5]" turn into a real click inside the browser window managed by the <a class="el" href="../../dd/da5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_203__browsercontext.html">BrowserContext</a>?</p>
 <p>This is where the <b>Action Controller</b> and <b>Action Registry</b> come into play. They are the "hands" and "toolbox" that execute the Agent's decisions.</p>
-<h2><a class="anchor" id="autotoc_md903"></a>
+<h2><a class="anchor" id="autotoc_md927"></a>
 What Problem Do They Solve?</h2>
 <p>Imagine you have a detailed instruction manual (the LLM's plan) for building a model car. The manual tells you exactly which piece to pick up (<code>index=5</code>) and what to do with it ("click" or "attach"). However, you still need:</p>
 <ol type="1">
@@ -144,10 +144,10 @@ What Problem Do They Solve?</h2>
 <li><b>Action Controller (The Mechanic):</b> A component that takes the specific action requested by the LLM (e.g., "execute `click_element` with `index=5`"), finds the corresponding function (the "tool") in the Registry, ensures the request is valid, and then executes that function using the <a class="el" href="../../dd/da5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_203__browsercontext.html">BrowserContext</a> (the "car").</li>
 </ol>
 <p>The Controller and Registry solve the problem of translating the LLM's high-level plan into concrete, executable browser operations in a structured and reliable way.</p>
-<h2><a class="anchor" id="autotoc_md904"></a>
+<h2><a class="anchor" id="autotoc_md928"></a>
 Meet the Toolbox and the Mechanic</h2>
 <p>Let's break down these two closely related concepts:</p>
-<h3><a class="anchor" id="autotoc_md905"></a>
+<h3><a class="anchor" id="autotoc_md929"></a>
 1. Action Registry: The Toolbox (<code>controller/registry/service.py</code>)</h3>
 <p>Think of the <code>Registry</code> as a carefully organized toolbox. Each drawer is labeled with the name of a tool (an action like <code>click_element</code>), and inside, you find the tool itself (the actual code function) along with its instructions (description and required parameters).</p>
 <ul>
@@ -160,7 +160,7 @@ Meet the Toolbox and the Mechanic</h2>
 </li>
 <li><b>Informs the LLM:</b> The <code>Registry</code> can generate a description of all available actions and their parameters. This description is given to the LLM (as part of the <a class="el" href="../../dd/d81/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_202__system__prompt.html">System Prompt</a>) so it knows exactly what "tools" it's allowed to ask the Agent to use.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md906"></a>
+<h3><a class="anchor" id="autotoc_md930"></a>
 2. Action Controller: The Mechanic (<code>controller/service.py</code>)</h3>
 <p>The <code>Controller</code> is the skilled mechanic who uses the tools from the Registry.</p>
 <ul>
@@ -170,7 +170,7 @@ Meet the Toolbox and the Mechanic</h2>
 <li><b>Executes the Action:</b> It calls the actual Python function associated with the action (e.g., the <code>click_element</code> function), passing it the validated parameters and the necessary <code>BrowserContext</code> (so the function knows <em>which</em> browser tab to act upon).</li>
 <li><b>Reports the Result:</b> The action function performs the task (e.g., clicking the element) and returns an <code>ActionResult</code> object, indicating whether it succeeded, failed, or produced some output. The Controller passes this result back to the Agent.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md907"></a>
+<h2><a class="anchor" id="autotoc_md931"></a>
 Using the Controller: Executing an Action</h2>
 <p>In the Agent's main loop (<a class="el" href="../../de/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_201__agent.html">Chapter 1: Agent</a>), after the LLM provides its plan as an <code>ActionModel</code>, the Agent simply hands this model over to the <code>Controller</code> to execute it.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- Simplified Agent step calling the Controller ---</span></div>
@@ -210,7 +210,7 @@ Using the Controller: Executing an Action</h2>
 <li>It returns an <code>ActionResult</code> (e.g., <code>ActionResult(extracted_content="Clicked button with index 5")</code>).</li>
 <li>The Agent receives this <code>action_result</code> and proceeds.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md908"></a>
+<h2><a class="anchor" id="autotoc_md932"></a>
 How it Works Under the Hood: The Execution Flow</h2>
 <p>Let's trace the journey of an action request from the Agent to the browser click:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -239,10 +239,10 @@ How it Works Under the Hood: The Execution Flow</h2>
 <div class="line">    ClickFunc--&gt;&gt;Controller: Return ActionResult(extracted_content=&quot;Clicked button...&quot;)</div>
 <div class="line">    Controller--&gt;&gt;Agent: Return ActionResult</div>
 </div><!-- fragment --><p>This diagram shows the Controller orchestrating the process: receiving the request, consulting the Registry, validating, calling the specific action function, and returning the result.</p>
-<h2><a class="anchor" id="autotoc_md909"></a>
+<h2><a class="anchor" id="autotoc_md933"></a>
 Diving Deeper into the Code</h2>
 <p>Let's peek at simplified versions of the key files.</p>
-<h3><a class="anchor" id="autotoc_md910"></a>
+<h3><a class="anchor" id="autotoc_md934"></a>
 1. Registering Actions (<code>controller/registry/service.py</code>)</h3>
 <p>Actions are typically registered using a decorator <code>@registry.action</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- File: controller/registry/service.py (Simplified Registry) ---</span></div>
@@ -317,7 +317,7 @@ Diving Deeper into the Code</h2>
 <div class="line">         <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
 <div class="line">             <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;Error executing {action_name}: {e}&quot;</span>) <span class="keyword">from</span> e</div>
 </div><!-- fragment --><p>This shows how the <code>@registry.action</code> decorator takes a function, its description, and parameter model, and stores them in the <code>registry</code> dictionary. <code>execute_action</code> is the core method used by the <code>Controller</code> to run a specific action.</p>
-<h3><a class="anchor" id="autotoc_md911"></a>
+<h3><a class="anchor" id="autotoc_md935"></a>
 2. Defining Action Parameters (<code>controller/views.py</code>)</h3>
 <p>Each action often has its own Pydantic model to define its expected parameters.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- File: controller/views.py (Simplified Action Parameter Models) ---</span></div>
@@ -342,7 +342,7 @@ Diving Deeper into the Code</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># ... other action models like GoToUrlAction, ScrollAction etc. ...</span></div>
 </div><!-- fragment --><p>These models ensure that when the Controller receives parameters like <code>{"index": 5}</code>, it can validate that <code>index</code> is indeed an integer as required by <code>ClickElementAction</code>.</p>
-<h3><a class="anchor" id="autotoc_md912"></a>
+<h3><a class="anchor" id="autotoc_md936"></a>
 3. The Controller Service (<code>controller/service.py</code>)</h3>
 <p>The <code>Controller</code> class ties everything together. It initializes the <code>Registry</code> and registers the default browser actions. Its main job is the <code>act</code> method.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- File: controller/service.py (Simplified Controller) ---</span></div>
@@ -423,7 +423,7 @@ Diving Deeper into the Code</h2>
 <div class="line">            logger.error(f<span class="stringliteral">&quot;Error during controller.act: {e}&quot;</span>, exc_info=<span class="keyword">True</span>)</div>
 <div class="line">            <span class="keywordflow">return</span> ActionResult(error=str(e)) <span class="comment"># Return error in ActionResult</span></div>
 </div><!-- fragment --><p>The <code>Controller</code> registers all the standard browser actions during initialization. The <code>act</code> method then dynamically finds and executes the requested action using the <code>Registry</code>.</p>
-<h2><a class="anchor" id="autotoc_md913"></a>
+<h2><a class="anchor" id="autotoc_md937"></a>
 Conclusion</h2>
 <p>The <b>Action Registry</b> acts as the definitive catalog or "toolbox" of all operations the <code>Browser Use</code> Agent can perform. The <b>Action Controller</b> is the "mechanic" that interprets the LLM's plan, selects the appropriate tool from the Registry, and executes it within the specified <a class="el" href="../../dd/da5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_203__browsercontext.html">BrowserContext</a>.</p>
 <p>Together, they provide a robust and extensible way to translate high-level instructions into low-level browser interactions, forming the crucial link between the Agent's "brain" (LLM planner) and its "hands" (browser manipulation).</p>

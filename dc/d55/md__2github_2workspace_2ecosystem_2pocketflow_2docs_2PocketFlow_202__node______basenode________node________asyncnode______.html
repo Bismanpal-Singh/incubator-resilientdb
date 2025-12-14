@@ -121,15 +121,15 @@ $(function(){initNavTree('dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_node___basenode____node____asyncnode___</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2694"></a>
-autotoc_md2694</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2718"></a>
+autotoc_md2718</h2>
 <p>layout: default title: "Node (BaseNode, Node, AsyncNode)" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2695"></a>
+<h2><a class="anchor" id="autotoc_md2719"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2696"></a>
+<h1><a class="anchor" id="autotoc_md2720"></a>
 Chapter 2: Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</h1>
 <p>In <a class="el" href="../../d1/d94/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_201__shared__state______shared____dictionary____.html">Chapter 1: Shared State (<code>shared</code> dictionary)</a>, we learned how different parts of a PocketFlow workflow can communicate using the <code>shared</code> dictionary. Now, let's meet the actual "workers" that perform the tasks and use this shared information: <b>Nodes</b>.</p>
-<h2><a class="anchor" id="autotoc_md2697"></a>
+<h2><a class="anchor" id="autotoc_md2721"></a>
 What are Nodes and Why Do We Need Them?</h2>
 <p>Imagine you're building an AI that helps you write a story. This process might involve several steps:</p><ol type="1">
 <li>Generate a story idea.</li>
@@ -150,7 +150,7 @@ What are Nodes and Why Do We Need Them?</h2>
 <li><b>Reusable:</b> A Node designed for web search can be used in many different AI applications.</li>
 <li><b>Manageable:</b> It's easier to build and debug a sequence of simple steps than one giant, monolithic piece of code.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2698"></a>
+<h2><a class="anchor" id="autotoc_md2722"></a>
 The Anatomy of a Node: <code>prep</code>, <code>exec</code>, and <code>post</code></h2>
 <p>Most Nodes in PocketFlow have a similar structure, typically involving three key methods:</p>
 <ol type="1">
@@ -222,7 +222,7 @@ The Anatomy of a Node: <code>prep</code>, <code>exec</code>, and <code>post</cod
 <div class="line">    &quot;summary_output&quot;: &quot;This is a summary of: PocketFlow is a cool...&quot;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> The summary is now available in the <code>shared</code> dictionary for other Nodes or for final output!</p>
-<h2><a class="anchor" id="autotoc_md2699"></a>
+<h2><a class="anchor" id="autotoc_md2723"></a>
 Types of Nodes: <code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code></h2>
 <p>PocketFlow provides a few variations of Nodes, built on top of each other:</p>
 <ul>
@@ -238,10 +238,10 @@ Types of Nodes: <code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2700"></a>
+<h1><a class="anchor" id="autotoc_md2724"></a>
 ... other imports ...</h1>
 <p>class Summarize(Node): # Inherits from Node </p>
-<h1><a class="anchor" id="autotoc_md2701"></a>
+<h1><a class="anchor" id="autotoc_md2725"></a>
 ... prep, exec, post methods ...</h1>
 <p>def exec_fallback(self, shared, prep_res, exc): """Provide a simple fallback instead of crashing.""" return "There was an error processing your request." ``<code> This</code>Summarize<code>Node, if its</code>exec<code>method fails (e.g.,</code>call_llm<code>raises an error), will retry (default is 1 retry, but can be configured like</code>Summarize(max_retries=3)<code>). If all retries fail,</code>exec_fallback` is called.</p>
 <ul>
@@ -254,21 +254,21 @@ Types of Nodes: <code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2702"></a>
+<h1><a class="anchor" id="autotoc_md2726"></a>
 ... other imports ...</h1>
 <p>class FetchRecipes(AsyncNode): # Inherits from AsyncNode async def prep_async(self, shared): </p>
-<h1><a class="anchor" id="autotoc_md2703"></a>
+<h1><a class="anchor" id="autotoc_md2727"></a>
 ... prepare input asynchronously ...</h1>
 <p>ingredient = await get_user_input("Enter ingredient: ") # get_user_input is async return ingredient</p>
 <p>async def exec_async(self, ingredient): </p>
-<h1><a class="anchor" id="autotoc_md2704"></a>
+<h1><a class="anchor" id="autotoc_md2728"></a>
 ... execute task asynchronously ...</h1>
 <p>recipes = await fetch_recipes(ingredient) # fetch_recipes is async return recipes</p>
 <p>async def post_async(self, shared, prep_res, recipes): </p>
-<h1><a class="anchor" id="autotoc_md2705"></a>
+<h1><a class="anchor" id="autotoc_md2729"></a>
 ... post-process asynchronously ...</h1>
 <p>shared["recipes"] = recipes return "suggest" # Action for the next step ``<code> Notice the</code>async def<code>and</code>await<code>keywords. This</code>FetchRecipes` Node can wait for user input and web requests without freezing the application.</p>
-<h2><a class="anchor" id="autotoc_md2706"></a>
+<h2><a class="anchor" id="autotoc_md2730"></a>
 How a Node Runs: Under the Hood (Simplified)</h2>
 <p>When PocketFlow decides it's time for a particular Node to run (as part of a Flow (<code>Flow</code>, <code>AsyncFlow</code>)), it essentially orchestrates the calling of its <code>prep</code>, <code>exec</code>, and <code>post</code> methods in sequence.</p>
 <p>Here's a simplified view of what happens when a synchronous <code>Node</code>'s internal <code>_run</code> method is invoked:</p>
@@ -329,7 +329,7 @@ How a Node Runs: Under the Hood (Simplified)</h2>
 <div class="line">                time.sleep(self.wait) <span class="comment"># Wait before retrying</span></div>
 </div><!-- fragment --><p> This shows how <code>Node</code> makes your worker more robust by automatically handling temporary failures.</p>
 <p>For <code>AsyncNode</code>, the methods are <code>prep_async</code>, <code>exec_async</code>, <code>post_async</code>, and they are <code>await</code>ed, allowing other tasks to run while waiting for I/O operations. This will be detailed in <a class="el" href="../../d7/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_205__asynchronous__processing___dbf1dc61cb3bcd98d46655d3ab8e2dd9.html">Chapter 5</a>.</p>
-<h2><a class="anchor" id="autotoc_md2707"></a>
+<h2><a class="anchor" id="autotoc_md2731"></a>
 Conclusion</h2>
 <p>You've now been introduced to <b>Nodes</b>, the workhorses of PocketFlow!</p><ul>
 <li>They represent <b>single, atomic steps</b> in your workflow.</li>

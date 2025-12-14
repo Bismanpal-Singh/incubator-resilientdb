@@ -121,18 +121,18 @@ $(function(){initNavTree('de/dcd/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_mcp_protocol_types</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2432"></a>
-autotoc_md2432</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2456"></a>
+autotoc_md2456</h2>
 <p>layout: default title: "MCP Protocol Types" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2433"></a>
+<h2><a class="anchor" id="autotoc_md2457"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2434"></a>
+<h1><a class="anchor" id="autotoc_md2458"></a>
 Chapter 7: MCP Protocol Types - The Standard Language</h1>
 <p>In the previous chapter, <a class="el" href="../../d2/de0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_206__fastmcp__context______context____.html">Chapter 6: Talking Back - FastMCP Context (<code>Context</code>)</a>, we saw how the <code>Context</code> object gives our tools and resources a "backstage pass" to send logs, report progress, and access other server features during a request. We've built up a good understanding of how <code>FastMCP</code> helps us create powerful servers with tools (<a class="el" href="../../dc/df6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_204__fastmcp__tools______tool________toolmanager____.html">Chapter 4</a>), resources (<a class="el" href="../../d9/dfc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_203__fastmcp__resources_95757cc8f176683b04c22ceeac7ea1d5.html">Chapter 3</a>), and prompts (<a class="el" href="../../d5/de9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_205__fastmcp__prompts___e380d8fca08b641e7632fcc5814680b7.html">Chapter 5</a>).</p>
 <p>But have you ever wondered <em>how</em> the client and server actually talk to each other under the hood? When your tool function uses <code>ctx.report_progress()</code>, how does that message get sent? When a client asks to call a tool, what does that request <em>look like</em> electronically?</p>
 <p>Imagine trying to send mail internationally. If everyone used different envelope sizes, address formats, and languages, it would be chaos! Postal services rely on standards. Similarly, for a client (like a chatbot interface) and your MCP server (like your <code>CalculatorServer</code>) to communicate reliably, they need a <b>standard language</b> and <b>standard formats</b> for their messages.</p>
 <p>This is where <b>MCP Protocol Types</b> come in. They are the fundamental, standardized data structures – the "digital forms" or "letter formats" – defined by the Model Context Protocol (MCP) specification itself.</p>
-<h2><a class="anchor" id="autotoc_md2435"></a>
+<h2><a class="anchor" id="autotoc_md2459"></a>
 What are MCP Protocol Types?</h2>
 <p>Think of MCP Protocol Types as the official <b>blueprints</b> for all the different kinds of messages that can be sent between an MCP client and server. They define precisely what information should be included in each type of message.</p>
 <p>These types cover all the interactions we've implicitly seen:</p>
@@ -153,7 +153,7 @@ What are MCP Protocol Types?</h2>
 <li><code>JSONRPCError</code>: The standard "form" for reporting errors.</li>
 </ul>
 <p>These are just a few examples; the MCP specification defines many such types to cover all standard interactions.</p>
-<h2><a class="anchor" id="autotoc_md2436"></a>
+<h2><a class="anchor" id="autotoc_md2460"></a>
 Why Standardized Types? Meet Pydantic</h2>
 <p>Why go to the trouble of defining all these specific types? Why not just send messages like "Hey server, run the add tool with 5 and 7"?</p>
 <p>Without standards, communication quickly breaks down:</p><ul>
@@ -169,7 +169,7 @@ Why Standardized Types? Meet Pydantic</h2>
 <li><b>Type Safety &amp; Developer Experience:</b> Because the types are clearly defined, your code editor can help you! It knows what fields exist on an <code>InitializeResult</code> object, reducing typos and making development faster and less error-prone.</li>
 </ol>
 <p>Pydantic makes the communication reliable and robust by enforcing the MCP standard for every message.</p>
-<h2><a class="anchor" id="autotoc_md2437"></a>
+<h2><a class="anchor" id="autotoc_md2461"></a>
 Examples in Action: Connecting High-Level to Low-Level</h2>
 <p>While <code>FastMCP</code> does a great job hiding these low-level details, let's peek behind the curtain and see how our previous examples relate to these protocol types.</p>
 <p><b>Scenario 1: Client Listing Tools</b></p>
@@ -183,23 +183,23 @@ Examples in Action: Connecting High-Level to Low-Level</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2438"></a>
+<h1><a class="anchor" id="autotoc_md2462"></a>
 Simplified example of creating a ListToolsResult object</h1>
-<h1><a class="anchor" id="autotoc_md2439"></a>
+<h1><a class="anchor" id="autotoc_md2463"></a>
 (FastMCP does this automatically for you!)</h1>
 <p>from mcp.types import ListToolsResult, Tool</p>
-<h1><a class="anchor" id="autotoc_md2440"></a>
+<h1><a class="anchor" id="autotoc_md2464"></a>
 ToolManager gathered this info from your @server.tool decorator</h1>
 <p>add_tool_info = Tool( name="add", description="Adds two numbers together.", inputSchema={ # JSON Schema describing expected input "type": "object", "properties": { "num1": {"type": "integer"}, "num2": {"type": "integer"} }, "required": ["num1", "num2"] } )</p>
-<h1><a class="anchor" id="autotoc_md2441"></a>
+<h1><a class="anchor" id="autotoc_md2465"></a>
 FastMCP creates the result object</h1>
 <p>result_data = ListToolsResult( tools=[add_tool_info] </p>
-<h1><a class="anchor" id="autotoc_md2442"></a>
+<h1><a class="anchor" id="autotoc_md2466"></a>
 nextCursor would be set if paginating</h1>
 <p>)</p>
-<h1><a class="anchor" id="autotoc_md2443"></a>
+<h1><a class="anchor" id="autotoc_md2467"></a>
 This result_data object is then packaged into a</h1>
-<h1><a class="anchor" id="autotoc_md2444"></a>
+<h1><a class="anchor" id="autotoc_md2468"></a>
 standard JSONRPCResponse and sent to the client.</h1>
 <p>print(result_data.model_dump_json(indent=2)) # See its JSON form ```</p>
 <p><b>Example Output (JSON representation):</b> <code>json { "_meta": null, "nextCursor": null, "tools": [ { "name": "add", "description": "Adds two numbers together.", "inputSchema": { "type": "object", "properties": { "num1": { "type": "integer" }, "num2": { "type": "integer" } }, "required": [ "num1", "num2" ] } } ] } </code> This structured JSON, based on the <code>ListToolsResult</code> model, is what gets sent back to the client.</p>
@@ -213,24 +213,24 @@ standard JSONRPCResponse and sent to the client.</h1>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2445"></a>
+<h1><a class="anchor" id="autotoc_md2469"></a>
 Simplified example of creating a ProgressNotification</h1>
-<h1><a class="anchor" id="autotoc_md2446"></a>
+<h1><a class="anchor" id="autotoc_md2470"></a>
 (Context object does this for you!)</h1>
 <p>from mcp.types import ProgressNotification, ProgressNotificationParams</p>
-<h1><a class="anchor" id="autotoc_md2447"></a>
+<h1><a class="anchor" id="autotoc_md2471"></a>
 Context gets these values</h1>
 <p>token_from_request = "client_progress_token_123" current_step = 2 total_steps = 5 progress_value = current_step / total_steps # 0.4</p>
-<h1><a class="anchor" id="autotoc_md2448"></a>
+<h1><a class="anchor" id="autotoc_md2472"></a>
 Context creates the notification object</h1>
 <p>notification_data = ProgressNotification( method="notifications/progress", # Standard MCP method name params=ProgressNotificationParams( progressToken=token_from_request, progress=progress_value, total=float(total_steps) ) )</p>
-<h1><a class="anchor" id="autotoc_md2449"></a>
+<h1><a class="anchor" id="autotoc_md2473"></a>
 This notification_data is then packaged into a</h1>
-<h1><a class="anchor" id="autotoc_md2450"></a>
+<h1><a class="anchor" id="autotoc_md2474"></a>
 JSONRPCNotification message and sent to the client.</h1>
 <p>print(notification_data.model_dump_json(indent=2)) ```</p>
 <p><b>Example Output (JSON representation):</b> <code>json { "method": "notifications/progress", "params": { "_meta": null, "progressToken": "client_progress_token_123", "progress": 0.4, "total": 5.0 } } </code> This structured JSON notification, based on the <code>ProgressNotification</code> model, is sent to the client to update its UI.</p>
-<h2><a class="anchor" id="autotoc_md2451"></a>
+<h2><a class="anchor" id="autotoc_md2475"></a>
 Do I Need to Use These Directly?</h2>
 <p>Probably not, especially when you're starting out and using <code>FastMCP</code>!</p>
 <p>The beauty of <code>FastMCP</code> and its decorators (<code>@server.tool</code>, <code>@server.resource</code>) and helpers (<code>Context</code>) is that they <b>abstract away</b> these low-level protocol types. You work with regular Python functions, arguments, and return values, and <code>FastMCP</code> handles the conversion to and from the appropriate MCP Protocol Types automatically using Pydantic.</p>
@@ -241,7 +241,7 @@ Do I Need to Use These Directly?</h2>
 <li><b>Understanding the Protocol:</b> Reading the official MCP specification or the SDK's <code>mcp/types.py</code> file gives you the ground truth about how communication works.</li>
 </ul>
 <p>Think of it like driving a car. You mostly use the steering wheel, pedals, and shifter (like <code>FastMCP</code> abstractions). You don't usually interact directly with the engine pistons or fuel injectors (like MCP Protocol Types). But knowing they exist helps you understand how the car works and what might be wrong if it breaks down.</p>
-<h2><a class="anchor" id="autotoc_md2452"></a>
+<h2><a class="anchor" id="autotoc_md2476"></a>
 Under the Hood: Messages in Transit</h2>
 <p>Let's visualize where these types fit into a simple <code>callTool</code> interaction.</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -288,7 +288,7 @@ Under the Hood: Messages in Transit</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># --- Other definitions like Tool, Resource, CallToolRequest etc. ---</span></div>
 </div><!-- fragment --><p> This snippet shows how Pydantic <code>BaseModel</code> is used with standard Python type hints (<code>float</code>, <code>str | int</code>, <code>Literal["..."]</code>) to define the structure and expected data types for the <code>ProgressNotification</code>.</p>
-<h2><a class="anchor" id="autotoc_md2453"></a>
+<h2><a class="anchor" id="autotoc_md2477"></a>
 Conclusion</h2>
 <p>You've learned about MCP Protocol Types – the standardized "digital forms" that define the structure of all communication (requests, responses, notifications, errors) between MCP clients and servers.</p>
 <ul>

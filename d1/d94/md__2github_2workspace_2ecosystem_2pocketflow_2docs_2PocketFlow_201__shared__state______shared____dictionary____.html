@@ -121,12 +121,12 @@ $(function(){initNavTree('d1/d94/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_shared_state___shared__dictionary__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2684"></a>
-autotoc_md2684</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2708"></a>
+autotoc_md2708</h2>
 <p>layout: default title: "Shared State (Shared Dictionary)" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2685"></a>
+<h2><a class="anchor" id="autotoc_md2709"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2686"></a>
+<h1><a class="anchor" id="autotoc_md2710"></a>
 Chapter 1: Shared State (<code>shared</code> dictionary)</h1>
 <p>Welcome to your first step into the world of PocketFlow! Building powerful AI applications often involves breaking down complex tasks into smaller, manageable steps. But how do these steps communicate with each other? How does one part of your AI know what another part has done or figured out? That's where the <b><code>shared</code> dictionary</b> comes into play.</p>
 <p>Imagine you're building a simple AI assistant.</p><ol type="1">
@@ -135,7 +135,7 @@ Chapter 1: Shared State (<code>shared</code> dictionary)</h1>
 <li>Finally, it uses your original question and the search results to give you an answer.</li>
 </ol>
 <p>For this to work, the "question understanding" step needs to pass the question to the "web searching" step. Then, both the original question and the search results need to be available to the "answering" step. The <code>shared</code> dictionary is the magic message board that lets all these steps share information.</p>
-<h2><a class="anchor" id="autotoc_md2687"></a>
+<h2><a class="anchor" id="autotoc_md2711"></a>
 What is the <code>shared</code> Dictionary?</h2>
 <p>At its heart, the <code>shared</code> dictionary is a standard Python dictionary (<code>dict</code>). Think of it like a <b>communal backpack</b> or a <b>shared whiteboard</b>. As your PocketFlow application (which we call a <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a>) runs, different components (which we call <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>) can:</p><ul>
 <li><b>Put things into it</b> (write data).</li>
@@ -143,7 +143,7 @@ What is the <code>shared</code> Dictionary?</h2>
 <li><b>Update things</b> that are already there.</li>
 </ul>
 <p>This <code>shared</code> dictionary becomes the primary way for different parts of your workflow to pass data, intermediate results, and context to each other. It's available throughout the entire lifecycle of a single execution of a <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a>.</p>
-<h2><a class="anchor" id="autotoc_md2688"></a>
+<h2><a class="anchor" id="autotoc_md2712"></a>
 How to Use the <code>shared</code> Dictionary</h2>
 <p>Let's see how this works with a few simple examples.</p>
 <p><b>1. Initializing <code>shared</code> with Starting Data</b></p>
@@ -229,14 +229,14 @@ How to Use the <code>shared</code> Dictionary</h2>
 <div class="line"> </div>
 <div class="line">print(<span class="stringliteral">&quot;\nSummary:&quot;</span>, shared[<span class="stringliteral">&quot;summary&quot;</span>])</div>
 </div><!-- fragment --><p> This line simply prints the value associated with the key <code>"summary"</code> from the <code>shared</code> dictionary, which was put there by the <code>Summarize</code> <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>.</p>
-<h2><a class="anchor" id="autotoc_md2689"></a>
+<h2><a class="anchor" id="autotoc_md2713"></a>
 Key Characteristics of <code>shared</code></h2>
 <ul>
 <li><b>It's a Python Dictionary:</b> This makes it incredibly flexible and easy to use. If you know how to use dictionaries in Python (e.g., &lsquo;my_dict['key&rsquo;] = value<code>,</code>value = my_dict['key']<code>,</code>my_dict.get('key', default_value)<code>), you already know how to interact with</code>shared<code>.</code></li>
 <li><code> **Scoped to a Single Flow Execution:** Each time you run a [Flow (</code>Flow<code>,</code>AsyncFlow<code>)](<a class="el" href="../../d9/ded/04__flow______flow________asyncflow_______8md.html">04_flow___flow____asyncflow___.md</a>) (e.g., by calling</code>flow.run(shared_input)<code>), it operates on its own instance of the</code>shared<code>dictionary. If you run the same [Flow (</code>Flow<code>,</code>AsyncFlow<code>)](<a class="el" href="../../d9/ded/04__flow______flow________asyncflow_______8md.html">04_flow___flow____asyncflow___.md</a>) twice, even simultaneously for different requests, they will have completely separate</code>shared<code>dictionaries. They won't interfere with each other. Think of it like two people filling out their own copies of the same form.</code></li>
 <li><code> **Persistent Throughout One Flow Execution:** The</code>shared<code>dictionary is created (or you provide an initial one) when a [Flow (</code>Flow<code>,</code>AsyncFlow<code>)](<a class="el" href="../../d9/ded/04__flow______flow________asyncflow_______8md.html">04_flow___flow____asyncflow___.md</a>) starts. The *exact same* dictionary object is then passed from one [Node (</code>BaseNode<code>,</code>Node<code>,</code>AsyncNode<code>)](<a class="el" href="../../d0/dd7/02__node______basenode________node________asyncnode_______8md.html">02_node___basenode____node____asyncnode___.md</a>) to the next. Any modifications made by one [Node (</code>BaseNode<code>,</code>Node<code>,</code>AsyncNode<code>)](<a class="el" href="../../d0/dd7/02__node______basenode________node________asyncnode_______8md.html">02_node___basenode____node____asyncnode___.md</a>) are visible to all subsequent [Nodes (</code>BaseNode<code>,</code>Node<code>,</code>AsyncNode`)](<a class="el" href="../../d0/dd7/02__node______basenode________node________asyncnode_______8md.html">02_node___basenode____node____asyncnode___.md</a>).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2690"></a>
+<h2><a class="anchor" id="autotoc_md2714"></a>
 What Happens Under the Hood? (A Simplified View)</h2>
 <p>You don't need to manage the passing of the <code>shared</code> dictionary yourself; PocketFlow handles it for you. Here's a simplified step-by-step:</p>
 <ol type="1">
@@ -269,14 +269,14 @@ What Happens Under the Hood? (A Simplified View)</h2>
 <div class="line">    NodeB-&gt;&gt;SharedDict: Reads input (e.g., shared[&#39;data_from_A&#39;])</div>
 <div class="line">    NodeB-&gt;&gt;SharedDict: Writes output (e.g., shared[&#39;final_answer&#39;] = ...)</div>
 <div class="line">    PocketFlowEngine-&gt;&gt;You: Flow complete (initial_shared is now updated)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2691"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2715"></a>
 Analogy Time!</h2>
 <p>Think of the <code>shared</code> dictionary as:</p>
 <ul>
 <li><b>A Relay Race Baton (but smarter!):</b> Each runner (<a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>) takes the baton (<code>shared</code> dictionary), maybe adds a small note or a sticker to it, and then passes it to the next runner. By the end of the race, the baton has collected contributions from everyone.</li>
 <li><b>A Project's Shared Folder:</b> Imagine a team working on a project. They have a shared folder (<code>shared</code> dictionary) on a server. The first person creates a document (initial data). The next person opens it, adds their part, and saves it. The next person does the same. Everyone works on the same set of files in that folder.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2692"></a>
+<h2><a class="anchor" id="autotoc_md2716"></a>
 Conclusion</h2>
 <p>You've now learned about the <code>shared</code> dictionary, the backbone of communication within a PocketFlow <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a>. It's a simple yet powerful Python dictionary that allows different <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> to share data and context seamlessly. By reading from and writing to <code>shared</code>, your <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> can collaborate to achieve complex tasks.</p>
 <p>Now that you understand how data is passed around, you're probably wondering about the "workers" themselves – the <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>. What are they, and how do you build them? Let's dive into that in the next chapter!</p>

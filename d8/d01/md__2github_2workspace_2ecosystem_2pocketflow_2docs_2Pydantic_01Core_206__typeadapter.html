@@ -121,17 +121,17 @@ $(function(){initNavTree('d8/d01/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_typeadapter</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2867"></a>
-autotoc_md2867</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2891"></a>
+autotoc_md2891</h2>
 <p>layout: default title: "TypeAdapter" parent: "Pydantic Core" </p>
-<h2><a class="anchor" id="autotoc_md2868"></a>
+<h2><a class="anchor" id="autotoc_md2892"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md2869"></a>
+<h1><a class="anchor" id="autotoc_md2893"></a>
 Chapter 6: TypeAdapter - Your Universal Data Handler</h1>
 <p>Welcome to the final chapter of our Pydantic Core tutorial! In <a class="el" href="../../d0/d56/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_205__core__schema______validation__serialization.html">Chapter 5: Core Schema &amp; Validation/Serialization</a>, we dove deep into how Pydantic uses the <code>CoreSchema</code> and the <code>pydantic-core</code> engine to efficiently validate and serialize data for your <code>BaseModel</code> classes.</p>
 <p>But what if you have data that <em>isn't</em> structured as a <code>BaseModel</code>? Imagine you receive a simple list of product IDs from an API, or you need to validate a function argument that's just a dictionary or a date. You still want Pydantic's powerful validation and maybe its smart serialization, but creating a whole <code>BaseModel</code> just for <code>list[int]</code> seems like overkill.</p>
 <p>This is exactly where <code>TypeAdapter</code> comes in!</p>
-<h2><a class="anchor" id="autotoc_md2870"></a>
+<h2><a class="anchor" id="autotoc_md2894"></a>
 The Problem: Handling Simple Types</h2>
 <p>Let's say you're working with a function that expects a list of user IDs, which should all be positive integers:</p>
 <div class="fragment"><div class="line"><span class="comment"># Our expected data structure: a list of positive integers</span></div>
@@ -149,12 +149,12 @@ The Problem: Handling Simple Types</h2>
 <div class="line">        print(f<span class="stringliteral">&quot;Processing user ID: {user_id}&quot;</span>)</div>
 <div class="line">        <span class="comment"># We assume user_ids is already clean list[int] here</span></div>
 </div><!-- fragment --><p>Manually parsing the JSON, checking the type of the list and its elements, converting strings like <code>"205"</code> to integers, and validating positivity can be tedious and error-prone. We want Pydantic's magic for this simple list!</p>
-<h2><a class="anchor" id="autotoc_md2871"></a>
+<h2><a class="anchor" id="autotoc_md2895"></a>
 Introducing <code>TypeAdapter</code>: The Universal Handler</h2>
 <p><code>TypeAdapter</code> provides Pydantic's validation and serialization capabilities for <b>arbitrary Python types</b>, not just <code>BaseModel</code> subclasses.</p>
 <p><b>Analogy:</b> Think of <code>TypeAdapter</code> as a <b>universal quality checker and packager</b>. Unlike <code>BaseModel</code> (which is like a specific blueprint for a complex object), <code>TypeAdapter</code> can handle <em>any</em> kind of item – a list, a dictionary, an integer, a date, a union type, etc. – as long as you tell it the <b>type specification</b> the item should conform to.</p>
 <p>It acts as a lightweight wrapper around Pydantic's core validation and serialization engine for any type hint you give it.</p>
-<h2><a class="anchor" id="autotoc_md2872"></a>
+<h2><a class="anchor" id="autotoc_md2896"></a>
 Creating a <code>TypeAdapter</code></h2>
 <p>You create a <code>TypeAdapter</code> by simply passing the Python type you want to handle to its initializer.</p>
 <p>Let's create one for our <code>list[int]</code> requirement, but let's add the positivity constraint using <code>PositiveInt</code> from Pydantic's types.</p>
@@ -171,10 +171,10 @@ Creating a <code>TypeAdapter</code></h2>
 <div class="line">print(user_id_list_adapter)</div>
 <div class="line"><span class="comment"># Expected Output: TypeAdapter(&lt;class &#39;list[pydantic.types.PositiveInt]&#39;&gt;)</span></div>
 </div><!-- fragment --><p>We now have <code>user_id_list_adapter</code>, an object specifically configured to validate data against the <code>List[PositiveInt]</code> type and serialize Python lists matching this type.</p>
-<h2><a class="anchor" id="autotoc_md2873"></a>
+<h2><a class="anchor" id="autotoc_md2897"></a>
 Validation with <code>TypeAdapter</code></h2>
 <p>The primary use case is validation. <code>TypeAdapter</code> offers methods similar to <code>BaseModel</code>'s <code>model_validate</code> and <code>model_validate_json</code>.</p>
-<h3><a class="anchor" id="autotoc_md2874"></a>
+<h3><a class="anchor" id="autotoc_md2898"></a>
 <code>validate_python()</code></h3>
 <p>This method takes a Python object (like a list or dict) and validates it against the adapter's type. It performs type checks, coercion (like converting <code>"205"</code> to <code>205</code>), and runs any defined constraints (like <code>PositiveInt</code>).</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> ValidationError, PositiveInt, TypeAdapter</div>
@@ -221,7 +221,7 @@ Validation with <code>TypeAdapter</code></h2>
 <div class="line">    <span class="comment"># 1</span></div>
 <div class="line">    <span class="comment">#   Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value=&#39;abc&#39;, input_type=str]</span></div>
 </div><!-- fragment --><p>Just like with <code>BaseModel</code>, <code>TypeAdapter</code> gives you clear validation errors pinpointing the exact location and reason for the failure. It also handles useful type coercion automatically.</p>
-<h3><a class="anchor" id="autotoc_md2875"></a>
+<h3><a class="anchor" id="autotoc_md2899"></a>
 <code>validate_json()</code></h3>
 <p>If your input data is a JSON string (or bytes/bytearray), you can use <code>validate_json()</code> to parse and validate in one step.</p>
 <div class="fragment"><div class="line"><span class="comment"># Continuing from above...</span></div>
@@ -249,10 +249,10 @@ Validation with <code>TypeAdapter</code></h2>
 <div class="line">    <span class="comment"># 1</span></div>
 <div class="line">    <span class="comment">#   Input should be greater than 0 [type=greater_than, context={&#39;gt&#39;: 0}, input_value=-5, input_type=int]</span></div>
 </div><!-- fragment --><p>This is extremely handy for validating raw API request bodies or data loaded from JSON files without needing to parse the JSON yourself first.</p>
-<h2><a class="anchor" id="autotoc_md2876"></a>
+<h2><a class="anchor" id="autotoc_md2900"></a>
 Serialization with <code>TypeAdapter</code></h2>
 <p><code>TypeAdapter</code> can also serialize Python objects according to the rules of its associated type, similar to <code>BaseModel.model_dump()</code> and <code>model_dump_json()</code>.</p>
-<h3><a class="anchor" id="autotoc_md2877"></a>
+<h3><a class="anchor" id="autotoc_md2901"></a>
 <code>dump_python()</code></h3>
 <p>Converts a Python object into a "dumped" representation (often simpler Python types). This is most useful when the type involves Pydantic models or types with custom serialization logic (like datetimes, enums, etc.). For simple types like <code>list[int]</code>, it might not change much.</p>
 <p>Let's use a slightly more complex example: <code>List[datetime]</code>.</p>
@@ -274,7 +274,7 @@ Serialization with <code>TypeAdapter</code></h2>
 <div class="line">dumped_for_json = datetime_list_adapter.dump_python(dt_list, mode=<span class="stringliteral">&#39;json&#39;</span>)</div>
 <div class="line">print(f<span class="stringliteral">&quot;Dumped for JSON: {dumped_for_json}&quot;</span>)</div>
 <div class="line"><span class="comment"># Expected Output: Dumped for JSON: [&#39;2023-01-01T12:00:00&#39;, &#39;2024-07-15T09:30:00&#39;]</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2878"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2902"></a>
 <code>dump_json()</code></h3>
 <p>Directly serializes the Python object into a JSON string, using Pydantic's encoders (e.g., converting <code>datetime</code> to ISO 8601 strings).</p>
 <div class="fragment"><div class="line"><span class="comment"># Continuing with datetime_list_adapter and dt_list...</span></div>
@@ -289,7 +289,7 @@ Serialization with <code>TypeAdapter</code></h2>
 <div class="line"><span class="comment">#   &quot;2024-07-15T09:30:00&quot;</span></div>
 <div class="line"><span class="comment"># ]</span></div>
 </div><!-- fragment --><p>This uses the same powerful serialization engine as <code>BaseModel</code>, ensuring consistent output formats.</p>
-<h2><a class="anchor" id="autotoc_md2879"></a>
+<h2><a class="anchor" id="autotoc_md2903"></a>
 Getting JSON Schema</h2>
 <p>You can also generate a <a href="https://json-schema.org/">JSON Schema</a> for the type handled by the adapter using the <code>json_schema()</code> method.</p>
 <div class="fragment"><div class="line"><span class="comment"># Using our user_id_list_adapter from before...</span></div>
@@ -311,7 +311,7 @@ Getting JSON Schema</h2>
 <div class="line"><span class="comment">#   &quot;type&quot;: &quot;array&quot;</span></div>
 <div class="line"><span class="comment"># }</span></div>
 </div><!-- fragment --><p>This schema accurately describes the expected data: an array (<code>"type": "array"</code>) where each item (<code>"items"</code>) must be an integer (<code>"type": "integer"</code>) that is greater than 0 (<code>"exclusiveMinimum": 0</code>).</p>
-<h2><a class="anchor" id="autotoc_md2880"></a>
+<h2><a class="anchor" id="autotoc_md2904"></a>
 Under the Hood: Direct Line to the Core</h2>
 <p>How does <code>TypeAdapter</code> work? It acts as a direct interface to the validation and serialization machinery we discussed in <a class="el" href="../../d0/d56/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_205__core__schema______validation__serialization.html">Chapter 5</a>.</p>
 <p><b>Step-by-Step:</b></p>
@@ -423,7 +423,7 @@ Under the Hood: Direct Line to the Core</h2>
 <div class="line">        <span class="comment"># Generates schema based on self.core_schema</span></div>
 <div class="line">        schema_generator_instance = GenerateJsonSchema(**kwargs)</div>
 <div class="line">        <span class="keywordflow">return</span> schema_generator_instance.generate(self.core_schema, mode=kwargs.get(<span class="stringliteral">&#39;mode&#39;</span>, <span class="stringliteral">&#39;validation&#39;</span>))</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2881"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2905"></a>
 Conclusion</h2>
 <p>Congratulations! You've learned about <code>TypeAdapter</code>, a flexible tool for applying Pydantic's validation and serialization to any Python type, not just <code>BaseModel</code>s.</p>
 <ul>

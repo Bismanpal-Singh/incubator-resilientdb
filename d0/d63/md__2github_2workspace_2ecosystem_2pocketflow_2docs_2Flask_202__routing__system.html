@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/d63/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_routing_system</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1849"></a>
-autotoc_md1849</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1873"></a>
+autotoc_md1873</h2>
 <p>layout: default title: "Routing System" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1850"></a>
+<h2><a class="anchor" id="autotoc_md1874"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1851"></a>
+<h1><a class="anchor" id="autotoc_md1875"></a>
 Chapter 2: Routing System</h1>
 <p>Welcome back! In <a class="el" href="../../df/d69/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_201__application__object______flask____.html">Chapter 1: Application Object (<code>Flask</code>)</a>, we learned how to create the central <code>app</code> object, the control tower for our Flask application. We even added a simple "Hello, World!" page using &lsquo;@app.route(&rsquo;/')`.</p>
 <p>But how did Flask know that visiting the homepage (<code>/</code>) should run our <code>index()</code> function? And how can we create more pages, like an "About Us" page at <code>/about</code>? That's where the <b>Routing System</b> comes in.</p>
-<h2><a class="anchor" id="autotoc_md1852"></a>
+<h2><a class="anchor" id="autotoc_md1876"></a>
 What Problem Does It Solve? The Need for Directions</h2>
 <p>Imagine you have a website with multiple pages: a homepage, an about page, a contact page, maybe even pages for individual user profiles. When a user types a URL like <code><a href="http://yourwebsite.com/about">http://yourwebsite.com/about</a></code> into their browser, how does your Flask application know <em>which</em> piece of Python code should handle this request and generate the "About Us" content?</p>
 <p>You need a system to map these incoming URLs to the specific Python functions that generate the response for each page. Think of it like a city map's index:</p>
@@ -140,7 +140,7 @@ What Problem Does It Solve? The Need for Directions</h2>
 <li><b>View Function:</b> The specific page number in the map book that shows the details for that address.</li>
 </ul>
 <p>Flask's routing system, largely powered by a library called Werkzeug, acts as this index. It lets you define URL patterns (like <code>/</code> or <code>/about</code> or <code>/user/&lt;username&gt;</code>) and connect them to your Python functions (called <b>view functions</b>).</p>
-<h2><a class="anchor" id="autotoc_md1853"></a>
+<h2><a class="anchor" id="autotoc_md1877"></a>
 Defining Routes with <code>@app.route()</code></h2>
 <p>In Flask, the most common way to define these URL-to-function mappings is using the <code>@app.route()</code> decorator, which we briefly saw in Chapter 1.</p>
 <p>Let's revisit our <code>hello.py</code> and add an "About" page.</p>
@@ -180,7 +180,7 @@ Defining Routes with <code>@app.route()</code></h2>
 <li>Visit <code><a href="http://127.0.0.1:5000/about">http://127.0.0.1:5000/about</a></code>. You should see "This is the About Us page.".</li>
 </ol>
 <p>See? The routing system directed each URL to the correct view function!</p>
-<h2><a class="anchor" id="autotoc_md1854"></a>
+<h2><a class="anchor" id="autotoc_md1878"></a>
 Dynamic Routes: Using Variables in URLs</h2>
 <p>What if you want pages that change based on the URL? For example, a profile page for different users like <code>/user/alice</code> and <code>/user/bob</code>. You don't want to write a new view function for every single user!</p>
 <p>Flask allows you to define <em>variable parts</em> in your URL rules using angle brackets <code>&lt; &gt;</code>.</p>
@@ -216,7 +216,7 @@ Dynamic Routes: Using Variables in URLs</h2>
 <li>Visit <code><a href="http://127.0.0.1:5000/user/Bob">http://127.0.0.1:5000/user/Bob</a></code>. You should see "Hello, Bob!".</li>
 </ol>
 <p>Flask's routing system matched both URLs to the same rule (<code>/user/&lt;username&gt;</code>) and passed the different usernames (&lsquo;'Alice&rsquo;<code>,</code>'Bob'<code>) to the</code>show_user_profile` function.</p>
-<h2><a class="anchor" id="autotoc_md1855"></a>
+<h2><a class="anchor" id="autotoc_md1879"></a>
 Specifying Data Types: Converters</h2>
 <p>By default, variables captured from the URL are treated as strings. But what if you need a number? For example, displaying blog post number 5 at <code>/post/5</code>. You might want Flask to ensure that only numbers are accepted for that part of the URL.</p>
 <p>You can specify a <b>converter</b> inside the angle brackets using <code>&lt;converter:variable_name&gt;</code>.</p>
@@ -251,7 +251,7 @@ Specifying Data Types: Converters</h2>
 <li><code>path</code>: Like <code>string</code> but also accepts slashes (useful for matching file paths).</li>
 <li><code>uuid</code>: Accepts UUID strings.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1856"></a>
+<h2><a class="anchor" id="autotoc_md1880"></a>
 Under the Hood: How Does Routing Work?</h2>
 <p>You don't <em>need</em> to know the deep internals, but understanding the basics helps.</p>
 <p>When you define routes using <code>@app.route()</code>, Flask doesn't immediately check URLs. Instead, it builds a map, like pre-compiling that map index we talked about.</p>
@@ -291,7 +291,7 @@ Under the Hood: How Does Routing Work?</h2>
 <div class="line">    ViewFunc--&gt;&gt;-FlaskApp: Return &#39;Hello, Alice!&#39;</div>
 <div class="line">    FlaskApp--&gt;&gt;-Browser: Send response &#39;Hello, Alice!&#39;</div>
 </div><!-- fragment --><p>The key takeaway is that <code>@app.route</code> builds a map upfront, and Werkzeug efficiently searches this map for each incoming request to find the right function and extract any variable parts.</p>
-<h2><a class="anchor" id="autotoc_md1857"></a>
+<h2><a class="anchor" id="autotoc_md1881"></a>
 Conclusion</h2>
 <p>You've learned how Flask's <b>Routing System</b> acts as a map between URLs and the Python functions (view functions) that handle them.</p>
 <ul>

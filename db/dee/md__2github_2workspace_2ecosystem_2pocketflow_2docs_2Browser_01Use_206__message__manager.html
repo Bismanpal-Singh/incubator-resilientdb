@@ -121,17 +121,17 @@ $(function(){initNavTree('db/dee/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_message_manager</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md915"></a>
-autotoc_md915</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md939"></a>
+autotoc_md939</h2>
 <p>layout: default title: "Message Manager" parent: "Browser Use" </p>
-<h2><a class="anchor" id="autotoc_md916"></a>
+<h2><a class="anchor" id="autotoc_md940"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md917"></a>
+<h1><a class="anchor" id="autotoc_md941"></a>
 Chapter 6: Message Manager - Keeping the Conversation Straight</h1>
 <p>In the <a class="el" href="../../de/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_205__action__controller______registry.html">previous chapter</a>, we learned how the <code>Action Controller</code> and <code>Registry</code> act as the Agent's "hands" and "toolbox", executing the specific actions decided by the LLM planner. But how does the LLM get all the information it needs to make those decisions in the first place? How does the Agent keep track of the ongoing conversation, including what it "saw" on the page and what happened after each action?</p>
 <p>Imagine you're having a long, multi-step discussion with an assistant about a complex task. If the assistant has a poor memory, they might forget earlier instructions, the current status, or previous results, making it impossible to proceed correctly. LLMs face a similar challenge: they need the conversation history for context, but they have a limited memory (called the "context window").</p>
 <p>This is the problem the <b>Message Manager</b> solves.</p>
-<h2><a class="anchor" id="autotoc_md918"></a>
+<h2><a class="anchor" id="autotoc_md942"></a>
 What Problem Does the Message Manager Solve?</h2>
 <p>The <code>Agent</code> needs to have a conversation with the LLM. This conversation isn't just chat; it includes:</p>
 <ol type="1">
@@ -149,7 +149,7 @@ What Problem Does the Message Manager Solve?</h2>
 <li><b>Manages Limits:</b> It helps prevent the conversation history from exceeding the LLM's context window limit, potentially by removing older parts of the conversation if it gets too long.</li>
 </ul>
 <p>Think of the <code>MessageManager</code> as a meticulous secretary for the Agent-LLM conversation. It takes clear, concise notes, presents the current situation accurately, and ensures the conversation doesn't ramble on for too long, keeping everything within the LLM's "attention span".</p>
-<h2><a class="anchor" id="autotoc_md919"></a>
+<h2><a class="anchor" id="autotoc_md943"></a>
 Meet the Message Manager: The Conversation Secretary</h2>
 <p>The <code>MessageManager</code> (found in <code>agent/message_manager/service.py</code>) is responsible for managing the list of messages that are sent to the LLM in each step.</p>
 <p>Here are its main jobs:</p>
@@ -166,7 +166,7 @@ Meet the Message Manager: The Conversation Secretary</h2>
 <li><b>Providing Messages to LLM:</b> When the <code>Agent</code> is ready to call the LLM, it asks the <code>MessageManager</code> for the current conversation history (<code>get_messages()</code>).</li>
 <li><b>Token Management:</b> Every time a message is added, the <code>MessageManager</code> calculates how many tokens it adds (<code>_count_tokens</code>) and updates the total. If the total exceeds the limit (<code>max_input_tokens</code>), it might trigger a truncation strategy (<code>cut_messages</code>) to shorten the history, usually by removing parts of the oldest user state message or removing the image first.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md920"></a>
+<h2><a class="anchor" id="autotoc_md944"></a>
 How the Agent Uses the Message Manager</h2>
 <p>Let's revisit the simplified <code>Agent.step</code> method from <a class="el" href="../../de/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_201__agent.html">Chapter 1</a> and highlight the <code>MessageManager</code> interactions (using <code>self._message_manager</code>):</p>
 <div class="fragment"><div class="line"><span class="comment"># --- File: agent/service.py (Simplified step method - Highlighting MessageManager) ---</span></div>
@@ -222,7 +222,7 @@ How the Agent Uses the Message Manager</h2>
 <div class="line">            self.state.last_result = result</div>
 <div class="line">        <span class="comment"># ... (finally block) ...</span></div>
 </div><!-- fragment --><p>This flow shows the cycle: add state/previous result -&gt; get messages -&gt; call LLM -&gt; add LLM response -&gt; execute action -&gt; store result for <em>next</em> state message.</p>
-<h2><a class="anchor" id="autotoc_md921"></a>
+<h2><a class="anchor" id="autotoc_md945"></a>
 How it Works Under the Hood: Managing the Flow</h2>
 <p>Let's visualize the key interactions during one step of the Agent loop involving the <code>MessageManager</code>:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -261,7 +261,7 @@ How it Works Under the Hood: Managing the Flow</h2>
 <div class="line">    Agent-&gt;&gt;Agent: Store ActionResult in `self.state.last_result` (for next step)</div>
 <div class="line">    Note over Agent: End of step</div>
 </div><!-- fragment --><p>This shows how <code>MessageManager</code> sits between the Agent, the Browser State, and the LLM, managing the history list and token counts.</p>
-<h2><a class="anchor" id="autotoc_md922"></a>
+<h2><a class="anchor" id="autotoc_md946"></a>
 Diving Deeper into the Code (<code>agent/message_manager/service.py</code>)</h2>
 <p>Let's look at simplified versions of key methods in <code>MessageManager</code>.</p>
 <p><b>1. Initialization (<code>__init__</code> and <code>_init_messages</code>)</b></p>
@@ -461,7 +461,7 @@ Diving Deeper into the Code (<code>agent/message_manager/service.py</code>)</h2>
 <div class="line">        <span class="keywordflow">if</span> self.state.history.current_tokens &gt; self.settings.max_input_tokens:</div>
 <div class="line">             <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Max token limit reached even after trimming.&quot;</span>)</div>
 </div><!-- fragment --><p>This shows the basic mechanics of adding messages, calculating their approximate size, and applying strategies to keep the history within the LLM's context window limit.</p>
-<h2><a class="anchor" id="autotoc_md923"></a>
+<h2><a class="anchor" id="autotoc_md947"></a>
 Conclusion</h2>
 <p>The <code>MessageManager</code> is the Agent's conversation secretary. It meticulously records the dialogue between the Agent (reporting browser state and action results) and the LLM (providing analysis and action plans), starting from the initial <code>System Prompt</code> and task definition.</p>
 <p>Crucially, it formats these messages correctly, tracks the conversation's size using token counts, and implements strategies to keep the history concise enough for the LLM's limited context window. Without the <code>MessageManager</code>, the Agent would quickly lose track of the conversation, and the LLM wouldn't have the necessary context to guide the browser effectively.</p>

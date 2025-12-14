@@ -121,17 +121,17 @@ $(function(){initNavTree('d8/da9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_functional_api</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2886"></a>
-autotoc_md2886</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2910"></a>
+autotoc_md2910</h2>
 <p>layout: default title: "Functional API" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2887"></a>
+<h2><a class="anchor" id="autotoc_md2911"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2888"></a>
+<h1><a class="anchor" id="autotoc_md2912"></a>
 Chapter 1: The Simplest Way - The Functional API</h1>
 <p>Welcome to the world of <code>Requests</code>! If you need to get information from a website or interact with a web service using Python, <code>Requests</code> is your friendly helper.</p>
 <p>Imagine you just want to quickly grab the content of a webpage, maybe check the latest news headlines from a site, or send a simple piece of data to an online service. How do you do that without getting bogged down in complex details?</p>
 <p>That's where the <b>Functional API</b> of <code>Requests</code> comes in. It's the most straightforward way to start making web requests.</p>
-<h2><a class="anchor" id="autotoc_md2889"></a>
+<h2><a class="anchor" id="autotoc_md2913"></a>
 What's the Functional API?</h2>
 <p>Think of the Functional API as a set of handy, ready-to-use tools right at the top level of the <code>requests</code> library. You don't need to set anything up; you just call a function like <code>requests.get()</code> to fetch data or <code>requests.post()</code> to send data.</p>
 <p><b>Analogy:</b> Ordering Takeout 🍕</p>
@@ -143,7 +143,7 @@ What's the Functional API?</h2>
 <li><code> You get your pizza (</code>Response` object).</li>
 </ol>
 <p>It's super convenient for a one-time order!</p>
-<h2><a class="anchor" id="autotoc_md2890"></a>
+<h2><a class="anchor" id="autotoc_md2914"></a>
 Making Your First Request: <code>requests.get()</code></h2>
 <p>The most common type of request is a <code>GET</code> request. It's what your web browser does every time you type a website address and hit Enter. It means "Please *get* me the content of this page."</p>
 <p>Let's try it! First, make sure you have <code>requests</code> installed (<code>pip install requests</code>). Then, in your Python script or interactive session:</p>
@@ -171,7 +171,7 @@ Making Your First Request: <code>requests.get()</code></h2>
 <li><code>response.status_code</code>: We checked the status code. <code>200</code> is the standard code for "Everything went okay!". Other codes might indicate errors (like <code>404 Not Found</code>).</li>
 <li><code>response.text</code>: We accessed the main content (usually HTML or JSON) returned by the server as a string.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2891"></a>
+<h2><a class="anchor" id="autotoc_md2915"></a>
 Sending Data: <code>requests.post()</code></h2>
 <p>Sometimes, instead of just getting data, you need to <em>send</em> data to a website. This is often done when submitting a form, logging in, or telling an API to perform an action. The <code>POST</code> method is commonly used for this.</p>
 <p>The Functional API provides <code>requests.post()</code> for this purpose.</p>
@@ -201,7 +201,7 @@ Sending Data: <code>requests.post()</code></h2>
 <li>The <code>response.text</code> from <code>httpbin.org/post</code> conveniently shows us the data it received, confirming our <code>payload</code> was sent correctly.</li>
 </ol>
 <p><code>Requests</code> also offers functions for other HTTP methods like <code>put</code>, <code>delete</code>, <code>head</code>, <code>patch</code>, and <code>options</code>, all working similarly: <code>requests.put(...)</code>, <code>requests.delete(...)</code>, etc.</p>
-<h2><a class="anchor" id="autotoc_md2892"></a>
+<h2><a class="anchor" id="autotoc_md2916"></a>
 How It Works Under the Hood</h2>
 <p>You might wonder: if it's so simple, how does <code>requests.get()</code> actually connect to the internet and manage the request?</p>
 <p>Every time you call one of these functional API methods (like <code>requests.get</code> or <code>requests.post</code>), <code>Requests</code> performs a few steps behind the scenes:</p>
@@ -258,7 +258,7 @@ How It Works Under the Hood</h2>
 <div class="line"><span class="comment"># ... similar functions for put, delete, head, patch, options ...</span></div>
 <div class="ttc" id="apybind__kv__service_8cpp_html_abe6524afb3a69dc9a4c314e11f96f29f"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#abe6524afb3a69dc9a4c314e11f96f29f">get</a></div><div class="ttdeci">std::string get(std::string key, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00039">pybind_kv_service.cpp:39</a></div></div>
 </div><!-- fragment --><p>Each function like <code>get</code>, <code>post</code>, etc., is just a simple wrapper that calls the main <code>request</code> function, which in turn creates and uses that temporary <code>Session</code>.</p>
-<h2><a class="anchor" id="autotoc_md2893"></a>
+<h2><a class="anchor" id="autotoc_md2917"></a>
 When Is It Good? When Is It Not?</h2>
 <p><b>Good For:</b></p>
 <ul>
@@ -272,7 +272,7 @@ When Is It Good? When Is It Not?</h2>
 <li><b>Needing persistence:</b> If the website gives you a cookie (like after logging in) and you want to use it on your <em>next</em> request to that same site, the functional API won't remember it because the temporary <code>Session</code> (which holds cookies) is discarded after each call.</li>
 <li><b>Fine-grained control:</b> If you need custom configurations, specific connection pooling, or advanced features, using a <code>Session</code> object directly offers more power.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2894"></a>
+<h2><a class="anchor" id="autotoc_md2918"></a>
 Conclusion</h2>
 <p>You've learned about the <code>Requests</code> Functional API – the simplest way to make web requests using functions like <code>requests.get()</code> and <code>requests.post()</code>. It's perfect for quick tasks and getting started. You saw how it works by creating temporary <code>Session</code> objects behind the scenes.</p>
 <p>While convenient for single shots, remember its limitations for performance and state persistence when dealing with multiple requests to the same site.</p>

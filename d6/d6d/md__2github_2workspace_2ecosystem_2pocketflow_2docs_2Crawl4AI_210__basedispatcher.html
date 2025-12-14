@@ -121,16 +121,16 @@ $(function(){initNavTree('d6/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">10_basedispatcher</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1456"></a>
-autotoc_md1456</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1480"></a>
+autotoc_md1480</h2>
 <p>layout: default title: "BaseDispatcher" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1457"></a>
+<h2><a class="anchor" id="autotoc_md1481"></a>
 nav_order: 10</h2>
-<h1><a class="anchor" id="autotoc_md1458"></a>
+<h1><a class="anchor" id="autotoc_md1482"></a>
 Chapter 10: Orchestrating the Crawl - BaseDispatcher</h1>
 <p>In <a class="el" href="../../d1/dcd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_209__cachecontext______cachemode.html">Chapter 9: Smart Fetching with Caching - CacheContext / CacheMode</a>, we learned how Crawl4AI uses caching to cleverly avoid re-fetching the same webpage multiple times, which is especially helpful when crawling many URLs. We've also seen how methods like <code>arun_many()</code> (<a class="el" href="../../d8/dc9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_202__asyncwebcrawler.html">Chapter 2: Meet the General Manager - AsyncWebCrawler</a>) or strategies like <a class="el" href="../../d3/da3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_208__deepcrawlstrategy.html">DeepCrawlStrategy</a> can lead to potentially hundreds or thousands of individual URLs needing to be crawled.</p>
 <p>This raises a question: if we have 1000 URLs to crawl, does Crawl4AI try to crawl all 1000 simultaneously? That would likely overwhelm your computer's resources (like memory and CPU) and could also flood the target website with too many requests, potentially getting you blocked! How does Crawl4AI manage running many crawls efficiently and responsibly?</p>
-<h2><a class="anchor" id="autotoc_md1459"></a>
+<h2><a class="anchor" id="autotoc_md1483"></a>
 What Problem Does <code>BaseDispatcher</code> Solve?</h2>
 <p>Imagine you're managing a fleet of delivery drones (<code>AsyncWebCrawler</code> tasks) that need to pick up packages from many different addresses (URLs). If you launch all 1000 drones at the exact same moment:</p>
 <ul>
@@ -145,11 +145,11 @@ What Problem Does <code>BaseDispatcher</code> Solve?</h2>
 <li>How to handle potential delays or issues (like rate limiting from a specific website).</li>
 </ol>
 <p>In Crawl4AI, the <code>BaseDispatcher</code> acts as this <b>Traffic Controller</b> or <b>Task Scheduler</b> for concurrent crawling operations, primarily when using <code>arun_many()</code>. It manages <em>how</em> multiple crawl tasks are executed concurrently, ensuring the process is efficient without overwhelming your system or the target websites.</p>
-<h2><a class="anchor" id="autotoc_md1460"></a>
+<h2><a class="anchor" id="autotoc_md1484"></a>
 What is <code>BaseDispatcher</code>?</h2>
 <p><code>BaseDispatcher</code> is an abstract concept (a blueprint or job description) in Crawl4AI. It defines <em>that</em> we need a system for managing the execution of multiple, concurrent crawling tasks. It specifies the <em>interface</em> for how the main <code>AsyncWebCrawler</code> interacts with such a system, but the specific <em>logic</em> for managing concurrency can vary.</p>
 <p>Think of it as the control panel for our drone fleet – the panel exists, but the specific rules programmed into it determine how drones are dispatched.</p>
-<h2><a class="anchor" id="autotoc_md1461"></a>
+<h2><a class="anchor" id="autotoc_md1485"></a>
 The Different Controllers: Ways to Dispatch Tasks</h2>
 <p>Crawl4AI provides concrete implementations (the actual traffic control systems) based on the <code>BaseDispatcher</code> blueprint:</p>
 <ol type="1">
@@ -167,7 +167,7 @@ The Different Controllers: Ways to Dispatch Tasks</h2>
 </li>
 </ol>
 <p>These dispatchers can also optionally work with a <code>RateLimiter</code> component, which adds politeness rules for specific websites (e.g., slowing down requests to a domain if it returns "429 Too Many Requests").</p>
-<h2><a class="anchor" id="autotoc_md1462"></a>
+<h2><a class="anchor" id="autotoc_md1486"></a>
 How <code>arun_many</code> Uses the Dispatcher</h2>
 <p>When you call <code>crawler.arun_many(urls=...)</code>, here's the basic flow involving the dispatcher:</p>
 <ol type="1">
@@ -207,7 +207,7 @@ How <code>arun_many</code> Uses the Dispatcher</h2>
 <div class="line">    Note over Dispatcher: Manages running tasks, collects results</div>
 <div class="line">    Dispatcher--&gt;&gt;AWC: List of CrawlResults</div>
 <div class="line">    AWC--&gt;&gt;User: List of CrawlResults</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1463"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1487"></a>
 Using the Dispatcher (Often Implicitly!)</h2>
 <p>Most of the time, you don't need to think about the dispatcher explicitly. When you use <code>arun_many</code>, the default <code>MemoryAdaptiveDispatcher</code> handles things automatically.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter10_example_1.py</span></div>
@@ -246,7 +246,7 @@ Using the Dispatcher (Often Implicitly!)</h2>
 <li>Crawl4AI automatically creates and uses a <code>MemoryAdaptiveDispatcher</code>.</li>
 <li>This dispatcher runs the crawls concurrently, adapting to your system's memory, and returns all the results once completed (because <code>stream=False</code>). You benefit from concurrency without explicit setup.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1464"></a>
+<h2><a class="anchor" id="autotoc_md1488"></a>
 Explicitly Choosing a Dispatcher</h2>
 <p>What if you want simpler, fixed concurrency? You can explicitly create and pass a <code>SemaphoreDispatcher</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter10_example_2.py</span></div>
@@ -297,7 +297,7 @@ Explicitly Choosing a Dispatcher</h2>
 <li><b>Pass Dispatcher:</b> We pass our <code>semaphore_controller</code> instance directly to the <code>dispatcher</code> parameter of <code>arun_many</code>.</li>
 <li><b>Execution:</b> Now, <code>arun_many</code> uses our <code>SemaphoreDispatcher</code>. It will start the first two crawls. As one finishes, it will start the next one from the list, always ensuring no more than two are running concurrently.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1465"></a>
+<h2><a class="anchor" id="autotoc_md1489"></a>
 A Glimpse Under the Hood</h2>
 <p>Where are these dispatchers defined? In <code>crawl4ai/async_dispatcher.py</code>.</p>
 <p><b>The Blueprint (<code>BaseDispatcher</code>):</b></p>
@@ -473,7 +473,7 @@ A Glimpse Under the Hood</h2>
 <div class="line">    <span class="comment"># run_urls_stream would have similar logic but use asyncio.as_completed</span></div>
 <div class="line">    <span class="comment"># or manage tasks manually to yield results as they finish.</span></div>
 </div><!-- fragment --><p>The key takeaway is that the <code>Dispatcher</code> orchestrates calls to the single-page <code>crawler.arun</code> method, wrapping them with concurrency controls (like the <code>async with semaphore:</code> block) before running them using <code>asyncio</code>'s concurrency tools (<code>asyncio.create_task</code>, <code>asyncio.gather</code>, etc.).</p>
-<h2><a class="anchor" id="autotoc_md1466"></a>
+<h2><a class="anchor" id="autotoc_md1490"></a>
 Conclusion</h2>
 <p>You've learned about <code>BaseDispatcher</code>, the crucial "Traffic Controller" that manages concurrent crawls in Crawl4AI, especially for <code>arun_many</code>.</p>
 <ul>

@@ -121,12 +121,12 @@ $(function(){initNavTree('d7/df5/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_configuration</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md966"></a>
-autotoc_md966</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md990"></a>
+autotoc_md990</h2>
 <p>layout: default title: "Configuration" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md967"></a>
+<h2><a class="anchor" id="autotoc_md991"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md968"></a>
+<h1><a class="anchor" id="autotoc_md992"></a>
 Chapter 2: Configuration - Telling Celery How to Work</h1>
 <p>In <a class="el" href="../../d3/d58/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_201__celery__app.html">Chapter 1: The Celery App</a>, we created our first <code>Celery</code> app instance. We gave it a name and told it where our message broker and result backend were located using the <code>broker</code> and <code>backend</code> arguments:</p>
 <div class="fragment"><div class="line"><span class="comment"># From Chapter 1</span></div>
@@ -136,7 +136,7 @@ Chapter 2: Configuration - Telling Celery How to Work</h1>
 <div class="line">             broker=<span class="stringliteral">&#39;redis://localhost:6379/0&#39;</span>,</div>
 <div class="line">             backend=<span class="stringliteral">&#39;redis://localhost:6379/0&#39;</span>)</div>
 </div><!-- fragment --><p>This worked, but what if we want to change settings later, or manage many different settings? Passing everything directly when creating the <code>app</code> can become messy.</p>
-<h2><a class="anchor" id="autotoc_md969"></a>
+<h2><a class="anchor" id="autotoc_md993"></a>
 What Problem Does Configuration Solve?</h2>
 <p>Think of Celery as a busy workshop with different stations (workers, schedulers) and tools (message brokers, result storage). <b>Configuration</b> is the central instruction manual or settings panel for this entire workshop.</p>
 <p>It tells Celery things like:</p>
@@ -148,7 +148,7 @@ What Problem Does Configuration Solve?</h2>
 <li><b>How should scheduled tasks run?</b> (e.g., What timezone should be used?)</li>
 </ul>
 <p>Without configuration, Celery wouldn't know how to connect to your broker, where to put results, or how to manage the workflow. Configuration allows you to customize Celery to fit your specific needs.</p>
-<h2><a class="anchor" id="autotoc_md970"></a>
+<h2><a class="anchor" id="autotoc_md994"></a>
 Key Configuration Concepts</h2>
 <p>While Celery has many settings, here are some fundamental ones you'll encounter often:</p>
 <ol type="1">
@@ -158,7 +158,7 @@ Key Configuration Concepts</h2>
 <li><b><code>task_serializer</code></b>: Defines the format used to package task messages before sending them to the broker (e.g., 'json', 'pickle'). 'json' is a safe and common default.</li>
 <li><b><code>timezone</code></b>: Sets the timezone Celery uses, which is important for scheduled tasks managed by <a class="el" href="../../dd/d67/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_207__beat____scheduler__.html">Chapter 7: Beat (Scheduler)</a>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md971"></a>
+<h2><a class="anchor" id="autotoc_md995"></a>
 How to Configure Your Celery App</h2>
 <p>Celery is flexible and offers several ways to set its configuration.</p>
 <p><b>Method 1: Directly on the App Object (After Creation)</b></p>
@@ -197,21 +197,21 @@ How to Configure Your Celery App</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md972"></a>
+<h1><a class="anchor" id="autotoc_md996"></a>
 celeryconfig.py</h1>
-<h1><a class="anchor" id="autotoc_md973"></a>
+<h1><a class="anchor" id="autotoc_md997"></a>
 Broker settings</h1>
 <p>broker_url = 'redis://localhost:6379/0'</p>
-<h1><a class="anchor" id="autotoc_md974"></a>
+<h1><a class="anchor" id="autotoc_md998"></a>
 Result backend settings</h1>
 <p>result_backend = 'redis://localhost:6379/1'</p>
-<h1><a class="anchor" id="autotoc_md975"></a>
+<h1><a class="anchor" id="autotoc_md999"></a>
 Task settings</h1>
 <p>task_serializer = 'json' result_serializer = 'json' accept_content = ['json']</p>
-<h1><a class="anchor" id="autotoc_md976"></a>
+<h1><a class="anchor" id="autotoc_md1000"></a>
 Timezone settings</h1>
 <p>timezone = 'America/New_York' enable_utc = True # Recommended</p>
-<h1><a class="anchor" id="autotoc_md977"></a>
+<h1><a class="anchor" id="autotoc_md1001"></a>
 List of modules to import when the Celery worker starts.</h1>
 <p>imports = ('proj.tasks',) # Example: Assuming tasks are in proj/tasks.py ```</p>
 <p><b>Explanation:</b></p><ul>
@@ -220,21 +220,21 @@ List of modules to import when the Celery worker starts.</h1>
 </ul>
 <p><b>Load the configuration in your app file (<code>celery_app.py</code>):</b></p>
 <p>```python </p>
-<h1><a class="anchor" id="autotoc_md978"></a>
+<h1><a class="anchor" id="autotoc_md1002"></a>
 celery_app.py</h1>
 <p>from celery import Celery</p>
-<h1><a class="anchor" id="autotoc_md979"></a>
+<h1><a class="anchor" id="autotoc_md1003"></a>
 Create the app instance (no need to pass broker/backend here now)</h1>
 <p>app = Celery('tasks')</p>
-<h1><a class="anchor" id="autotoc_md980"></a>
+<h1><a class="anchor" id="autotoc_md1004"></a>
 Load configuration from the 'celeryconfig' module</h1>
-<h1><a class="anchor" id="autotoc_md981"></a>
+<h1><a class="anchor" id="autotoc_md1005"></a>
 Assumes celeryconfig.py is in the same directory or Python path</h1>
 <p>app.config_from_object('celeryconfig')</p>
 <p>print(f"Loaded Broker URL from config file: {app.conf.broker_url}") print(f"Loaded Timezone from config file: {app.conf.timezone}")</p>
-<h1><a class="anchor" id="autotoc_md982"></a>
+<h1><a class="anchor" id="autotoc_md1006"></a>
 You might still define tasks in this file or in the modules listed</h1>
-<h1><a class="anchor" id="autotoc_md983"></a>
+<h1><a class="anchor" id="autotoc_md1007"></a>
 in celeryconfig.imports</h1>
 <p>@app.task def multiply(x, y): return x * y ```</p>
 <p><b>Explanation:</b></p><ul>
@@ -262,7 +262,7 @@ in celeryconfig.imports</h1>
 <div class="line"># celery -A your_app_module worker --loglevel=info</div>
 </div><!-- fragment --><p>Celery automatically picks up these environment variables. They often take precedence over settings defined in a configuration file or directly on the app, making them ideal for overriding settings in different environments (development, staging, production).</p>
 <p><em>Note: The exact precedence order can sometimes depend on how and when configuration is loaded, but environment variables are generally a high-priority source.</em></p>
-<h2><a class="anchor" id="autotoc_md984"></a>
+<h2><a class="anchor" id="autotoc_md1008"></a>
 How It Works Internally (Simplified View)</h2>
 <ol type="1">
 <li><b>Loading:</b> When you create a <code>Celery</code> app or call <code>app.config_from_object()</code>, Celery reads the settings from the specified source (arguments, object/module, environment variables).</li>
@@ -287,7 +287,7 @@ How It Works Internally (Simplified View)</h2>
 <div class="line">    CeleryApp--&gt;&gt;Worker: Return &#39;redis://localhost:6379/0&#39;</div>
 <div class="line">    Worker-&gt;&gt;Broker: Connect using &#39;redis://localhost:6379/0&#39;</div>
 </div><!-- fragment --><p>This diagram shows the app loading configuration first, and then the worker using that stored configuration (<code>app.conf</code>) to perform its duties, like connecting to the broker.</p>
-<h2><a class="anchor" id="autotoc_md985"></a>
+<h2><a class="anchor" id="autotoc_md1009"></a>
 Code Dive: Where Configuration Lives</h2>
 <ul>
 <li><b><code>app.conf</code>:</b> This is the primary interface you interact with. It's an instance of a special dictionary-like class (<code>celery.app.utils.Settings</code>) that handles loading defaults, converting keys (Celery has changed setting names over time), and providing convenient access. You saw this in the direct update example: <code>app.conf.update(...)</code>.</li>
@@ -325,7 +325,7 @@ Code Dive: Where Configuration Lives</h2>
 <div class="line"> </div>
 <div class="line">        <span class="comment"># ... return result object ...</span></div>
 </div><!-- fragment --><p>This illustrates the core idea: load configuration into <code>app.conf</code>, then components read from <code>app.conf</code> when they need instructions.</p>
-<h2><a class="anchor" id="autotoc_md986"></a>
+<h2><a class="anchor" id="autotoc_md1010"></a>
 Conclusion</h2>
 <p>Configuration is the backbone of Celery's flexibility. You've learned:</p>
 <ul>

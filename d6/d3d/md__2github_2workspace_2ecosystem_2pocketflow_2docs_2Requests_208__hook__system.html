@@ -121,16 +121,16 @@ $(function(){initNavTree('d6/d3d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_hook_system</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2963"></a>
-autotoc_md2963</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2987"></a>
+autotoc_md2987</h2>
 <p>layout: default title: "Hook System" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2964"></a>
+<h2><a class="anchor" id="autotoc_md2988"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md2965"></a>
+<h1><a class="anchor" id="autotoc_md2989"></a>
 Chapter 8: The Hook System - Setting Up Checkpoints</h1>
 <p>In <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Chapter 7: Transport Adapters</a>, we saw how to customize the low-level details of <em>how</em> requests are sent and connections are managed, like setting custom retry strategies. Transport Adapters give you control over the delivery mechanism itself.</p>
 <p>But what if you don't need to change <em>how</em> the request is sent, but instead want to simply <b>react</b> when something happens during the process? For example, maybe you want to log every single response your application receives, or perhaps automatically add a timestamp to every request header just before it goes out (though this specific header example isn't currently supported by the default hooks).</p>
-<h2><a class="anchor" id="autotoc_md2966"></a>
+<h2><a class="anchor" id="autotoc_md2990"></a>
 The Problem: Reacting to Events</h2>
 <p>Imagine you're building an application that interacts with several different web services. For debugging or monitoring purposes, you want to keep a record of every response you get back – specifically, the URL you requested and the status code the server returned.</p>
 <p>You could manually add <code>print()</code> statements after every single <code>requests.get()</code>, <code>s.post()</code>, etc., call throughout your code:</p>
@@ -147,7 +147,7 @@ The Problem: Reacting to Events</h2>
 <div class="line">print(f<span class="stringliteral">&quot;LOG: Got {response3.status_code} for {response3.url}&quot;</span>)</div>
 <div class="line"><span class="comment"># ... process response3 ...</span></div>
 </div><!-- fragment --><p>This quickly becomes tedious and error-prone. If you forget to add the logging line, you miss that record. If you want to change the log format, you have to change it everywhere. Isn't there a way to tell <code>requests</code> to automatically run your logging code <em>every time</em> it gets a response?</p>
-<h2><a class="anchor" id="autotoc_md2967"></a>
+<h2><a class="anchor" id="autotoc_md2991"></a>
 Meet the Hook System: Your Automated Checkpoints</h2>
 <p>Yes, there is! <code>Requests</code> provides a <b>Hook System</b> that lets you do just that.</p>
 <p>Think of hooks like setting up <b>checkpoints</b> in the process of making a request and getting a response. When the process reaches a specific checkpoint, <code>requests</code> pauses briefly and calls any custom functions you've registered for that checkpoint.</p>
@@ -162,7 +162,7 @@ Meet the Hook System: Your Automated Checkpoints</h2>
 <p>Currently, the main event available is the <b><code>response</code></b> hook.</p><ul>
 <li><b><code>response</code> Hook:</b> This hook runs <em>after</em> a response has been received from the server and the basic <code>Response</code> object has been built, but <em>before</em> that <code>Response</code> object is returned to your code that called <code>requests.get()</code> or <code>s.post()</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2968"></a>
+<h2><a class="anchor" id="autotoc_md2992"></a>
 Using the <code>response</code> Hook</h2>
 <p>Let's solve our logging problem using the <code>response</code> hook.</p>
 <p><b>Step 1: Define the Hook Function</b></p>
@@ -274,7 +274,7 @@ Using the <code>response</code> Hook</h2>
 <div class="line"><span class="comment">#         return new_response # Return the NEW response</span></div>
 <div class="line"><span class="comment">#     return None # Otherwise, keep the original response</span></div>
 </div><!-- fragment --><p><b>Caution:</b> Modifying or replacing responses within hooks can be powerful but also confusing if not done carefully. For beginners, using hooks for actions like logging or metrics that don't change the response is often the safest starting point.</p>
-<h2><a class="anchor" id="autotoc_md2969"></a>
+<h2><a class="anchor" id="autotoc_md2993"></a>
 How It Works Internally</h2>
 <p>Where exactly does <code>requests</code> call these hooks? The <code>response</code> hook is triggered within the <code>Session.send()</code> method, after the underlying <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Transport Adapter</a> has returned a response, but before things like cookie persistence and redirect handling are fully completed for that specific response.</p>
 <ol type="1">
@@ -412,7 +412,7 @@ How It Works Internally</h2>
 <div class="line"><span class="comment"># Note: Session.prepare_request merges Request hooks and Session hooks</span></div>
 <div class="line"><span class="comment">#       into the PreparedRequest.hooks dictionary.</span></div>
 </div><!-- fragment --><p>The <code>dispatch_hook</code> function is the core mechanism that allows <code>requests</code> to call your custom functions at the designated <code>"response"</code> checkpoint within <code>Session.send</code>.</p>
-<h2><a class="anchor" id="autotoc_md2970"></a>
+<h2><a class="anchor" id="autotoc_md2994"></a>
 Conclusion</h2>
 <p>You've learned about the <b>Hook System</b> in <code>requests</code>, a way to register custom callback functions that run at specific points in the request-response lifecycle.</p>
 <ul>

@@ -121,17 +121,17 @@ $(function(){initNavTree('d2/d40/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_relevantcontentfilter</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1398"></a>
-autotoc_md1398</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1422"></a>
+autotoc_md1422</h2>
 <p>layout: default title: "RelevantContentFilter" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1399"></a>
+<h2><a class="anchor" id="autotoc_md1423"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1400"></a>
+<h1><a class="anchor" id="autotoc_md1424"></a>
 Chapter 5: Focusing on What Matters - RelevantContentFilter</h1>
 <p>In <a class="el" href="../../df/d80/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_204__contentscrapingstrategy.html">Chapter 4: Cleaning Up the Mess - ContentScrapingStrategy</a>, we learned how Crawl4AI takes the raw, messy HTML from a webpage and cleans it up using a <code>ContentScrapingStrategy</code>. This gives us a tidier version of the HTML (<code>cleaned_html</code>) and extracts basic elements like links and images.</p>
 <p>But even after this initial cleanup, the page might still contain a lot of "noise" relative to what we <em>actually</em> care about. Imagine a news article page: the <code>ContentScrapingStrategy</code> might remove scripts and styles, but it could still leave the main article text, plus related article links, user comments, sidebars with ads, and maybe a lengthy footer.</p>
 <p>If our goal is just to get the main article content (e.g., to summarize it or feed it to an AI), all that extra stuff is just noise. How can we filter the cleaned content even further to keep only the truly relevant parts?</p>
-<h2><a class="anchor" id="autotoc_md1401"></a>
+<h2><a class="anchor" id="autotoc_md1425"></a>
 What Problem Does <code>RelevantContentFilter</code> Solve?</h2>
 <p>Think of the <code>cleaned_html</code> from the previous step like flour that's been roughly sifted – the biggest lumps are gone, but there might still be smaller clumps or bran mixed in. If you want super fine flour for a delicate cake, you need a finer sieve.</p>
 <p><code>RelevantContentFilter</code> acts as this <b>finer sieve</b> or a <b>Relevance Sieve</b>. It's a strategy applied <em>after</em> the initial cleaning by <code>ContentScrapingStrategy</code> but <em>before</em> the final processing (like generating the final Markdown output or using an AI for extraction). Its job is to go through the cleaned content and decide which parts are truly relevant to our goal, removing the rest.</p>
@@ -141,11 +141,11 @@ What Problem Does <code>RelevantContentFilter</code> Solve?</h2>
 <li><b>Focus AI:</b> If we're sending the content to a Large Language Model (LLM), feeding it only the most relevant parts saves processing time (and potentially money) and can lead to better results.</li>
 <li><b>Improve Accuracy:</b> By removing distracting noise, subsequent steps like data extraction are less likely to grab the wrong information.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1402"></a>
+<h2><a class="anchor" id="autotoc_md1426"></a>
 What is <code>RelevantContentFilter</code>?</h2>
 <p><code>RelevantContentFilter</code> is an abstract concept (a blueprint) in Crawl4AI representing a <b>method for identifying and retaining only the relevant portions of cleaned HTML content</b>. It defines <em>that</em> we need a way to filter for relevance, but the specific technique used can vary.</p>
 <p>This allows us to choose different filtering approaches depending on the task and the type of content.</p>
-<h2><a class="anchor" id="autotoc_md1403"></a>
+<h2><a class="anchor" id="autotoc_md1427"></a>
 The Different Filters: Tools for Sieving</h2>
 <p>Crawl4AI provides several concrete implementations (the actual sieves) of <code>RelevantContentFilter</code>:</p>
 <ol type="1">
@@ -168,7 +168,7 @@ The Different Filters: Tools for Sieving</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1404"></a>
+<h2><a class="anchor" id="autotoc_md1428"></a>
 How <code>RelevantContentFilter</code> is Used (Via Markdown Generation)</h2>
 <p>In Crawl4AI, the <code>RelevantContentFilter</code> is typically integrated into the <b>Markdown generation</b> step. The standard markdown generator (<code>DefaultMarkdownGenerator</code>) can accept a <code>RelevantContentFilter</code> instance.</p>
 <p>When configured this way:</p>
@@ -184,7 +184,7 @@ How <code>RelevantContentFilter</code> is Used (Via Markdown Generation)</h2>
 <li><code>result.markdown.fit_markdown</code>: Markdown based <em>only</em> on the parts deemed relevant by the filter.</li>
 </ul>
 <p>Let's see how to configure this.</p>
-<h3><a class="anchor" id="autotoc_md1405"></a>
+<h3><a class="anchor" id="autotoc_md1429"></a>
 Example 1: Using <code>BM25ContentFilter</code> to find specific content</h3>
 <p>Imagine we crawled a page about renewable energy, but we only want the parts specifically discussing <b>solar power</b>.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter5_example_1.py</span></div>
@@ -243,7 +243,7 @@ Example 1: Using <code>BM25ContentFilter</code> to find specific content</h3>
 <li><b>Configure Run:</b> We create <code>CrawlerRunConfig</code> and tell it to use our special <code>markdown_generator_with_filter</code> for this run.</li>
 <li><b>Crawl &amp; Check:</b> We run the crawl as usual. In the <code>result</code>, <code>result.markdown.raw_markdown</code> will have the markdown for the whole page, while <code>result.markdown.fit_markdown</code> will <em>only</em> contain markdown derived from the HTML parts that the <code>BM25ContentFilter</code> scored highly for relevance to "solar power technology". You'll likely see the <code>fit_markdown</code> is significantly shorter.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1406"></a>
+<h3><a class="anchor" id="autotoc_md1430"></a>
 Example 2: Using <code>PruningContentFilter</code> to remove boilerplate</h3>
 <p>Now, let's try removing common noise like sidebars or footers based on structure, without needing a specific query.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter5_example_2.py</span></div>
@@ -300,7 +300,7 @@ Example 2: Using <code>PruningContentFilter</code> to remove boilerplate</h3>
 <li>We pass this filter to the <code>DefaultMarkdownGenerator</code>.</li>
 <li>The resulting <code>result.markdown.fit_markdown</code> should contain Markdown primarily from the main content areas of the page, with structurally identified boilerplate removed.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1407"></a>
+<h3><a class="anchor" id="autotoc_md1431"></a>
 Example 3: Using <code>LLMContentFilter</code> (Conceptual)</h3>
 <p>Using <code>LLMContentFilter</code> follows the same pattern, but requires setting up LLM provider details.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter5_example_3_conceptual.py</span></div>
@@ -373,7 +373,7 @@ Example 3: Using <code>LLMContentFilter</code> (Conceptual)</h3>
 <li>We integrate it into <code>DefaultMarkdownGenerator</code> and <code>CrawlerRunConfig</code> as before.</li>
 <li>When <code>arun</code> is called, the <code>LLMContentFilter</code> would (in a real scenario) interact with the configured LLM API, sending chunks of the <code>cleaned_html</code> and the instruction, then assembling the AI's response into the <code>fit_markdown</code>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1408"></a>
+<h2><a class="anchor" id="autotoc_md1432"></a>
 Under the Hood: How Filtering Fits In</h2>
 <p>The <code>RelevantContentFilter</code> doesn't run on its own; it's invoked by another component, typically the <code>DefaultMarkdownGenerator</code>.</p>
 <p>Here's the sequence:</p>
@@ -499,7 +499,7 @@ Under the Hood: How Filtering Fits In</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># ... Implementations for PruningContentFilter and LLMContentFilter ...</span></div>
 </div><!-- fragment --><p>The key is that each filter implements the <code>filter_content</code> method, returning the list of HTML fragments it considers relevant. The <code>DefaultMarkdownGenerator</code> then uses these fragments to create the <code>fit_markdown</code>.</p>
-<h2><a class="anchor" id="autotoc_md1409"></a>
+<h2><a class="anchor" id="autotoc_md1433"></a>
 Conclusion</h2>
 <p>You've learned about <code>RelevantContentFilter</code>, Crawl4AI's "Relevance Sieve"!</p>
 <ul>

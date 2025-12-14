@@ -121,15 +121,15 @@ $(function(){initNavTree('d3/dac/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_input_handling__textbuffer_editor_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1264"></a>
-autotoc_md1264</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1288"></a>
+autotoc_md1288</h2>
 <p>layout: default title: "Input Handling (TextBuffer/Editor)" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1265"></a>
+<h2><a class="anchor" id="autotoc_md1289"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1266"></a>
+<h1><a class="anchor" id="autotoc_md1290"></a>
 Chapter 2: Input Handling (TextBuffer/Editor)</h1>
 <p>In the <a class="el" href="../../dd/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_201__terminal__ui____ink__components__.html">previous chapter</a>, we saw how Codex uses Ink and React to draw the chat interface in your terminal. We learned about components like <code>&lt;TerminalChatInput&gt;</code> and <code>&lt;MultilineTextEditor&gt;</code> that show an input box. But how does that input box <em>actually work</em>?</p>
-<h2><a class="anchor" id="autotoc_md1267"></a>
+<h2><a class="anchor" id="autotoc_md1291"></a>
 Why a Fancy Input Box?</h2>
 <p>Imagine you want Codex to write a small Python script. You might type something like this:</p>
 <div class="fragment"><div class="line">Write a python function that:</div>
@@ -145,7 +145,7 @@ Why a Fancy Input Box?</h2>
 <li>Perhaps even open the current text in your main code editor (like VS Code or Vim) for complex edits (<code>Ctrl+X</code>).</li>
 </ul>
 <p>This is where the <b>Input Handling</b> system comes in. It's like a mini text editor built right into the Codex chat interface, designed to make typing potentially complex prompts and messages much easier than a standard terminal input line.</p>
-<h2><a class="anchor" id="autotoc_md1268"></a>
+<h2><a class="anchor" id="autotoc_md1292"></a>
 Key Idea: The <code>TextBuffer</code></h2>
 <p>The heart of this system is a class called <code>TextBuffer</code> (found in <code>text-buffer.ts</code>). Think of <code>TextBuffer</code> like the hidden document model behind a simple text editor (like Notepad or TextEdit):</p>
 <ul>
@@ -155,7 +155,7 @@ Key Idea: The <code>TextBuffer</code></h2>
 <li><b>It manages scrolling:</b> If your text gets longer than the input box can display, the <code>TextBuffer</code> figures out which part of the text should be visible.</li>
 </ul>
 <p>The <code>MultilineTextEditor</code> React component we saw in Chapter 1 uses an instance of this <code>TextBuffer</code> internally to manage the state of the text being edited.</p>
-<h2><a class="anchor" id="autotoc_md1269"></a>
+<h2><a class="anchor" id="autotoc_md1293"></a>
 How You Use It (Indirectly)</h2>
 <p>You don't directly interact with <code>TextBuffer</code> yourself. You interact with the <code>&lt;MultilineTextEditor&gt;</code> component displayed by Ink. But understanding <code>TextBuffer</code> helps you see <em>how</em> the editor works.</p>
 <p>Let's look at a simplified view of how the <code>&lt;TerminalChatNewInput&gt;</code> component uses <code>&lt;MultilineTextEditor&gt;</code>:</p>
@@ -234,7 +234,7 @@ How You Use It (Indirectly)</h2>
 <li><b><code>onSubmit={onSubmit}</code>:</b> When you press Enter (in a way that signifies submission, not just adding a newline), the <code>MultilineTextEditor</code> calls this <code>onSubmit</code> function, passing the final text content. This function then sends the message off to the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> and clears the input.</li>
 <li><b>History (<code>useInput</code>):</b> The parent component (<code>TerminalChatNewInput</code>) uses Ink's <code>useInput</code> hook to <em>intercept</em> the Up/Down arrow keys <em>before</em> they even reach the <code>MultilineTextEditor</code>. It checks if the cursor (using <code>editorRef.current?.isCursorAtFirstRow()</code>) is at the very top/bottom edge of the text. If so, it handles history navigation by changing the <code>input</code> state and forcing the editor to update using <code>setEditorKey</code>. If the cursor isn't at the edge, it lets the arrow key "fall through" to the <code>MultilineTextEditor</code>, which then just moves the cursor normally within the text via its internal <code>TextBuffer</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1270"></a>
+<h2><a class="anchor" id="autotoc_md1294"></a>
 Under the Hood: Keystroke to Display</h2>
 <p>Let's trace what happens when you type a character, say 'h', into the input box:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -278,7 +278,7 @@ Under the Hood: Keystroke to Display</h2>
 <li><code> **Draw:** The component uses this information to render the text (</code>h<code>) in the terminal. It uses the cursor position to draw the cursor, often by rendering the character *at* the cursor position with an inverted background color (like</code>chalk.inverse(char)`).</li>
 </ol>
 <p>This same loop happens for every key press: Backspace calls <code>TextBuffer.backspace()</code>, arrow keys call <code>TextBuffer.move()</code>, Enter calls <code>TextBuffer.newline()</code> (or triggers <code>onSubmit</code>), etc.</p>
-<h2><a class="anchor" id="autotoc_md1271"></a>
+<h2><a class="anchor" id="autotoc_md1295"></a>
 Diving into <code>TextBuffer</code> Code (Simplified)</h2>
 <p>Let's peek inside <code>text-buffer.ts</code>:</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/text-buffer.ts (Simplified)</div>
@@ -443,7 +443,7 @@ Diving into <code>TextBuffer</code> Code (Simplified)</h2>
 <li><code>handleInput</code> acts as the main entry point, deciding which specific editing operation to perform based on the key pressed.</li>
 <li><code>openInExternalEditor</code> handles the <code>Ctrl+X</code> magic by saving to a temp file, running your system's default editor, and reloading the content.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1272"></a>
+<h2><a class="anchor" id="autotoc_md1296"></a>
 Conclusion</h2>
 <p>You've now seen how Codex provides a surprisingly powerful text editing experience right within your terminal. It goes far beyond a simple input line by using the <code>&lt;MultilineTextEditor&gt;</code> component, which relies heavily on the internal <code>TextBuffer</code> class. This class manages the text content, cursor position, and editing operations like insertion, deletion, multi-line handling, cursor navigation (including word jumps), and even integration with external editors. This allows you to compose complex prompts or provide detailed feedback without leaving the terminal interface.</p>
 <p>With the UI drawn and user input handled, what happens next? How does Codex take your input, think about it, and generate a response or decide to run a command? That's the job of the core logic loop.</p>

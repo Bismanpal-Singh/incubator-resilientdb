@@ -121,16 +121,16 @@ $(function(){initNavTree('d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_task</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1488"></a>
-autotoc_md1488</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1512"></a>
+autotoc_md1512</h2>
 <p>layout: default title: "Task" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1489"></a>
+<h2><a class="anchor" id="autotoc_md1513"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1490"></a>
+<h1><a class="anchor" id="autotoc_md1514"></a>
 Chapter 3: Task - Defining the Work</h1>
 <p>In <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Chapter 1</a>, we met the <code>Crew</code> - our AI team manager. In <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Chapter 2</a>, we met the <code>Agent</code>s - our specialized AI workers. Now, we need to tell these agents <em>exactly</em> what to do. How do we give them specific assignments?</p>
 <p>That's where the <code>Task</code> comes in!</p>
-<h2><a class="anchor" id="autotoc_md1491"></a>
+<h2><a class="anchor" id="autotoc_md1515"></a>
 Why Do We Need Tasks?</h2>
 <p>Imagine our trip planning <code>Crew</code> again. We have a 'Travel Researcher' <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> and an 'Activity Planner' <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>. Just having them isn't enough. We need to give them clear instructions:</p>
 <ul>
@@ -139,7 +139,7 @@ Why Do We Need Tasks?</h2>
 </ul>
 <p>These specific instructions are <b><code>Task</code>s</b> in CrewAI. Instead of one vague goal, we break the project down into smaller, concrete steps.</p>
 <p><b>Problem Solved:</b> <code>Task</code> allows you to define individual, actionable assignments for your <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s. It turns a big goal into a manageable checklist.</p>
-<h2><a class="anchor" id="autotoc_md1492"></a>
+<h2><a class="anchor" id="autotoc_md1516"></a>
 What is a Task?</h2>
 <p>Think of a <code>Task</code> as a <b>work order</b> or a <b>specific assignment</b> given to an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>. It clearly defines what needs to be done and what the expected result should look like.</p>
 <p>Here are the key ingredients of a <code>Task</code>:</p>
@@ -154,7 +154,7 @@ What is a Task?</h2>
 <li><b><code>output_file</code></b> (Optional, Advanced): You can have the task automatically save its output to a file.</li>
 </ol>
 <p>A <code>Task</code> bundles the instructions (<code>description</code>, <code>expected_output</code>) and assigns them to the right worker (<code>agent</code>), potentially giving them background info (<code>context</code>) and specific equipment (<code>tools</code>).</p>
-<h2><a class="anchor" id="autotoc_md1493"></a>
+<h2><a class="anchor" id="autotoc_md1517"></a>
 Let's Define a Task!</h2>
 <p>Let's look again at the tasks we created for our trip planning <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> in <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Chapter 1</a>.</p>
 <div class="fragment"><div class="line"><span class="comment"># Import necessary classes</span></div>
@@ -204,7 +204,7 @@ Let's Define a Task!</h2>
 <li><code>context=[task1]</code> (Commented Out): We <em>could</em> explicitly tell <code>task2</code> that it depends on <code>task1</code>. However, when using a <code>sequential</code> <a class="el" href="../../de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_205__process.html">Process</a> in the <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>, this dependency is usually handled automatically! The output of <code>task1</code> will be passed to <code>task2</code> as context.</li>
 </ul>
 <p>Running this code creates <code>Task</code> objects, ready to be managed by a <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>.</p>
-<h2><a class="anchor" id="autotoc_md1494"></a>
+<h2><a class="anchor" id="autotoc_md1518"></a>
 Task Workflow and Context: Connecting the Dots</h2>
 <p>Tasks are rarely standalone. They often form a sequence, where the result of one task is needed for the next. This is where <code>context</code> comes in.</p>
 <p>Imagine our <code>Crew</code> is set up with a <code>sequential</code> <a class="el" href="../../de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_205__process.html">Process</a> (like in Chapter 1):</p>
@@ -226,7 +226,7 @@ Task Workflow and Context: Connecting the Dots</h2>
 <div class="line">    style B fill:#ccf,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5</div>
 <div class="line">    style D fill:#cfc,stroke:#333,stroke-width:2px</div>
 </div><!-- fragment --><p>While the <code>sequential</code> process often handles context automatically, you <em>can</em> explicitly define dependencies using the <code>context</code> parameter in the <code>Task</code> definition if you need more control, especially with more complex workflows.</p>
-<h2><a class="anchor" id="autotoc_md1495"></a>
+<h2><a class="anchor" id="autotoc_md1519"></a>
 How Does a Task Execute "Under the Hood"?</h2>
 <p>When the <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>'s <code>kickoff()</code> method runs a task, here's a simplified view of what happens:</p>
 <ol type="1">
@@ -352,7 +352,7 @@ How Does a Task Execute "Under the Hood"?</h2>
 <li>It takes the raw result from the agent and wraps it in a <code>TaskOutput</code> object, handling formatting (like JSON) and optional actions (callbacks, file saving).</li>
 <li>The <code>prompt()</code> method shows how the core instructions are formatted before being potentially combined with context and tool descriptions by the agent.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1496"></a>
+<h2><a class="anchor" id="autotoc_md1520"></a>
 Advanced Task Features (A Quick Peek)</h2>
 <p>While we focused on the basics, <code>Task</code> has more capabilities:</p>
 <ul>
@@ -361,7 +361,7 @@ Advanced Task Features (A Quick Peek)</h2>
 <li><b>File Output (&lsquo;output_file='path/to/output.txt&rsquo;`):</b> Automatically save the task's result to a specified file.</li>
 <li><b>Conditional Tasks (<code>ConditionalTask</code>):</b> A special type of task (defined in <code>crewai.tasks.conditional_task</code>) that only runs if a specific condition (based on the previous task's output) is met. This allows for branching logic in your workflows.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1497"></a>
+<h2><a class="anchor" id="autotoc_md1521"></a>
 Conclusion</h2>
 <p>You've now learned about the <code>Task</code> – the fundamental unit of work in CrewAI. A <code>Task</code> defines <em>what</em> needs to be done (<code>description</code>), what the result should look like (<code>expected_output</code>), and <em>who</em> should do it (<code>agent</code>). Tasks are the building blocks of your Crew's plan, and their outputs often flow as <code>context</code> to subsequent tasks, creating powerful workflows.</p>
 <p>We've seen how to define Agents and give them Tasks. But what if an agent needs a specific ability, like searching the internet, calculating something, or reading a specific document? How do we give our agents superpowers? That's where <a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Tools</a> come in! Let's explore them in the next chapter.</p>

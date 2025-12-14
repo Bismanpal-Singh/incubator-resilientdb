@@ -121,15 +121,15 @@ $(function(){initNavTree('d1/dcd/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">09_cachecontext___cachemode</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1446"></a>
-autotoc_md1446</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1470"></a>
+autotoc_md1470</h2>
 <p>layout: default title: "CacheContext &amp; CacheMode" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1447"></a>
+<h2><a class="anchor" id="autotoc_md1471"></a>
 nav_order: 9</h2>
-<h1><a class="anchor" id="autotoc_md1448"></a>
+<h1><a class="anchor" id="autotoc_md1472"></a>
 Chapter 9: Smart Fetching with Caching - CacheContext / CacheMode</h1>
 <p>In the previous chapter, <a class="el" href="../../d3/da3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_208__deepcrawlstrategy.html">Chapter 8: Exploring Websites - DeepCrawlStrategy</a>, we saw how Crawl4AI can explore websites by following links, potentially visiting many pages. During such explorations, or even when you run the same crawl multiple times, the crawler might try to fetch the exact same webpage again and again. This can be slow and might unnecessarily put a load on the website you're crawling. Wouldn't it be smarter to remember the result from the first time and just reuse it?</p>
-<h2><a class="anchor" id="autotoc_md1449"></a>
+<h2><a class="anchor" id="autotoc_md1473"></a>
 What Problem Does Caching Solve?</h2>
 <p>Imagine you need to download a large instruction manual (a webpage) from the internet.</p>
 <ul>
@@ -137,7 +137,7 @@ What Problem Does Caching Solve?</h2>
 <li><b>With Caching:</b> The first time you download it, you save a copy on your computer (the "cache"). The next time you need it, you first check your local copy. If it's there, you use it instantly! You only download it again if you specifically want the absolute latest version or if your local copy is missing.</li>
 </ul>
 <p>Caching in Crawl4AI works the same way. It's a mechanism to <b>store the results</b> of crawling a webpage locally (in a database file). When asked to crawl a URL again, Crawl4AI can check its cache first. If a valid result is already stored, it can return that saved result almost instantly, saving time and resources.</p>
-<h2><a class="anchor" id="autotoc_md1450"></a>
+<h2><a class="anchor" id="autotoc_md1474"></a>
 Introducing <code>CacheMode</code> and <code>CacheContext</code></h2>
 <p>Crawl4AI uses two key concepts to manage this caching behavior:</p>
 <ol type="1">
@@ -156,7 +156,7 @@ Introducing <code>CacheMode</code> and <code>CacheContext</code></h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1451"></a>
+<h2><a class="anchor" id="autotoc_md1475"></a>
 Setting the Cache Policy: Using <code>CacheMode</code></h2>
 <p>You control the caching behavior by setting the <code>cache_mode</code> parameter within the <code>CrawlerRunConfig</code> object that you pass to <code>crawler.arun()</code> or <code>crawler.arun_many()</code>.</p>
 <p>Let's explore the most common <code>CacheMode</code> options:</p>
@@ -280,7 +280,7 @@ Setting the Cache Policy: Using <code>CacheMode</code></h2>
 <li><code>CacheMode.READ_ONLY</code>: Only uses existing cached results. If a result isn't in the cache, it will fail or return an empty result rather than fetching it. Never saves anything new.</li>
 <li><code>CacheMode.WRITE_ONLY</code>: Never reads from the cache (always fetches fresh). It <em>only</em> writes the newly fetched result to the cache.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1452"></a>
+<h2><a class="anchor" id="autotoc_md1476"></a>
 How Caching Works Internally</h2>
 <p>When you call <code>crawler.arun(url="...", config=...)</code>:</p>
 <ol type="1">
@@ -335,7 +335,7 @@ How Caching Works Internally</h2>
 <div class="line">        Ctx--&gt;&gt;AWC: No</div>
 <div class="line">    end</div>
 <div class="line">    AWC--&gt;&gt;User: Return New CrawlResult</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1453"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1477"></a>
 Code Glimpse</h2>
 <p>Let's look at simplified code snippets.</p>
 <p><b>Inside <code>async_webcrawler.py</code> (where <code>arun</code> uses caching):</b></p>
@@ -436,7 +436,7 @@ Code Glimpse</h2>
 <div class="line"><span class="keyword">def </span>_legacy_to_cache_mode(...) -&gt; CacheMode:</div>
 <div class="line">    <span class="comment"># ... logic to convert old boolean flags ...</span></div>
 <div class="line">    <span class="keywordflow">pass</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1454"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1478"></a>
 Conclusion</h2>
 <p>You've learned how Crawl4AI uses caching to avoid redundant work and speed up repeated crawls!</p>
 <ul>

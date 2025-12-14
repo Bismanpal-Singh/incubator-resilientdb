@@ -121,18 +121,18 @@ $(function(){initNavTree('dd/dc3/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_chatcompletioncontext</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md745"></a>
-autotoc_md745</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md769"></a>
+autotoc_md769</h2>
 <p>layout: default title: "ChatCompletionContext" parent: "AutoGen Core" </p>
-<h2><a class="anchor" id="autotoc_md746"></a>
+<h2><a class="anchor" id="autotoc_md770"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md747"></a>
+<h1><a class="anchor" id="autotoc_md771"></a>
 Chapter 6: ChatCompletionContext - Remembering the Conversation</h1>
 <p>In <a class="el" href="../../d8/df2/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_205__chatcompletionclient.html">Chapter 5: ChatCompletionClient</a>, we learned how agents talk to Large Language Models (LLMs) using a <code>ChatCompletionClient</code>. We saw that we need to send a list of <code>messages</code> (the conversation history) to the LLM so it knows the context.</p>
 <p>But conversations can get very long! Imagine talking on the phone for an hour. Can you remember <em>every single word</em> that was said? Probably not. You remember the main points, the beginning, and what was said most recently. LLMs have a similar limitation – they can only pay attention to a certain amount of text at once (called the "context window").</p>
 <p>If we send the <em>entire</em> history of a very long chat, it might be too much for the LLM, lead to errors, be slow, or cost more money (since many LLMs charge based on the amount of text).</p>
 <p>So, how do we smartly choose <em>which</em> parts of the conversation history to send? This is the problem that <b><code>ChatCompletionContext</code></b> solves.</p>
-<h2><a class="anchor" id="autotoc_md748"></a>
+<h2><a class="anchor" id="autotoc_md772"></a>
 Motivation: Keeping LLM Conversations Focused</h2>
 <p>Let's say we have a helpful assistant agent chatting with a user:</p>
 <ol type="1">
@@ -145,7 +145,7 @@ Motivation: Keeping LLM Conversations Focused</h2>
 </ol>
 <p>When the Assistant needs to draft the email (step 6), does it need the <em>exact</em> text from step 2 about what AutoGen is? Probably not. It definitely needs the instructions from step 3 and the topic from step 5. Maybe the initial greeting isn't super important either.</p>
 <p><code>ChatCompletionContext</code> acts like a <b>smart transcript editor</b>. Before sending the history to the LLM via the <code>ChatCompletionClient</code>, it reviews the full conversation log and prepares a shorter, focused version containing only the messages it thinks are most relevant for the LLM's next response.</p>
-<h2><a class="anchor" id="autotoc_md749"></a>
+<h2><a class="anchor" id="autotoc_md773"></a>
 Key Concepts: Managing the Chat History</h2>
 <ol type="1">
 <li><b>The Full Transcript Holder:</b> A <code>ChatCompletionContext</code> object holds the <em>complete</em> list of messages (<code>LLMMessage</code> objects like <code>SystemMessage</code>, <code>UserMessage</code>, <code>AssistantMessage</code> from Chapter 5) that have occurred in a specific conversation thread. You add new messages using its <code>add_message</code> method.</li>
@@ -157,7 +157,7 @@ Key Concepts: Managing the Chat History</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md750"></a>
+<h2><a class="anchor" id="autotoc_md774"></a>
 Use Case Example: Chatting with Different Memory Strategies</h2>
 <p>Let's simulate adding messages to different context managers and see what <code>get_messages</code> returns.</p>
 <p><b>Step 1: Define some messages</b></p>
@@ -270,7 +270,7 @@ Use Case Example: Chatting with Different Memory Strategies</h2>
 <li>Simple Q&amp;A? <code>Buffered</code> might be fine.</li>
 <li>Following complex initial instructions? <code>HeadAndTail</code> or even <code>Unbounded</code> (if short) might be better.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md751"></a>
+<h2><a class="anchor" id="autotoc_md775"></a>
 Under the Hood: How Context is Managed</h2>
 <p>The core idea is defined by the <code>ChatCompletionContext</code> abstract base class.</p>
 <p><b>Conceptual Flow:</b></p>
@@ -304,20 +304,20 @@ Under the Hood: How Context is Managed</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md752"></a>
+<h1><a class="anchor" id="autotoc_md776"></a>
 From: model_context/_chat_completion_context.py (Simplified)</h1>
 <p>from abc import ABC, abstractmethod from typing import List from ..models import LLMMessage</p>
 <p>class ChatCompletionContext(ABC): component_type = "chat_completion_context" # Identifies this as a component type</p>
 <p>def <b>init</b>(self, initial_messages: List[LLMMessage] | None = None) -&gt; None: </p>
-<h1><a class="anchor" id="autotoc_md753"></a>
+<h1><a class="anchor" id="autotoc_md777"></a>
 Holds the COMPLETE history</h1>
 <p>self._messages: List[LLMMessage] = initial_messages or []</p>
 <p>async def add_message(self, message: LLMMessage) -&gt; None: """Add a message to the full context.""" self._messages.append(message)</p>
 <p>@abstractmethod async def get_messages(self) -&gt; List[LLMMessage]: """Get the subset of messages based on the strategy.""" </p>
-<h1><a class="anchor" id="autotoc_md754"></a>
+<h1><a class="anchor" id="autotoc_md778"></a>
 Each subclass MUST implement this logic</h1>
 <p>...</p>
-<h1><a class="anchor" id="autotoc_md755"></a>
+<h1><a class="anchor" id="autotoc_md779"></a>
 Other methods like clear(), save_state(), load_state() exist too</h1>
 <p>``` The base class handles storing messages; subclasses define <em>how</em> to retrieve them.</p>
 <ul>
@@ -325,7 +325,7 @@ Other methods like clear(), save_state(), load_state() exist too</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md756"></a>
+<h1><a class="anchor" id="autotoc_md780"></a>
 From: model_context/_unbounded_chat_completion_context.py (Simplified)</h1>
 <p>from typing import List from ._chat_completion_context import ChatCompletionContext from ..models import LLMMessage</p>
 <p>class UnboundedChatCompletionContext(ChatCompletionContext): async def get_messages(self) -&gt; List[LLMMessage]: """Returns all messages.""" return self._messages # Just return the whole internal list ```</p>
@@ -334,15 +334,15 @@ From: model_context/_unbounded_chat_completion_context.py (Simplified)</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md757"></a>
+<h1><a class="anchor" id="autotoc_md781"></a>
 From: model_context/_buffered_chat_completion_context.py (Simplified)</h1>
 <p>from typing import List from ._chat_completion_context import ChatCompletionContext from ..models import LLMMessage, FunctionExecutionResultMessage</p>
 <p>class BufferedChatCompletionContext(ChatCompletionContext): def <b>init</b>(self, buffer_size: int, ...): super().__init__(...) self._buffer_size = buffer_size</p>
 <p>async def get_messages(self) -&gt; List[LLMMessage]: """Get at most `buffer_size` recent messages.""" </p>
-<h1><a class="anchor" id="autotoc_md758"></a>
+<h1><a class="anchor" id="autotoc_md782"></a>
 Slice the list to get the last 'buffer_size' items</h1>
 <p>messages = self._messages[-self._buffer_size :] </p>
-<h1><a class="anchor" id="autotoc_md759"></a>
+<h1><a class="anchor" id="autotoc_md783"></a>
 Special case: Avoid starting with a function result message</h1>
 <p>if messages and isinstance(messages[0], FunctionExecutionResultMessage): messages = messages[1:] return messages ```</p>
 <ul>
@@ -350,16 +350,16 @@ Special case: Avoid starting with a function result message</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md760"></a>
+<h1><a class="anchor" id="autotoc_md784"></a>
 From: model_context/_head_and_tail_chat_completion_context.py (Simplified)</h1>
 <p>from typing import List from ._chat_completion_context import ChatCompletionContext from ..models import LLMMessage, UserMessage</p>
 <p>class HeadAndTailChatCompletionContext(ChatCompletionContext): def <b>init</b>(self, head_size: int, tail_size: int, ...): super().__init__(...) self._head_size = head_size self._tail_size = tail_size</p>
 <p>async def get_messages(self) -&gt; List[LLMMessage]: head = self._messages[: self._head_size] # First 'head_size' items tail = self._messages[-self._tail_size :] # Last 'tail_size' items num_skipped = len(self._messages) - len(head) - len(tail)</p>
 <p>if num_skipped &lt;= 0: # If no overlap or gap return self._messages else: # If messages were skipped placeholder = [UserMessage(content=f"Skipped {num_skipped} messages.", source="System")] </p>
-<h1><a class="anchor" id="autotoc_md761"></a>
+<h1><a class="anchor" id="autotoc_md785"></a>
 Combine head + placeholder + tail</h1>
 <p>return head + placeholder + tail ``` These implementations provide different ways to manage the context window effectively.</p>
-<h2><a class="anchor" id="autotoc_md762"></a>
+<h2><a class="anchor" id="autotoc_md786"></a>
 Putting it Together with ChatCompletionClient</h2>
 <p>How does an agent use <code>ChatCompletionContext</code> with the <code>ChatCompletionClient</code> from Chapter 5?</p>
 <ol type="1">
@@ -370,7 +370,7 @@ Putting it Together with ChatCompletionClient</h2>
 <li>When the LLM replies (e.g., with an <code>AssistantMessage</code>), the agent adds it back to the context: <code>await context.add_message(llm_response_message)</code>.</li>
 </ol>
 <p>This loop ensures that the history is continuously updated and intelligently trimmed before each call to the LLM.</p>
-<h2><a class="anchor" id="autotoc_md763"></a>
+<h2><a class="anchor" id="autotoc_md787"></a>
 Next Steps</h2>
 <p>You've learned how <code>ChatCompletionContext</code> helps manage the conversation history sent to LLMs, preventing context window overflows and keeping the interaction focused using different strategies (<code>Unbounded</code>, <code>Buffered</code>, <code>HeadAndTail</code>).</p>
 <p>This context management is a specific form of <b>memory</b>. Agents might need to remember things beyond just the chat history. How do they store general information, state, or knowledge over time?</p>

@@ -121,17 +121,17 @@ $(function(){initNavTree('da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_llm</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1522"></a>
-autotoc_md1522</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1546"></a>
+autotoc_md1546</h2>
 <p>layout: default title: "LLM" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1523"></a>
+<h2><a class="anchor" id="autotoc_md1547"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1524"></a>
+<h1><a class="anchor" id="autotoc_md1548"></a>
 Chapter 6: LLM - The Agent's Brain</h1>
 <p>In the <a class="el" href="../../de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_205__process.html">previous chapter</a>, we explored the <code>Process</code> - how the <code>Crew</code> organizes the workflow for its <code>Agent</code>s, deciding whether they work sequentially or are managed hierarchically. We now have specialized agents (<a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>), defined work (<a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>), useful abilities (<a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Tool</a>), and a workflow strategy (<a class="el" href="../../de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_205__process.html">Process</a>).</p>
 <p>But what actually does the <em>thinking</em> inside an agent? When we give the 'Travel Researcher' agent the task "Find sunny European cities," what part of the agent understands this request, decides to use the search tool, interprets the results, and writes the final list?</p>
 <p>This core thinking component is the <b>Large Language Model</b>, or <b>LLM</b>.</p>
-<h2><a class="anchor" id="autotoc_md1525"></a>
+<h2><a class="anchor" id="autotoc_md1549"></a>
 Why Do Agents Need an LLM?</h2>
 <p>Imagine our 'Travel Researcher' agent again. It has a <code>role</code>, <code>goal</code>, and <code>backstory</code>. It has a <code>Task</code> to complete and maybe a <code>Tool</code> to search the web. But it needs something to:</p>
 <ol type="1">
@@ -142,7 +142,7 @@ Why Do Agents Need an LLM?</h2>
 </ol>
 <p>The LLM is the engine that performs all these cognitive actions. It's the "brain" that drives the agent's behavior based on the instructions and tools provided.</p>
 <p><b>Problem Solved:</b> The LLM provides the core intelligence for each <code>Agent</code>. It processes language, makes decisions (like which tool to use or what text to generate), and ultimately enables the agent to perform its assigned <code>Task</code> based on its defined profile.</p>
-<h2><a class="anchor" id="autotoc_md1526"></a>
+<h2><a class="anchor" id="autotoc_md1550"></a>
 What is an LLM in CrewAI?</h2>
 <p>Think of an LLM as a highly advanced, versatile AI assistant you can interact with using text. Models like OpenAI's GPT-4, Google's Gemini, Anthropic's Claude, or open-source models run locally via tools like Ollama are all examples of LLMs. They are trained on vast amounts of text data and can understand instructions, answer questions, write text, summarize information, and even make logical deductions.</p>
 <p>In CrewAI, the <code>LLM</code> concept is an <b>abstraction</b>. CrewAI itself doesn't <em>include</em> these massive language models. Instead, it provides a standardized way to <b>connect to and interact with</b> various LLMs, whether they are hosted by companies like OpenAI or run on your own computer.</p>
@@ -158,7 +158,7 @@ What is an LLM in CrewAI?</h2>
 <li><b>API Management:</b> It manages the technical details of sending requests to the chosen LLM provider and receiving the responses.</li>
 </ul>
 <p>Essentially, CrewAI lets you plug in the LLM brain of your choice for your agents.</p>
-<h2><a class="anchor" id="autotoc_md1527"></a>
+<h2><a class="anchor" id="autotoc_md1551"></a>
 Configuring an LLM for Your Crew</h2>
 <p>You need to tell CrewAI which LLM(s) your agents should use. There are several ways to do this, ranging from letting CrewAI detect settings automatically to explicitly configuring specific models.</p>
 <p><b>1. Automatic Detection (Environment Variables)</b></p>
@@ -269,7 +269,7 @@ Configuring an LLM for Your Crew</h2>
 <li><code>function_calling_llm</code>: Specifies the LLM used by agents primarily to decide <em>which tool to call</em> and <em>with what arguments</em>. This can sometimes be a faster/cheaper model than the one used for generating the final detailed response. If not set, agents typically use their main <code>llm</code>.</li>
 </ul>
 <p>If an agent doesn't have an <code>llm</code> explicitly assigned, it might inherit the <code>function_calling_llm</code> or default to environment settings. It's usually clearest to assign LLMs explicitly where needed.</p>
-<h2><a class="anchor" id="autotoc_md1528"></a>
+<h2><a class="anchor" id="autotoc_md1552"></a>
 How LLM Interaction Works Internally</h2>
 <p>When an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> needs to think (e.g., execute a <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>), the process looks like this:</p>
 <ol type="1">
@@ -399,7 +399,7 @@ How LLM Interaction Works Internally</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># ... other methods like _handle_streaming_response ...</span></div>
 </div><!-- fragment --><p>This simplified view shows how the <code>LLM</code> class acts as a wrapper around <code>litellm</code>, preparing requests and processing responses, shielding the rest of CrewAI from the complexities of different LLM APIs.</p>
-<h2><a class="anchor" id="autotoc_md1529"></a>
+<h2><a class="anchor" id="autotoc_md1553"></a>
 Conclusion</h2>
 <p>You've learned about the <b>LLM</b>, the essential "brain" powering your CrewAI <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s. It's the component that understands language, reasons about tasks, decides on actions (like using <a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Tool</a>s), and generates text.</p>
 <p>We saw that CrewAI uses the <code>litellm</code> library to provide a flexible way to connect to a wide variety of LLM providers (like OpenAI, Google Gemini, Anthropic Claude, or local models via Ollama). You can configure which LLM your agents or crew use, either implicitly through environment variables or explicitly by passing configured LLM objects (often using LangChain wrappers) during <code>Agent</code> or <code>Crew</code> creation.</p>

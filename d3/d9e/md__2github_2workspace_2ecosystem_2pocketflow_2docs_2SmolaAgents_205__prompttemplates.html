@@ -121,12 +121,12 @@ $(function(){initNavTree('d3/d9e/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_prompttemplates</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md3092"></a>
-autotoc_md3092</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md3116"></a>
+autotoc_md3116</h2>
 <p>layout: default title: "PromptTemplates" parent: "SmolaAgents" </p>
-<h2><a class="anchor" id="autotoc_md3093"></a>
+<h2><a class="anchor" id="autotoc_md3117"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md3094"></a>
+<h1><a class="anchor" id="autotoc_md3118"></a>
 Chapter 5: PromptTemplates - Crafting Your Agent's Script</h1>
 <p>Welcome back! In <a class="el" href="../../d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_204__agentmemory.html">Chapter 4: AgentMemory</a>, we learned how our agent uses its "logbook" (<code>AgentMemory</code>) to remember the task, its past actions, and observations. This memory is crucial for deciding the next step.</p>
 <p>But how exactly does the agent <em>use</em> this memory to talk to its LLM brain (<a class="el" href="../../dc/db5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_202__model__interface.html">Chapter 2: Model Interface</a>)? How does it tell the LLM:</p><ul>
@@ -137,7 +137,7 @@ Chapter 5: PromptTemplates - Crafting Your Agent's Script</h1>
 <li>"Now, tell me what to do next!"</li>
 </ul>
 <p>Simply dumping the raw memory might confuse the LLM. We need a structured way to present this information – like giving someone clear, consistent instructions. This is where <b>PromptTemplates</b> come in!</p>
-<h2><a class="anchor" id="autotoc_md3095"></a>
+<h2><a class="anchor" id="autotoc_md3119"></a>
 The Problem: Giving Clear Instructions Every Time</h2>
 <p>Imagine you have a very capable assistant, but you need to explain their role and the current task <em>every single time</em> you talk to them. You'd want a standard way to do this, right? You'd probably have a template:</p>
 <ul>
@@ -154,7 +154,7 @@ The Problem: Giving Clear Instructions Every Time</h2>
 <li>Relevant parts of the <a class="el" href="../../d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_204__agentmemory.html">AgentMemory</a>.</li>
 </ul>
 <p>How can we manage these instructions effectively and dynamically include the specific details for the current situation?</p>
-<h2><a class="anchor" id="autotoc_md3096"></a>
+<h2><a class="anchor" id="autotoc_md3120"></a>
 The Solution: Mad Libs for Agents! (<code>PromptTemplates</code>)</h2>
 <p>Remember Mad Libs? The game where you have a story template with blanks like <code>[NOUN]</code>, <code>[VERB]</code>, <code>[ADJECTIVE]</code>, and you fill them in to create a funny story?</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Mad_Libs_logo.svg/320px-Mad_Libs_logo.svg.png" alt="Mad Libs Example" class="inline"/></p>
@@ -166,7 +166,7 @@ The Solution: Mad Libs for Agents! (<code>PromptTemplates</code>)</h2>
 <li>The <code>MultiStepAgent</code> automatically picks the right template, fills in the blanks with current data (like the task description, tool list from <a class="el" href="../../d4/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_203__tool.html">Chapter 3: Tool</a>, or memory summary from <a class="el" href="../../d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_204__agentmemory.html">Chapter 4: AgentMemory</a>), and sends the final, complete prompt to the LLM.</li>
 </ul>
 <p>This ensures the LLM gets clear, consistent, and context-rich instructions every time.</p>
-<h2><a class="anchor" id="autotoc_md3097"></a>
+<h2><a class="anchor" id="autotoc_md3121"></a>
 What's Inside the <code>PromptTemplates</code> Collection?</h2>
 <p>The <code>PromptTemplates</code> object is essentially a structured dictionary holding different template strings for different situations. The main ones are:</p>
 <ol type="1">
@@ -186,7 +186,7 @@ What's Inside the <code>PromptTemplates</code> Collection?</h2>
 <li><b><code>managed_agent</code></b>: If you build agents that can call <em>other</em> agents (like team members), these templates define how the calling agent instructs the "managed" agent (<code>{{ name }}</code>, <code>{{ task }}</code>) and how the result (<code>{{ final_answer }}</code>) is reported back.</li>
 </ol>
 <p>The most important one for understanding basic agent behavior is the <b><code>system_prompt</code></b>. It sets the stage for the entire interaction.</p>
-<h2><a class="anchor" id="autotoc_md3098"></a>
+<h2><a class="anchor" id="autotoc_md3122"></a>
 How It Works: Filling in the Blanks with Jinja2</h2>
 <p>Let's imagine a simplified <code>system_prompt</code> template:</p>
 <div class="fragment"><div class="line">You are a helpful assistant.</div>
@@ -223,7 +223,7 @@ How It Works: Filling in the Blanks with Jinja2</h2>
 <div class="line">    C --&gt; D[&quot;Final Prompt String&lt;br/&gt;(System Prompt with actual tools listed)&quot;];</div>
 <div class="line">    D --&gt; E[&quot;LLM Brain&quot;];</div>
 </div><!-- fragment --><p>The agent uses similar logic for other templates, inserting <code>{{ task }}</code>, snippets from <a class="el" href="../../d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_204__agentmemory.html">AgentMemory</a>, etc., as needed.</p>
-<h2><a class="anchor" id="autotoc_md3099"></a>
+<h2><a class="anchor" id="autotoc_md3123"></a>
 Using <code>PromptTemplates</code> in <code>SmolaAgents</code></h2>
 <p>The good news is that <code>SmolaAgents</code> handles most of this automatically!</p>
 <ul>
@@ -328,7 +328,7 @@ Using <code>PromptTemplates</code> in <code>SmolaAgents</code></h2>
 <div class="line">  You can use imports in your code, but only from the following list of modules: {{authorized_imports}}</div>
 <div class="line">  # ... (rest of the prompt) ...</div>
 </div><!-- fragment --><p>{% raw %} You can see the <code>{{ tools }}</code>, <code>{{ managed_agents }}</code>, and <code>{{ authorized_imports }}</code> placeholders ready to be filled in. The <code>{%- for ... %}</code> syntax is Jinja2's way of looping through lists (like the list of tools). {% endraw %}</p>
-<h2><a class="anchor" id="autotoc_md3100"></a>
+<h2><a class="anchor" id="autotoc_md3124"></a>
 Conclusion</h2>
 <p><code>PromptTemplates</code> are the unsung heroes that shape the conversation between the agent and its LLM brain. They act like customizable scripts or Mad Libs templates, ensuring the LLM receives clear, consistent instructions filled with the specific details it needs (like the task, available tools, and memory context).</p>
 <p>You've learned:</p>

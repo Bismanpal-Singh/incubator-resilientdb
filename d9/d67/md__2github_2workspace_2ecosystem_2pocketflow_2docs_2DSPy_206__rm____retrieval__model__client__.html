@@ -121,12 +121,12 @@ $(function(){initNavTree('d9/d67/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_rm__retrieval_model_client_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1644"></a>
-autotoc_md1644</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1668"></a>
+autotoc_md1668</h2>
 <p>layout: default title: "RM (Retrieval Model Client)" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1645"></a>
+<h2><a class="anchor" id="autotoc_md1669"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1646"></a>
+<h1><a class="anchor" id="autotoc_md1670"></a>
 Chapter 6: RM (Retrieval Model Client) - Your Program's Librarian</h1>
 <p>In <a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">Chapter 5: LM (Language Model Client)</a>, we learned how to connect our DSPy programs to the powerful "brain" of a Language Model (LM) using the LM Client. The LM is great at generating creative text, answering questions based on its vast training data, and reasoning.</p>
 <p>But what if your program needs information that the LM wasn't trained on?</p><ul>
@@ -156,7 +156,7 @@ Chapter 6: RM (Retrieval Model Client) - Your Program's Librarian</h1>
 <li>A glimpse into how the RM fetches data behind the scenes.</li>
 </ul>
 <p>Let's give our program access to external knowledge!</p>
-<h2><a class="anchor" id="autotoc_md1647"></a>
+<h2><a class="anchor" id="autotoc_md1671"></a>
 What Does the RM Client Do?</h2>
 <p>The RM Client acts as a bridge between your DSPy program and an external knowledge source. Its main job is to:</p>
 <ol type="1">
@@ -171,7 +171,7 @@ What Does the RM Client Do?</h2>
 <li><b>Return the Passages:</b> It gives these retrieved passages back to your DSPy program, usually as a list of text strings or structured objects.</li>
 </ol>
 <p>The key goal is to provide <b>relevant context</b> that the <a class="el" href="../../d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_205__lm____language__model__client__.html">LM (Language Model Client)</a> can then use to perform its task more accurately, often within a structure called Retrieval-Augmented Generation (RAG).</p>
-<h2><a class="anchor" id="autotoc_md1648"></a>
+<h2><a class="anchor" id="autotoc_md1672"></a>
 Configuring Which RM to Use</h2>
 <p>Just like we configured the LM in the previous chapter, we need to tell DSPy which RM to use. This is done using <code>dspy.settings.configure</code>.</p>
 <p>First, you import and create an instance of the specific RM client you want to use. DSPy has built-in clients for several common retrieval systems.</p>
@@ -180,7 +180,7 @@ Configuring Which RM to Use</h2>
 <ol type="1">
 <li><b>Import the client:</b> <code>python import dspy </code> <em>(For many RMs like ColBERTv2, Pinecone, Weaviate, the client is directly available under <code>dspy</code> or <code>dspy.retrieve</code>)</em></li>
 <li><p class="startli"><b>Create an instance:</b> You need to provide the URL and port (if applicable) of the ColBERTv2 server.</p>
-<p class="startli"><code>python @section autotoc_md1649 Assume a ColBERTv2 server is running at this URL indexing Wikipedia colbertv2_wiki = dspy.ColBERTv2(url='<a href="http://your-colbertv2-endpoint.com:8893'">http://your-colbertv2-endpoint.com:8893'</a>, port=None) </code> This creates an object <code>colbertv2_wiki</code> that knows how to talk to that specific ColBERTv2 server.</p>
+<p class="startli"><code>python @section autotoc_md1673 Assume a ColBERTv2 server is running at this URL indexing Wikipedia colbertv2_wiki = dspy.ColBERTv2(url='<a href="http://your-colbertv2-endpoint.com:8893'">http://your-colbertv2-endpoint.com:8893'</a>, port=None) </code> This creates an object <code>colbertv2_wiki</code> that knows how to talk to that specific ColBERTv2 server.</p>
 </li>
 <li><p class="startli"><b>Configure DSPy settings:</b> Tell DSPy globally that this is the RM to use.</p>
 <p class="startli"><code>python dspy.settings.configure(rm=colbertv2_wiki) </code> Now, any DSPy module that needs to retrieve information will automatically use the <code>colbertv2_wiki</code> instance.</p>
@@ -208,7 +208,7 @@ Configuring Which RM to Use</h2>
 <div class="line"><span class="comment"># )</span></div>
 <div class="line"><span class="comment"># dspy.settings.configure(rm=weaviate_retriever)</span></div>
 </div><!-- fragment --><p> <em>(Don't worry about the specifics of connecting to Pinecone or Weaviate here; the key takeaway is the <code>dspy.settings.configure(rm=...)</code> pattern.)</em></p>
-<h2><a class="anchor" id="autotoc_md1650"></a>
+<h2><a class="anchor" id="autotoc_md1674"></a>
 How Modules Use the Configured RM: <code>dspy.Retrieve</code></h2>
 <p>Usually, you don't call <code>dspy.settings.rm(...)</code> directly in your main program logic. Instead, you use a DSPy module designed for retrieval. The most basic one is <code>dspy.Retrieve</code>.</p>
 <p>The <code>dspy.Retrieve</code> module is a simple <a class="el" href="../../d8/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_201__module______program.html">Module</a> whose job is to:</p><ol type="1">
@@ -266,7 +266,7 @@ How Modules Use the Configured RM: <code>dspy.Retrieve</code></h2>
 <div class="fragment"><div class="line">Question: What is the largest rodent?</div>
 <div class="line">Answer: The largest rodent is the capybara.</div>
 </div><!-- fragment --><p>The <code>dspy.Retrieve</code> module handles the interaction with the configured RM seamlessly.</p>
-<h2><a class="anchor" id="autotoc_md1651"></a>
+<h2><a class="anchor" id="autotoc_md1675"></a>
 Calling the RM Directly (for Testing)</h2>
 <p>While <code>dspy.Retrieve</code> is the standard way, you <em>can</em> call the configured RM directly if you want to quickly test it or see what it returns.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> dspy</div>
@@ -295,7 +295,7 @@ Calling the RM Directly (for Testing)</h2>
 <div class="line">--- Passage 2 ---</div>
 <div class="line">Stanford Cardinal | The Official Site of Stanford Athletics Stanford University is home to 36 varsity sports programs, 20 for women and 16 for men. Stanford participates in the NCAA&#39;s Division I (Football Bowl Subdivision subdivision for football). Stanford is a member of the Pac-12 Conference in most sports; the men&#39;s and women&#39;s water polo teams are members of the Mountain Pacific Sports Federation, the men&#39;s volleyball team is a member of the Mountain Pacific Sports Federation, the field hockey team is a member of the America East Conference, and the sailing team competes in the Pacific Coast Collegiate Sailing Conference....</div>
 </div><!-- fragment --><p>This shows how you can directly interact with the RM client configured in <code>dspy.settings</code>. Notice the output is often a list of <code>dspy.dsp.utils.dotdict</code> objects, where the actual text is usually in the <code>long_text</code> attribute. <code>dspy.Retrieve</code> conveniently extracts just the text into its <code>.passages</code> list.</p>
-<h2><a class="anchor" id="autotoc_md1652"></a>
+<h2><a class="anchor" id="autotoc_md1676"></a>
 How It Works Under the Hood</h2>
 <p>Let's trace the journey of a query when using <code>dspy.Retrieve</code> within our <code>SimpleRAG</code> program:</p>
 <ol type="1">
@@ -407,7 +407,7 @@ How It Works Under the Hood</h2>
 <div class="line">            print(f<span class="stringliteral">&quot;Error calling ColBERTv2 server: {e}&quot;</span>)</div>
 <div class="line">            <span class="keywordflow">return</span> [] <span class="comment"># Return empty list on error</span></div>
 </div><!-- fragment --><p>The key idea is abstraction: <code>dspy.Retrieve</code> uses whatever RM is configured in <code>dspy.settings</code>, and the specific RM client hides the details of talking to its particular backend search system.</p>
-<h2><a class="anchor" id="autotoc_md1653"></a>
+<h2><a class="anchor" id="autotoc_md1677"></a>
 Conclusion</h2>
 <p>You've now met the <b>RM (Retrieval Model Client)</b>, your DSPy program's connection to external knowledge sources!</p>
 <ul>

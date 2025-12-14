@@ -121,17 +121,17 @@ $(function(){initNavTree('dd/deb/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_command_execution___sandboxing</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1306"></a>
-autotoc_md1306</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1330"></a>
+autotoc_md1330</h2>
 <p>layout: default title: "Command Execution &amp; Sandboxing" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1307"></a>
+<h2><a class="anchor" id="autotoc_md1331"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1308"></a>
+<h1><a class="anchor" id="autotoc_md1332"></a>
 Chapter 6: Command Execution &amp; Sandboxing</h1>
 <p>In the <a class="el" href="../../dc/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_205__response______tool__call__handling.html">previous chapter</a>, we learned how Codex listens to the AI and understands when it wants to use a tool, like running a specific shell command (<code>git status</code> or <code>npm install</code>). We also know from the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a> chapter that Codex checks if it <em>should</em> run the command based on your chosen safety level.</p>
 <p>But once Codex has the command and permission (either from you or automatically), how does it actually <em>run</em> that command? And how does it do it safely, especially if you've given it more freedom in <code>full-auto</code> mode?</p>
 <p>That's the job of the <b>Command Execution &amp; Sandboxing</b> system.</p>
-<h2><a class="anchor" id="autotoc_md1309"></a>
+<h2><a class="anchor" id="autotoc_md1333"></a>
 What's the Big Idea? The Workshop Safety Zones</h2>
 <p>Imagine Codex is working in a workshop. This system is like the different areas and safety procedures in that workshop:</p>
 <ul>
@@ -139,7 +139,7 @@ What's the Big Idea? The Workshop Safety Zones</h2>
 <li><b>The Safety Cage (Sandboxing):</b> For potentially risky tasks (like testing a powerful new tool, or maybe running a command the AI suggested that you haven't manually approved in <code>full-auto</code> mode), Codex moves the work inside a special safety cage. This cage has reinforced walls and maybe limited power outlets, preventing any accidents from affecting the rest of the workshop.</li>
 </ul>
 <p>This system takes a command requested by the AI (like <code>python script.py</code> or <code>git commit -m "AI commit"</code>) and actually runs it on your computer's command line. Crucially, it decides <em>whether</em> to run it directly (on the workbench) or inside a restricted environment (the safety cage or "sandbox"). It also collects the results – what the command printed (output/stdout), any errors (stderr), and whether it finished successfully (exit code).</p>
-<h2><a class="anchor" id="autotoc_md1310"></a>
+<h2><a class="anchor" id="autotoc_md1334"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b>Raw Execution:</b><ul>
@@ -162,7 +162,7 @@ Key Concepts</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1311"></a>
+<h2><a class="anchor" id="autotoc_md1335"></a>
 How It Works: From Approval to Execution</h2>
 <p>The Command Execution system doesn't decide <em>whether</em> to run a command – that's the job of the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a>. This system comes into play <em>after</em> the approval check.</p>
 <p>Remember the <code>handleExecCommand</code> function from the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> chapter? It first calls <code>canAutoApprove</code> (<a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a>). If the command is approved (either by policy or by you), <code>canAutoApprove</code> tells <code>handleExecCommand</code> <em>whether</em> sandboxing is needed (<code>runInSandbox: true</code> or <code>runInSandbox: false</code>).</p>
@@ -215,7 +215,7 @@ How It Works: From Approval to Execution</h2>
 <li><b>Step 3:</b> A helper (<code>getSandbox</code>) determines the specific <code>SandboxType</code> (e.g., <code>MACOS_SEATBELT</code> or <code>NONE</code>) based on <code>runInSandbox</code> and the operating system. Then, the core execution function (<code>execCommand</code>) is called, passing the command details and the chosen <code>sandboxType</code>.</li>
 <li><b>Step 4:</b> The results (stdout, stderr, exit code) from <code>execCommand</code> are packaged up.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1312"></a>
+<h2><a class="anchor" id="autotoc_md1336"></a>
 Under the Hood: Running the Command</h2>
 <p>Let's trace the execution flow:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -248,7 +248,7 @@ Under the Hood: Running the Command</h2>
 <div class="line">    SB--&gt;&gt;Exec: Returns result</div>
 <div class="line">    Exec--&gt;&gt;EC: Returns result</div>
 <div class="line">    EC--&gt;&gt;HEC: Returns final summary</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1313"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1337"></a>
 The Entry Point: <code>exec.ts</code></h3>
 <p>This file acts as a router. It takes the command and the desired <code>SandboxType</code> and calls the appropriate execution function.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/agent/exec.ts (Simplified)</div>
@@ -292,7 +292,7 @@ The Entry Point: <code>exec.ts</code></h3>
 <li>It calls the selected function.</li>
 <li>Note: <code>apply_patch</code> is handled specially by <code>execApplyPatch</code>, which directly uses Node.js file system functions instead of spawning a shell command.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1314"></a>
+<h3><a class="anchor" id="autotoc_md1338"></a>
 Raw Execution: <code>raw-exec.ts</code></h3>
 <p>This function runs the command directly using Node.js's built-in <code>child_process.spawn</code>.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/agent/sandbox/raw-exec.ts (Simplified)</div>
@@ -351,7 +351,7 @@ Raw Execution: <code>raw-exec.ts</code></h3>
 <li>It includes logic to kill the child process if the <code>abortSignal</code> is triggered (e.g., user presses Ctrl+C).</li>
 <li>Crucially, it always <code>resolve</code>s the promise, even on errors, packaging the error into the <code>ExecResult</code>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1315"></a>
+<h3><a class="anchor" id="autotoc_md1339"></a>
 Sandboxing on macOS: <code>macos-seatbelt.ts</code></h3>
 <p>This function wraps the command execution using macOS's <code>sandbox-exec</code> tool.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/agent/sandbox/macos-seatbelt.ts (Simplified)</div>
@@ -408,7 +408,7 @@ Sandboxing on macOS: <code>macos-seatbelt.ts</code></h3>
 <li>It constructs a new command line that starts with <code>sandbox-exec</code>, passes the generated policy (<code>-p</code>), passes parameters defining the writable roots (<code>-D</code>), and finally appends the original command.</li>
 <li>It then calls <code>rawExec</code> to run this <em>entire</em> <code>sandbox-exec ... -- original-command ...</code> line. The operating system handles enforcing the sandbox rules.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1316"></a>
+<h3><a class="anchor" id="autotoc_md1340"></a>
 Sandboxing with Docker: <code>Dockerfile</code></h3>
 <p>Another approach, often used on Linux or as a fallback, is Docker. The <code>Dockerfile</code> defines the restricted environment.</p>
 <div class="fragment"><div class="line"><span class="preprocessor"># File: codex-cli/Dockerfile (Simplified Snippets)</span></div>
@@ -451,7 +451,7 @@ Sandboxing with Docker: <code>Dockerfile</code></h3>
 <li><b>Network Firewall:</b> An <code>init_firewall.sh</code> script (run via <code>sudo</code> at startup or when needed) configures <code>iptables</code> to restrict network access. This prevents sandboxed commands from easily calling out to arbitrary internet addresses.</li>
 <li><b>Usage:</b> Codex might be run <em>entirely</em> within this container, or it might invoke commands <em>inside</em> this container from the outside using <code>docker exec</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1317"></a>
+<h2><a class="anchor" id="autotoc_md1341"></a>
 Conclusion</h2>
 <p>You've reached the end of the workshop tour! The <b>Command Execution &amp; Sandboxing</b> system is Codex's way of actually <em>doing</em> things on the command line when instructed by the AI. It carefully considers the safety level decided by the <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html">Approval Policy &amp; Security</a> and chooses the right execution method: direct "raw" execution for trusted commands, or running inside a protective "sandbox" (like macOS Seatbelt or a Docker container) for potentially riskier operations, especially in <code>full-auto</code> mode. This layered approach allows Codex to be powerful while providing crucial safety mechanisms against unintended consequences.</p>
 <p>We've seen how Codex handles input, talks to the AI, checks policies, and executes commands. But how does Codex know <em>which</em> AI model to use, what your API key is, or which approval mode you prefer? All these settings need to be managed.</p>

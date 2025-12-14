@@ -121,16 +121,16 @@ $(function(){initNavTree('d9/d88/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_configuration___config__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1897"></a>
-autotoc_md1897</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1921"></a>
+autotoc_md1921</h2>
 <p>layout: default title: "Configuration (config)" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1898"></a>
+<h2><a class="anchor" id="autotoc_md1922"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1899"></a>
+<h1><a class="anchor" id="autotoc_md1923"></a>
 Chapter 6: Configuration (<code>Config</code>)</h1>
 <p>Welcome back! In <a class="el" href="../../d2/d15/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_205__context__globals______current__a0f66e55a619b85550f70ee0df6dbdc86.html">Chapter 5: Context Globals (<code>current_app</code>, <code>request</code>, <code>session</code>, <code>g</code>)</a>, we saw how Flask uses context globals like <code>current_app</code> and <code>session</code>. We even learned that using the <code>session</code> requires setting a <code>SECRET_KEY</code> on our application object. But where is the best place to put settings like the secret key, or maybe a database connection string, or a flag to turn debugging features on or off? We definitely don't want to hardcode these directly into our main application logic!</p>
 <p>This chapter introduces Flask's built-in solution: the <b>Configuration</b> system.</p>
-<h2><a class="anchor" id="autotoc_md1900"></a>
+<h2><a class="anchor" id="autotoc_md1924"></a>
 What Problem Does It Solve? The Need for a Settings Panel</h2>
 <p>Imagine building a piece of electronic equipment, like a stereo amplifier. It has various knobs and switches: volume, bass, treble, input source selectors. These controls allow you to adjust the amplifier's behavior without opening it up and rewiring things.</p>
 <p>A web application also needs settings to control its behavior:</p>
@@ -143,7 +143,7 @@ What Problem Does It Solve? The Need for a Settings Panel</h2>
 <p>Hardcoding these values directly in your view functions or application setup code is messy and inflexible. If you need to change the database location when deploying your app from your laptop to a real server, you'd have to find and change the code. This is prone to errors and makes managing different environments (development, testing, production) difficult.</p>
 <p>Flask provides a central object, usually accessed via <code>app.config</code>, that acts like your application's main <b>settings panel</b>. It's a dictionary-like object where you can store all your configuration values. Flask itself uses this object for its own settings (like <code>DEBUG</code> or <code>SECRET_KEY</code>), and you can add your own custom settings too. Crucially, Flask provides convenient ways to load these settings from different places, like files or environment variables, keeping your configuration separate from your code.</p>
 <p>Our primary use case right now is setting the <code>SECRET_KEY</code> properly so we can use the <code>session</code> object securely, as discussed in <a class="el" href="../../d2/d15/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_205__context__globals______current__a0f66e55a619b85550f70ee0df6dbdc86.html">Chapter 5</a>.</p>
-<h2><a class="anchor" id="autotoc_md1901"></a>
+<h2><a class="anchor" id="autotoc_md1925"></a>
 Meet <code>app.config</code></h2>
 <p>When you create a Flask application object (<code>app = Flask(__name__)</code>), Flask automatically creates a configuration object for you, accessible as <code>app.config</code>.</p>
 <ul>
@@ -152,10 +152,10 @@ Meet <code>app.config</code></h2>
 <li>It comes pre-populated with some default values.</li>
 <li>It has special methods to load configuration from various sources.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1902"></a>
+<h2><a class="anchor" id="autotoc_md1926"></a>
 Populating the Configuration</h2>
 <p>There are several ways to add settings to <code>app.config</code>. Let's explore the most common ones.</p>
-<h3><a class="anchor" id="autotoc_md1903"></a>
+<h3><a class="anchor" id="autotoc_md1927"></a>
 1. Directly from Code (In-Place)</h3>
 <p>You can set configuration values directly like you would with a dictionary. This is often done right after creating the <code>app</code> object.</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (or your main app file)</span></div>
@@ -193,7 +193,7 @@ Populating the Configuration</h2>
 <li>We can access values using <code>[]</code> or the safer <code>.<a class="el" href="../../d7/da6/pybind__kv__service_8cpp.html#abe6524afb3a69dc9a4c314e11f96f29f">get()</a></code> method which allows providing a default.</li>
 </ul>
 <p><b>When to use:</b> Good for setting Flask's built-in defaults (like <code>DEBUG</code>) temporarily during development or setting simple, non-sensitive values. <b>Not ideal for secrets or complex configurations</b>, especially for deployment, as it mixes configuration with code.</p>
-<h3><a class="anchor" id="autotoc_md1904"></a>
+<h3><a class="anchor" id="autotoc_md1928"></a>
 2. From a Python Object (<code>from_object</code>)</h3>
 <p>You can define your configuration in a separate Python object (like a class) or a dedicated module (<code>.py</code> file) and then load it using <code>app.config.from_object()</code>. This method only loads attributes whose names are <b>all uppercase</b>.</p>
 <p>First, create a configuration file, say <code><a class="el" href="../../dd/deb/config_8py.html">config.py</a></code>:</p>
@@ -232,7 +232,7 @@ Populating the Configuration</h2>
 <li><code> It copies the values of these uppercase attributes into the</code>app.config<code>dictionary. *</code>internal_value` is ignored because it's lowercase.</li>
 </ul>
 <p><b>When to use:</b> Great for organizing your default configuration or different configurations (e.g., <code>DevelopmentConfig</code>, <code>ProductionConfig</code> classes) within your project structure. Helps keep settings separate from application logic.</p>
-<h3><a class="anchor" id="autotoc_md1905"></a>
+<h3><a class="anchor" id="autotoc_md1929"></a>
 3. From a Python File (<code>from_pyfile</code>)</h3>
 <p>Similar to <code>from_object</code>, but instead of importing a module, <code>app.config.from_pyfile()</code> executes a Python file (it doesn't have to end in <code>.py</code>, often <code>.cfg</code> is used by convention) and loads its uppercase variables.</p>
 <p>Create a configuration file, say <code>settings.cfg</code>:</p>
@@ -280,7 +280,7 @@ Populating the Configuration</h2>
 <li><code> The</code>silent=True` argument is useful if the config file is optional.</li>
 </ul>
 <p><b>When to use:</b> Very flexible. Good for separating configuration completely from your application package. Often used for instance-specific configurations (settings for a particular deployment).</p>
-<h3><a class="anchor" id="autotoc_md1906"></a>
+<h3><a class="anchor" id="autotoc_md1930"></a>
 4. From Environment Variables (<code>from_envvar</code>)</h3>
 <p>This is a common pattern, especially for production deployment. Instead of hardcoding the <em>path</em> to a configuration file, you store the path in an environment variable. <code>app.config.from_envvar()</code> reads the filename from the specified environment variable and then loads that file using <code>from_pyfile</code>.</p>
 <p>Imagine you have your <code>settings.cfg</code> from the previous example.</p>
@@ -316,7 +316,7 @@ Populating the Configuration</h2>
 <li>This decouples the <em>location</em> of the config file from your application code.</li>
 </ul>
 <p><b>When to use:</b> Excellent for production and deployment. Allows operators to specify the configuration file location without modifying the application code. Essential for managing different environments (development, staging, production) where configuration files might reside in different places or contain different values (especially secrets).</p>
-<h3><a class="anchor" id="autotoc_md1907"></a>
+<h3><a class="anchor" id="autotoc_md1931"></a>
 Loading Order and Overrides</h3>
 <p>You can use multiple loading methods. Each subsequent method will <b>override</b> any values set by previous methods if the keys are the same.</p>
 <p>A common pattern is:</p>
@@ -356,7 +356,7 @@ Loading Order and Overrides</h3>
 <div class="line"><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:</div>
 <div class="line">  app.run()</div>
 </div><!-- fragment --><p>Now, if <code>YOURAPP_SETTINGS</code> points to a file containing <code>DEBUG = True</code> and a different <code>SECRET_KEY</code>, those values will override the defaults set earlier.</p>
-<h2><a class="anchor" id="autotoc_md1908"></a>
+<h2><a class="anchor" id="autotoc_md1932"></a>
 Accessing Configuration Values</h2>
 <p>Once loaded, you can access configuration values anywhere you have access to the application object (<code>app</code>) or the <code>current_app</code> proxy (within a request or application context, see <a class="el" href="../../d2/d15/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_205__context__globals______current__a0f66e55a619b85550f70ee0df6dbdc86.html">Chapter 5</a>).</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> current_app, session</div>
@@ -382,7 +382,7 @@ Accessing Configuration Values</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Or directly via the app object if available</span></div>
 <div class="line">print(f<span class="stringliteral">&quot;Accessing SECRET_KEY via app: {app.config[&#39;SECRET_KEY&#39;]}&quot;</span>)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1909"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1933"></a>
 Under the Hood: The <code>Config</code> Object</h2>
 <p>What's happening when you call these methods?</p>
 <ol type="1">
@@ -410,7 +410,7 @@ Under the Hood: The <code>Config</code> Object</h2>
 <div class="line">    AppConfig-&gt;&gt;AppConfig: Iterate temp scope, copy UPPERCASE vars to self (dict)</div>
 <div class="line">    AppConfig--&gt;&gt;-UserCode: Return True (if successful)</div>
 </div><!-- fragment --><p>The key takeaway is that <code>app.config</code> is fundamentally a Python dictionary enhanced with convenient methods for populating itself from common configuration sources like Python objects, files, and environment variables, filtering for uppercase keys.</p>
-<h2><a class="anchor" id="autotoc_md1910"></a>
+<h2><a class="anchor" id="autotoc_md1934"></a>
 Conclusion</h2>
 <p>Configuration is essential for any non-trivial Flask application. The <code>app.config</code> object provides a centralized, dictionary-like store for all your application settings.</p>
 <ul>

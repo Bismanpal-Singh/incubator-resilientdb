@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['db_5fsetup_0',['DB_SETUP',['../d5/d62/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2docs_2DB__SETUP.html',1,'']]],
-  ['design_1',['design',['../dd/d4d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2design.html',1,'']]],
-  ['dummy_5fanalysis_2',['dummy_analysis',['../d7/daf/md__2github_2workspace_2ecosystem_2monitoring_2reslens-middleware_2middleware_2tmp_2dummy__analysis.html',1,'']]]
+  ['changelog_0',['CHANGELOG',['../d9/d7c/md__2github_2workspace_2CHANGELOG.html',1,'']]],
+  ['changes_1',['CHANGES',['../d4/de8/md__2github_2workspace_2ecosystem_2deployment_2orbit_2CHANGES.html',1,'']]],
+  ['code_5fof_5fconduct_2',['CODE_OF_CONDUCT',['../d7/d1c/md__2github_2workspace_2CODE__OF__CONDUCT.html',1,'CODE_OF_CONDUCT'],['../d6/d98/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2CODE__OF__CONDUCT.html',1,'CODE_OF_CONDUCT'],['../de/db0/md__2github_2workspace_2ecosystem_2tools_2rescli_2CODE__OF__CONDUCT.html',1,'CODE_OF_CONDUCT']]]
 ];

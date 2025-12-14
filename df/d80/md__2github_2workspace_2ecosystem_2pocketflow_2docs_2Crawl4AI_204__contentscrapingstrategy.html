@@ -121,12 +121,12 @@ $(function(){initNavTree('df/d80/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_contentscrapingstrategy</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1386"></a>
-autotoc_md1386</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1410"></a>
+autotoc_md1410</h2>
 <p>layout: default title: "ContentScrapingStrategy" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1387"></a>
+<h2><a class="anchor" id="autotoc_md1411"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1388"></a>
+<h1><a class="anchor" id="autotoc_md1412"></a>
 Chapter 4: Cleaning Up the Mess - ContentScrapingStrategy</h1>
 <p>In <a class="el" href="../../db/d01/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_203__crawlerrunconfig.html">Chapter 3: Giving Instructions - CrawlerRunConfig</a>, we learned how to give specific instructions to our <code>AsyncWebCrawler</code> using <code>CrawlerRunConfig</code>. This included telling it <em>how</em> to fetch the page and potentially take screenshots or PDFs.</p>
 <p>Now, imagine the crawler has successfully fetched the raw HTML content of a webpage. What's next? Raw HTML is often messy! It contains not just the main article or product description you might care about, but also:</p>
@@ -138,7 +138,7 @@ Chapter 4: Cleaning Up the Mess - ContentScrapingStrategy</h1>
 <li>Comments left by developers</li>
 </ul>
 <p>Before we can really understand the <em>meaning</em> of the page or extract specific important information, we need to clean up this mess and get a basic understanding of its structure.</p>
-<h2><a class="anchor" id="autotoc_md1389"></a>
+<h2><a class="anchor" id="autotoc_md1413"></a>
 What Problem Does <code>ContentScrapingStrategy</code> Solve?</h2>
 <p>Think of the raw HTML fetched by the crawler as a very rough first draft of a book manuscript. It has the core story, but it's full of editor's notes, coffee stains, layout instructions for the printer, and maybe even doodles in the margins.</p>
 <p>Before the <em>main</em> editor (who focuses on plot and character) can work on it, someone needs to do an initial cleanup. This "First Pass Editor" would:</p>
@@ -148,11 +148,11 @@ What Problem Does <code>ContentScrapingStrategy</code> Solve?</h2>
 <li>Produce a tidier version of the manuscript, ready for more detailed analysis.</li>
 </ol>
 <p>In Crawl4AI, the <code>ContentScrapingStrategy</code> acts as this <b>First Pass Editor</b>. It takes the raw HTML and performs an initial cleanup and structure extraction. Its job is to transform the messy HTML into a more manageable format, identifying key elements like text content, links, images, and basic page metadata (like the title).</p>
-<h2><a class="anchor" id="autotoc_md1390"></a>
+<h2><a class="anchor" id="autotoc_md1414"></a>
 What is <code>ContentScrapingStrategy</code>?</h2>
 <p><code>ContentScrapingStrategy</code> is an abstract concept (like a job description) in Crawl4AI that defines <em>how</em> the initial processing of raw HTML should happen. It specifies <em>that</em> we need a method to clean HTML and extract basic structure, but the specific tools and techniques used can vary.</p>
 <p>This allows Crawl4AI to be flexible. Different strategies might use different underlying libraries or have different performance characteristics.</p>
-<h2><a class="anchor" id="autotoc_md1391"></a>
+<h2><a class="anchor" id="autotoc_md1415"></a>
 The Implementations: Meet the Editors</h2>
 <p>Crawl4AI provides concrete implementations (the actual editors doing the work) of this strategy:</p>
 <ol type="1">
@@ -171,7 +171,7 @@ The Implementations: Meet the Editors</h2>
 </li>
 </ol>
 <p>For most beginners, the default <code>WebScrapingStrategy</code> works perfectly fine! You usually don't need to worry about switching unless you encounter performance issues on very large-scale crawls (which is a more advanced topic).</p>
-<h2><a class="anchor" id="autotoc_md1392"></a>
+<h2><a class="anchor" id="autotoc_md1416"></a>
 How It Works Conceptually</h2>
 <p>Here's the flow:</p>
 <ol type="1">
@@ -197,7 +197,7 @@ How It Works Conceptually</h2>
 <div class="line">    CSS--&gt;&gt;AWC: Here&#39;s the ScrapingResult (Cleaned HTML, Links, Media, Metadata)</div>
 <div class="line">    AWC-&gt;&gt;CR: Combine ScrapingResult with other info</div>
 <div class="line">    AWC--&gt;&gt;User: Return final CrawlResult</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1393"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1417"></a>
 Using the Default Strategy (<code>WebScrapingStrategy</code>)</h2>
 <p>You're likely already using it without realizing it! When you run a basic crawl, <code>AsyncWebCrawler</code> automatically employs <code>WebScrapingStrategy</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter4_example_1.py</span></div>
@@ -261,7 +261,7 @@ Using the Default Strategy (<code>WebScrapingStrategy</code>)</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1394"></a>
+<h2><a class="anchor" id="autotoc_md1418"></a>
 Explicitly Choosing a Strategy (e.g., <code>LXMLWebScrapingStrategy</code>)</h2>
 <p>What if you want to try the potentially faster <code>LXMLWebScrapingStrategy</code>? You can specify it in the <code>CrawlerRunConfig</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter4_example_2.py</span></div>
@@ -305,7 +305,7 @@ Explicitly Choosing a Strategy (e.g., <code>LXMLWebScrapingStrategy</code>)</h2>
 <li><b>Run:</b> Now, when <code>crawler.arun</code> is called with this config, it will use <code>LXMLWebScrapingStrategy</code> instead of the default <code>WebScrapingStrategy</code> for the initial HTML processing step.</li>
 </ol>
 <p>For simple pages, the results from both strategies will often be very similar. The choice typically comes down to performance considerations in more advanced scenarios.</p>
-<h2><a class="anchor" id="autotoc_md1395"></a>
+<h2><a class="anchor" id="autotoc_md1419"></a>
 A Glimpse Under the Hood</h2>
 <p>Inside the <code>crawl4ai</code> library, the file <code>content_scraping_strategy.py</code> defines the blueprint and the implementations.</p>
 <p><b>The Blueprint (Abstract Base Class):</b></p>
@@ -403,7 +403,7 @@ A Glimpse Under the Hood</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># ascrap might also delegate or have specific async optimizations</span></div>
 </div><!-- fragment --><p>The key takeaway is that both strategies implement the <code>scrap</code> (and <code>ascrap</code>) method, taking raw HTML and returning a structured <code>ScrapingResult</code>. The <code>AsyncWebCrawler</code> can use either one thanks to this common interface.</p>
-<h2><a class="anchor" id="autotoc_md1396"></a>
+<h2><a class="anchor" id="autotoc_md1420"></a>
 Conclusion</h2>
 <p>You've learned about <code>ContentScrapingStrategy</code>, Crawl4AI's "First Pass Editor" for raw HTML.</p>
 <ul>

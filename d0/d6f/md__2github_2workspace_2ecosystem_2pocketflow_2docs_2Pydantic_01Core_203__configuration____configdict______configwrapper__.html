@@ -121,12 +121,12 @@ $(function(){initNavTree('d0/d6f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_configuration__configdict___configwrapper_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2817"></a>
-autotoc_md2817</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2841"></a>
+autotoc_md2841</h2>
 <p>layout: default title: "Configuration (ConfigDict &amp; ConfigWrapper)" parent: "Pydantic Core" </p>
-<h2><a class="anchor" id="autotoc_md2818"></a>
+<h2><a class="anchor" id="autotoc_md2842"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2819"></a>
+<h1><a class="anchor" id="autotoc_md2843"></a>
 Chapter 3: Configuring Your Blueprint - Model Settings</h1>
 <p>In <a class="el" href="../../d7/d22/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_201__basemodel.html">Chapter 1</a>, we learned about <code>BaseModel</code> as our data blueprint, and in <a class="el" href="../../d9/df6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_202__fields____fieldinfo______field__function__.html">Chapter 2</a>, we saw how <code>Field()</code> lets us add specific notes (like defaults or aliases) to individual rooms (fields) on that blueprint.</p>
 <p>But what about instructions that apply to the <em>entire</em> blueprint? Imagine needing rules like:</p>
@@ -136,7 +136,7 @@ Chapter 3: Configuring Your Blueprint - Model Settings</h1>
 <li>"All room names on the final report should be lowercase." (Apply a naming convention during output)</li>
 </ul>
 <p>These are model-wide settings, not specific to just one field. Pydantic provides a way to configure this overall behavior using model configuration.</p>
-<h2><a class="anchor" id="autotoc_md2820"></a>
+<h2><a class="anchor" id="autotoc_md2844"></a>
 Why Configure the Whole Model?</h2>
 <p>Let's consider a simple <code>Product</code> model:</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</div>
@@ -152,7 +152,7 @@ Why Configure the Whole Model?</h2>
 <li><code> **Naming Conventions:** What if our API expects JSON keys in</code>camelCase<code>(like</code>itemId<code>) instead of Python's standard</code>snake_case<code>(</code>item_id`)?</li>
 </ol>
 <p>These global behaviors are controlled via Pydantic's configuration system.</p>
-<h2><a class="anchor" id="autotoc_md2821"></a>
+<h2><a class="anchor" id="autotoc_md2845"></a>
 Introducing <code>ConfigDict</code> and <code>model_config</code></h2>
 <p>Pydantic allows you to customize model behavior by adding a special class attribute called <code>model_config</code>. This attribute should be assigned a dictionary-like object called <code>ConfigDict</code>.</p>
 <p>Think of <code>model_config = ConfigDict(...)</code> as the <b>master instruction sheet</b> or the <b>global settings panel</b> attached to your <code>BaseModel</code> blueprint. It provides overarching rules for how Pydantic should handle the model.</p>
@@ -217,7 +217,7 @@ Introducing <code>ConfigDict</code> and <code>model_config</code></h2>
 <div class="line">    <span class="comment"># name</span></div>
 <div class="line">    <span class="comment">#  Input should be a valid string [type=string_type, input_value=999, input_type=int]</span></div>
 </div><!-- fragment --><p>By adding the <code>model_config</code> dictionary, we changed the fundamental behavior of our <code>Product</code> model without altering the field definitions themselves.</p>
-<h2><a class="anchor" id="autotoc_md2822"></a>
+<h2><a class="anchor" id="autotoc_md2846"></a>
 Common Configuration Options</h2>
 <p>Here are a few more useful options you can set in <code>ConfigDict</code>:</p>
 <ul>
@@ -226,21 +226,21 @@ Common Configuration Options</h2>
 <p class="startli">model_config = ConfigDict( alias_generator=to_camel, # Use the camelCase generator populate_by_name=True # Allow using EITHER alias or python name for input (see warning below) </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2823"></a>
+<h1><a class="anchor" id="autotoc_md2847"></a>
 Replaced by validate_by_name=True + validate_by_alias=True</h1>
 <p>)</p>
-<h1><a class="anchor" id="autotoc_md2824"></a>
+<h1><a class="anchor" id="autotoc_md2848"></a>
 Input using camelCase aliases</h1>
 <p>user_data_camel = {'userId': 1, 'firstName': 'Arthur'} user = User(**user_data_camel) print(f"User created from camelCase: {user}") </p>
-<h1><a class="anchor" id="autotoc_md2825"></a>
+<h1><a class="anchor" id="autotoc_md2849"></a>
 Expected Output: User created from camelCase: user_id=1 first_name='Arthur'</h1>
-<h1><a class="anchor" id="autotoc_md2826"></a>
+<h1><a class="anchor" id="autotoc_md2850"></a>
 Output (dumping) using aliases requires <code>by_alias=True</code></h1>
 <p>print(f"Dumped with aliases: {user.model_dump(by_alias=True)}") </p>
-<h1><a class="anchor" id="autotoc_md2827"></a>
+<h1><a class="anchor" id="autotoc_md2851"></a>
 Expected Output: Dumped with aliases: {'userId': 1, 'firstName': 'Arthur'}</h1>
 <p>print(f"Dumped without aliases: {user.model_dump()}") </p>
-<h1><a class="anchor" id="autotoc_md2828"></a>
+<h1><a class="anchor" id="autotoc_md2852"></a>
 Expected Output: Dumped without aliases: {'user_id': 1, 'first_name': 'Arthur'}</h1>
 <p><code></p><ul>
 <li>**Modern Alias Control (Pydantic &gt;= v2.11):** Instead of `populate_by_name`, use `validate_by_alias`, `validate_by_name`, and `serialize_by_alias` for finer control: </li>
@@ -249,18 +249,18 @@ Expected Output: Dumped without aliases: {'user_id': 1, 'first_name': 'Arthur'}<
 <p>class UserV2(BaseModel): user_id: int first_name: str</p>
 <p>model_config = ConfigDict( alias_generator=to_camel, validate_by_name=True, # Allow input using 'user_id', 'first_name' validate_by_alias=True, # Allow input using 'userId', 'firstName' (default is True) serialize_by_alias=True # Use aliases ('userId', 'firstName') when dumping by default )</p>
 <p>user_data_camel = {'userId': 1, 'firstName': 'Zaphod'} user_camel = UserV2(**user_data_camel) print(f"User from camel: {user_camel}") </p>
-<h1><a class="anchor" id="autotoc_md2829"></a>
+<h1><a class="anchor" id="autotoc_md2853"></a>
 &gt; User from camel: user_id=1 first_name='Zaphod'</h1>
 <p>user_data_snake = {'user_id': 2, 'first_name': 'Ford'} user_snake = UserV2(**user_data_snake) print(f"User from snake: {user_snake}") </p>
-<h1><a class="anchor" id="autotoc_md2830"></a>
+<h1><a class="anchor" id="autotoc_md2854"></a>
 &gt; User from snake: user_id=2 first_name='Ford'</h1>
-<h1><a class="anchor" id="autotoc_md2831"></a>
+<h1><a class="anchor" id="autotoc_md2855"></a>
 serialize_by_alias=True means model_dump() uses aliases by default</h1>
 <p>print(f"Dumped (default alias): {user_camel.model_dump()}") </p>
-<h1><a class="anchor" id="autotoc_md2832"></a>
+<h1><a class="anchor" id="autotoc_md2856"></a>
 &gt; Dumped (default alias): {'userId': 1, 'firstName': 'Zaphod'}</h1>
 <p>print(f"Dumped (force no alias): {user_camel.model_dump(by_alias=False)}") </p>
-<h1><a class="anchor" id="autotoc_md2833"></a>
+<h1><a class="anchor" id="autotoc_md2857"></a>
 &gt; Dumped (force no alias): {'user_id': 1, 'first_name': 'Zaphod'}</h1>
 <p>```</p>
 <ul>
@@ -271,12 +271,12 @@ serialize_by_alias=True means model_dump() uses aliases by default</h1>
 <p class="startli">order = Order(order_id=101, status=Status.PROCESSING) print(f"Order object status type: {type(order.status)}") </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2834"></a>
+<h1><a class="anchor" id="autotoc_md2858"></a>
 Expected Output: Order object status type: &lt;enum 'Status'&gt;</h1>
 <p>print(f"Order dumped: {order.model_dump()}") </p>
-<h1><a class="anchor" id="autotoc_md2835"></a>
+<h1><a class="anchor" id="autotoc_md2859"></a>
 Expected Output: Order dumped: {'order_id': 101, 'status': 'processing'}</h1>
-<h1><a class="anchor" id="autotoc_md2836"></a>
+<h1><a class="anchor" id="autotoc_md2860"></a>
 Note: 'status' is the string "processing", not Status.PROCESSING</h1>
 <p>```</p>
 <ul>
@@ -286,17 +286,17 @@ Note: 'status' is the string "processing", not Status.PROCESSING</h1>
 <p class="startli">comment_data = {'text': ' Hello World! ', 'author': ' ALICE '} comment = Comment(**comment_data) print(comment) </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2837"></a>
+<h1><a class="anchor" id="autotoc_md2861"></a>
 Expected Output: text='hello world!' author='alice'</h1>
 <p>```</p>
 <p>You can find the full list of configuration options in the Pydantic documentation for <a href="https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict"><code>ConfigDict</code></a>.</p>
 <p><b>Important Note:</b> Configuration set in <code>model_config</code> generally applies <em>during validation and serialization</em>. For example, <code>alias_generator</code> helps Pydantic understand incoming data with aliases and optionally use aliases when producing output, but the internal attribute name in your Python code remains the Python name (e.g., <code>user_id</code>).</p>
-<h2><a class="anchor" id="autotoc_md2838"></a>
+<h2><a class="anchor" id="autotoc_md2862"></a>
 What About <code>ConfigWrapper</code>? (Internal Detail)</h2>
 <p>You might see <code>ConfigWrapper</code> mentioned in Pydantic's internal code or documentation.</p>
 <p><b>Analogy:</b> If <code>ConfigDict</code> is the settings form you fill out (<code>frozen=True</code>, &lsquo;extra='forbid&rsquo;<code>), then</code>ConfigWrapper` is the internal manager object that Pydantic creates <em>from</em> your form. This manager holds onto your settings, knows the default values for settings you <em>didn't</em> specify, and provides a consistent way for the rest of Pydantic (like the schema builder) to ask "Is this model frozen?" or "What should happen with extra fields?".</p>
 <p><b>Key Point:</b> As a user writing Pydantic models, you almost always interact with <b><code>ConfigDict</code></b> via the <code>model_config</code> attribute. You generally don't need to create or use <code>ConfigWrapper</code> directly. It's an internal helper that makes Pydantic's life easier.</p>
-<h2><a class="anchor" id="autotoc_md2839"></a>
+<h2><a class="anchor" id="autotoc_md2863"></a>
 Under the Hood: How Configuration is Applied</h2>
 <p>Let's refine our understanding of how a <code>BaseModel</code> class gets created, now including configuration.</p>
 <p><b>High-Level Steps:</b></p>
@@ -405,7 +405,7 @@ Under the Hood: How Configuration is Applied</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> cls</div>
 </div><!-- fragment --><p>This setup ensures that the model-wide rules defined in <code>model_config</code> are consistently applied during both validation (creating model instances) and serialization (dumping model instances).</p>
-<h2><a class="anchor" id="autotoc_md2840"></a>
+<h2><a class="anchor" id="autotoc_md2864"></a>
 Conclusion</h2>
 <p>You've learned how to configure the overall behavior of your <code>BaseModel</code> blueprints:</p>
 <ul>

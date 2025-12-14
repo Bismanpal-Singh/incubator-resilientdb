@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/d60/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_streaming_communication__sse_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2000"></a>
-autotoc_md2000</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2024"></a>
+autotoc_md2024</h2>
 <p>layout: default title: "Streaming Communication (SSE)" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md2001"></a>
+<h2><a class="anchor" id="autotoc_md2025"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2002"></a>
+<h1><a class="anchor" id="autotoc_md2026"></a>
 Chapter 7: Streaming Communication (SSE)</h1>
 <p>In the <a class="el" href="../../d7/d27/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_206__task__handling__logic____server__side__.html">previous chapter</a>, we built the "brain" of our agent – the <b>Task Handling Logic</b>. We saw how this logic can <code>yield</code> status updates or partial results as it works on a task. That's great, but how do those updates actually get back to the client in real-time? If the agent is writing a long story, how does the user see it paragraph by paragraph instead of waiting minutes for the whole thing?</p>
 <p>This chapter dives into <b>Streaming Communication</b> using <b>Server-Sent Events (SSE)</b>. It solves the problem: <b>How can the server send real-time updates to the client for tasks that take time?</b></p>
-<h2><a class="anchor" id="autotoc_md2003"></a>
+<h2><a class="anchor" id="autotoc_md2027"></a>
 The Problem: Waiting is Boring!</h2>
 <p>Imagine you ask your AI agent assistant to plan a detailed weekend trip to a new city. This involves looking up flights, hotels, attractions, restaurants, checking opening times, maybe even booking things. This could take a minute or two!</p>
 <p>If the communication was just a simple request and response, your application would send the request "Plan my trip" and then... wait. And wait. And wait. Finally, after two minutes, it would get the complete plan back. That's not a very engaging experience! You'd wonder if it was even working.</p>
@@ -143,7 +143,7 @@ The Problem: Waiting is Boring!</h2>
 <li>"Okay, the final plan is ready!"</li>
 </ul>
 <p>This way, the user sees progress and knows the agent is actively working.</p>
-<h2><a class="anchor" id="autotoc_md2004"></a>
+<h2><a class="anchor" id="autotoc_md2028"></a>
 The Solution: Streaming with Server-Sent Events (SSE)</h2>
 <p>This real-time update mechanism is called <b>streaming</b>. Instead of one big response at the end, the server <em>streams</em> multiple small messages back to the client over a single connection.</p>
 <p>The Google A2A protocol uses a standard web technology called <b>Server-Sent Events (SSE)</b> to achieve this.</p>
@@ -160,7 +160,7 @@ The Solution: Streaming with Server-Sent Events (SSE)</h2>
 <li><b>One-Way:</b> Data primarily flows from Server -&gt; Client.</li>
 <li><b>Standard Web Tech:</b> It's built on top of regular HTTP.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2005"></a>
+<h2><a class="anchor" id="autotoc_md2029"></a>
 How Streaming Works in A2A</h2>
 <ol type="1">
 <li><b>Client Initiates:</b> The <a class="el" href="../../dd/d41/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_205__a2a__client__implementation.html">A2A Client</a> uses a specific JSON-RPC method: <code>tasks/sendSubscribe</code> (instead of the regular <code>tasks/send</code>). This tells the server, "I want to start this task, AND I want to receive live updates."</li>
@@ -174,10 +174,10 @@ How Streaming Works in A2A</h2>
 <li><code> **Repeat:** Steps 4 and 5 repeat every time the handler yields something new.</code></li>
 <li><code> **Stream Ends:** When the handler finishes (or yields a final state like</code>completed<code>or</code>failed<code>), the server sends a final event (often marked with</code>final: true`) and then closes the connection.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2006"></a>
+<h2><a class="anchor" id="autotoc_md2030"></a>
 Server-Side: Sending the Stream</h2>
 <p>Let's peek at how the <code>A2AServer</code> library handles yielded values from your task handler (<a class="el" href="../../d7/d27/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_206__task__handling__logic____server__side__.html">Chapter 6</a>) to send SSE events.</p>
-<h3><a class="anchor" id="autotoc_md2007"></a>
+<h3><a class="anchor" id="autotoc_md2031"></a>
 JavaScript Example (Conceptual)</h3>
 <p>The <code>A2AServer</code> in <code>samples/js/src/server/server.ts</code> uses the underlying Express.js response object (<code>res</code>) to write SSE messages.</p>
 <div class="fragment"><div class="line">// File: samples/js/src/server/server.ts (Simplified Snippet inside handleTaskSendSubscribe)</div>
@@ -224,7 +224,7 @@ JavaScript Example (Conceptual)</h3>
 <li><b>Sending:</b> <code>sendEvent</code> is called to push the formatted message to the client.</li>
 <li><b>Closing:</b> Once the loop finishes (or a final event is sent), <code>res.end()</code> closes the connection.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md2008"></a>
+<h3><a class="anchor" id="autotoc_md2032"></a>
 Python Example (Conceptual)</h3>
 <p>The Python <code>A2AServer</code> in <code>samples/python/common/server/server.py</code> uses the <code>sse-starlette</code> library and <code>EventSourceResponse</code> to handle the streaming.</p>
 <div class="fragment"><div class="line"><span class="comment"># File: samples/python/common/server/server.py (Simplified Snippet _create_response)</span></div>
@@ -257,10 +257,10 @@ Python Example (Conceptual)</h3>
 <li><b>Automatic Streaming:</b> <code>EventSourceResponse</code> automatically handles sending the correct SSE headers and writing each yielded <code>data</code> chunk to the client over the open connection.</li>
 </ol>
 <p>In both cases, the library handles the details of SSE formatting, letting your <code>TaskHandler</code> focus just on yielding the updates.</p>
-<h2><a class="anchor" id="autotoc_md2009"></a>
+<h2><a class="anchor" id="autotoc_md2033"></a>
 Client-Side: Receiving the Stream</h2>
 <p>How does the <code>A2AClient</code> handle these incoming events?</p>
-<h3><a class="anchor" id="autotoc_md2010"></a>
+<h3><a class="anchor" id="autotoc_md2034"></a>
 JavaScript Example (Conceptual)</h3>
 <p>The <code>A2AClient</code> in <code>samples/js/src/client/client.ts</code> uses the browser's <code>fetch</code> API and <code>ReadableStream</code> to process the SSE events.</p>
 <div class="fragment"><div class="line">// File: samples/js/src/client/client.ts (Simplified Snippet inside _handleStreamingResponse)</div>
@@ -326,7 +326,7 @@ JavaScript Example (Conceptual)</h3>
 <li><b>Yielding Payload:</b> It extracts the <code>result</code> field from the parsed JSON-RPC response (this <code>result</code> contains the <code>TaskStatusUpdateEvent</code> or <code>TaskArtifactUpdateEvent</code>) and <code>yield</code>s it to the application code (the <code>for await...of</code> loop).</li>
 <li><b>Error Handling:</b> It includes checks for HTTP errors and JSON parsing errors.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md2011"></a>
+<h3><a class="anchor" id="autotoc_md2035"></a>
 Python Example (Conceptual)</h3>
 <p>The Python <code>A2AClient</code> in <code>samples/python/common/client/client.py</code> uses the <code>httpx-sse</code> library.</p>
 <div class="fragment"><div class="line"><span class="comment"># File: samples/python/common/client/client.py (Simplified Snippet send_task_streaming)</span></div>
@@ -366,7 +366,7 @@ Python Example (Conceptual)</h3>
 <li><b>Error Handling:</b> Includes <code>try...except</code> blocks for JSON decoding errors and HTTP request errors.</li>
 </ol>
 <p>Again, the client libraries hide most of the complexity, providing a simple async iterator for your application to consume.</p>
-<h2><a class="anchor" id="autotoc_md2012"></a>
+<h2><a class="anchor" id="autotoc_md2036"></a>
 Under the Hood: The SSE Sequence</h2>
 <p>Here's how the pieces fit together when a client requests streaming:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -419,7 +419,7 @@ Under the Hood: The SSE Sequence</h2>
 <div class="line">    ClientLib--&gt;&gt;App: yield TaskStatusUpdateEvent (completed)</div>
 <div class="line">    ClientLib-&gt;&gt;ClientLib: Detect stream end</div>
 <div class="line">    App-&gt;&gt;App: Async loop finishes</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2013"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2037"></a>
 SSE Event Format in A2A</h2>
 <p>The basic format of an SSE message is:</p>
 <div class="fragment"><div class="line">data: &lt;payload_as_json_string&gt;</div>
@@ -434,7 +434,7 @@ SSE Event Format in A2A</h2>
 </div><!-- fragment --><p><b>Example Artifact Update Event (as sent over SSE):</b></p>
 <div class="fragment"><div class="line">data: {&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: &quot;req-client-123&quot;, &quot;result&quot;: {&quot;id&quot;: &quot;task-abc&quot;, &quot;artifact&quot;: {&quot;parts&quot;: [{&quot;text&quot;: &quot;Here is the first paragraph...&quot;}]}, &quot;final&quot;: false}}</div>
 </div><!-- fragment --><p>The <code>final: true</code> flag is added to the <em>last</em> event sent for a task (usually a final <code>TaskStatusUpdateEvent</code> with state <code>completed</code> or <code>failed</code>) to signal the end of the stream.</p>
-<h2><a class="anchor" id="autotoc_md2014"></a>
+<h2><a class="anchor" id="autotoc_md2038"></a>
 Conclusion</h2>
 <p>Streaming Communication using Server-Sent Events (SSE) is a powerful feature of the A2A protocol that allows agents to provide real-time feedback for long-running tasks.</p>
 <ul>

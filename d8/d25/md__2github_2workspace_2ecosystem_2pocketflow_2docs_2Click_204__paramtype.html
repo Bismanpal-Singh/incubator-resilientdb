@@ -121,12 +121,12 @@ $(function(){initNavTree('d8/d25/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_paramtype</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1197"></a>
-autotoc_md1197</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1221"></a>
+autotoc_md1221</h2>
 <p>layout: default title: "ParamType" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1198"></a>
+<h2><a class="anchor" id="autotoc_md1222"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1199"></a>
+<h1><a class="anchor" id="autotoc_md1223"></a>
 Chapter 4: ParamType - Checking and Converting Inputs</h1>
 <p>In <a class="el" href="../../db/dbc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_203__parameter____option______argument__.html">Chapter 3: Parameter (Option / Argument)</a>, we learned how to define inputs for our commands using <code>@click.option</code> and <code>@click.argument</code>. Our <code>greet</code> command could take a <code>--name</code> option, and our <code>copy</code> command took <code>SRC</code> and <code>DST</code> arguments.</p>
 <p>But what if we need more control? What if our command needs a <em>number</em> as input, like <code>--count 3</code>? Or what if an option should only accept specific words, like <code>--level easy</code> or <code>--level hard</code>? Right now, Click treats most inputs as simple text strings.</p>
@@ -136,7 +136,7 @@ Chapter 4: ParamType - Checking and Converting Inputs</h1>
 <li><b>Convert:</b> Change the input text (which is always initially a string) into the Python type you need (e.g., the string <code>"3"</code> becomes the integer <code>3</code>).</li>
 </ol>
 <p><code>ParamType</code>s make your commands more robust by catching errors early and giving your Python code the data types it expects.</p>
-<h2><a class="anchor" id="autotoc_md1200"></a>
+<h2><a class="anchor" id="autotoc_md1224"></a>
 Why Do We Need ParamTypes?</h2>
 <p>Imagine you're writing a command to repeat a message multiple times:</p>
 <div class="fragment"><div class="line">repeat --times 5 &quot;Hello!&quot;</div>
@@ -147,7 +147,7 @@ Why Do We Need ParamTypes?</h2>
 <li>If yes, convert it to the integer <code>5</code> and pass it to your function.</li>
 <li>If no (like <code>"five"</code>), stop immediately and show the user a helpful error message <em>before</em> your function even runs!</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1201"></a>
+<h2><a class="anchor" id="autotoc_md1225"></a>
 Using Built-in ParamTypes</h2>
 <p>Click provides several ready-to-use <code>ParamType</code>s. You specify which one to use with the <code>type</code> argument in <code>@click.option</code> or <code>@click.argument</code>.</p>
 <p>Let's modify an example to use <code>click.INT</code>.</p>
@@ -183,7 +183,7 @@ Using Built-in ParamTypes</h2>
 <div class="line"> </div>
 <div class="line">Error: Invalid value for &#39;--count&#39;: &#39;five&#39; is not a valid integer.</div>
 </div><!-- fragment --><p>Perfect! Click caught the error because <code>"five"</code> couldn't be converted by <code>click.INT</code>. It printed a helpful message and prevented our <code>repeat</code> function from running with bad data.</p>
-<h2><a class="anchor" id="autotoc_md1202"></a>
+<h2><a class="anchor" id="autotoc_md1226"></a>
 Common Built-in Types</h2>
 <p>Click offers several useful built-in types:</p>
 <ul>
@@ -194,7 +194,7 @@ Common Built-in Types</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1203"></a>
+<h1><a class="anchor" id="autotoc_md1227"></a>
 choice_example.py</h1>
 <p>import click</p>
 <p>@click.command() @click.option('&ndash;difficulty', type=click.Choice(['easy', 'medium', 'hard'], case_sensitive=False), default='easy') def <a class="el" href="../../dd/dc4/namespacesetup.html">setup(difficulty)</a>: click.echo(f"Setting up game with difficulty: {difficulty}")</p>
@@ -205,11 +205,11 @@ choice_example.py</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1204"></a>
+<h1><a class="anchor" id="autotoc_md1228"></a>
 path_example.py</h1>
 <p>import click</p>
 <p>@click.command() @click.argument('output_dir', type=click.Path(exists=True, file_okay=False, dir_okay=True, writable=True)) def process(output_dir): click.echo(f"Processing data into directory: {output_dir}") </p>
-<h1><a class="anchor" id="autotoc_md1205"></a>
+<h1><a class="anchor" id="autotoc_md1229"></a>
 We know output_dir exists, is a directory, and is writable!</h1>
 <p>if <b>name</b> == '<b>main</b>': process() ```</p>
 <ul>
@@ -217,18 +217,18 @@ We know output_dir exists, is a directory, and is writable!</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1206"></a>
+<h1><a class="anchor" id="autotoc_md1230"></a>
 file_example.py</h1>
 <p>import click</p>
 <p>@click.command() @click.argument('input_file', type=click.File('r')) # Open for reading text def cat(input_file): </p>
-<h1><a class="anchor" id="autotoc_md1207"></a>
+<h1><a class="anchor" id="autotoc_md1231"></a>
 input_file is an open file handle!</h1>
 <p>click.echo(input_file.read()) </p>
-<h1><a class="anchor" id="autotoc_md1208"></a>
+<h1><a class="anchor" id="autotoc_md1232"></a>
 Click will close the file automatically after this function returns</h1>
 <p>if <b>name</b> == '<b>main</b>': cat() ```</p>
 <p>These built-in types cover most common use cases for validating and converting command-line inputs.</p>
-<h2><a class="anchor" id="autotoc_md1209"></a>
+<h2><a class="anchor" id="autotoc_md1233"></a>
 How ParamTypes Work Under the Hood</h2>
 <p>What happens when you specify <code>type=click.INT</code>?</p>
 <ol type="1">
@@ -306,16 +306,16 @@ How ParamTypes Work Under the Hood</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># click.INT is just an instance of this class</span></div>
 <div class="line">INT = IntParamType()</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1210"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1234"></a>
 Custom Types</h2>
 <p>What if none of the built-in types do exactly what you need? Click allows you to create your own custom <code>ParamType</code>s! You can do this by subclassing <code>click.ParamType</code> and implementing the <code>name</code> attribute and the <code>convert</code> method. This is an advanced topic, but it provides great flexibility.</p>
-<h2><a class="anchor" id="autotoc_md1211"></a>
+<h2><a class="anchor" id="autotoc_md1235"></a>
 Shell Completion Hints</h2>
 <p>An added benefit of using specific <code>ParamType</code>s is that they can provide hints for shell completion (when the user presses Tab). For example:</p><ul>
 <li>&lsquo;click.Choice(['easy&rsquo;, 'medium', 'hard'])<code>can suggest</code>easy<code>,</code>medium<code>, or</code>hard<code>. *</code>click.Path` can suggest file and directory names from the current location.</li>
 </ul>
 <p>This makes your CLI even more user-friendly.</p>
-<h2><a class="anchor" id="autotoc_md1212"></a>
+<h2><a class="anchor" id="autotoc_md1236"></a>
 Conclusion</h2>
 <p><code>ParamType</code>s are a fundamental part of Click, acting as the bridge between raw command-line text input and the well-typed data your Python functions need. They handle the crucial tasks of:</p>
 <ul>

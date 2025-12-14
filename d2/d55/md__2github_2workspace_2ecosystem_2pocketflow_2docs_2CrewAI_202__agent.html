@@ -121,15 +121,15 @@ $(function(){initNavTree('d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_agent</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1479"></a>
-autotoc_md1479</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1503"></a>
+autotoc_md1503</h2>
 <p>layout: default title: "Agent" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1480"></a>
+<h2><a class="anchor" id="autotoc_md1504"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1481"></a>
+<h1><a class="anchor" id="autotoc_md1505"></a>
 Chapter 2: Agent - Your Specialized AI Worker</h1>
 <p>In <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Chapter 1</a>, we learned about the <code>Crew</code> – the manager that organizes our AI team. But a manager needs a team to manage! That's where <code>Agent</code>s come in.</p>
-<h2><a class="anchor" id="autotoc_md1482"></a>
+<h2><a class="anchor" id="autotoc_md1506"></a>
 Why Do We Need Agents?</h2>
 <p>Imagine our trip planning <code>Crew</code> again. The <code>Crew</code> knows the overall goal (plan a surprise trip), but it doesn't <em>do</em> the research or the planning itself. It needs specialists.</p>
 <ul>
@@ -138,7 +138,7 @@ Why Do We Need Agents?</h2>
 </ul>
 <p>In CrewAI, these specialists are called <b><code>Agent</code>s</b>. Instead of having one super-smart AI try to juggle everything, we create multiple <code>Agent</code>s, each with its own focus and expertise. This makes complex tasks more manageable and often leads to better results.</p>
 <p><b>Problem Solved:</b> <code>Agent</code>s allow you to break down a large task into smaller pieces and assign each piece to an AI worker specifically designed for it.</p>
-<h2><a class="anchor" id="autotoc_md1483"></a>
+<h2><a class="anchor" id="autotoc_md1507"></a>
 What is an Agent?</h2>
 <p>Think of an <code>Agent</code> as a <b>dedicated AI worker</b> on your <code>Crew</code>. Each <code>Agent</code> has a unique profile that defines who they are and what they do:</p>
 <ol type="1">
@@ -151,7 +151,7 @@ What is an Agent?</h2>
 <li><b><code>verbose</code></b> (Optional, default <code>False</code>): If <code>True</code>, the Agent will print out its thought process as it works, which is great for debugging and understanding what's happening.</li>
 </ol>
 <p>An Agent takes the <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Tasks</a> assigned to it by the <code>Crew</code> and uses its <code>role</code>, <code>goal</code>, <code>backstory</code>, <code>llm</code>, and <code>tools</code> to complete them.</p>
-<h2><a class="anchor" id="autotoc_md1484"></a>
+<h2><a class="anchor" id="autotoc_md1508"></a>
 Let's Define an Agent!</h2>
 <p>Let's revisit the <code>researcher</code> Agent from Chapter 1 and look closely at how it's defined.</p>
 <div class="fragment"><div class="line"><span class="comment"># Make sure you have crewai installed</span></div>
@@ -182,7 +182,7 @@ Let's Define an Agent!</h2>
 <li>&lsquo;role='Expert Travel Researcher&rsquo;<code>: We clearly define the agent's job title. This tells the LLM its primary function. *</code>goal='Find the most exciting...'<code>: We give it a specific, measurable objective. This guides its actions. *</code>backstory='You are a world-class...'<code>: We provide context and personality. This influences the *style* and *quality* of its output. Notice the detailed description – this helps the LLM adopt the persona. *</code>verbose=True<code>: We'll see detailed logs of this agent's thoughts and actions when it runs. *</code>allow_delegation=False`: This researcher won't ask other agents for help; it will complete its task independently.</li>
 </ul>
 <p>Running this code snippet creates an <code>Agent</code> object in Python. This object is now ready to be added to a <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> and assigned <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Tasks</a>.</p>
-<h2><a class="anchor" id="autotoc_md1485"></a>
+<h2><a class="anchor" id="autotoc_md1509"></a>
 How Agents Work "Under the Hood"</h2>
 <p>So, what happens when an <code>Agent</code> is given a task by the <code>Crew</code>?</p>
 <ol type="1">
@@ -268,7 +268,7 @@ How Agents Work "Under the Hood"</h2>
 <li>It uses an internal object called <code>agent_executor</code> (specifically <code>CrewAgentExecutor</code> from <code>crewai/agents/crew_agent_executor.py</code>) to manage the actual step-by-step thinking, tool use, and response generation loop with the LLM.</li>
 </ul>
 <p>You don't need to understand the <code>agent_executor</code> in detail right now, just know that it's the engine that drives the agent's execution based on the profile and task you provide.</p>
-<h2><a class="anchor" id="autotoc_md1486"></a>
+<h2><a class="anchor" id="autotoc_md1510"></a>
 Conclusion</h2>
 <p>You've now met the core members of your AI team: the <code>Agent</code>s! You learned that each <code>Agent</code> is a specialized worker defined by its <code>role</code>, <code>goal</code>, and <code>backstory</code>. They use an <a class="el" href="../../da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_206__llm.html">LLM</a> as their brain and can be equipped with <a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Tools</a> to perform specific actions.</p>
 <p>We saw how to define an agent in code and got a glimpse into how they process information and execute the work assigned by the <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>.</p>

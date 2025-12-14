@@ -121,18 +121,18 @@ $(function(){initNavTree('da/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_client_server_sessions___clientsession____serversession__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2455"></a>
-autotoc_md2455</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2479"></a>
+autotoc_md2479</h2>
 <p>layout: default title: "Client/Server Sessions (ClientSession, ServerSession)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2456"></a>
+<h2><a class="anchor" id="autotoc_md2480"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md2457"></a>
+<h1><a class="anchor" id="autotoc_md2481"></a>
 Chapter 8: Client/Server Sessions (<code>ClientSession</code>, <code>ServerSession</code>)</h1>
 <p>Welcome back! In <a class="el" href="../../de/dcd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_207__mcp__protocol__types.html">Chapter 7: MCP Protocol Types</a>, we learned about the standardized "digital forms" – the Pydantic models – that define the structure of messages exchanged between an MCP client and server. We saw examples like <code>CallToolRequest</code> and <code>ProgressNotification</code>.</p>
 <p>But knowing the <em>format</em> of a letter isn't enough. How does a specific conversation between one client and one server actually happen over time? How does the server know which incoming response belongs to which outgoing request it sent earlier? How is the initial connection "hello" handled?</p>
 <p>Imagine you call a large company's support line. You don't just shout into the void; you get connected to a specific operator who handles <em>your</em> call from start to finish. This operator keeps track of your requests, finds the answers, and manages the connection until you hang up.</p>
 <p>In the <code>MCP Python SDK</code>, this "phone line operator" role is played by <b>Session</b> objects: <code>ClientSession</code> and <code>ServerSession</code>.</p>
-<h2><a class="anchor" id="autotoc_md2458"></a>
+<h2><a class="anchor" id="autotoc_md2482"></a>
 What's a Session? The Dedicated Conversation Line</h2>
 <p>A <b>Session</b> object (<code>ClientSession</code> or <code>ServerSession</code>) manages the state and lifecycle of a <b>single, ongoing connection</b> between one MCP client and one MCP server. Think of it as establishing a dedicated phone line for one specific conversation.</p>
 <p>This "operator" handles several crucial tasks for that single connection:</p>
@@ -143,7 +143,7 @@ What's a Session? The Dedicated Conversation Line</h2>
 <li><b>State Management:</b> Keeps track of whether the connection is initializing, active, or closed.</li>
 <li><b>Lifecycle:</b> Manages the setup and eventual teardown (hang-up) of the connection.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2459"></a>
+<h2><a class="anchor" id="autotoc_md2483"></a>
 Two Sides of the Coin: <code>ClientSession</code> vs. <code>ServerSession</code></h2>
 <p>Why are there two types of sessions? Because the client and server have different roles in the conversation:</p>
 <ul>
@@ -163,7 +163,7 @@ Two Sides of the Coin: <code>ClientSession</code> vs. <code>ServerSession</code>
 </li>
 </ul>
 <p>They use the same underlying mechanisms but have different methods tailored to their role (e.g., <code>ClientSession</code> has <code>call_tool</code>, <code>ServerSession</code> has <code>send_log_message</code>).</p>
-<h2><a class="anchor" id="autotoc_md2460"></a>
+<h2><a class="anchor" id="autotoc_md2484"></a>
 How <code>FastMCP</code> Uses <code>ServerSession</code> (Behind the Scenes)</h2>
 <p>If you're building a server using <code>FastMCP</code> (as we did in chapters <a class="el" href="../../d8/d5c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_202__fastmcp__server______fastmcp____.html">2</a> through <a class="el" href="../../d2/de0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_206__fastmcp__context______context____.html">6</a>), you generally <b>don't interact with <code>ServerSession</code> directly</b>.</p>
 <p>When a client connects to your <code>FastMCP</code> server:</p><ol type="1">
@@ -175,7 +175,7 @@ How <code>FastMCP</code> Uses <code>ServerSession</code> (Behind the Scenes)</h2
 <li>The <code>ServerSession</code> manages this connection until the client disconnects.</li>
 </ol>
 <p>So, <code>ServerSession</code> is the hidden engine powering the communication for each connected client in a <code>FastMCP</code> server. You benefit from its work without needing to manage it manually.</p>
-<h2><a class="anchor" id="autotoc_md2461"></a>
+<h2><a class="anchor" id="autotoc_md2485"></a>
 When Might You Use <code>ClientSession</code>?</h2>
 <p>You would typically use <code>ClientSession</code> if you were writing a standalone Python application that needs to <em>connect to</em> and <em>interact with</em> an existing MCP server (which might be one you built with <code>FastMCP</code> or someone else's).</p>
 <p><b>Example Scenario: A Simple Client</b></p>
@@ -217,7 +217,7 @@ When Might You Use <code>ClientSession</code>?</h2>
 <li>We use <code>session.call_tool()</code> to send the request. The <code>ClientSession</code> assigns an ID, sends the message, and waits for the specific response with that ID.</li>
 <li>The result comes back directly from the <code>call_tool</code> method.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2462"></a>
+<h2><a class="anchor" id="autotoc_md2486"></a>
 How Sessions Work Under the Hood: The Operator's Workflow</h2>
 <p>Let's trace the lifecycle and the request/response matching managed by a session. We'll use our phone operator analogy.</p>
 <ol type="1">
@@ -287,7 +287,7 @@ How Sessions Work Under the Hood: The Operator's Workflow</h2>
 <div class="line">    ClientSess-&gt;&gt;ClientSess: Match ID=1 to &#39;waiter&#39;</div>
 <div class="line">    ClientSess--&gt;&gt;-ClientApp: Return result (CallToolResult object)</div>
 </div><!-- fragment --><p>This flow highlights how the session objects act as intermediaries, managing IDs and matching responses back to their original requests.</p>
-<h2><a class="anchor" id="autotoc_md2463"></a>
+<h2><a class="anchor" id="autotoc_md2487"></a>
 Diving into the Code (Briefly!)</h2>
 <p>You typically won't call these methods directly when using <code>FastMCP</code> for servers, but seeing the structure helps understand the session's role. These snippets are heavily simplified.</p>
 <p><b>Base Class (<code>shared/session.py</code>):</b></p>
@@ -394,7 +394,7 @@ Diving into the Code (Briefly!)</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># ... other methods like send_progress_notification, send_resource_updated ...</span></div>
 </div><!-- fragment --><p>This highlights how <code>ServerSession</code> intercepts the <code>initialize</code> request and the <code>initialized</code> notification to manage the connection state before passing other messages to the main server logic.</p>
-<h2><a class="anchor" id="autotoc_md2464"></a>
+<h2><a class="anchor" id="autotoc_md2488"></a>
 Conclusion</h2>
 <p>You've now explored <code>ClientSession</code> and <code>ServerSession</code>, the dedicated operators managing individual communication lines between MCP clients and servers.</p>
 <ul>

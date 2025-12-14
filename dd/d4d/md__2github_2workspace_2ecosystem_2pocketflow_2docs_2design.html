@@ -121,17 +121,17 @@ $(function(){initNavTree('dd/d4d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">design</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1579"></a>
-autotoc_md1579</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1603"></a>
+autotoc_md1603</h2>
 <p>layout: default title: "System Design" </p>
-<h2><a class="anchor" id="autotoc_md1580"></a>
+<h2><a class="anchor" id="autotoc_md1604"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1581"></a>
+<h1><a class="anchor" id="autotoc_md1605"></a>
 System Design: Codebase Knowledge Builder</h1>
 <blockquote class="doxtable">
 <p>Please DON'T remove notes for AI </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md1582"></a>
+<h2><a class="anchor" id="autotoc_md1606"></a>
 Requirements</h2>
 <blockquote class="doxtable">
 <p>Notes for AI: Keep it simple and clear. If the requirements are abstract, write concrete user stories </p>
@@ -154,7 +154,7 @@ Requirements</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1583"></a>
+<h2><a class="anchor" id="autotoc_md1607"></a>
 Flow Design</h2>
 <blockquote class="doxtable">
 <p>Notes for AI:</p><ol type="1">
@@ -162,14 +162,14 @@ Flow Design</h2>
 <li>Present a concise, high-level description of the workflow. </li>
 </ol>
 </blockquote>
-<h3><a class="anchor" id="autotoc_md1584"></a>
+<h3><a class="anchor" id="autotoc_md1608"></a>
 Applicable Design Pattern:</h3>
 <p>This project primarily uses a <b>Workflow</b> pattern to decompose the tutorial generation process into sequential steps. The chapter writing step utilizes a <b>BatchNode</b> (a form of MapReduce) to process each abstraction individually.</p>
 <ol type="1">
 <li><b>Workflow:</b> The overall process follows a defined sequence: fetch code -&gt; identify abstractions -&gt; analyze relationships -&gt; determine order -&gt; write chapters -&gt; combine tutorial into files.</li>
 <li><b>Batch Processing:</b> The <code>WriteChapters</code> node processes each identified abstraction independently (map) before the final tutorial files are structured (reduce).</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1585"></a>
+<h3><a class="anchor" id="autotoc_md1609"></a>
 Flow high-level Design:</h3>
 <ol type="1">
 <li><b><code>FetchRepo</code></b>: Crawls the specified GitHub repository URL or local directory using appropriate utility (<code>crawl_github_files</code> or <code>crawl_local_files</code>), retrieving relevant source code file contents.</li>
@@ -185,7 +185,7 @@ Flow high-level Design:</h3>
 <div class="line">    C --&gt; D[OrderChapters];</div>
 <div class="line">    D --&gt; E[Batch WriteChapters];</div>
 <div class="line">    E --&gt; F[CombineTutorial];</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1586"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1610"></a>
 Utility Functions</h2>
 <blockquote class="doxtable">
 <p>Notes for AI:</p><ol type="1">
@@ -213,9 +213,9 @@ Utility Functions</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1587"></a>
+<h2><a class="anchor" id="autotoc_md1611"></a>
 Node Design</h2>
-<h3><a class="anchor" id="autotoc_md1588"></a>
+<h3><a class="anchor" id="autotoc_md1612"></a>
 Shared Store</h3>
 <blockquote class="doxtable">
 <p>Notes for AI: Try to minimize data redundancy </p>
@@ -245,7 +245,7 @@ Shared Store</h3>
 <div class="line">    <span class="stringliteral">&quot;final_output_dir&quot;</span>: <span class="keywordtype">None</span> <span class="comment"># Output of CombineTutorial: Path to the final generated tutorial directory (e.g., &quot;output/my_project&quot;)</span></div>
 <div class="line">}</div>
 <div class="ttc" id="apybind__kv__service_8cpp_html_a26ae8807a2b3217bb2339bd18aaaa4e6"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#a26ae8807a2b3217bb2339bd18aaaa4e6">set</a></div><div class="ttdeci">bool set(std::string key, std::string value, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00051">pybind_kv_service.cpp:51</a></div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1589"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1613"></a>
 Node Steps</h3>
 <blockquote class="doxtable">
 <p>Notes for AI: Carefully decide whether to use Batch/Async Node/Flow. Removed explicit try/except in exec, relying on Node's built-in fault tolerance. </p>

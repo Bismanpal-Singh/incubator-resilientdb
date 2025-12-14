@@ -121,16 +121,16 @@ $(function(){initNavTree('de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_process</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1509"></a>
-autotoc_md1509</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1533"></a>
+autotoc_md1533</h2>
 <p>layout: default title: "Process" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1510"></a>
+<h2><a class="anchor" id="autotoc_md1534"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1511"></a>
+<h1><a class="anchor" id="autotoc_md1535"></a>
 Chapter 5: Process - Orchestrating the Workflow</h1>
 <p>In <a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Chapter 4: Tool</a>, we learned how to give our <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s special abilities using <code>Tool</code>s, like searching the web. Now we have specialized agents, defined tasks, and equipped agents. But how do they actually <em>work together</em>? Does Agent 1 finish its work before Agent 2 starts? Or is there a manager overseeing everything?</p>
 <p>This coordination is handled by the <b><code>Process</code></b>.</p>
-<h2><a class="anchor" id="autotoc_md1512"></a>
+<h2><a class="anchor" id="autotoc_md1536"></a>
 Why Do We Need a Process?</h2>
 <p>Think back to our trip planning <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>. We have a 'Travel Researcher' agent and an 'Activity Planner' agent.</p>
 <ul>
@@ -139,7 +139,7 @@ Why Do We Need a Process?</h2>
 </ul>
 <p>The way the agents collaborate and the order in which <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>s are executed is crucial for success. A well-defined <code>Process</code> ensures work flows smoothly and efficiently.</p>
 <p><b>Problem Solved:</b> <code>Process</code> defines the strategy or workflow the <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> uses to execute its <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>s. It dictates how <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s collaborate and how information moves between them.</p>
-<h2><a class="anchor" id="autotoc_md1513"></a>
+<h2><a class="anchor" id="autotoc_md1537"></a>
 What is a Process?</h2>
 <p>Think of the <code>Process</code> as the <b>project management style</b> for your <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>. It determines the overall flow of work. CrewAI primarily supports two types of processes:</p>
 <ol type="1">
@@ -157,10 +157,10 @@ What is a Process?</h2>
 </li>
 </ol>
 <p>Choosing the right <code>Process</code> is key to structuring how your agents interact.</p>
-<h2><a class="anchor" id="autotoc_md1514"></a>
+<h2><a class="anchor" id="autotoc_md1538"></a>
 How to Use Process</h2>
 <p>You define the process when you create your <code>Crew</code>, using the <code>process</code> parameter.</p>
-<h3><a class="anchor" id="autotoc_md1515"></a>
+<h3><a class="anchor" id="autotoc_md1539"></a>
 Sequential Process</h3>
 <p>This is the default and simplest process. We already used it in <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Chapter 1</a>!</p>
 <div class="fragment"><div class="line"><span class="comment"># Assuming &#39;researcher&#39; and &#39;planner&#39; agents are defined (from Chapter 2)</span></div>
@@ -194,7 +194,7 @@ Sequential Process</h3>
 </li>
 </ul>
 <p>It's simple and predictable: Task 1 -&gt; Task 2 -&gt; Done.</p>
-<h3><a class="anchor" id="autotoc_md1516"></a>
+<h3><a class="anchor" id="autotoc_md1540"></a>
 Hierarchical Process</h3>
 <p>For this process, the <code>Crew</code> needs a manager. You usually specify the language model the manager should use (<code>manager_llm</code>). The manager agent is created internally by CrewAI using this LLM.</p>
 <div class="fragment"><div class="line"><span class="comment"># Assuming &#39;researcher&#39; and &#39;planner&#39; agents are defined</span></div>
@@ -237,7 +237,7 @@ Hierarchical Process</h3>
 </li>
 </ul>
 <p>This process is more dynamic, allowing the manager to adapt the workflow.</p>
-<h2><a class="anchor" id="autotoc_md1517"></a>
+<h2><a class="anchor" id="autotoc_md1541"></a>
 How Process Works "Under the Hood"</h2>
 <p>When you call <code>crew.kickoff()</code>, the first thing the <code>Crew</code> does is check its <code>process</code> attribute to determine the execution strategy.</p>
 <ol type="1">
@@ -252,7 +252,7 @@ How Process Works "Under the Hood"</h2>
 <li><b>Managed Execution (Hierarchical):</b> <code>_run_hierarchical_process()</code> delegates control to the manager agent. The manager agent, using its LLM and specialized delegation tools (like <code>AgentTools</code>), decides which task to tackle next and which worker agent to assign it to. It manages the flow until all tasks are completed.</li>
 <li><b>Output:</b> The final result (usually the output of the last task) is packaged and returned.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1518"></a>
+<h3><a class="anchor" id="autotoc_md1542"></a>
 Visualization</h3>
 <p>Let's visualize the difference:</p>
 <p><b>Sequential Process:</b></p>
@@ -286,7 +286,7 @@ Visualization</h3>
 <div class="line">    PlannerAgent--&gt;&gt;ManagerAgent: Task 2 Output (Itinerary)</div>
 <div class="line">    ManagerAgent-&gt;&gt;MyCrew: Report Final Result (Itinerary)</div>
 <div class="line">    MyCrew--&gt;&gt;User: Final Result (Itinerary)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1519"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1543"></a>
 Diving into the Code (<code>crew.py</code>)</h3>
 <p>The <code>Crew</code> class in <code>crewai/crew.py</code> holds the logic.</p>
 <div class="fragment"><div class="line"><span class="comment"># Simplified view from crewai/crew.py</span></div>
@@ -386,7 +386,7 @@ Diving into the Code (<code>crew.py</code>)</h3>
 <li><code>_run_sequential_process</code> iterates through tasks in order.</li>
 <li><code>_run_hierarchical_process</code> relies on the <code>manager_agent</code> (created by <code>_create_manager_agent</code> if needed) to manage the task execution flow, often using delegation tools.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1520"></a>
+<h2><a class="anchor" id="autotoc_md1544"></a>
 Conclusion</h2>
 <p>You've now learned about the <code>Process</code> - the crucial setting that defines <em>how</em> your <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> collaborates.</p>
 <ul>

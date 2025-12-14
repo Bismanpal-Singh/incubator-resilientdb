@@ -121,16 +121,16 @@ $(function(){initNavTree('d1/d39/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_templating__jinja2_integration_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1870"></a>
-autotoc_md1870</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1894"></a>
+autotoc_md1894</h2>
 <p>layout: default title: "Templating (Jinja2 Integration)" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1871"></a>
+<h2><a class="anchor" id="autotoc_md1895"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1872"></a>
+<h1><a class="anchor" id="autotoc_md1896"></a>
 Chapter 4: Templating (Jinja2 Integration)</h1>
 <p>Welcome back! In <a class="el" href="../../d5/d48/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_203__request__and__response__objects.html">Chapter 3: Request and Response Objects</a>, we saw how to handle incoming requests and craft outgoing responses. We even created a simple HTML form, but we had to write the HTML code directly as a string inside our Python function. Imagine building a whole website like that – it would get very messy very quickly!</p>
 <p>How can we separate the design and structure of our web pages (HTML) from the Python code that generates the dynamic content? This chapter introduces <b>Templating</b>.</p>
-<h2><a class="anchor" id="autotoc_md1873"></a>
+<h2><a class="anchor" id="autotoc_md1897"></a>
 What Problem Does It Solve? Mixing Code and Design is Messy</h2>
 <p>Think about writing a personalized email newsletter. You have a standard letter format (the design), but you need to insert specific details for each recipient (the dynamic data), like their name. You wouldn't want to write the entire letter from scratch in your code for every single person!</p>
 <p>Similarly, when building a web page, you have the HTML structure (the design), but parts of it need to change based on data from your application (like showing the currently logged-in user's name, a list of products, or search results). Putting complex HTML directly into your Python view functions makes the code hard to read, hard to maintain, and difficult for web designers (who might not know Python) to work on.</p>
@@ -144,7 +144,7 @@ What Problem Does It Solve? Mixing Code and Design is Messy</h2>
 <li><b><code>render_template</code> Function:</b> The mail merge tool itself.</li>
 <li><b>Final HTML:</b> The personalized letter ready to be sent.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1874"></a>
+<h2><a class="anchor" id="autotoc_md1898"></a>
 Creating Your First Template</h2>
 <p>By default, Flask looks for template files in a folder named <code>templates</code> right next to your main application file (like <code>hello.py</code>).</p>
 <ol type="1">
@@ -169,7 +169,7 @@ Creating Your First Template</h2>
 <li>This is mostly standard HTML.</li>
 <li><code>{{ name_in_template }}</code>: This is a Jinja2 <b>placeholder</b> or <b>expression</b>. It tells Jinja2: "When this template is rendered, replace this part with the value of the variable named `name_in_template` that the Python code provides."</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1875"></a>
+<h2><a class="anchor" id="autotoc_md1899"></a>
 Rendering Templates with <code>render_template</code></h2>
 <p>Now, let's modify our Python code (<code>hello.py</code>) to use this template. We need to:</p>
 <ol type="1">
@@ -218,7 +218,7 @@ Rendering Templates with <code>render_template</code></h2>
 <li>Visit <code><a href="http://127.0.0.1:5000/user/Alice">http://127.0.0.1:5000/user/Alice</a></code>. Your browser will receive HTML generated from the <em>same</em> <code>hello.html</code> template, but this time showing: "Hello, Alice!".</li>
 </ol>
 <p>See how we reused the same HTML structure but dynamically changed the content using <code>render_template</code> and variables!</p>
-<h2><a class="anchor" id="autotoc_md1876"></a>
+<h2><a class="anchor" id="autotoc_md1900"></a>
 Basic Jinja2 Syntax: Variables, Conditionals, and Loops</h2>
 <p>Jinja2 offers more than just variable substitution. You can use basic programming constructs right inside your HTML.</p>
 <p>There are two main types of delimiters:</p>
@@ -227,7 +227,7 @@ Basic Jinja2 Syntax: Variables, Conditionals, and Loops</h2>
 <li><code>{% ... %}</code>: Used for <b>statements</b>. This includes things like <code>if</code>/<code>else</code> blocks, <code>for</code> loops, and other control structures. These don't directly output text but control how the template is rendered. {% endraw %}</li>
 </ul>
 <p>Let's look at some examples.</p>
-<h3><a class="anchor" id="autotoc_md1877"></a>
+<h3><a class="anchor" id="autotoc_md1901"></a>
 Example: Using <code>if</code>/<code>else</code></h3>
 <p>Imagine you want to show different content depending on whether a user is logged in.</p>
 <p><b>Python (<code>hello.py</code>):</b></p>
@@ -267,7 +267,7 @@ Example: Using <code>if</code>/<code>else</code></h3>
 <li><code>{{ user.name }}</code>: Accesses the <code>name</code> attribute of the <code>user</code> dictionary passed from Python. {% endraw %}</li>
 </ul>
 <p>If you run this and visit <code>/profile</code>, you'll see the "Welcome back, Charlie!" message. If you change <code>current_user</code> to <code>None</code> in the Python code and refresh, you'll see the "Welcome, Guest!" message.</p>
-<h3><a class="anchor" id="autotoc_md1878"></a>
+<h3><a class="anchor" id="autotoc_md1902"></a>
 Example: Using <code>for</code> Loops</h3>
 <p>Let's say you want to display a list of items.</p>
 <p><b>Python (<code>hello.py</code>):</b></p>
@@ -305,7 +305,7 @@ Example: Using <code>for</code> Loops</h3>
 <li><code>{% endfor %}</code>: Marks the end of the <code>for</code> loop. {% endraw %}</li>
 </ul>
 <p>Visiting <code>/items</code> will show a bulleted list of the fruits.</p>
-<h2><a class="anchor" id="autotoc_md1879"></a>
+<h2><a class="anchor" id="autotoc_md1903"></a>
 Generating URLs within Templates using <code>url_for</code></h2>
 <p>Just like we used <code>url_for</code> in Python (<a class="el" href="../../d0/d63/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_202__routing__system.html">Chapter 2: Routing System</a>) to avoid hardcoding URLs, we often need to generate URLs within our HTML templates (e.g., for links or form actions). Flask automatically makes the <code>url_for</code> function available inside your Jinja2 templates.</p>
 <p><b>Template (<code>templates/navigation.html</code>):</b></p>
@@ -330,7 +330,7 @@ Generating URLs within Templates using <code>url_for</code></h2>
 <li>&lsquo;{{ url_for('index&rsquo;) }}<code>: Generates the URL for the view function associated with the endpoint</code>'index'<code>(which is likely</code>/<code>). *</code>{{ url_for('show_items') }}<code>: Generates the URL for the</code>show_items<code>endpoint (likely</code>/items<code>). *</code>{{ url_for('greet_user', username='Admin') }}<code>: Generates the URL for the</code>greet_user<code>endpoint, filling in the</code>username<code>variable (likely</code>/user/Admin`). {% endraw %}</li>
 </ul>
 <p>Using <code>url_for</code> in templates ensures that your links will always point to the correct place, even if you change the URL rules in your Python code later.</p>
-<h2><a class="anchor" id="autotoc_md1880"></a>
+<h2><a class="anchor" id="autotoc_md1904"></a>
 Under the Hood: How <code>render_template</code> Works</h2>
 <p>When you call &lsquo;render_template('some_template.html&rsquo;, var=value)`, here's a simplified sequence of what happens inside Flask and Jinja2:</p>
 <p>{% raw %}</p><ol type="1">
@@ -372,7 +372,7 @@ Under the Hood: How <code>render_template</code> Works</h2>
 <div class="line">    Response--&gt;&gt;-ViewFunc: Response object</div>
 <div class="line">    ViewFunc--&gt;&gt;Browser: Return Response</div>
 </div><!-- fragment --><p>The key players are the <code>Flask</code> application instance (which holds the Jinja2 environment configuration), the <code>render_template</code> function, and the Jinja2 <code>Environment</code> itself, which uses loaders to find templates and context processors to enrich the data available during rendering.</p>
-<h2><a class="anchor" id="autotoc_md1881"></a>
+<h2><a class="anchor" id="autotoc_md1905"></a>
 Conclusion</h2>
 <p>Templating is a fundamental technique for building dynamic web pages. Flask integrates seamlessly with the powerful Jinja2 template engine.</p>
 <p>{% raw %}</p><ul>

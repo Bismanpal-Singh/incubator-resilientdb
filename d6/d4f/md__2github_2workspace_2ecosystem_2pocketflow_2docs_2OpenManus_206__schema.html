@@ -121,17 +121,17 @@ $(function(){initNavTree('d6/d4f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_schema</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2638"></a>
-autotoc_md2638</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2662"></a>
+autotoc_md2662</h2>
 <p>layout: default title: "Schema" parent: "OpenManus" </p>
-<h2><a class="anchor" id="autotoc_md2639"></a>
+<h2><a class="anchor" id="autotoc_md2663"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md2640"></a>
+<h1><a class="anchor" id="autotoc_md2664"></a>
 Chapter 6: Schema - The Official Data Forms</h1>
 <p>In <a class="el" href="../../d0/d93/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_205__baseflow.html">Chapter 5: BaseFlow</a>, we saw how Flows act like project managers, coordinating different <a class="el" href="../../d0/d71/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_203__baseagent.html">Agents</a> and <a class="el" href="../../de/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_204__tool______toolcollection.html">Tools</a> to complete complex tasks. But for all these different parts (Flows, Agents, LLMs, Tools) to work together smoothly, they need to speak the same language and use the same formats when exchanging information.</p>
 <p>Imagine a busy office where everyone fills out forms for requests, reports, and messages. If everyone uses their <em>own</em> unique form layout, it quickly becomes chaotic! Someone might forget a required field, use the wrong data type (like writing "yesterday" instead of a specific date), or mislabel information. It would be incredibly hard to process anything efficiently.</p>
 <p>This is where <b>Schemas</b> come into play in OpenManus.</p>
-<h2><a class="anchor" id="autotoc_md2641"></a>
+<h2><a class="anchor" id="autotoc_md2665"></a>
 What Problem Does Schema Solve?</h2>
 <p>In our digital "office" (the OpenManus application), various components need to pass data back and forth:</p><ul>
 <li>The User sends a request (a message).</li>
@@ -154,7 +154,7 @@ What Problem Does Schema Solve?</h2>
 <li>"The input parameter `query` should be set to `latest AI news`."</li>
 </ol>
 <p>A schema defines exactly how this "tool call request" should look, ensuring the Agent understands it correctly.</p>
-<h2><a class="anchor" id="autotoc_md2642"></a>
+<h2><a class="anchor" id="autotoc_md2666"></a>
 Key Concepts: Standard Templates via Pydantic</h2>
 <ol type="1">
 <li><b>Schema as Templates:</b> At its core, a schema is a formal definition of a data structure. It specifies:<ul>
@@ -171,7 +171,7 @@ Key Concepts: Standard Templates via Pydantic</h2>
 </li>
 </ol>
 <p>Think of Pydantic as the strict office manager who checks every form submitted, ensuring it's filled out correctly according to the official template before passing it on.</p>
-<h2><a class="anchor" id="autotoc_md2643"></a>
+<h2><a class="anchor" id="autotoc_md2667"></a>
 How Do We Use Schemas? (Examples)</h2>
 <p>Schemas are defined throughout the OpenManus codebase, primarily as Pydantic models. You've already encountered some! Let's look at a few key examples found mostly in <code>app/schema.py</code> and <code>app/tool/base.py</code>.</p>
 <p><b>1. <code>Message</code> (from <code>app/schema.py</code>): The Chat Bubble</b></p>
@@ -248,7 +248,7 @@ How Do We Use Schemas? (Examples)</h2>
 <li>It includes an <code>output</code> field for the successful result (which can be of <code>Any</code> type, allowing flexibility for different tools) and an optional <code>error</code> field to report problems.</li>
 <li>Specific tools might <em>inherit</em> from <code>ToolResult</code> to add more specific fields, like <code>SearchResult</code> adding <code>url</code>, <code>title</code>, etc. (see <code>app/tool/web_search.py</code>). Using <code>ToolResult</code> as a base ensures all tool outputs have a consistent minimum structure.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2644"></a>
+<h2><a class="anchor" id="autotoc_md2668"></a>
 Under the Hood: Pydantic Validation</h2>
 <p>The real power of using Pydantic for schemas comes from its automatic data validation. Let's illustrate with a simplified <code>Message</code> example.</p>
 <p>Imagine you have this Pydantic model:</p>
@@ -318,7 +318,7 @@ Under the Hood: Pydantic Validation</h2>
 <li>The error message clearly explains <em>what</em> is wrong and <em>where</em>.</li>
 </ul>
 <p>This validation happens automatically whenever data is loaded into these Pydantic models within OpenManus, catching errors early and ensuring data consistency across the entire application. You mostly find these schema definitions in <code>app/schema.py</code>, but also within specific tool files (like <code>app/tool/base.py</code>, <code>app/tool/web_search.py</code>) for their specific results.</p>
-<h2><a class="anchor" id="autotoc_md2645"></a>
+<h2><a class="anchor" id="autotoc_md2669"></a>
 Wrapping Up Chapter 6</h2>
 <p>You've learned that <b>Schemas</b> are like official data templates or forms used throughout OpenManus. They define the expected structure for important data like messages, tool calls, agent states, and tool results. By using the <b>Pydantic</b> library, OpenManus automatically <b>validates</b> data against these schemas, ensuring consistency, preventing errors, and making the whole system more reliable and easier to understand. They are the backbone of structured communication between different components.</p>
 <p>We've now covered most of the core functional building blocks of OpenManus. But how do we configure things like which LLM model to use, API keys, or which tools an agent should have? That's handled by the Configuration system.</p>

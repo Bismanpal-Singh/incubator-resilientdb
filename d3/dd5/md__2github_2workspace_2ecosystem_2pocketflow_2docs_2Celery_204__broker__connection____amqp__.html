@@ -121,16 +121,16 @@ $(function(){initNavTree('d3/dd5/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_broker_connection__amqp_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1011"></a>
-autotoc_md1011</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1035"></a>
+autotoc_md1035</h2>
 <p>layout: default title: "Broker Connection (AMQP)" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md1012"></a>
+<h2><a class="anchor" id="autotoc_md1036"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1013"></a>
+<h1><a class="anchor" id="autotoc_md1037"></a>
 Chapter 4: Broker Connection (AMQP) - Celery's Postal Service</h1>
 <p>In <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Chapter 3: Task</a>, we learned how to define "job descriptions" (Tasks) like <code>add(x, y)</code> and how to request them using <code>.delay()</code>. But when you call <code>add.delay(2, 2)</code>, how does that request actually <em>get</em> to a worker process that can perform the addition? It doesn't just magically appear!</p>
 <p>This is where the <b>Broker Connection</b> comes in. Think of it as Celery's built-in postal service.</p>
-<h2><a class="anchor" id="autotoc_md1014"></a>
+<h2><a class="anchor" id="autotoc_md1038"></a>
 What Problem Does the Broker Connection Solve?</h2>
 <p>Imagine you want to send a letter (a task request) to a friend (a worker) who lives in another city. You can't just shout the message out your window and hope they hear it. You need:</p>
 <ol type="1">
@@ -139,11 +139,11 @@ What Problem Does the Broker Connection Solve?</h2>
 </ol>
 <p>The Broker Connection is that crucial link between your application (where you call <code>.delay()</code>) or your Celery worker and the message broker system. It manages sending messages <em>to</em> the broker and receiving messages <em>from</em> the broker reliably.</p>
 <p>Without this connection, your task requests would never leave your application, and your workers would never know there's work waiting for them.</p>
-<h2><a class="anchor" id="autotoc_md1015"></a>
+<h2><a class="anchor" id="autotoc_md1039"></a>
 Key Concepts: Post Office &amp; Rules</h2>
 <p>Let's break down the pieces:</p>
 <ol type="1">
-<li><b>The Message Broker (The Post Office):</b> This is a separate piece of software that acts as a central hub for messages. Common choices are RabbitMQ and Redis. You tell Celery its address using the <code>broker_url</code> setting in your <a class="el" href="../../d7/df5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_202__configuration.html">Configuration</a>. <code>python @section autotoc_md1016 From Chapter 2 - celeryconfig.py broker_url = 'amqp://guest:guest@localhost:5672//' # Example for RabbitMQ @section autotoc_md1017 Or maybe: broker_url = 'redis://localhost:6379/0' # Example for Redis </code></li>
+<li><b>The Message Broker (The Post Office):</b> This is a separate piece of software that acts as a central hub for messages. Common choices are RabbitMQ and Redis. You tell Celery its address using the <code>broker_url</code> setting in your <a class="el" href="../../d7/df5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_202__configuration.html">Configuration</a>. <code>python @section autotoc_md1040 From Chapter 2 - celeryconfig.py broker_url = 'amqp://guest:guest@localhost:5672//' # Example for RabbitMQ @section autotoc_md1041 Or maybe: broker_url = 'redis://localhost:6379/0' # Example for Redis </code></li>
 <li><b>The Connection (Talking to the Staff):</b> This is the active communication channel established between your Python code (either your main app or a worker) and the broker. It's like having an open phone line to the post office. Celery, using a library called <code>kombu</code>, handles creating and managing these connections based on the <code>broker_url</code>.</li>
 <li><b>AMQP (The Postal Rules):</b> AMQP stands for <b>Advanced Message Queuing Protocol</b>. Think of it as a specific set of rules and procedures for how post offices should operate – how letters should be addressed, sorted, delivered, and confirmed.<ul>
 <li>RabbitMQ is a broker that speaks AMQP natively.</li>
@@ -154,7 +154,7 @@ Key Concepts: Post Office &amp; Rules</h2>
 <li><b>Producer (Sending Mail):</b> When your application calls <code>add.delay(2, 2)</code>, it acts as a <em>producer</em>. It uses its broker connection to send a message ("Please run 'add' with arguments (2, 2)") to the broker.</li>
 <li><b>Consumer (Receiving Mail):</b> A Celery <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a> acts as a <em>consumer</em>. It uses its <em>own</em> broker connection to constantly check a specific mailbox (queue) at the broker for new messages. When it finds one, it takes it, performs the task, and tells the broker it's done.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1018"></a>
+<h2><a class="anchor" id="autotoc_md1042"></a>
 How Sending a Task Uses the Connection</h2>
 <p>Let's revisit sending a task from <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Chapter 3: Task</a>:</p>
 <div class="fragment"><div class="line"><span class="comment"># run_tasks.py (simplified)</span></div>
@@ -175,7 +175,7 @@ How Sending a Task Uses the Connection</h2>
 <div class="line">print(f<span class="stringliteral">&quot;Task sent! ID: {result_promise.id}&quot;</span>)</div>
 </div><!-- fragment --><p>The <code>add.delay(2, 2)</code> call triggers this whole process. It needs the configured <code>broker_url</code> to know <em>which</em> post office to connect to, and the broker connection handles the actual sending of the "letter" (task message).</p>
 <p>Similarly, a running Celery <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a> establishes its own connection to the <em>same</em> broker. It uses this connection to <em>listen</em> for incoming messages on the queues it's assigned to.</p>
-<h2><a class="anchor" id="autotoc_md1019"></a>
+<h2><a class="anchor" id="autotoc_md1043"></a>
 How It Works Internally (Simplified)</h2>
 <p>Celery uses a powerful library called <b>Kombu</b> to handle the low-level details of connecting and talking to different types of brokers (RabbitMQ, Redis, etc.). The <code>app.amqp</code> object in Celery acts as a high-level interface to Kombu's features.</p>
 <ol type="1">
@@ -204,7 +204,7 @@ How It Works Internally (Simplified)</h2>
 <div class="line">    App--&gt;&gt;Task: Return AsyncResult</div>
 <div class="line">    Task--&gt;&gt;Client: Return AsyncResult</div>
 </div><!-- fragment --><p>This shows the flow: your code calls <code>.delay()</code>, Celery uses its configured connection details (<code>app.amqp</code> layer) to get a connection and producer, and then publishes the message to the broker.</p>
-<h2><a class="anchor" id="autotoc_md1020"></a>
+<h2><a class="anchor" id="autotoc_md1044"></a>
 Code Dive: Sending a Message</h2>
 <p>Let's peek inside <code>app/amqp.py</code> where the <code>AMQP</code> class orchestrates sending. The <code>send_task_message</code> method (simplified below) is key.</p>
 <div class="fragment"><div class="line"><span class="comment"># Simplified from app/amqp.py within the AMQP class</span></div>
@@ -249,7 +249,7 @@ Code Dive: Sending a Message</h2>
 <li>It calls <code>producer.publish()</code>, passing the task body and all the necessary options (like serializer). This is the function that actually sends the data over the network connection to the broker.</li>
 </ul>
 <p>The <code>Connection</code> objects themselves are managed by Kombu (see <code>kombu/connection.py</code>). Celery uses these objects via its <code>app.connection_for_write()</code> or <code>app.connection_for_read()</code> methods, which often pull from the connection pool (<code>kombu.pools</code>).</p>
-<h2><a class="anchor" id="autotoc_md1021"></a>
+<h2><a class="anchor" id="autotoc_md1045"></a>
 Conclusion</h2>
 <p>The Broker Connection is Celery's vital communication link, its "postal service."</p>
 <ul>
