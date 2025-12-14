@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['guide_0',['Simple PDF Chat Setup Guide',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html',1,'']]]
+  ['nft_5fmarket_0',['nft_market',['../d4/d01/md__2github_2workspace_2ecosystem_2graphql_2docs_2nft__market.html',1,'nft_market'],['../d2/d18/md__2github_2workspace_2ecosystem_2graphql_2service_2sdk__validator_2docs_2nft__market.html',1,'nft_market']]]
 ];

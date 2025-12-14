@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ResilientDB: ResAI Research System Architecture</title>
+<title>ResilientDB: SYSTEM_ARCHITECTURE</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -118,12 +118,13 @@ $(function(){initNavTree('dc/d36/md__2github_2workspace_2ecosystem_2AI-Tooling_2
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">ResAI Research System Architecture</div></div>
+  <div class="headertitle"><div class="title">SYSTEM_ARCHITECTURE</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md209"></a></p>
-<h1><a class="anchor" id="autotoc_md210"></a>
-System Architecture Diagram</h1>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md209"></a>
+ResAI Research System Architecture</h1>
+<h2><a class="anchor" id="autotoc_md210"></a>
+System Architecture Diagram</h2>
 <div class="fragment"><div class="line">graph TB</div>
 <div class="line">    %% User Interface Layer</div>
 <div class="line">    subgraph Frontend[&quot;Frontend (Next.js)&quot;]</div>
@@ -220,10 +221,10 @@ System Architecture Diagram</h1>
 <div class="line">    class DIM,MDQE,LP,VSI,Retriever service</div>
 <div class="line">    class DeepSeek,HuggingFace,LlamaCloud external</div>
 <div class="line">    class Docs,Parsed,Cache storage</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md211"></a>
-Data Flow</h1>
-<h2><a class="anchor" id="autotoc_md212"></a>
-Document Selection Flow</h2>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md211"></a>
+Data Flow</h2>
+<h3><a class="anchor" id="autotoc_md212"></a>
+Document Selection Flow</h3>
 <ol type="1">
 <li>User opens research page</li>
 <li>System loads available documents from <code>/documents/</code> directory</li>
@@ -233,8 +234,8 @@ Document Selection Flow</h2>
 <li>Vector embeddings are generated using HuggingFace</li>
 <li>Indices are stored in memory cache</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md213"></a>
-Chat Query Flow</h2>
+<h3><a class="anchor" id="autotoc_md213"></a>
+Chat Query Flow</h3>
 <ol type="1">
 <li>User enters a question</li>
 <li>System retrieves relevant chunks from combined index</li>

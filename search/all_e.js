@@ -388,7 +388,7 @@ var searchData=
   ['chat_20not_20working_385',['Chat Not Working',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html#autotoc_md250',1,'']]],
   ['chat_20query_20flow_386',['Chat Query Flow',['../dc/d36/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2docs_2SYSTEM__ARCHITECTURE.html#autotoc_md213',1,'']]],
   ['chat_20response_20item_20tsx_20tt_387',['Displaying Tool Calls (&lt;tt&gt;terminal-chat-response-item.tsx&lt;/tt&gt;)',['../dc/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_205__response______tool__call__handling.html#autotoc_md1303',1,'']]],
-  ['chat_20setup_20guide_388',['Simple PDF Chat Setup Guide',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html',1,'']]],
+  ['chat_20setup_20guide_388',['Simple PDF Chat Setup Guide',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html#autotoc_md233',1,'']]],
   ['chat_20starters_20fastmcp_20prompts_20tt_20prompt_20tt_20tt_20promptmanager_20tt_389',['Chapter 5: Reusable Chat Starters - FastMCP Prompts (&lt;tt&gt;Prompt&lt;/tt&gt;, &lt;tt&gt;PromptManager&lt;/tt&gt;)',['../d5/de9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_205__fastmcp__prompts___e380d8fca08b641e7632fcc5814680b7.html#autotoc_md2375',1,'']]],
   ['chat_20tt_390',['&lt;tt&gt;/api/research/chat&lt;/tt&gt;',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html#autotoc_md245',1,'']]],
   ['chat_5fhistory_20will_20use_20topic_20to_20accumulate_20strings_391',['^^^ state key &apos;chat_history&apos; will use Topic to accumulate strings',['../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html#autotoc_md2144',1,'']]],

@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ResilientDB: PostgreSQL + Vector Storage Setup</title>
+<title>ResilientDB: DB_SETUP</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -118,26 +118,27 @@ $(function(){initNavTree('d5/d62/md__2github_2workspace_2ecosystem_2AI-Tooling_2
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">PostgreSQL + Vector Storage Setup</div></div>
+  <div class="headertitle"><div class="title">DB_SETUP</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md205"></a></p>
-<h1><a class="anchor" id="autotoc_md206"></a>
-Prerequisites</h1>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md205"></a>
+PostgreSQL + Vector Storage Setup</h1>
+<h2><a class="anchor" id="autotoc_md206"></a>
+Prerequisites</h2>
 <ul>
 <li>PostgreSQL with pgvector extension</li>
 <li>Node.js packages: pg, pgvector, @llamaindex/postgres</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md207"></a>
-Setup</h1>
+<h2><a class="anchor" id="autotoc_md207"></a>
+Setup</h2>
 <div class="fragment"><div class="line"># Install PostgreSQL &amp; pgvector</div>
 <div class="line">brew install postgresql pgvector</div>
 <div class="line">brew services start postgresql</div>
 <div class="line"> </div>
 <div class="line"># Create database  </div>
 <div class="line">createdb nexus_db</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md208"></a>
-Add env variables:</h1>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md208"></a>
+Add env variables:</h2>
 <p>DATABASE_URL=postgresql://{username}@localhost:5432/nexus_db </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

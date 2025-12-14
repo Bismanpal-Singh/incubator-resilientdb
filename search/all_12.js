@@ -376,7 +376,7 @@ var searchData=
   ['growing_20house_373',['What Problem Do They Solve? Organizing a Growing House',['../da/de3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_208__blueprints.html#autotoc_md1925',1,'']]],
   ['guard_374',['What&apos;s the Big Idea? The Security Guard',['../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_204__approval__policy______security.html#autotoc_md1287',1,'']]],
   ['guess_20based_20on_20python_20type_20optional_375',['If no type defined, try to guess based on Python type (optional)',['../d6/df3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_207__agenttype.html#autotoc_md3166',1,'']]],
-  ['guide_376',['Simple PDF Chat Setup Guide',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html',1,'']]],
+  ['guide_376',['Simple PDF Chat Setup Guide',['../d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2nexus_2RESEARCH__SETUP.html#autotoc_md233',1,'']]],
   ['guide_20for_20configurations_377',['Detailed Guide for Configurations',['../d3/dff/md__2github_2workspace_2ecosystem_2monitoring_2reslens_2INSTALLATION.html#autotoc_md608',1,'']]],
   ['guide_20through_20the_20database_378',['Chapter 7: Iterator - Your Guide Through the Database',['../d8/dd9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_207__iterator.html#autotoc_md2292',1,'']]]
 ];

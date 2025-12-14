@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ResilientDB: Simple PDF Chat Setup Guide</title>
+<title>ResilientDB: RESEARCH_SETUP</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -118,32 +118,33 @@ $(function(){initNavTree('d4/d87/md__2github_2workspace_2ecosystem_2AI-Tooling_2
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Simple PDF Chat Setup Guide</div></div>
+  <div class="headertitle"><div class="title">RESEARCH_SETUP</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md233"></a></p>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md233"></a>
+Simple PDF Chat Setup Guide</h1>
 <p>This guide will help you set up the simplified PDF chat functionality that allows you to select PDFs, preview them, and chat with their content using LlamaParse.</p>
-<h1><a class="anchor" id="autotoc_md234"></a>
-Prerequisites</h1>
-<h2><a class="anchor" id="autotoc_md235"></a>
-1. API Keys Required</h2>
+<h2><a class="anchor" id="autotoc_md234"></a>
+Prerequisites</h2>
+<h3><a class="anchor" id="autotoc_md235"></a>
+1. API Keys Required</h3>
 <p>You need the following API keys:</p>
-<h3><a class="anchor" id="autotoc_md236"></a>
-DeepSeek API Key</h3>
+<h4><a class="anchor" id="autotoc_md236"></a>
+DeepSeek API Key</h4>
 <ul>
 <li>Go to <a href="https://platform.deepseek.com/">DeepSeek Platform</a></li>
 <li>Sign up and create an API key</li>
 <li>This is used for the AI chat responses</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md237"></a>
-LlamaCloud API Key</h3>
+<h4><a class="anchor" id="autotoc_md237"></a>
+LlamaCloud API Key</h4>
 <ul>
 <li>Go to <a href="https://cloud.llamaindex.ai">LlamaCloud</a></li>
 <li>Sign up and get your API key</li>
 <li>This is used for document parsing with LlamaParse</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md238"></a>
-2. Environment Setup</h2>
+<h3><a class="anchor" id="autotoc_md238"></a>
+2. Environment Setup</h3>
 <p>Create a <code>.env.local</code> file in your project root:</p>
 <div class="fragment"><div class="line"># Required: DeepSeek API Key for the LLM</div>
 <div class="line">DEEPSEEK_API_KEY=your_deepseek_api_key_here</div>
@@ -153,10 +154,10 @@ LlamaCloud API Key</h3>
 <div class="line"> </div>
 <div class="line"># Optional: DeepSeek model (defaults to &quot;deepseek-chat&quot;)</div>
 <div class="line">DEEPSEEK_MODEL=deepseek-chat</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md239"></a>
-Features</h1>
-<h2><a class="anchor" id="autotoc_md240"></a>
-Current Implementation</h2>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md239"></a>
+Features</h2>
+<h3><a class="anchor" id="autotoc_md240"></a>
+Current Implementation</h3>
 <ol type="1">
 <li><b>Document Selection</b>: Choose from PDFs in the <code>/documents</code> folder using a dropdown</li>
 <li><b>PDF Preview</b>: Native browser PDF viewer on the right side</li>
@@ -164,8 +165,8 @@ Current Implementation</h2>
 <li><b>Text Extraction</b>: Uses LlamaParse for reliable text extraction from PDFs</li>
 <li><b>In-Memory Caching</b>: Parsed documents are cached in memory to avoid re-parsing</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md241"></a>
-What's Removed</h2>
+<h3><a class="anchor" id="autotoc_md241"></a>
+What's Removed</h3>
 <ul>
 <li>Layout extraction and highlighting</li>
 <li>Complex file-based caching</li>
@@ -174,8 +175,8 @@ What's Removed</h2>
 <li>Image serving</li>
 <li>Complex UI components</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md242"></a>
-Usage</h1>
+<h2><a class="anchor" id="autotoc_md242"></a>
+Usage</h2>
 <ol type="1">
 <li><b>Access the Interface</b>:<ul>
 <li>Navigate to <code>/placeholder</code> in your app</li>
@@ -194,25 +195,25 @@ Usage</h1>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md243"></a>
-API Endpoints</h1>
-<h2><a class="anchor" id="autotoc_md244"></a>
-<code>/api/research/documents</code></h2>
+<h2><a class="anchor" id="autotoc_md243"></a>
+API Endpoints</h2>
+<h3><a class="anchor" id="autotoc_md244"></a>
+<code>/api/research/documents</code></h3>
 <ul>
 <li><b>Method</b>: GET</li>
 <li><b>Description</b>: Lists available PDF documents</li>
 <li><b>Returns</b>: Array of document metadata</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md245"></a>
-<code>/api/research/chat</code></h2>
+<h3><a class="anchor" id="autotoc_md245"></a>
+<code>/api/research/chat</code></h3>
 <ul>
 <li><b>Method</b>: POST</li>
 <li><b>Body</b>: <code>{ query: "your question", documentPath: "documents/filename.pdf" }</code></li>
 <li><b>Description</b>: Chat with a specific document using LlamaParse + DeepSeek</li>
 <li><b>Returns</b>: Streaming text response</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md246"></a>
-How It Works</h1>
+<h2><a class="anchor" id="autotoc_md246"></a>
+How It Works</h2>
 <ol type="1">
 <li><b>Document Loading</b>: When you select a PDF, it loads in the browser's native PDF viewer</li>
 <li><b>First Question</b>: When you ask your first question about a document, LlamaParse extracts the text</li>
@@ -220,56 +221,56 @@ How It Works</h1>
 <li><b>Chat Response</b>: DeepSeek generates responses based on relevant document content</li>
 <li><b>Caching</b>: The vector index is cached in memory to avoid re-parsing the same document</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md247"></a>
-Troubleshooting</h1>
-<h2><a class="anchor" id="autotoc_md248"></a>
-"Failed to parse document" Error</h2>
+<h2><a class="anchor" id="autotoc_md247"></a>
+Troubleshooting</h2>
+<h3><a class="anchor" id="autotoc_md248"></a>
+"Failed to parse document" Error</h3>
 <p><b>Most Common Causes:</b></p>
 <ol type="1">
 <li><b>Invalid LlamaCloud API Key</b>: Check your API key at <a href="https://cloud.llamaindex.ai">LlamaCloud</a></li>
 <li><b>Insufficient Credits</b>: Check your LlamaCloud account balance</li>
 <li><b>Unsupported PDF</b>: Some PDFs may not be parseable</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md249"></a>
-Documents Not Appearing</h2>
+<h3><a class="anchor" id="autotoc_md249"></a>
+Documents Not Appearing</h3>
 <ul>
 <li>Check that PDF files are in the <code>/documents</code> folder</li>
 <li>Ensure files have <code>.pdf</code> extension</li>
 <li>Check browser console for errors</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md250"></a>
-Chat Not Working</h2>
+<h3><a class="anchor" id="autotoc_md250"></a>
+Chat Not Working</h3>
 <ul>
 <li>Verify <code>DEEPSEEK_API_KEY</code> is set correctly</li>
 <li>Ensure the document was successfully parsed</li>
 <li>Check browser network tab for API errors</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md251"></a>
-PDF Not Loading</h2>
+<h3><a class="anchor" id="autotoc_md251"></a>
+PDF Not Loading</h3>
 <ul>
 <li>Ensure the PDF file is accessible</li>
 <li>Check browser console for loading errors</li>
 <li>Try a different PDF to isolate the issue</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md252"></a>
-Development Notes</h1>
-<h2><a class="anchor" id="autotoc_md253"></a>
-Performance</h2>
+<h2><a class="anchor" id="autotoc_md252"></a>
+Development Notes</h2>
+<h3><a class="anchor" id="autotoc_md253"></a>
+Performance</h3>
 <ul>
 <li>Documents are parsed on first use (lazy loading)</li>
 <li>Vector indices are cached in memory during the session</li>
 <li>Large PDFs may take longer to parse initially</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md254"></a>
-Limitations</h2>
+<h3><a class="anchor" id="autotoc_md254"></a>
+Limitations</h3>
 <ul>
 <li>No persistent caching (re-parses on server restart)</li>
 <li>Single document chat only (no multi-document queries)</li>
 <li>No visual highlighting or source citations</li>
 <li>Relies on browser's built-in PDF viewer</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md255"></a>
-Future Enhancements</h2>
+<h3><a class="anchor" id="autotoc_md255"></a>
+Future Enhancements</h3>
 <p>If needed, you could add back:</p>
 <ul>
 <li>File-based caching for persistence</li>
@@ -277,8 +278,8 @@ Future Enhancements</h2>
 <li>Source citations (without visual highlighting)</li>
 <li>Document upload functionality</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md256"></a>
-File Structure</h1>
+<h2><a class="anchor" id="autotoc_md256"></a>
+File Structure</h2>
 <div class="fragment"><div class="line">src/app/</div>
 <div class="line">├── placeholder/</div>
 <div class="line">│   └── page.tsx                 # Main chat interface</div>
