@@ -3,241 +3,195 @@ import { Divider, Box, Space, Alert, Text, Code, Title } from '@mantine/core'
 
 {/* BEGIN AUTO_DOC: resvault */}
 
-# ResVault
+# resvault
+
+`resvault` is a browser extension wallet that manages user accounts using *cryptographic key pairs*. It operates in two distinct modes: a simple **Key-Value (KV) store** for basic transactions and a more advanced **Smart Contract** mode for deploying contracts to a blockchain network. The wallet allows users to securely create, import, and manage multiple accounts while connecting to different networks.
+
+
+```mermaid
+flowchart TD
+A0["Global State Management (GlobalContext)"]
+A1["Key Pair Management"]
+A2["Authentication & Routing Flow"]
+A3["Service Modes (KV vs. Contract)"]
+A4["Network & Connection Management"]
+A5["Transaction & Contract Deployment"]
+A2 -- "Updates state" --> A0
+A0 -- "Implements logic for" --> A1
+A2 -- "Routes based on" --> A3
+A4 -- "Uses keys from" --> A1
+A5 -- "Requires connection" --> A4
+A5 -- "Controls mode" --> A3
+
+```
+
+ResVault is a browser extension wallet designed for secure cryptographic key management and interaction with blockchain networks. It provides a robust framework for handling user authentication, managing multiple accounts, and submitting transactions, all while maintaining a strict security model. This guide outlines the core architecture and functionality of the ResVault application.
+
+## Authentication and Routing
+
+ResVault's navigation is governed by a user's authentication status. The main application router, located in `src/App.js`, acts as a traffic controller, directing users to different sets of pages based on whether they are logged in.
+
+This logic hinges on a single state variable, `isAuthenticated`, managed by the `GlobalContext`.
+
+```javascript
+// src/App.js
+function App() {
+  const { isAuthenticated } = useContext(GlobalContext);
 
-A Chrome extension that serves as a comprehensive wallet for ResilientDB, providing a user-friendly interface for managing accounts, submitting transactions, deploying smart contracts, and interacting with the ResilientDB blockchain network.
+  return (
+    <Routes>
+      {!isAuthenticated ? (
+        // Render public routes (Login, SignUp, Home)
+      ) : (
+        // Render secure, authenticated routes (Dashboard)
+      )}
+    </Routes>
+  );
+}
+```
 
-## Overview
+### Public Routes
+When a user is not authenticated (`isAuthenticated` is `false`), they are restricted to a few public pages:
+*   `/`: The main landing page.
+*   `/signup`: The account creation page.
+*   `/login`: The account login page.
+*   Any other path (`*`) redirects the user to the home page.
+
+### Authenticated Routes
+Upon successful login, `isAuthenticated` becomes `true`, and the router switches to the secure routes.
+*   `/dashboard` or `/contract`: The main functional dashboards.
+*   Any other path (`*`) now redirects the user to their dashboard, preventing access to public pages like `/login` while authenticated.
+
+The login process is the key transition point. On a successful password verification, the `loginAccount` function sets the global state and redirects the user.
+
+```javascript
+// src/pages/Login.jsx
+const loginAccount = async (e) => {
+  // ... password verification ...
+
+  // 1. Update global state
+  setIsAuthenticated(true);
+  
+  // 2. Redirect to the secure area
+  navigate("/dashboard");
+};
+```
+
+## Key Pair Management
+
+Each account in ResVault is a cryptographic key pair, consisting of a shareable **public key** and a secret **private key** used for signing. The wallet's core function is to securely manage the entire lifecycle of these key pairs. All key management logic is centralized in `src/context/GlobalContext.js`.
+
+The security of the wallet is based on a cycle of generation, encryption, storage, and decryption.
+
+1.  **Generation**: New key pairs are created using the `tweetnacl` library.
+2.  **Encryption**: The entire list of a user's key pairs is stringified into JSON and then encrypted using their password with `CryptoJS.AES`. ResVault **never** stores private keys or passwords in plain text.
+3.  **Storage**: The resulting encrypted string is the only sensitive data saved to `chrome.storage.sync`.
+4.  **Decryption**: When a user logs in, the stored data is fetched and decrypted using the password they provide. If successful, the decrypted keys are loaded into the application's memory for the session.
+
+```javascript
+// src/context/GlobalContext.js
+const saveKeyPairsToStorage = (keyPairs, password) => {
+  // Encrypt the JSON string of all key pairs
+  const encryptedKeyPairs = CryptoJS.AES.encrypt(
+    JSON.stringify(keyPairs),
+    password
+  ).toString();
+
+  // Save only the encrypted text to Chrome's storage
+  chrome.storage.sync.set({ encryptedKeyPairs });
+};
+```
+
+## Service Modes: KV vs. Contract
+
+ResVault operates in two distinct service modes to provide a focused user experience for different backends. This is controlled by the `serviceMode` state variable.
 
-ResVault is a Chrome extension wallet designed specifically for ResilientDB, a High Throughput Yielding Permissioned Blockchain Fabric founded by [ExpoLab](https://expolab.org/) at [UC Davis](https://www.ucdavis.edu/) in 2018. ResilientDB advocates a system-centric design by adopting a multi-threaded architecture that encompasses deep pipelines and separates the ordering of client transactions from their execution.
+### Key-Value (KV) Mode
+*   **Purpose**: Interacting with a simple key-value database.
+*   **UI**: Renders the `Dashboard.jsx` component, which is optimized for submitting simple JSON transactions.
+*   **Identity**: Uses the account's **Public Key** as the primary identifier.
 
-## Features
+### Smart Contract Mode
+*   **Purpose**: Deploying and interacting with smart contracts (e.g., Solidity).
+*   **UI**: Renders the `Contract.jsx` component, featuring tools to upload `.sol` and configuration files.
+*   **Identity**: Uses the **Owner Address** (e.g., `0x...`) derived from the public key.
 
-### Core Functionality
+Users can toggle between modes via a badge in the UI. This action calls `toggleServiceMode`, which updates the `serviceMode` state in `GlobalContext`, triggering the `App.js` router to display the corresponding dashboard component.
 
-- **Account Management**
-  - Create new accounts with secure key generation
-  - Delete existing accounts
-  - Multi-account support with key pair switching
-  - User profiles and authentication
+## Network and Connection Management
 
-- **Transaction Operations**
-  - Submit transactions to ResilientDB networks
-  - Transaction logging and history
-  - Secure transaction signing with Ed25519 keys
-  - File upload for transaction data
+The wallet provides granular control over network connections and site permissions, ensuring users control where their wallet operates and which applications can interact with it.
 
-- **Network Management**
-  - Switch between ResilientDB Mainnet and Localnet
-  - Custom network configuration
-  - Real-time connection status
-  - Network-specific settings
+### Network Selection
+A dropdown menu allows users to switch between different blockchain networks (e.g., Mainnet, Localnet, or custom networks). Selecting a network updates the target server URL in the global state and persists this choice in `chrome.storage.local` for future sessions. For security, switching networks automatically disconnects the wallet from any connected site.
 
-- **Service Modes**
-  - Key-Value service mode for data operations
-  - Smart Contract service mode for contract deployment
-  - Dynamic mode switching
+### Site Connection Permissions
+ResVault does not expose a user's wallet to websites by default. A user must explicitly grant permission by clicking a "connect" icon for each specific website. This action triggers a secure handshake:
 
-### Smart Contract Features (v1.2.0)
+1.  The UI sends a `storeKeys` message to the extension's isolated background script.
+2.  The message securely passes the active keys, network URL, and the website's domain.
+3.  The background script stores this information in its memory, associating the keys only with that specific domain and network.
 
-- **Contract Deployment**
-  - Deploy Solidity smart contracts directly from the wallet
-  - Automatic contract compilation on the server
-  - Address ownership using your wallet address
-  - GraphQL integration with ResilientDB contract service
+When disconnecting, a `disconnectKeys` message is sent, and the background script erases the keys associated with that site, revoking its permissions. This ensures private keys never leave the secure context of the wallet extension.
 
-- **Contract Management**
-  - Upload and deploy contract files
-  - Constructor argument support
-  - Contract address tracking
-  - Deployment status monitoring
+## Submitting Transactions and Deploying Contracts
 
-### Planned Features
+The wallet's primary function is to sign and submit data to the blockchain. This process follows a secure hand-off pattern where the UI prepares the data, but all cryptographic operations happen in the secure background script.
 
-- Password improvement
-- Transaction details view
-- View all transactions functionality
-- Contract execution and interaction
-- Gas estimation and optimization
+### Submitting a KV Transaction
+In KV Mode, the user uploads a JSON file containing transaction details to `Dashboard.jsx`. Clicking "Submit" initiates the following flow:
+1.  **Hand-off**: The UI sends a `submitTransactionFromDashboard` message to the background script with the transaction data.
+2.  **Signing**: The background script retrieves the stored private key for the session and signs the transaction.
+3.  **Dispatch**: The signed transaction is sent to the selected network's server.
+4.  **Confirmation**: The background script awaits a success or error response and forwards it back to the UI, which then notifies the user.
 
-## Installation
+### Deploying a Smart Contract
+The process is similar in Contract Mode. The user uploads a Solidity (`.sol`) file and a configuration (`.json`) file. Clicking "Deploy" sends a `deployContractChain` message to the background script, which then handles the compilation, signing, and deployment of the contract.
 
-### Building and Installing from Source
+```javascript
+// src/pages/Dashboard.jsx - The UI hand-off
+const handleSubmit = () => {
+  chrome.runtime.sendMessage({
+    action: 'submitTransactionFromDashboard',
+    transactionData: transactionData,
+    domain: domain,
+    net: selectedNet,
+  }, (response) => {
+    // Handle the success or error response from the background script
+  });
+};
+```
 
-ResVault can be built from source and then installed into chrome.
+## Global State Management with GlobalContext
 
-#### Prerequisites
+ResVault relies on a centralized state management system, `GlobalContext`, to ensure data consistency across all components. This context acts as a "single source of truth" for the application's most critical state, including:
+*   `isAuthenticated`: The user's login status.
+*   `serviceMode`: The active service mode (`'KV'` or `'Contract'`).
+*   `keyPairs`: The list of the user's decrypted accounts.
+*   `selectedNet`: The currently active network.
 
-- **Node.js** (required for building)
-- Git
+The entire application is wrapped in a `<GlobalProvider>` component, which makes this state available to all child components.
 
-#### Build Steps
+### Reading and Writing to State
+Components can read from and write to this global state using React's `useContext` hook.
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/ResilientApp/ResVault.git
-   cd ResVault
-   ```
+*   **Reading State**: To access a value, a component destructures it from `useContext`.
+    ```javascript
+    const { isAuthenticated, serviceMode } = useContext(GlobalContext);
+    ```
+*   **Updating State**: To change a value, a component calls one of the update functions provided by the context.
+    ```javascript
+    const { setIsAuthenticated } = useContext(GlobalContext);
+    setIsAuthenticated(true);
+    ```
 
-2. **Install Dependencies**
-   ```bash
-   npm install --legacy-peer-deps
-   ```
+When an update function is called, the state in `GlobalContext` changes, and React automatically re-renders any component that depends on that piece of state, ensuring the UI is always synchronized.
 
-3. **Build the Extension**
-   ```bash
-   npm run build
-   ```
+This architecture provides a secure and maintainable foundation for managing digital assets and interacting with decentralized applications.
 
-4. **Install in Chrome**
-   - Open Chrome and navigate to `chrome://extensions/`
-   - Toggle **Developer mode** on (top right corner)
-   - Click **Load unpacked**
-   - Select the `build` folder from the ResVault project directory
+---
 
-5. **Verify Installation**
-   - The ResVault extension should appear in your Chrome extensions list
-   - Click the extension icon in the toolbar to access the wallet
-
-### Future Installation Methods
-
-- **Chrome Web Store**: Coming Soon
-- **GitHub Releases**: Will be available once releases are published
-
-## Usage
-
-### Getting Started
-
-1. **Access the Wallet**
-   - Click the ResVault extension icon in your Chrome toolbar
-   - The wallet interface will open in a popup window
-
-2. **Create Your First Account**
-   - Click "Create Account" to generate a new wallet
-   - Follow the setup process to secure your account
-   - Save your recovery information securely
-
-3. **Login to Your Account**
-   - Use your credentials to access your wallet
-   - Ensure you're on a secure connection
-
-### Managing Accounts
-
-- **Create Account**: Generate new wallet addresses with secure key pairs
-- **Delete Account**: Remove accounts you no longer need
-- **Switch Accounts**: Easily switch between multiple key pairs
-- **User Profiles**: Manage different user profiles within the wallet
-- **Export/Import Keys**: Download and upload key pair files
-
-### Network Configuration
-
-1. **Select Network**
-   - Choose between ResilientDB Mainnet and Localnet
-   - Configure custom network endpoints
-   - Set protocol (HTTP/HTTPS)
-
-2. **Service Mode**
-   - Toggle between Key-Value and Smart Contract modes
-   - Mode-specific functionality and interfaces
-
-3. **Connection Status**
-   - Real-time connection indicators
-   - Network-specific settings and configurations
-
-### Submitting Transactions
-
-1. **Prepare Transaction**
-   - Upload JSON transaction files
-   - Enter transaction details manually
-   - Verify recipient addresses and amounts
-
-2. **Review and Confirm**
-   - Double-check all transaction details
-   - Confirm the transaction with your private key
-
-3. **Monitor Status**
-   - Track transaction status in real-time
-   - View transaction history and confirmations
-   - Copy transaction IDs for reference
-
-### Smart Contract Deployment
-
-1. **Upload Contract**
-   - Upload Solidity contract files
-   - Paste contract code directly
-   - Provide constructor arguments if needed
-
-2. **Deploy Contract**
-   - Deploy using your wallet address as owner
-   - Monitor deployment progress
-   - Receive contract address upon successful deployment
-
-3. **Contract Management**
-   - Track deployed contracts
-   - View contract addresses and ownership
-   - Monitor contract deployment status
-
-### Transaction Logging
-
-- View all submitted transactions
-- Check transaction status and confirmations
-- Access detailed transaction information
-- Export transaction history
-
-## Security Considerations
-
-### Best Practices
-
-- **Secure Storage**: Never share your private keys or recovery phrases
-- **Regular Updates**: Keep the extension updated to the latest version
-- **Secure Environment**: Only use the wallet on trusted devices and networks
-- **Backup**: Always backup your account recovery information
-
-### Privacy
-
-- ResVault operates locally in your browser
-- Private keys are stored securely in the extension
-- No sensitive data is transmitted to external servers
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Extension Not Loading**
-   - Ensure Developer mode is enabled in Chrome
-   - Check that the build folder is correctly selected
-   - Try refreshing the extensions page
-
-2. **Transaction Failures**
-   - Verify you have sufficient balance
-   - Check network connectivity to ResilientDB
-   - Ensure transaction parameters are correct
-
-3. **Account Access Issues**
-   - Verify your login credentials
-   - Check if the account exists
-   - Try refreshing the extension
-
-## Links
-
-- **Website**: [ResilientDB](https://resilientdb.com)
-- **GitHub Repository**: [ResVault](https://github.com/apache/incubator-resilientdb-resvault)
-- **Apache Incubator**: [Apache Incubator ResVault](https://github.com/apache/incubator-resilientdb-resvault)
-
-## License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/apache/incubator-resilientdb-resvault/blob/main/LICENSE) file for details.
-
-## Related Tools
-
-- [ResilientDB](../resilientdb) - The underlying blockchain platform
-- [ResContract CLI](../rescontract) - Command-line interface for smart contracts
-- [ResDB-ORM](../resdb_orm) - Object-relational mapping for ResilientDB
-- [ResilientDB Python SDK](../pythonsdk) - Python SDK for ResilientDB 
-
-## Contributing
-
-We welcome contributions to this project! Please feel free to submit pull requests, report issues, or suggest new features.
+Generated by [AI Codebase Knowledge Builder](https://github.com/The-Pocket/Tutorial-Codebase-Knowledge)
 
 {/* END AUTO_DOC: resvault */}
 
