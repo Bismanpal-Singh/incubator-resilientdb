@@ -6,207 +6,187 @@ import { NodeQueryBuilder } from '../components/cache/NodeQueryBuilder'
 
 {/* BEGIN AUTO_DOC: resilient-node-cache */}
 
-# ResilientDB Node Cache
+# resilient-node-cache
 
-ResilientDB Node Cache is a TypeScript library that provides real-time synchronization between ResilientDB and MongoDB using WebSocket and HTTP connections. It's designed to be a robust caching layer for blockchain data, making it easier to work with ResilientDB data in Node.js applications.
+This project acts as a data bridge, automatically copying information from a **ResilientDB** database into a **MongoDB** database. It first performs a *bulk data transfer* over HTTP to sync all historical records. After that, it uses a persistent *real-time WebSocket connection* to listen for new updates, ensuring the MongoDB copy is always current. The library is designed to be robust, automatically handling connection drops and making it easy to query the synchronized data.
 
-## Interactive Tools
 
-<Tabs defaultValue="config">
-  <TabsList>
-    <TabsTab value="config">Configuration Generator</TabsTab>
-    <TabsTab value="query">Query Builder</TabsTab>
-  </TabsList>
+```mermaid
+flowchart TD
+A0["`WebSocketMongoSync` Orchestrator"]
+A1["System Configuration (`MongoConfig` & `ResilientDBConfig`)"]
+A2["Synchronization Lifecycle"]
+A3["Batch Data Sync (HTTP)"]
+A4["Real-time Update Listener (WebSocket)"]
+A5["Connection Resiliency"]
+A6["Data Querying Pattern"]
+A1 -- "Configures" --> A0
+A0 -- "Implements" --> A2
+A2 -- "Initiates" --> A3
+A4 -- "Triggers fetch" --> A3
+A5 -- "Restores" --> A4
+A0 -- "Enables" --> A6
 
-  <TabsPanel value="config">
-    <Box my="md">
-      <Alert icon={<IconInfoCircle size={16} />} title="Interactive Configuration" color="blue">
-        Use this tool to generate your Node Cache configuration code. Adjust the parameters below and copy the generated code.
-      </Alert>
-      <NodeConfigGenerator />
-    </Box>
-  </TabsPanel>
-
-  <TabsPanel value="query">
-    <Box my="md">
-      <Alert icon={<IconInfoCircle size={16} />} title="MongoDB Query Builder" color="blue">
-        Build and test MongoDB queries for your cached blockchain data. The results will show sample data structure.
-      </Alert>
-      <NodeQueryBuilder />
-    </Box>
-  </TabsPanel>
-</Tabs>
-
-## Features
-
-- Real-time synchronization via WebSocket and HTTP
-- Automatic reconnection handling
-- Configurable batch processing
-- Event-driven architecture
-- MongoDB querying capabilities
-- TypeScript support with full type definitions
-
-## Installation
-
-The library can be installed via npm:
-
-```bash
-npm install resilient-node-cache
 ```
 
-## Syncing Data from ResilientDB to MongoDB
+`resilient-node-cache` is a robust library designed to create and maintain a local MongoDB cache of data from a ResilientDB instance. It handles historical data synchronization, real-time updates, and network interruptions automatically, providing a reliable local data source for your applications.
 
-Create a sync script to initialize and start the data synchronization from ResilientDB to MongoDB.
+This guide explains the core concepts, from initial setup to advanced data querying patterns.
 
-```typescript
-import { WebSocketMongoSync } from 'resilient-node-cache';
+## Getting Started: Configuration & Initialization
 
-// MongoDB Configuration
+To begin, you must define the data source (ResilientDB) and the destination (MongoDB). This is done through two simple configuration objects.
+
+### 1. System Configuration
+
+The library requires a `MongoConfig` object for your database destination and a `ResilientDBConfig` object for the data source.
+
+**`MongoConfig`**
+This object specifies the connection details for your MongoDB database.
+
+*   `uri`: The MongoDB connection string.
+*   `dbName`: The name of the database to use.
+*   `collectionName`: The name of the collection where block data will be stored.
+
+```javascript
 const mongoConfig = {
   uri: 'mongodb://localhost:27017',
-  dbName: 'myDatabase',
-  collectionName: 'myCollection',
+  dbName: 'myResilientApp',
+  collectionName: 'blocks',
 };
+```
 
-// ResilientDB Configuration
+**`ResilientDBConfig`**
+This object points to the ResilientDB server.
+
+*   `baseUrl`: The primary address using the `resilientdb://` protocol. The library automatically converts this to the correct HTTP and WebSocket endpoints.
+*   `httpSecure`: Use `https` for data fetching.
+*   `wsSecure`: Use `wss` for real-time updates.
+
+```javascript
 const resilientDBConfig = {
   baseUrl: 'resilientdb://crow.resilientdb.com',
   httpSecure: true,
   wsSecure: true,
 };
+```
 
-// Initialize the sync
-const sync = new WebSocketMongoSync(mongoConfig, resilientDBConfig);
+### 2. The `WebSocketMongoSync` Orchestrator
 
-// Set up event handlers
-sync.on('connected', () => {
-  console.log('WebSocket connected.');
-});
+The `WebSocketMongoSync` class is the central manager that uses your configurations to coordinate the entire synchronization process.
 
-sync.on('data', (newBlocks) => {
-  console.log('Received new blocks:', newBlocks);
-});
+First, create an instance by passing your configuration objects to its constructor.
 
-sync.on('error', (error) => {
-  console.error('Error:', error);
-});
+```javascript
+const { WebSocketMongoSync } = require('resilient-node-cache');
 
-sync.on('closed', () => {
-  console.log('Connection closed.');
-});
+const syncOrchestrator = new WebSocketMongoSync(mongoConfig, resilientDBConfig);
+```
 
-// Start synchronization
+This creates an orchestrator that is ready but has not yet started its work. To begin the synchronization, call the asynchronous `.initialize()` method.
+
+```javascript
 (async () => {
   try {
-    await sync.initialize();
-    console.log('Synchronization initialized.');
+    await syncOrchestrator.initialize();
+    console.log('Synchronization initialized successfully!');
   } catch (error) {
-    console.error('Error during sync initialization:', error);
+    console.error('Failed to initialize synchronization:', error);
   }
 })();
 ```
 
-## Fetching Data by Public Key
+Upon calling `.initialize()`, the orchestrator begins its lifecycle to build and maintain a complete and up-to-date data cache.
 
-After syncing, you can retrieve that data from MongoDB depending on your use case. Here's a sample script to retrieve all transactions associated with a specified public key:
+## How It Works: The Synchronization Lifecycle
 
-```typescript
-// fetchTransactionsWithPublicKey.js
+The library follows a reliable, four-stage process to ensure your data is both complete and current. Think of it as an archivist who first organizes all past records before setting up a system for new ones.
 
+1.  **Connect to MongoDB**: Establishes a connection to the database.
+2.  **Historical Batch Sync (HTTP)**: Fetches all missing historical data efficiently.
+3.  **Real-time Listener (WebSocket)**: Opens a connection for instant notifications of new data.
+4.  **Periodic Poller (HTTP)**: Starts a backup fetcher for maximum reliability.
+
+This sequence guarantees that real-time updates are only processed after the entire data history is verifiably present in your database.
+
+### Historical Data Sync (HTTP)
+
+To sync a potentially large history of blocks, the library uses a strategy analogous to a fleet of trucks moving inventory. Instead of fetching blocks one by one, it fetches them in concurrent batches.
+
+*   **Batching**: The orchestrator requests a range of blocks (e.g., 1-100) in a single HTTP request, reducing network overhead.
+*   **Concurrency**: It runs multiple fetch operations in parallel (default is 5) to dramatically speed up the initial sync.
+
+This process is fully automatic. The orchestrator first checks your database for the latest block it has, calculates the missing ranges, and then dispatches concurrent workers to fetch and save the data until your cache is completely caught up.
+
+### Real-time Updates (WebSocket)
+
+For instant updates, the library uses a lightweight WebSocket connection that functions like a pager. Rather than constantly polling the server, it listens for a simple notification.
+
+1.  A persistent WebSocket connection is opened to the ResilientDB server.
+2.  The server sends a simple message (e.g., `"Update blocks"`) the moment a new block is created.
+3.  Upon receiving this signal, the orchestrator triggers its powerful HTTP batch sync mechanism to fetch the new data.
+
+This design is highly efficient: the WebSocket handles low-overhead signaling, while the robust HTTP process handles the actual data transfer.
+
+### Connection Resiliency
+
+The library is designed to handle unstable network conditions automatically. If the WebSocket connection drops, it initiates a self-healing process using an **exponential backoff** algorithm.
+
+*   **Detection**: An unexpected connection loss is detected.
+*   **Retry with Delay**: The library waits for a short interval (e.g., 5 seconds) and tries to reconnect.
+*   **Exponential Increase**: If the reconnection fails, it doubles the waiting time before the next attempt (e.g., 10s, 20s, 40s...).
+
+This prevents the client from overwhelming a server that may be restarting and allows the connection to be restored gracefully once the network is stable. During any downtime, the periodic HTTP poller acts as a safety net, ensuring your data cache never falls too far behind.
+
+## Querying Cached Data
+
+Once data is synced, you can query it directly from your MongoDB collection. The recommended approach is to use MongoDB's **Aggregation Pipeline**, an efficient "assembly line" for filtering and transforming data to find exactly what you need.
+
+The most common use case is finding all transactions associated with a user's public key.
+
+### Example: Finding a User's Transactions
+
+The following pipeline finds all transactions sent by a specific public key, sorts them by newest first, and cleans up the output.
+
+```javascript
 const { MongoClient } = require('mongodb');
 
-const mongoConfig = {
-  uri: 'mongodb://localhost:27017',
-  dbName: 'myDatabase',
-  collectionName: 'myCollection',
-};
-
-// The publicKey for which to fetch transactions
+// The public key we are searching for
 const targetPublicKey = "8LUKr81SmkdDhuBNAHfH9C8G5m6Cye2mpUggVu61USbD";
 
-(async () => {
-  const client = new MongoClient(mongoConfig.uri);
+const pipeline = [
+  // 1. Deconstruct blocks into individual transactions
+  { $unwind: "$transactions" },
+  // 2. Deconstruct transactions into individual inputs
+  { $unwind: "$transactions.value.inputs" },
+  // 3. Keep only inputs where the sender matches our target
+  { $match: { "transactions.value.inputs.owners_before": targetPublicKey } },
+  // 4. Sort by newest first
+  { $sort: { "transactions.value.asset.data.timestamp": -1 } },
+  // 5. Reshape the output to show only the transaction
+  { $project: { transaction: "$transactions", _id: 0 } }
+];
 
-  try {
-    await client.connect();
-    const db = client.db(mongoConfig.dbName);
-    const collection = db.collection(mongoConfig.collectionName);
+// In an async function:
+const client = new MongoClient('mongodb://localhost:27017');
+await client.connect();
+const collection = client.db('myResilientApp').collection('blocks');
 
-    console.log('Connected to MongoDB for fetching transactions.');
-
-    // Create an index on transactions.value.inputs.owners_before for optimized querying
-    const indexName = await collection.createIndex({ "transactions.value.inputs.owners_before": 1 });
-    console.log(`Index created: ${indexName} on transactions.value.inputs.owners_before`);
-
-    // Define aggregation pipeline to fetch all transactions for the specified publicKey in owners_before
-    const pipeline = [
-      { $unwind: "$transactions" },
-      { $unwind: "$transactions.value.inputs" },
-      { 
-        $match: { 
-          "transactions.value.inputs.owners_before": targetPublicKey 
-        }
-      },
-      { $sort: { "transactions.value.asset.data.timestamp": -1 } },
-      { $project: { transaction: "$transactions", _id: 0 } }
-    ];
-
-    const cursor = collection.aggregate(pipeline);
-    const transactions = await cursor.toArray();
-
-    if (transactions.length > 0) {
-      console.log('Transactions with the specified publicKey in owners_before:', 
-                  JSON.stringify(transactions, null, 2));
-    } else {
-      console.log(`No transactions found for publicKey: ${targetPublicKey}`);
-    }
-  } catch (error) {
-    console.error('Error fetching transactions:', error);
-  } finally {
-    await client.close();
-  }
-})();
+const transactions = await collection.aggregate(pipeline).toArray();
+console.log('Found transactions:', transactions);
+await client.close();
 ```
 
-## Data Synchronization
+**A Note on Performance:** For fast queries, especially in large datasets, it is crucial to create a MongoDB index on the fields you search frequently.
 
-The Node Cache library synchronizes data between ResilientDB and MongoDB in real-time. When new blocks are received from ResilientDB:
-
-1. The data is automatically stored in your configured MongoDB collection
-2. The `data` event is emitted with the new blocks
-3. You can query the data using standard MongoDB queries
-
-The exact structure of the data in MongoDB will match the structure of blocks in your ResilientDB node. This ensures that your cached data remains consistent with the source.
-
-## Best Practices
-
-<Alert icon={<IconInfoCircle size={16} />} title="Performance Tips" color="blue">
-  - Use appropriate indexes on your MongoDB collections
-  - Configure batch sizes based on your data volume
-  - Implement proper error handling and reconnection logic
-  - Monitor WebSocket connection health
-</Alert>
-
-## API Reference
-
-### WebSocketMongoSync Class
-
-The main class for managing synchronization between ResilientDB and MongoDB.
-
-#### Constructor
-```typescript
-new WebSocketMongoSync(mongoConfig: MongoConfig, resilientDBConfig: ResilientDBConfig)
+```javascript
+// Creates an index to speed up searches by owner public key
+await collection.createIndex({ "transactions.value.inputs.owners_before": 1 });
 ```
 
-#### Methods
-- `initialize(): Promise<void>` - Start the synchronization process
-- `close(): Promise<void>` - Close all connections and stop synchronization
+---
 
-#### Events
-- `connected` - Fired when WebSocket connection is established
-- `closed` - Fired when connection is closed
-- `data` - Fired when new blocks are received
-- `error` - Fired when an error occurs
+Generated by [AI Codebase Knowledge Builder](https://github.com/The-Pocket/Tutorial-Codebase-Knowledge)
 
 {/* END AUTO_DOC: resilient-node-cache */}
 

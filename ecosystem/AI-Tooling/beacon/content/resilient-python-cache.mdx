@@ -6,264 +6,176 @@ import { PythonQueryBuilder } from '../components/cache/PythonQueryBuilder'
 
 {/* BEGIN AUTO_DOC: resilient-python-cache */}
 
-# ResilientDB Python Cache
+# resilient-python-cache
 
-ResilientDB Python Cache is a library that provides real-time synchronization between ResilientDB and MongoDB. It's designed to act as a caching layer for blockchain data, making it easier to query and work with data from ResilientDB in your applications.
+`resilient-python-cache` is a library that *automatically keeps a local MongoDB database in sync* with a remote **ResilientDB**. It uses a dual-strategy of listening for *real-time push notifications* (via WebSocket) and periodically *pulling data in batches* (via HTTP) to ensure no data is missed. The library is built to be **resilient**, automatically handling connection drops and efficiently fetching large amounts of data.
 
-## Interactive Tools
 
-<Tabs defaultValue="config">
-  <TabsList>
-    <TabsTab value="config">Configuration Generator</TabsTab>
-    <TabsTab value="query">Query Builder</TabsTab>
-  </TabsList>
+```mermaid
+flowchart TD
+A0["`ResilientPythonCache` (The Sync Orchestrator)"]
+A1["Configuration Models (`MongoConfig` & `ResilientDBConfig`)"]
+A2["Dual-Mode Data Sync (HTTP & WebSocket)"]
+A3["Resilient Connection Management"]
+A4["Concurrent Batch Processing"]
+A5["Event-Driven API (`AsyncIOEventEmitter`)"]
+A0 -- "Is configured by" --> A1
+A0 -- "Orchestrates" --> A2
+A0 -- "Inherits from" --> A5
+A2 -- "Relies on" --> A3
+A2 -- "Uses" --> A4
 
-  <TabsPanel value="config">
-    <Box my="md">
-      <Alert icon={<IconInfoCircle size={16} />} title="Interactive Configuration" color="blue">
-        Use this tool to generate your Python Cache configuration code. Adjust the parameters below and copy the generated code.
-      </Alert>
-      <PythonConfigGenerator />
-    </Box>
-  </TabsPanel>
-
-  <TabsPanel value="query">
-    <Box my="md">
-      <Alert icon={<IconInfoCircle size={16} />} title="MongoDB Query Builder" color="blue">
-        Build and test MongoDB queries for your cached blockchain data. The results will show sample data structure.
-      </Alert>
-      <PythonQueryBuilder />
-    </Box>
-  </TabsPanel>
-</Tabs>
-
-## Features
-
-- Real-time synchronization between ResilientDB and MongoDB
-- Automatic WebSocket connection management
-- Configurable batch processing
-- Event-driven architecture
-- MongoDB querying capabilities for blockchain data
-
-## Installation
-
-The library can be installed directly from PyPI using pip:
-
-```bash
-pip install resilient-python-cache
 ```
 
-## Complete Example
+`resilient-python-cache` is a Python library that provides a robust, real-time local cache for data from a ResilientDB instance. It is designed to solve the challenge of keeping a local data copy perfectly synchronized with a remote source, ensuring your application is both fast and fault-tolerant.
 
-Below is a complete example that demonstrates how to set up real-time synchronization between ResilientDB and MongoDB. This example shows:
-- How to configure MongoDB and ResilientDB connections
-- How to set up event handlers for different scenarios
-- How to handle errors and cleanup
-- How to run the synchronization indefinitely
+## Core Architecture: Dual-Mode Data Synchronization
+
+To guarantee data is both fresh and complete, the library employs a dual-mode synchronization strategy, combining "push" and "pull" methods that run in parallel.
+
+### The "Push" Method (WebSocket)
+
+For real-time updates, the library maintains a persistent WebSocket connection to the ResilientDB server. When new data is committed, the server "pushes" an immediate notification to the cache, triggering a fetch of the new block. This ensures minimal latency and a highly responsive application.
+
+### The "Pull" Method (HTTP)
+
+To act as a safety net, the library also periodically "pulls" data from a standard HTTP endpoint. This recurring fetch requests any blocks created since the last check, guaranteeing that no data is ever missed, even if the WebSocket connection is temporarily interrupted.
+
+### How They Work Together
+
+The WebSocket provides speed, while the periodic HTTP fetch provides reliability. If a WebSocket notification is missed for any reason, the HTTP pull will catch the missing data on its next cycle. Both methods trigger the same underlying logic to fetch and store new blocks, ensuring consistency.
+
+```python
+# The WebSocket listener triggers a fetch upon receiving a message
+async def connect_websocket(self):
+    async with websockets.connect(self.ws_endpoint) as websocket:
+        async for message in websocket:
+            if "Update blocks" in message:
+                # Trigger a fetch to get the new data
+                await self.fetch_and_sync_new_blocks()
+
+# The periodic fetch runs on a timer as a backup
+async def start_periodic_fetch(self):
+    while not self.is_closing:
+        await self.fetch_and_sync_new_blocks()
+        await asyncio.sleep(self.fetch_interval / 1000)
+```
+
+## Getting Started: The `ResilientPythonCache` Class
+
+The `ResilientPythonCache` class is the central orchestrator that manages all synchronization logic. Think of it as a general manager for your local data cache; you configure it, start it, and it handles all background tasks automatically.
+
+### Basic Usage
+
+Using the library involves four straightforward steps:
+
+1.  **Provide Configuration**: Define where to get data from (`ResilientDBConfig`) and where to store it (`MongoConfig`).
+2.  **Instantiate the Cache**: Create an instance of `ResilientPythonCache` with your configurations.
+3.  **Listen for Events**: Register handler functions for events like `data` or `error`.
+4.  **Initialize**: Call the `await cache.initialize()` method to start the connection and synchronization processes.
 
 ```python
 import asyncio
-from resilient_python_cache import ResilientPythonCache, MongoConfig, ResilientDBConfig
+from resilient_python_cache import (
+    ResilientPythonCache,
+    MongoConfig,
+    ResilientDBConfig
+)
 
+# 1. Configure databases
+mongo_config = MongoConfig("mongodb://localhost:27017", "myAppDB", "transactions")
+resilient_db_config = ResilientDBConfig("resilientdb://crow.resilientdb.com")
+
+# 2. Create the cache instance
+cache = ResilientPythonCache(mongo_config, resilient_db_config)
+
+# 3. Listen for new data
+cache.on("data", lambda blocks: print(f"Synced {len(blocks)} new blocks."))
+cache.on("error", lambda err: print(f"An error occurred: {err}"))
+
+# 4. Start the process
 async def main():
-    # Configure MongoDB connection
-    mongo_config = MongoConfig(
-        uri="mongodb://localhost:27017",
-        db_name="myDatabase",
-        collection_name="myCollection"
-    )
+    await cache.initialize()
+    await asyncio.Future() # Keep the script running
 
-    # Configure ResilientDB connection
-    resilient_db_config = ResilientDBConfig(
-        base_url="resilientdb://crow.resilientdb.com",
-        http_secure=True,
-        ws_secure=True
-    )
-
-    # Initialize the cache
-    cache = ResilientPythonCache(mongo_config, resilient_db_config)
-
-    # Set up event handlers for different scenarios
-    cache.on("connected", lambda: print("WebSocket connected."))
-    cache.on("data", lambda new_blocks: print("Received new blocks:", new_blocks))
-    cache.on("error", lambda error: print("Error:", error))
-    cache.on("closed", lambda: print("Connection closed."))
-
-    try:
-        # Start the synchronization process
-        await cache.initialize()
-        print("Synchronization initialized.")
-
-        try:
-            # Keep the process running until interrupted
-            await asyncio.Future()
-        except asyncio.CancelledError:
-            pass
-
-    except Exception as error:
-        print("Error during sync initialization:", error)
-    finally:
-        # Ensure proper cleanup of resources
-        await cache.close()
-
-if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("Interrupted by user")
+asyncio.run(main())
 ```
 
-## Configuration Options
+When `initialize()` is called, it connects to MongoDB, performs an initial historical data sync, and then starts the dual-mode background tasks.
 
-### MongoDB Configuration
+## Configuration
 
-The MongoDB configuration specifies where and how to store the blockchain data. Here's what each parameter means:
-- `uri`: The MongoDB connection string (supports both local and remote MongoDB instances)
-- `db_name`: The name of the database where blocks will be stored
-- `collection_name`: The name of the collection within the database
+Configuration is handled through simple dataclass objects, separating connection details from your application logic.
+
+### `MongoConfig`
+
+This object specifies the details for your local MongoDB cache.
+
+*   `uri`: The full connection string for your MongoDB server.
+*   `db_name`: The name of the database to use.
+*   `collection_name`: The name of the collection for storing blocks.
 
 ```python
 mongo_config = MongoConfig(
-    uri="mongodb://localhost:27017",     # MongoDB connection string
-    db_name="myDatabase",                # Database name
-    collection_name="myCollection"       # Collection name
+    uri="mongodb://localhost:27017",
+    db_name="myAppDB",
+    collection_name="transactions"
 )
 ```
 
-### ResilientDB Configuration
+### `ResilientDBConfig`
 
-The ResilientDB configuration controls how the library connects to ResilientDB nodes. Here's what each parameter does:
-- `base_url`: The URL of your ResilientDB node
-- `http_secure`: Whether to use HTTPS for REST API calls
-- `ws_secure`: Whether to use WSS for WebSocket connections
-- `reconnect_interval`: How often to attempt reconnection if connection is lost
-- `fetch_interval`: How often to sync data from ResilientDB
+This object defines the connection details for the remote ResilientDB server.
+
+*   `base_url`: The primary address of the ResilientDB node (e.g., `resilientdb://...`). The library derives the HTTP and WebSocket endpoints from this.
+*   `fetch_interval` (optional): The interval in milliseconds for the HTTP pull mechanism (default: `10000`).
+*   `reconnect_interval` (optional): The base delay in milliseconds for reconnection attempts (default: `2000`).
 
 ```python
 resilient_db_config = ResilientDBConfig(
-    base_url="resilientdb://crow.resilientdb.com",  # ResilientDB node URL
-    http_secure=True,                               # Use HTTPS for REST API
-    ws_secure=True,                                 # Use WSS for WebSocket
-    reconnect_interval=5000,                        # Reconnection interval (ms)
-    fetch_interval=30000                            # Periodic sync interval (ms)
+    base_url="resilientdb://crow.resilientdb.com",
+    fetch_interval=5000 # Check every 5 seconds
 )
 ```
 
-## Event Handling
+## Interacting with the Cache: The Event-Driven API
 
-The library uses an event-driven architecture to notify your application about various states and data updates. Here are the key events you can listen to:
-- `connected`: Fired when WebSocket connection is established
-- `closed`: Fired when connection is closed
-- `data`: Fired when new blocks are received
-- `error`: Fired when an error occurs
+Instead of forcing you to poll for status changes, `ResilientPythonCache` uses an event-driven model. You can subscribe handler functions to be called when specific events occur.
 
-```python
-# WebSocket connection events
-cache.on("connected", lambda: print("WebSocket connected"))
-cache.on("closed", lambda: print("Connection closed"))
-
-# Data events
-cache.on("data", lambda new_blocks: print("New blocks received:", new_blocks))
-
-# Error handling
-cache.on("error", lambda error: print("Error occurred:", error))
-```
-
-## MongoDB Collection Structure
-
-The library stores blockchain data in MongoDB using the following structure. Each document represents a block:
-- `id`: Unique identifier for the block
-- `createdAt`: Timestamp when the block was created
-- `transactions`: Array of transactions in the block, each containing:
-  - Transaction ID
-  - Input data
-  - Output data
-  - Associated metadata
-
-```javascript
-{
-  "id": "block_identifier",
-  "createdAt": ISODate("2025-04-27T..."),
-  "transactions": [
-    {
-      "id": "transaction_id",
-      "inputs": [...],
-      "outputs": [...],
-      "metadata": {...}
-    }
-    // ... more transactions
-  ]
-}
-```
-
-## Best Practices
-
-<Alert icon={<IconInfoCircle size={16} />} title="Performance Tips" color="blue">
-  - Use appropriate indexes on your MongoDB collections
-  - Configure batch sizes based on your data volume
-  - Monitor WebSocket connection health
-  - Implement proper error handling
-  - Use try/finally blocks to ensure proper cleanup
-</Alert>
-
-## Error Handling
-
-Proper error handling is crucial for maintaining a reliable synchronization process. Always wrap your code in try-catch blocks and ensure proper cleanup:
+The primary events are:
+*   `connected`: Fires when the WebSocket connection is established.
+*   `data`: Fires after a new batch of blocks has been successfully saved to the local cache. The handler receives the list of new blocks.
+*   `error`: Fires when a significant, non-recoverable error occurs.
+*   `closed`: Fires after the cache connections have been gracefully closed via `cache.close()`.
 
 ```python
-try:
-    await cache.initialize()
-except ConnectionError as e:
-    print("Failed to connect:", e)
-except Exception as e:
-    print("Unexpected error:", e)
-finally:
-    await cache.close()
+# Set up listeners before calling initialize()
+cache.on("connected", lambda: print("Connection established!"))
+cache.on("data", lambda blocks: update_dashboard(blocks))
+cache.on("error", lambda err: log_critical_error(err))
 ```
 
-## Advanced Usage
+## Fault Tolerance: Resilient Connection Management
 
-### Custom Batch Processing
+The library is designed to be resilient to network disruptions. If the WebSocket connection drops, it will not crash the application. Instead, it automatically attempts to reconnect using an **exponential backoff** strategy.
 
-You can customize how batches of blocks are processed by extending the ResilientPythonCache class. This is useful when you need to:
-- Apply custom transformations to the data
-- Perform additional validation
-- Add custom logging or monitoring
+*   The first attempt occurs after a short delay (e.g., 2 seconds).
+*   If that fails, it waits for a longer period (e.g., 4 seconds), then 8, and so on.
 
-```python
-class CustomCache(ResilientPythonCache):
-    async def process_batch(self, blocks):
-        # Custom processing logic
-        for block in blocks:
-            # Process each block
-            await self.process_single_block(block)
-```
+This prevents the library from overwhelming the server with rapid reconnection requests while ensuring the connection is restored as soon as possible. During any disconnection, the periodic HTTP "pull" continues to run, ensuring your cache does not fall far behind.
 
-### Query Examples
+## High-Performance Sync: Concurrent Batch Processing
 
-Here are some common MongoDB queries you might use to access your blockchain data. These examples show how to:
-- Retrieve specific transactions by ID
-- Get blocks within a time range
-- Use MongoDB's query operators effectively
+When the cache starts for the first time, it may need to sync a large amount of historical data. To do this efficiently, it avoids fetching blocks one by one. Instead, it uses a high-performance strategy combining two techniques:
 
-```python
-# Get transaction by ID
-async def get_transaction_by_id(mongo_client, tx_id):
-    result = await mongo_client[db_name][collection_name].find_one({
-        "transactions.id": tx_id
-    })
-    return result
+1.  **Batching**: It requests large ranges of blocks at once (e.g., 100 blocks per request).
+2.  **Concurrency**: It runs multiple fetch operations in parallel to maximize throughput.
 
-# Get blocks in a time range
-async def get_blocks_by_time(mongo_client, start_time, end_time):
-    results = await mongo_client[db_name][collection_name].find({
-        "createdAt": {
-            "$gte": start_time,
-            "$lte": end_time
-        }
-    }).to_list(length=None)
-    return results
-```
+To prevent overwhelming the network or the remote server, this concurrency is managed by a **semaphore**, which limits the number of simultaneous HTTP requests. This allows the initial sync to complete in a fraction of the time a sequential approach would take.
+
+---
+
+Generated by [AI Codebase Knowledge Builder](https://github.com/The-Pocket/Tutorial-Codebase-Knowledge)
 
 {/* END AUTO_DOC: resilient-python-cache */}
 

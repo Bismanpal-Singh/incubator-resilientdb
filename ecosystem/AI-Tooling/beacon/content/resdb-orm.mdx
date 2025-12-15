@@ -4,183 +4,149 @@ import { IconInfoCircle, IconCheck, IconAlertTriangle } from '@tabler/icons-reac
 
 {/* BEGIN AUTO_DOC: resdb-orm */}
 
-# ResDB-ORM
+# resdb-orm
 
-ResDB-ORM is a Python module designed to simplify interactions with ResilientDB's key-value store database by providing an Object-Relational Mapping (ORM) interface. This library allows developers to use basic CRUD functionalities with ease.
+This project provides a simple Python tool that acts as a friendly translator for the *ResilientDB key-value store*.
+Instead of writing complex network requests, you can use the **`ResDBORM` class** to easily *Create, Read, Update, and Delete* your data, just like managing files in a folder.
+It handles all the technical communication with the database behind the scenes.
 
-## Prerequisites
 
-Before using ResDB-ORM, ensure that the following services are running:
+```mermaid
+flowchart TD
+A0["ResDBORM Class"]
+A1["CRUD Operations"]
+A2["Configuration Management"]
+A3["API Interaction Layer"]
+A4["Record Structure"]
+A5["Project Packaging and Distribution"]
+A0 -- "Implements" --> A1
+A0 -- "Uses" --> A3
+A1 -- "Formats data as" --> A4
+A2 -- "Configures" --> A0
+A5 -- "Packages and distributes" --> A0
 
-<Alert icon={<IconInfoCircle size={16} />} title="Required Services" color="blue" mb="md">
-  <ul>
-    <li><strong>kv_server</strong>: The key-value store server that forms the backend for ResilientDB</li>
-    <li><strong>ResilientDB-GraphQL</strong>: Provides a GraphQL interface to interact with ResilientDB</li>
-  </ul>
-</Alert>
-
-## Installation
-
-### Option 1: Using the Installation Script
-
-The easiest way to set up ResDB-ORM is using the provided installation script:
-
-```bash
-git clone https://github.com/ResilientEcosystem/ResDB-ORM.git
-cd ResDB-ORM
-./INSTALL.sh
 ```
 
-<Alert icon={<IconAlertTriangle size={16} />} title="Note" color="yellow" mb="md">
-  The script may require sudo privileges to install dependencies and set up services.
-</Alert>
+`resdb-orm` is a lightweight Object-Relational Mapper (ORM) designed to simplify interactions with a ResilientDB key-value store. It provides a clean, high-level interface that abstracts away the complexities of direct API communication, allowing you to manage your data with simple Python commands.
 
-### Option 2: Manual Installation
+## Getting Started
 
-#### 1. Clone the Repository
+Before using the library, you need to install it and configure the database connection.
 
-```bash
-git clone https://github.com/ResilientEcosystem/ResDB-ORM.git
-cd ResDB-ORM
-```
+### Installation
 
-#### 2. Create and Activate Virtual Environment
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-#### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-#### 4. Install from PyPI
-
-Alternatively, you can install ResDB-ORM directly from PyPI:
+Install the library from PyPI using pip. The installation command automatically handles all necessary dependencies, such as `requests` and `PyYAML`.
 
 ```bash
 pip install resdb-orm
 ```
 
-## Configuration
+### Configuration
 
-### Setting up config.yaml
+`resdb-orm` reads the database endpoint from a `config.yaml` file in your project's root directory. This separates configuration from your application code, making it easy to switch between different database environments (e.g., development and production).
 
-The ResDB-ORM uses a `config.yaml` file to specify the database connection. The default configuration structure is:
+Create a `config.yaml` file with the following structure:
 
 ```yaml
+# File: config.yaml
 database:
   db_root_url: http://0.0.0.0:18000
 ```
 
-Update the `db_root_url` to point to your ResilientDB instance. For example:
+Replace the `db_root_url` value with the endpoint address provided by your running ResilientDB-GraphQL service. The `ResDBORM` class reads this URL upon initialization to know where to send requests.
 
-```yaml
-database:
-  db_root_url: http://localhost:18000
-```
+## Core Usage: The `ResDBORM` Class
 
-Or for a remote instance:
+The `ResDBORM` class is the central component of the library and serves as the primary interface to the database. All operations are performed through an instance of this class.
 
-```yaml
-database:
-  db_root_url: https://crow.resilientdb.com
-```
-
-## Quick Start
+First, import and instantiate the class:
 
 ```python
 from resdb_orm.orm import ResDBORM
 
-# Initialize the ORM (uses config.yaml by default)
+# This object is now your gateway to the database
+orm = ResDBORM()
+```
+
+When `ResDBORM()` is called, it automatically locates and parses `config.yaml` to prepare for communication.
+
+### CRUD Operations
+
+The library provides four fundamental methods for data management, corresponding to Create, Read, Update, and Delete operations.
+
+All data is stored in a standardized record structure: a JSON object containing a unique, auto-generated `id` and a `data` field that holds the information you provide.
+
+The following example demonstrates the complete lifecycle of a data record.
+
+```python
+from resdb_orm.orm import ResDBORM
+
+# 1. Initialize the ORM
 orm = ResDBORM()
 
-# Create a new record
-data = {"name": "John Doe", "age": 30, "city": "New York"}
-record_id = orm.create(data)
-print(f"Record created with ID: {record_id}")
+# 2. Create a new record
+# The `create` method accepts a dictionary and returns a unique ID.
+user_data = {"name": "Alice", "city": "Wonderland"}
+user_id = orm.create(user_data)
+print(f"Created record with ID: {user_id}")
 
-# Read a specific record
-record = orm.read(record_id)
-print(f"Retrieved record: {record}")
-print(f"Record data: {record['data']}")
+# 3. Read the record
+# The `read` method fetches the full record using its ID.
+retrieved_user = orm.read(user_id)
+print("Retrieved record:", retrieved_user)
+# Output will be: {'id': '...', 'data': {'name': 'Alice', 'city': 'Wonderland'}}
 
-# Read all records
-all_records = orm.read_all()
-print(f"All records: {all_records}")
+# 4. Update the record
+# The `update` method takes the record ID and a dictionary with the new data.
+updated_data = {"name": "Alice", "city": "Metropolis"}
+orm.update(user_id, updated_data)
+print("Record updated.")
 
-# Update a record
-updated_data = {"name": "John Doe", "age": 31, "city": "Boston"}
-result = orm.update(record_id, updated_data)
-print(f"Update result: {result}")
+# Verify the update
+updated_user = orm.read(user_id)
+print("Verified update:", updated_user['data']['city']) # Output: Metropolis
 
-# Delete a record
-delete_result = orm.delete(record_id)
-print(f"Delete result: {delete_result}")
+# 5. Delete the record
+# The `delete` method removes the record permanently using its ID.
+orm.delete(user_id)
+print("Record deleted.")
 ```
 
-## Features
+## How It Works
 
-<Box mb="xl">
-  <ul style={{ listStyle: 'none', padding: 0 }}>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-      <IconCheck size={16} color="green" style={{ marginRight: '8px' }} />
-      <strong>Simple CRUD Operations</strong>: Create, Read, Update, and Delete records with ease
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-      <IconCheck size={16} color="green" style={{ marginRight: '8px' }} />
-      <strong>Automatic Token Generation</strong>: Automatically generates secure random tokens for record IDs
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-      <IconCheck size={16} color="green" style={{ marginRight: '8px' }} />
-      <strong>Configuration Management</strong>: Simple YAML-based configuration
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-      <IconCheck size={16} color="green" style={{ marginRight: '8px' }} />
-      <strong>Error Handling</strong>: Comprehensive error handling and response validation
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-      <IconCheck size={16} color="green" style={{ marginRight: '8px' }} />
-      <strong>Easy Integration</strong>: Simple integration with existing Python applications
-    </li>
-  </ul>
-</Box>
+`resdb-orm` provides a simple interface by handling the underlying mechanics of data formatting and API communication.
 
-## API Reference
+### Record Structure
 
-### ResDBORM Class
+Every piece of data is wrapped in a consistent "record" format before being sent to the database. This structure acts as a labeled container for your information.
 
-The main class for interacting with ResilientDB through the ORM interface.
+*   `id`: A unique string identifier, automatically generated by the ORM during creation. It acts as the primary key.
+*   `data`: The original Python dictionary you provided.
 
-#### Constructor
-
-- **`ResDBORM(config_path='config.yaml')`**: Initialize the ORM with a configuration file
-
-#### Methods
-
-- **`create(data: dict)`**: Creates a new record with the provided data. Returns the generated record ID.
-- **`read(key: str)`**: Retrieves a specific record by its key. Returns the record data.
-- **`read_all()`**: Retrieves all records from the database. Returns a list of all records.
-- **`update(key: str, new_data: dict)`**: Updates an existing record by key. Returns status information.
-- **`delete(key: str)`**: Deletes a record by its key. Returns status information.
-- **`generate_token(length: int = 64)`**: Generates a secure random hexadecimal token for record IDs.
-
-## Verification
-
-Run the provided test script to verify that everything is set up correctly:
-
-```bash
-python test.py
+For example, `orm.create({"name": "Alice"})` sends the following JSON payload to the server:
+```json
+{
+  "id": "a-unique-auto-generated-id",
+  "data": {
+    "name": "Alice"
+  }
+}
 ```
 
-This script will perform basic operations to ensure that the connection to the ResilientDB instance is functional.
+### API Interaction Layer
 
-## Contributing
+The library uses the popular `requests` library to handle all network communication with the ResilientDB API. The `ResDBORM` class constructs the appropriate HTTP requests and delegates the task of sending them.
 
-We welcome contributions to this project! Please feel free to submit pull requests, report issues, or suggest new features.
+-   **Create (`create`)**: Sends an HTTP `POST` request to the `/v1/transactions/commit` endpoint with the record as a JSON payload.
+-   **Read (`read`)**: Sends an HTTP `GET` request to `/v1/transactions/{key}` where `{key}` is the record's ID.
+-   **Update (`update`)**: Sends an HTTP `POST` request, similar to `create`.
+-   **Delete (`delete`)**: Sends an HTTP `POST` request to remove the record.
+
+This layer ensures that headers like `Content-Type: application/json` are correctly set and that data is properly serialized, abstracting these low-level details from the user.
+
+---
+
+Generated by [AI Codebase Knowledge Builder](https://github.com/The-Pocket/Tutorial-Codebase-Knowledge)
 
 {/* END AUTO_DOC: resdb-orm */}
 
