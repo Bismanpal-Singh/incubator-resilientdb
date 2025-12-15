@@ -165,6 +165,8 @@ var namespaceresdb =
     [ "NewRequest", "d5/d10/namespaceresdb.html#a56d3b8c76b7936e7fc14a38d5ef31745", null ],
     [ "ParseSDKTransaction", "d5/d10/namespaceresdb.html#ac411f4b2b69ecb6aaa049332e9d10dff", null ],
     [ "ReadConfig", "d5/d10/namespaceresdb.html#a67842a19269800fb4efcff8d4082118b", null ],
+    [ "ReadConfig", "d5/d10/namespaceresdb.html#a67842a19269800fb4efcff8d4082118b", null ],
+    [ "ReadConfigFromFile", "d5/d10/namespaceresdb.html#aa55fc1c659f788583d9b656c93a8455b", null ],
     [ "ReadConfigFromFile", "d5/d10/namespaceresdb.html#aa55fc1c659f788583d9b656c93a8455b", null ],
     [ "RemoveJsonComments", "d5/d10/namespaceresdb.html#a40e4d60794706f33ddd0ed7893330c14", null ],
     [ "SendData", "d5/d10/namespaceresdb.html#a50f2133434c829fd6c5b4e980065a408", null ],

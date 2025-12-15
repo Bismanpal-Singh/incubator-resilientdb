@@ -121,16 +121,16 @@ $(function(){initNavTree('d9/d03/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_openapi___automatic_docs</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1766"></a>
-autotoc_md1766</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1767"></a>
+autotoc_md1767</h2>
 <p>layout: default title: "OpenAPI &amp; Automatic Docs" parent: "FastAPI" </p>
-<h2><a class="anchor" id="autotoc_md1767"></a>
+<h2><a class="anchor" id="autotoc_md1768"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1768"></a>
+<h1><a class="anchor" id="autotoc_md1769"></a>
 Chapter 4: OpenAPI &amp; Automatic Docs</h1>
 <p>Welcome back! In <a class="el" href="../../d5/df9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_203__data__validation______serialization____pydantic__.html">Chapter 3: Data Validation &amp; Serialization (Pydantic)</a>, we saw how FastAPI uses Pydantic models to automatically validate incoming data and serialize outgoing data, making our API robust and predictable. But how do we tell others (or remind ourselves later) how to actually <em>use</em> our API? What endpoints exist? What data should they send? What will they get back?</p>
 <p><b>Our Goal Today:</b> Discover how FastAPI automatically generates API documentation that is interactive and always stays synchronized with your code, using the OpenAPI standard.</p>
-<h2><a class="anchor" id="autotoc_md1769"></a>
+<h2><a class="anchor" id="autotoc_md1770"></a>
 What Problem Does This Solve?</h2>
 <p>Imagine you've built an amazing, complex machine – maybe a fantastic coffee maker. You know exactly how it works, which buttons to press, and where to put the beans and water. But if someone else wants to use it, or even if you forget some details after a few months, you need a <b>user manual</b>.</p>
 <p>An API is similar. It's a way for different software components (like a web frontend and a backend server, or two different backend services) to communicate. Without a clear "manual", it's hard for developers to know:</p>
@@ -144,9 +144,9 @@ What Problem Does This Solve?</h2>
 </ul>
 <p>Manually writing and updating this documentation is a chore. It's easy to make mistakes, and even easier for the documentation to become outdated as the code changes. This leads to confusion, errors, and wasted time.</p>
 <p>FastAPI solves this beautifully by automatically generating this "manual" based directly on your Python code. It uses an industry standard called <b>OpenAPI</b>.</p>
-<h2><a class="anchor" id="autotoc_md1770"></a>
+<h2><a class="anchor" id="autotoc_md1771"></a>
 Key Concepts</h2>
-<h3><a class="anchor" id="autotoc_md1771"></a>
+<h3><a class="anchor" id="autotoc_md1772"></a>
 1. OpenAPI Specification</h3>
 <ul>
 <li><b>What it is:</b> OpenAPI (formerly known as Swagger Specification) is a standard, language-agnostic way to describe RESTful APIs. Think of it as a universal blueprint for APIs.</li>
@@ -154,7 +154,7 @@ Key Concepts</h2>
 <li><b>Content:</b> An OpenAPI document details everything about your API: available paths, allowed operations (GET, POST, etc.) on those paths, expected parameters (path, query, header, cookie, body), data formats (using JSON Schema, which Pydantic models map to), security requirements, and more.</li>
 </ul>
 <p>FastAPI automatically generates this OpenAPI schema for your entire application.</p>
-<h3><a class="anchor" id="autotoc_md1772"></a>
+<h3><a class="anchor" id="autotoc_md1773"></a>
 2. Automatic Generation: From Code to Docs</h3>
 <p>How does FastAPI create this OpenAPI schema? It intelligently inspects your code:</p>
 <ul>
@@ -165,7 +165,7 @@ Key Concepts</h2>
 <li><b>Metadata:</b> It reads docstrings from your functions and metadata like <code>title</code>, <code>description</code>, <code>tags</code>, <code>summary</code>, <code>deprecated</code> that you add to your path operations or parameters.</li>
 </ul>
 <p>Because the documentation is generated <em>from</em> the code, it stays <b>synchronized</b>. If you change a parameter type or add a new endpoint, the documentation updates automatically the next time you run the app!</p>
-<h3><a class="anchor" id="autotoc_md1773"></a>
+<h3><a class="anchor" id="autotoc_md1774"></a>
 3. Interactive API Documentation UIs</h3>
 <p>Having the OpenAPI schema (the blueprint) is great, but it's just a JSON file. FastAPI goes a step further and provides two beautiful, interactive web interfaces <em>out-of-the-box</em> that use this schema:</p>
 <ul>
@@ -177,7 +177,7 @@ Key Concepts</h2>
 </li>
 <li><b>ReDoc (at <code>/redoc</code>):</b> This provides an alternative documentation view, often considered cleaner for pure documentation reading, presenting a three-panel layout with navigation, documentation, and code samples. It's less focused on interactive "try it out" functionality compared to Swagger UI but excellent for understanding the API structure.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1774"></a>
+<h2><a class="anchor" id="autotoc_md1775"></a>
 Using the Automatic Docs</h2>
 <p>The best part? You barely have to do anything to get basic documentation! Let's use a simple example building on previous chapters.</p>
 <div class="fragment"><div class="line"><span class="comment"># main.py</span></div>
@@ -306,7 +306,7 @@ Using the Automatic Docs</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># ... rest of your FastAPI app ...</span></div>
 </div><!-- fragment --><p>With these <code>Field</code> annotations, your documentation (especially in the "Schemas" section at the bottom of <code>/docs</code>) will become even more descriptive and helpful.</p>
-<h2><a class="anchor" id="autotoc_md1775"></a>
+<h2><a class="anchor" id="autotoc_md1776"></a>
 How it Works Under the Hood (Simplified)</h2>
 <p>How does FastAPI pull off this magic?</p>
 <ol type="1">
@@ -367,7 +367,7 @@ How it Works Under the Hood (Simplified)</h2>
 <div class="line">    Note over Browser: Swagger UI JS receives schema and renders interactive docs</div>
 <div class="line">    Browser-&gt;&gt;Browser: Display Interactive API Documentation</div>
 </div><!-- fragment --><p>This integration means your documentation isn't just an afterthought; it's a first-class citizen derived directly from the code that runs your API.</p>
-<h2><a class="anchor" id="autotoc_md1776"></a>
+<h2><a class="anchor" id="autotoc_md1777"></a>
 Conclusion</h2>
 <p>You've now seen how FastAPI leverages the OpenAPI standard and your own Python code (type hints, Pydantic models, docstrings) to provide automatic, interactive API documentation.</p>
 <ul>

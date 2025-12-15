@@ -121,17 +121,17 @@ $(function(){initNavTree('d8/dc9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_asyncwebcrawler</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1388"></a>
-autotoc_md1388</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1389"></a>
+autotoc_md1389</h2>
 <p>layout: default title: "AsyncWebCrawler" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1389"></a>
+<h2><a class="anchor" id="autotoc_md1390"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1390"></a>
+<h1><a class="anchor" id="autotoc_md1391"></a>
 Chapter 2: Meet the General Manager - AsyncWebCrawler</h1>
 <p>In <a class="el" href="../../dc/d53/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_201__asynccrawlerstrategy.html">Chapter 1: How We Fetch Webpages - AsyncCrawlerStrategy</a>, we learned about the different ways Crawl4AI can fetch the raw content of a webpage, like choosing between a fast drone (<code>AsyncHTTPCrawlerStrategy</code>) or a versatile delivery truck (<code>AsyncPlaywrightCrawlerStrategy</code>).</p>
 <p>But who decides <em>which</em> delivery vehicle to use? Who tells it <em>which</em> address (URL) to go to? And who takes the delivered package (the raw HTML) and turns it into something useful?</p>
 <p>That's where the <code>AsyncWebCrawler</code> comes in. Think of it as the <b>General Manager</b> of the entire crawling operation.</p>
-<h2><a class="anchor" id="autotoc_md1391"></a>
+<h2><a class="anchor" id="autotoc_md1392"></a>
 What Problem Does <code>AsyncWebCrawler</code> Solve?</h2>
 <p>Imagine you want to get information from a website. You need to:</p>
 <ol type="1">
@@ -143,7 +143,7 @@ What Problem Does <code>AsyncWebCrawler</code> Solve?</h2>
 <li>Finally, give you the <em>final, processed result</em>.</li>
 </ol>
 <p>Doing all these steps manually for every URL would be tedious and complex. <code>AsyncWebCrawler</code> acts as the central coordinator, managing all these steps for you. You just tell it what URL to crawl and maybe some preferences, and it handles the rest.</p>
-<h2><a class="anchor" id="autotoc_md1392"></a>
+<h2><a class="anchor" id="autotoc_md1393"></a>
 What is <code>AsyncWebCrawler</code>?</h2>
 <p><code>AsyncWebCrawler</code> is the main class you'll interact with when using Crawl4AI. It's the primary entry point for starting any crawling task.</p>
 <p><b>Key Responsibilities:</b></p>
@@ -161,7 +161,7 @@ What is <code>AsyncWebCrawler</code>?</h2>
 <li><b>Resource Management:</b> Handles starting and stopping resources (like browsers) cleanly.</li>
 </ul>
 <p>It's the "conductor" making sure all the different instruments play together harmoniously.</p>
-<h2><a class="anchor" id="autotoc_md1393"></a>
+<h2><a class="anchor" id="autotoc_md1394"></a>
 Your First Crawl: Using <code>arun</code></h2>
 <p>Let's see the <code>AsyncWebCrawler</code> in action. The most common way to use it is with an <code>async with</code> block, which automatically handles setup and cleanup. The main method to crawl a single URL is <code>arun</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter2_example_1.py</span></div>
@@ -204,7 +204,7 @@ Your First Crawl: Using <code>arun</code></h2>
 <li><b><code>result.success</code></b>: We check this boolean flag to see if the crawl completed without critical errors.</li>
 <li><b>Accessing Data:</b> If successful, we can access processed information like the page title (&lsquo;result.metadata['title&rsquo;]<code>) or the content formatted as Markdown (</code>result.markdown.raw_markdown`).</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1394"></a>
+<h2><a class="anchor" id="autotoc_md1395"></a>
 Configuring the Crawl</h2>
 <p>Sometimes, the default behavior isn't quite what you need. Maybe you want to use the faster "drone" strategy from Chapter 1, or perhaps you want to ensure you <em>always</em> fetch a fresh copy of the page, ignoring any saved cache.</p>
 <p>You can customize the behavior of a specific <code>arun</code> call by passing a <code>CrawlerRunConfig</code> object. Think of this as giving specific instructions to the General Manager for <em>this particular job</em>.</p>
@@ -248,7 +248,7 @@ Configuring the Crawl</h2>
 <li><b><code>crawler.arun(..., config=run_config)</code></b>: We pass our custom <code>run_config</code> object to the <code>arun</code> method using the <code>config</code> parameter.</li>
 </ol>
 <p>The <code>CrawlerRunConfig</code> is very powerful and lets you control many aspects of the crawl, including which scraping or extraction methods to use. We'll dive deep into it in the next chapter: <a class="el" href="../../db/d01/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_203__crawlerrunconfig.html">Chapter 3: Giving Instructions - CrawlerRunConfig</a>.</p>
-<h2><a class="anchor" id="autotoc_md1395"></a>
+<h2><a class="anchor" id="autotoc_md1396"></a>
 What Happens When You Call <code>arun</code>? (The Flow)</h2>
 <p>When you call <code>crawler.arun(url="...")</code>, the <code>AsyncWebCrawler</code> (our General Manager) springs into action and coordinates several steps behind the scenes:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -290,7 +290,7 @@ What Happens When You Call <code>arun</code>? (The Flow)</h2>
 <li><b>Cache Result (if needed):</b> If caching is enabled for writing, it saves the final processed result.</li>
 <li><b>Return Result:</b> It bundles everything into a <a class="el" href="../../dd/d0d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_207__crawlresult.html">CrawlResult</a> object and returns it to you.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1396"></a>
+<h2><a class="anchor" id="autotoc_md1397"></a>
 Crawling Many Pages: <code>arun_many</code></h2>
 <p>What if you have a whole list of URLs to crawl? Calling <code>arun</code> in a loop works, but it might not be the most efficient way. <code>AsyncWebCrawler</code> provides the <code>arun_many</code> method designed for this.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter2_example_3.py</span></div>
@@ -326,7 +326,7 @@ Crawling Many Pages: <code>arun_many</code></h2>
 <li><b><code>results</code></b>: <code>arun_many</code> returns a list where each item is a <code>CrawlResult</code> object corresponding to one of the input URLs.</li>
 </ol>
 <p><code>arun_many</code> is much more efficient for batch processing as it leverages <code>asyncio</code> to handle multiple fetches and processing tasks concurrently. It uses a <a class="el" href="../../d6/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_210__basedispatcher.html">BaseDispatcher</a> internally to manage this concurrency.</p>
-<h2><a class="anchor" id="autotoc_md1397"></a>
+<h2><a class="anchor" id="autotoc_md1398"></a>
 Under the Hood (A Peek at the Code)</h2>
 <p>You don't need to know the internal details to use <code>AsyncWebCrawler</code>, but seeing the structure can help. Inside the <code>crawl4ai</code> library, the file <code>async_webcrawler.py</code> defines this class.</p>
 <div class="fragment"><div class="line"><span class="comment"># Simplified from async_webcrawler.py</span></div>
@@ -422,7 +422,7 @@ Under the Hood (A Peek at the Code)</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># ... other methods like awarmup, close, caching helpers ...</span></div>
 </div><!-- fragment --><p>The key takeaway is that <code>AsyncWebCrawler</code> doesn't do the fetching or detailed processing <em>itself</em>. It acts as the central hub, coordinating calls to the various specialized <code>Strategy</code> classes based on the provided configuration.</p>
-<h2><a class="anchor" id="autotoc_md1398"></a>
+<h2><a class="anchor" id="autotoc_md1399"></a>
 Conclusion</h2>
 <p>You've met the General Manager: <code>AsyncWebCrawler</code>!</p>
 <ul>

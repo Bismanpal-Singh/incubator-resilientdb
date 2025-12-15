@@ -1,5 +1,10 @@
 var NAVTREEINDEX12 =
 {
+"db/d71/classresdb_1_1AtomicUniquePtr.html#ac69951cf8b7595a25e371a8d3b8e01ad":[0,0,16,12,1],
+"db/d71/classresdb_1_1AtomicUniquePtr.html#ac69951cf8b7595a25e371a8d3b8e01ad":[1,0,2,8,1],
+"db/d71/classresdb_1_1AtomicUniquePtr.html#af20b913b0035decb68bb0eb2222e5440":[0,0,16,12,3],
+"db/d71/classresdb_1_1AtomicUniquePtr.html#af20b913b0035decb68bb0eb2222e5440":[1,0,2,8,3],
+"db/d71/classresdb_1_1AtomicUniquePtr.html#af9516e423bba6cb72af692b07823d24e":[0,0,16,12,2],
 "db/d71/classresdb_1_1AtomicUniquePtr.html#af9516e423bba6cb72af692b07823d24e":[1,0,2,8,2],
 "db/d86/classresdb__driver_1_1exceptions_1_1BadRequest.html":[0,0,17,4,2],
 "db/d86/classresdb__driver_1_1exceptions_1_1BadRequest.html":[1,0,3,2,2],
@@ -244,10 +249,5 @@ var NAVTREEINDEX12 =
 "dc/d03/classresdb__driver_1_1connection_1_1Connection.html#a66e080bd770135327640f4145baea70b":[0,0,17,0,0,1],
 "dc/d03/classresdb__driver_1_1connection_1_1Connection.html#a66e080bd770135327640f4145baea70b":[1,0,3,0,0,1],
 "dc/d03/classresdb__driver_1_1connection_1_1Connection.html#a9db304c3d8a30f409e586c3ef7c6b720":[0,0,17,0,0,0],
-"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#a9db304c3d8a30f409e586c3ef7c6b720":[1,0,3,0,0,0],
-"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#abd2956be6c20d54a8112a458487e4c02":[0,0,17,0,0,7],
-"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#abd2956be6c20d54a8112a458487e4c02":[1,0,3,0,0,7],
-"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ac2cc06f174a97b777be534037c395c96":[0,0,17,0,0,6],
-"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ac2cc06f174a97b777be534037c395c96":[1,0,3,0,0,6],
-"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ad794b3fec2f08e6acaea470aadbb079e":[0,0,17,0,0,4]
+"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#a9db304c3d8a30f409e586c3ef7c6b720":[1,0,3,0,0,0]
 };

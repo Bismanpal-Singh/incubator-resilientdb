@@ -122,11 +122,11 @@ $(function(){initNavTree('dir_5c134d45f671752283cd0c4cc79f195f.html',''); initRe
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h1><a class="anchor" id="autotoc_md3506"></a>
+<h1><a class="anchor" id="autotoc_md3507"></a>
 Collaborative Drawing Toolkit</h1>
 <p><b>License</b>: Apache-2.0</p>
 <p>A universal JavaScript client library for building collaborative drawing applications with blockchain-backed storage. This toolkit provides a complete SDK for managing canvases, submitting drawing strokes, real-time collaboration, and integrating with ResilientDB's decentralized infrastructure.</p>
-<h2><a class="anchor" id="autotoc_md3507"></a>
+<h2><a class="anchor" id="autotoc_md3508"></a>
 Features</h2>
 <ul>
 <li>🎨 <b>Drawing Operations</b>: Submit strokes, undo/redo, clear canvas</li>
@@ -138,7 +138,7 @@ Features</h2>
 <li>📦 <b>Modular Design</b>: Use only what you need</li>
 <li>🔄 <b>Auto-Retry Logic</b>: Built-in request retry with exponential backoff</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3508"></a>
+<h2><a class="anchor" id="autotoc_md3509"></a>
 Project Structure</h2>
 <div class="fragment"><div class="line">drawing-toolkit/</div>
 <div class="line">├── src/                   # Source code</div>
@@ -150,15 +150,15 @@ Project Structure</h2>
 <div class="line">├── LICENSE                # Apache 2.0 License</div>
 <div class="line">├── README.md              # This file</div>
 <div class="line">└── package.json           # Package configuration</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3509"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3510"></a>
 Installation</h2>
 <div class="fragment"><div class="line">npm install collaborative-drawing-toolkit</div>
 </div><!-- fragment --><p>Or using yarn:</p>
 <div class="fragment"><div class="line">yarn add collaborative-drawing-toolkit</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3510"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3511"></a>
 Backend Requirements</h2>
 <p><b>This toolkit is a client library and requires a compatible backend server to function.</b></p>
-<h3><a class="anchor" id="autotoc_md3511"></a>
+<h3><a class="anchor" id="autotoc_md3512"></a>
 Required Infrastructure</h3>
 <p>You must have the following services running and accessible:</p>
 <ol type="1">
@@ -167,7 +167,7 @@ Required Infrastructure</h3>
 <li><b>MongoDB</b> - Warm cache and queryable data replica</li>
 <li><b>Redis</b> - In-memory cache for real-time performance</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md3512"></a>
+<h3><a class="anchor" id="autotoc_md3513"></a>
 Backend Setup Example</h3>
 <p>This toolkit is designed to work with any backend that implements the required API endpoints. For a reference implementation, see compatible backend servers that support:</p>
 <ul>
@@ -187,7 +187,7 @@ Backend Setup Example</h3>
 <div class="line"># Start backend server</div>
 <div class="line">python app.py</div>
 <div class="line"># Backend runs on http://localhost:10010 by default</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3513"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3514"></a>
 Quick Start</h2>
 <div class="fragment"><div class="line">import DrawingClient from &#39;collaborative-drawing-toolkit&#39;;</div>
 <div class="line"> </div>
@@ -227,7 +227,7 @@ Quick Start</h2>
 <div class="line">  console.log(&#39;New stroke from collaborator:&#39;, stroke);</div>
 <div class="line">  // Render the stroke on your canvas</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3514"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3515"></a>
 Architecture</h2>
 <p>This toolkit integrates with a backend server and ResilientDB infrastructure to provide:</p>
 <ol type="1">
@@ -236,9 +236,9 @@ Architecture</h2>
 <li><b>Real-Time Updates</b>: Socket.IO for instant collaboration</li>
 <li><b>Authentication</b>: JWT-based with wallet support for secure operations</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3515"></a>
+<h2><a class="anchor" id="autotoc_md3516"></a>
 API Reference</h2>
-<h3><a class="anchor" id="autotoc_md3516"></a>
+<h3><a class="anchor" id="autotoc_md3517"></a>
 Client Initialization</h3>
 <div class="fragment"><div class="line">const client = new DrawingClient({</div>
 <div class="line">  baseUrl: &#39;https://api.example.com&#39;,  // Required: Your backend server URL</div>
@@ -250,37 +250,37 @@ Client Initialization</h3>
 <div class="line">    return await refreshToken();</div>
 <div class="line">  }</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3517"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3518"></a>
 Authentication</h3>
-<h4><a class="anchor" id="autotoc_md3518"></a>
+<h4><a class="anchor" id="autotoc_md3519"></a>
 Register</h4>
 <div class="fragment"><div class="line">const { token, user } = await client.auth.register({</div>
 <div class="line">  username: &#39;alice&#39;,</div>
 <div class="line">  password: &#39;securePassword123&#39;,</div>
 <div class="line">  walletPubKey: &#39;optional_wallet_public_key&#39; // For secure canvases</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3519"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3520"></a>
 Login</h4>
 <div class="fragment"><div class="line">const { token, user } = await client.auth.login({</div>
 <div class="line">  username: &#39;alice&#39;,</div>
 <div class="line">  password: &#39;securePassword123&#39;</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3520"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3521"></a>
 Logout</h4>
 <div class="fragment"><div class="line">await client.auth.logout();</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3521"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3522"></a>
 Get Current User</h4>
 <div class="fragment"><div class="line">const { user } = await client.auth.getMe();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3522"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3523"></a>
 Canvas Management</h3>
-<h4><a class="anchor" id="autotoc_md3523"></a>
+<h4><a class="anchor" id="autotoc_md3524"></a>
 Create Canvas</h4>
 <div class="fragment"><div class="line">const { canvas } = await client.canvases.create({</div>
 <div class="line">  name: &#39;Collaborative Canvas&#39;,</div>
 <div class="line">  type: &#39;public&#39;,  // &#39;public&#39;, &#39;private&#39;, or &#39;secure&#39;</div>
 <div class="line">  description: &#39;Optional description&#39;</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3524"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3525"></a>
 List Canvases</h4>
 <div class="fragment"><div class="line">const { canvases, pagination } = await client.canvases.list({</div>
 <div class="line">  sortBy: &#39;createdAt&#39;,</div>
@@ -288,34 +288,34 @@ List Canvases</h4>
 <div class="line">  page: 1,</div>
 <div class="line">  per_page: 20</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3525"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3526"></a>
 Get Canvas Details</h4>
 <div class="fragment"><div class="line">const { canvas } = await client.canvases.get(canvasId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3526"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3527"></a>
 Update Canvas</h4>
 <div class="fragment"><div class="line">const { canvas } = await client.canvases.update(canvasId, {</div>
 <div class="line">  name: &#39;New Name&#39;,</div>
 <div class="line">  description: &#39;Updated description&#39;,</div>
 <div class="line">  archived: false</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3527"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3528"></a>
 Delete Canvas</h4>
 <div class="fragment"><div class="line">await client.canvases.delete(canvasId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3528"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3529"></a>
 Share Canvas</h4>
 <div class="fragment"><div class="line">await client.canvases.share(canvasId, [</div>
 <div class="line">  { username: &#39;bob&#39;, role: &#39;editor&#39; },</div>
 <div class="line">  { username: &#39;carol&#39;, role: &#39;viewer&#39; }</div>
 <div class="line">]);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3529"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3530"></a>
 Drawing Operations</h3>
-<h4><a class="anchor" id="autotoc_md3530"></a>
+<h4><a class="anchor" id="autotoc_md3531"></a>
 Get Strokes</h4>
 <div class="fragment"><div class="line">const { strokes } = await client.canvases.getStrokes(canvasId, {</div>
 <div class="line">  since: timestamp,  // Optional: get strokes after this time</div>
 <div class="line">  until: timestamp   // Optional: get strokes before this time</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3531"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3532"></a>
 Add Stroke</h4>
 <div class="fragment"><div class="line">await client.canvases.addStroke(canvasId, {</div>
 <div class="line">  pathData: [</div>
@@ -329,51 +329,51 @@ Add Stroke</h4>
 <div class="line">  signature: &#39;...&#39;,       // Optional: for secure canvases</div>
 <div class="line">  signerPubKey: &#39;...&#39;     // Optional: for secure canvases</div>
 <div class="line">});</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3532"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3533"></a>
 Undo</h4>
 <div class="fragment"><div class="line">await client.canvases.undo(canvasId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3533"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3534"></a>
 Redo</h4>
 <div class="fragment"><div class="line">await client.canvases.redo(canvasId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3534"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3535"></a>
 Clear Canvas</h4>
 <div class="fragment"><div class="line">await client.canvases.clear(canvasId);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3535"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3536"></a>
 Collaboration &amp; Invitations</h3>
-<h4><a class="anchor" id="autotoc_md3536"></a>
+<h4><a class="anchor" id="autotoc_md3537"></a>
 List Pending Invitations</h4>
 <div class="fragment"><div class="line">const { invites } = await client.invites.list();</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3537"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3538"></a>
 Accept an Invitation</h4>
 <div class="fragment"><div class="line">await client.invites.accept(inviteId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3538"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3539"></a>
 Decline an Invitation</h4>
 <div class="fragment"><div class="line">await client.invites.decline(inviteId);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3539"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3540"></a>
 Notifications</h3>
-<h4><a class="anchor" id="autotoc_md3540"></a>
+<h4><a class="anchor" id="autotoc_md3541"></a>
 List Notifications</h4>
 <div class="fragment"><div class="line">const { notifications } = await client.notifications.list();</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3541"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3542"></a>
 Mark Notification as Read</h4>
 <div class="fragment"><div class="line">await client.notifications.markRead(notificationId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3542"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3543"></a>
 Delete Notification</h4>
 <div class="fragment"><div class="line">await client.notifications.delete(notificationId);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3543"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3544"></a>
 Clear All Notifications</h4>
 <div class="fragment"><div class="line">await client.notifications.clear();</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3544"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3545"></a>
 Get Notification Preferences</h4>
 <div class="fragment"><div class="line">const { preferences } = await client.notifications.getPreferences();</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3545"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md3546"></a>
 Update Notification Preferences</h4>
 <div class="fragment"><div class="line">await client.notifications.updatePreferences({</div>
 <div class="line">  canvasInvites: true,</div>
 <div class="line">  mentions: true,</div>
 <div class="line">  canvasActivity: false</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3546"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3547"></a>
 Real-Time Collaboration</h3>
 <div class="fragment"><div class="line">// Connect to Socket.IO server</div>
 <div class="line">client.socket.connect(token);</div>
@@ -411,10 +411,10 @@ Real-Time Collaboration</h3>
 <div class="line"> </div>
 <div class="line">// Disconnect</div>
 <div class="line">client.socket.disconnect();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3547"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3548"></a>
 Integration with ResilientDB</h2>
 <p>This toolkit is designed to work seamlessly with ResilientDB's blockchain infrastructure:</p>
-<h3><a class="anchor" id="autotoc_md3548"></a>
+<h3><a class="anchor" id="autotoc_md3549"></a>
 Backend Integration</h3>
 <p>A compatible backend server should integrate:</p>
 <ol type="1">
@@ -432,7 +432,7 @@ Backend Integration</h3>
 <div class="line">│   └── db.py               # Redis + MongoDB setup</div>
 <div class="line">└── middleware/</div>
 <div class="line">    └── auth.py         # JWT authentication</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3549"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3550"></a>
 Stroke Flow</h3>
 <ol type="1">
 <li><b>Client</b> → Submits stroke via SDK</li>
@@ -441,9 +441,9 @@ Stroke Flow</h3>
 <li><b>Backend</b> → Broadcasts via Socket.IO (real-time)</li>
 <li><b>Sync Service</b> → Mirrors to MongoDB (queryable)</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3550"></a>
+<h2><a class="anchor" id="autotoc_md3551"></a>
 Examples</h2>
-<h3><a class="anchor" id="autotoc_md3551"></a>
+<h3><a class="anchor" id="autotoc_md3552"></a>
 Basic Drawing App</h3>
 <p>See <a href="examples/basic-drawing-app.html">examples/basic-drawing-app.html</a> for a complete example.</p>
 <div class="fragment"><div class="line">import DrawingClient from &#39;collaborative-drawing-toolkit&#39;;</div>
@@ -532,7 +532,7 @@ Basic Drawing App</h3>
 <div class="line">const canvas = document.getElementById(&#39;drawingCanvas&#39;);</div>
 <div class="line">const app = new DrawingApp(canvas);</div>
 <div class="line">app.init();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3552"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3553"></a>
 Secure Room with Wallet Signing</h3>
 <div class="fragment"><div class="line">import DrawingClient from &#39;collaborative-drawing-toolkit&#39;;</div>
 <div class="line">import { signMessage } from &#39;./wallet-utils&#39;;</div>
@@ -568,7 +568,7 @@ Secure Room with Wallet Signing</h3>
 <div class="line">  signature: signature,</div>
 <div class="line">  signerPubKey: myWalletPublicKey</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3553"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3554"></a>
 Error Handling</h2>
 <div class="fragment"><div class="line">try {</div>
 <div class="line">  await client.canvases.create({ name: &#39;Test&#39;, type: &#39;public&#39; });</div>
@@ -588,9 +588,9 @@ Error Handling</h2>
 <div class="line">    console.error(&#39;Error:&#39;, error.getUserMessage());</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3554"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3555"></a>
 Configuration</h2>
-<h3><a class="anchor" id="autotoc_md3555"></a>
+<h3><a class="anchor" id="autotoc_md3556"></a>
 Environment Variables</h3>
 <p>When deploying a backend server for this toolkit:</p>
 <div class="fragment"><div class="line"># MongoDB for queryable stroke replica</div>
@@ -605,10 +605,10 @@ Environment Variables</h3>
 <div class="line"># Redis for real-time caching</div>
 <div class="line">REDIS_HOST=localhost</div>
 <div class="line">REDIS_PORT=6379</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3556"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3557"></a>
 Testing</h2>
 <div class="fragment"><div class="line">npm test</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3557"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3558"></a>
 Contributing</h2>
 <p>Contributions are welcome! Please follow standard open-source contribution practices.</p>
 <ol type="1">
@@ -618,11 +618,11 @@ Contributing</h2>
 <li>Push to the branch</li>
 <li>Open a Pull Request</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3558"></a>
+<h2><a class="anchor" id="autotoc_md3559"></a>
 License</h2>
 <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at </p><pre class="fragment">http://www.apache.org/licenses/LICENSE-2.0
 </pre><p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<h2><a class="anchor" id="autotoc_md3559"></a>
+<h2><a class="anchor" id="autotoc_md3560"></a>
 Links</h2>
 <ul>
 <li><a href="https://resilientdb.com">ResilientDB</a></li>

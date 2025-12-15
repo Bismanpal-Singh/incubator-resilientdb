@@ -144,10 +144,10 @@ Directories</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h1><a class="anchor" id="autotoc_md3250"></a>
+<h1><a class="anchor" id="autotoc_md3251"></a>
 ResilientDB Ecosystem</h1>
 <p>This directory contains the ResilientDB ecosystem components organized as git subtrees.</p>
-<h2><a class="anchor" id="autotoc_md3251"></a>
+<h2><a class="anchor" id="autotoc_md3252"></a>
 Structure</h2>
 <div class="fragment"><div class="line">ecosystem/</div>
 <div class="line">├── graphql/                          # GraphQL service</div>
@@ -172,7 +172,7 @@ Structure</h2>
 <div class="line">    ├── resvault/                    # ResVault tool</div>
 <div class="line">    ├── create-resilient-app/        # App scaffolding tool</div>
 <div class="line">    └── drawing-lib/                 # Drawing library tool</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3252"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3253"></a>
 Clone Without Ecosystem</h2>
 <p>To clone ResilientDB without the ecosystem directory (faster, smaller):</p>
 <div class="fragment"><div class="line">git clone --filter=tree:0 --sparse https://github.com/apache/incubator-resilientdb.git</div>
@@ -181,7 +181,7 @@ Clone Without Ecosystem</h2>
 <div class="line">echo &quot;/*&quot; &gt; .git/info/sparse-checkout</div>
 <div class="line">echo &quot;\!ecosystem/&quot; &gt;&gt; .git/info/sparse-checkout</div>
 <div class="line">git read-tree -m -u HEAD</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3253"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3254"></a>
 Clone Specific Ecosystem Components</h2>
 <div class="fragment"><div class="line"># Only SDK components. Nothing else</div>
 <div class="line">git sparse-checkout set ecosystem/sdk</div>

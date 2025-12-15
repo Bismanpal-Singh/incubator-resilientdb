@@ -121,17 +121,17 @@ $(function(){initNavTree('d2/d15/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_context_globals___current_app____request____session____g__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1907"></a>
-autotoc_md1907</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1908"></a>
+autotoc_md1908</h2>
 <p>layout: default title: "Context Globals" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1908"></a>
+<h2><a class="anchor" id="autotoc_md1909"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1909"></a>
+<h1><a class="anchor" id="autotoc_md1910"></a>
 Chapter 5: Context Globals (<code>current_app</code>, <code>request</code>, <code>session</code>, <code>g</code>)</h1>
 <p>Welcome back! In <a class="el" href="../../d1/d39/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_204__templating____jinja2__integration__.html">Chapter 4: Templating (Jinja2 Integration)</a>, we learned how to separate our HTML structure from our Python code using templates and the <code>render_template</code> function. We saw how variables like <code>request</code> and functions like <code>url_for</code> seemed to be magically available in our templates.</p>
 <p>But how does that work? And more importantly, how can we easily access important information like the current application instance or the details of the incoming web request <em>inside</em> our Python view functions without passing these objects around manually to every single function? Imagine having to add <code>app</code> and <code>request</code> as arguments to all your helper functions – it would be very repetitive!</p>
 <p>This chapter introduces Flask's solution: <b>Context Globals</b>.</p>
-<h2><a class="anchor" id="autotoc_md1910"></a>
+<h2><a class="anchor" id="autotoc_md1911"></a>
 What Problem Do They Solve? Avoiding Tedious Parameter Passing</h2>
 <p>Think about working on a team project. There are certain tools or pieces of information everyone on the team needs access to frequently: the project plan, the shared calendar, the main contact person. It would be inefficient if every time someone needed the project plan, they had to specifically ask someone else to pass it to them. Instead, you might have a central place or a well-known name (like "The Plan") that everyone knows how to find.</p>
 <p>Similarly, in a Flask application, several objects are very commonly needed while handling a web request:</p>
@@ -143,7 +143,7 @@ What Problem Do They Solve? Avoiding Tedious Parameter Passing</h2>
 </ul>
 <p>Passing these objects explicitly as parameters to every function that might need them (especially view functions, <code>before_request</code> functions, <code>after_request</code> functions, template context processors) would make our code cluttered and harder to manage.</p>
 <p>Flask provides special "global" variables – <b><code>current_app</code></b>, <b><code>request</code></b>, <b><code>session</code></b>, and <b><code>g</code></b> – that act like smart pointers. They automatically find and give you access to the <em>correct</em> object relevant to the specific request you are currently handling, without you needing to pass anything around. They feel like magic variables!</p>
-<h2><a class="anchor" id="autotoc_md1911"></a>
+<h2><a class="anchor" id="autotoc_md1912"></a>
 Meet the Context Globals</h2>
 <p>These special variables are technically called <b>proxies</b>. Think of a proxy as a stand-in or an agent. When you talk to the <code>request</code> proxy, it secretly finds the <em>actual</em> request object for the HTTP request that is currently being processed and acts on its behalf. This magic happens using Flask's "context" system, which we'll touch on later and explore more in <a class="el" href="../../d6/da8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_207__application__and__request__contexts.html">Chapter 7</a>.</p>
 <p>Let's meet the main context globals:</p>
@@ -153,7 +153,7 @@ Meet the Context Globals</h2>
 <li><b><code>current_app</code></b>: Represents the <em>instance</em> of your Flask application that is handling the current request. This is useful for accessing application-wide configurations, resources, or extensions. It points to the same object you created with <code>app = Flask(__name__)</code> in <a class="el" href="../../df/d69/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_201__application__object______flask____.html">Chapter 1</a>, but you can access it from anywhere <em>during</em> a request without needing the <code>app</code> variable directly.</li>
 <li><b><code>g</code></b>: A simple namespace object (think of it like an empty box or scratchpad) that is available only for the duration of the <em>current request</em>. You can use it to store temporary data that multiple functions within the same request cycle might need access to, without passing it around. For example, you might store the current logged-in user object or a database connection here. It gets reset for every new request. The 'g' stands for "global", but it's global <em>only within the request context</em>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1912"></a>
+<h2><a class="anchor" id="autotoc_md1913"></a>
 Using the Context Globals</h2>
 <p>First, you usually need to import them from the <code>flask</code> package:</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, session, current_app, g, render_template</div>
@@ -168,7 +168,7 @@ Using the Context Globals</h2>
 <div class="line">app.config[<span class="stringliteral">&#39;SECRET_KEY&#39;</span>] = os.urandom(24)</div>
 <div class="line"><span class="comment"># We&#39;ll learn more about config in Chapter 6: Configuration (Config)</span></div>
 </div><!-- fragment --><p>Now let's see how to use them.</p>
-<h3><a class="anchor" id="autotoc_md1913"></a>
+<h3><a class="anchor" id="autotoc_md1914"></a>
 <code>request</code>: Accessing Incoming Data</h3>
 <p>We saw this in Chapter 3. Notice how the <code>index</code> function can use <code>request</code> directly without it being passed as an argument.</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (continued)</span></div>
@@ -184,7 +184,7 @@ Using the Context Globals</h2>
 <li><code>request.method</code>: Gets the HTTP method used (e.g., 'GET', 'POST').</li>
 </ul>
 <p>Flask automatically makes the correct <code>request</code> object available here when the <code>/</code> route is visited.</p>
-<h3><a class="anchor" id="autotoc_md1914"></a>
+<h3><a class="anchor" id="autotoc_md1915"></a>
 <code>current_app</code>: Accessing Application Settings</h3>
 <p>Imagine you want to log something using the application's logger or access a configuration value.</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (continued)</span></div>
@@ -212,7 +212,7 @@ Using the Context Globals</h2>
 <li><code>current_app.config.get(...)</code>: Accesses the application's configuration dictionary.</li>
 </ul>
 <p>Again, <code>app_info</code> doesn't need <code>app</code> passed in; <code>current_app</code> provides access to it within the request context.</p>
-<h3><a class="anchor" id="autotoc_md1915"></a>
+<h3><a class="anchor" id="autotoc_md1916"></a>
 <code>session</code>: Remembering Things Across Requests</h3>
 <p>Sessions allow you to store data associated with a specific user's browser session. Flask uses a secret key (<code>app.secret_key</code> or &lsquo;app.config['SECRET_KEY&rsquo;]`) to cryptographically sign the session cookie, preventing users from modifying it. <b>Always set a strong, random secret key!</b></p>
 <p>Let's create a simple view counter that increments each time the <em>same</em> user visits the page.</p>
@@ -247,7 +247,7 @@ Using the Context Globals</h2>
 <li>Refresh again. It will become 3, and so on.</li>
 <li>If you close your browser completely and reopen it (or use a private/incognito window), the count will reset to 1 because the session cookie is typically cleared or different.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1916"></a>
+<h3><a class="anchor" id="autotoc_md1917"></a>
 <code>g</code>: Temporary Storage for a Single Request</h3>
 <p>The <code>g</code> object is useful for storing data that needs to be accessed by multiple functions <em>within the same request cycle</em>. A common example is loading the current user's information from a database or verifying an API key. You might do this in a <code>@app.before_request</code> function and then access the result in your view function using <code>g</code>.</p>
 <p>Let's simulate loading some data before the request and accessing it in the view.</p>
@@ -296,7 +296,7 @@ Using the Context Globals</h2>
 <li>&lsquo;g.get('request_time&rsquo;, ...)<code>: In the view function</code>show_g<code>, we retrieve the data stored on</code>g<code>. Using</code>.<a class="el" href="../../d7/da6/pybind__kv__service_8cpp.html#abe6524afb3a69dc9a4c314e11f96f29f">get()</a><code>is safer as it allows providing a default if the attribute wasn't set. *</code>@app.teardown_request<code>: This decorator registers</code>teardown_request_data<code>to run after the request has been handled and the response sent, even if an exception occurred. It's a good place to clean up resources stored in</code>g<code>.</code>g.pop()` is used to get the value and remove it, preventing potential issues if the teardown runs multiple times in complex scenarios.</li>
 </ul>
 <p>When you visit <code>/show-g</code>, the <code>before_request</code> function runs first, setting <code>g.user</code> and <code>g.request_time</code>. Then <code>show_g</code> runs and reads those values from <code>g</code>. Finally, <code>teardown_request</code> runs. If you make another request, <code>g</code> will be empty again until <code>before_request</code> runs for that <em>new</em> request.</p>
-<h2><a class="anchor" id="autotoc_md1917"></a>
+<h2><a class="anchor" id="autotoc_md1918"></a>
 Why "Context"? The Magic Behind the Scenes</h2>
 <p>How do these globals always know which <code>request</code> or <code>app</code> to point to, especially if your web server is handling multiple requests at the same time?</p>
 <p>Flask manages this using <b>Contexts</b>. There are two main types:</p>
@@ -307,7 +307,7 @@ Why "Context"? The Magic Behind the Scenes</h2>
 <p>Think of these contexts like temporary bubbles or environments. When Flask handles a request, it inflates a request context bubble (which automatically includes an application context bubble inside it). Inside this bubble, the names <code>request</code>, <code>session</code>, <code>current_app</code>, and <code>g</code> are set up to point to the objects belonging to <em>that specific bubble</em>. If another request comes in concurrently (in a different thread or process), Flask creates a <em>separate</em> bubble for it, and the context globals inside that second bubble point to <em>its</em> own request, session, app, and g objects.</p>
 <p>This system ensures that even with multiple simultaneous requests, <code>request</code> in the code handling request A always refers to request A's data, while <code>request</code> in the code handling request B always refers to request B's data.</p>
 <p>We will explore contexts in more detail in <a class="el" href="../../d6/da8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_207__application__and__request__contexts.html">Chapter 7: Application and Request Contexts</a>.</p>
-<h2><a class="anchor" id="autotoc_md1918"></a>
+<h2><a class="anchor" id="autotoc_md1919"></a>
 Under the Hood: Proxies and <code>contextvars</code></h2>
 <p>How do these variables like <code>request</code> actually <em>do</em> the lookup within the current context?</p>
 <p>Flask uses a concept called <b>Local Proxies</b>, specifically <code>werkzeug.local.LocalProxy</code>. These proxy objects are essentially clever stand-ins. When you access an attribute or method on a proxy (like <code>request.method</code>), the proxy doesn't have the method itself. Instead, it performs a lookup to find the <em>real</em> object it should be representing <em>at that moment</em> based on the current context.</p>
@@ -365,7 +365,7 @@ Under the Hood: Proxies and <code>contextvars</code></h2>
 <div class="line">    Proxy-&gt;&gt;FormDictB: Get item &#39;name&#39;</div>
 <div class="line">    FormDictB--&gt;&gt;Proxy: Return &#39;Bob&#39;</div>
 <div class="line">    Proxy--&gt;&gt;-UserCodeB: Return &#39;Bob&#39;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1919"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1920"></a>
 Conclusion</h2>
 <p>You've learned about Flask's Context Globals: <code>current_app</code>, <code>request</code>, <code>session</code>, and <code>g</code>. These are powerful proxy objects that simplify your code by providing easy access to application- or request-specific information without needing to pass objects around manually.</p>
 <ul>

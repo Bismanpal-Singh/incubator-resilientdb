@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/d56/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_core_schema___validation_serialization</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2879"></a>
-autotoc_md2879</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2880"></a>
+autotoc_md2880</h2>
 <p>layout: default title: "Core Schema &amp; Validation/Serialization" parent: "Pydantic Core" </p>
-<h2><a class="anchor" id="autotoc_md2880"></a>
+<h2><a class="anchor" id="autotoc_md2881"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2881"></a>
+<h1><a class="anchor" id="autotoc_md2882"></a>
 Chapter 5: Core Schema &amp; Validation/Serialization</h1>
 <p>In the previous chapters, we've seen how to define data structures using <a class="el" href="../../d7/d22/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_201__basemodel.html">BaseModel</a>, customize fields with <a class="el" href="../../d9/df6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_202__fields____fieldinfo______field__function__.html">Field()</a>, set model-wide behavior with <a class="el" href="../../d0/d6f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_203__configuration____configdict______configwrapper__.html">Configuration</a>, and even add <a class="el" href="../../d3/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_204__custom__logic____decorators______annotated__helpers__.html">Custom Logic</a> using decorators. You might be wondering: how does Pydantic take all these Python definitions and use them to perform such fast and reliable validation and serialization?</p>
 <p>The secret lies in an internal representation called the <b>Core Schema</b> and a high-performance engine called <code>pydantic-core</code>. Let's peek under the hood!</p>
-<h2><a class="anchor" id="autotoc_md2882"></a>
+<h2><a class="anchor" id="autotoc_md2883"></a>
 Why Look Under the Hood?</h2>
 <p>Imagine you've designed a beautiful blueprint for a house (your Pydantic <code>BaseModel</code>). You've specified room sizes (type hints), special fixtures (<code>Field</code> constraints), and overall building codes (<code>ConfigDict</code>). You've even added custom inspection notes (decorators).</p>
 <p>Now, how does the construction crew actually <em>build</em> the house and check everything rigorously? They don't just glance at the user-friendly blueprint. They work from a highly detailed <b>technical specification</b> derived from it. This spec leaves no room for ambiguity.</p>
@@ -140,7 +140,7 @@ Why Look Under the Hood?</h2>
 <li><b>Consistency:</b> How validation and serialization rules are strictly enforced.</li>
 <li><b>Power:</b> How complex requirements are translated into concrete instructions.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2883"></a>
+<h2><a class="anchor" id="autotoc_md2884"></a>
 What is the Core Schema? The Technical Specification</h2>
 <p>When Pydantic processes your <code>BaseModel</code> definition (including type hints, <code>Field</code> calls, <code>ConfigDict</code>, decorators, etc.), it translates all that information into an internal data structure called the <b>Core Schema</b>.</p>
 <p>Think of the Core Schema as:</p>
@@ -158,7 +158,7 @@ What is the Core Schema? The Technical Specification</h2>
 </li>
 </ol>
 <p><b>Analogy:</b> Your Python <code>BaseModel</code> is the architect's blueprint. The <code>CoreSchema</code> is the exhaustive technical specification document derived from that blueprint, detailing every material, dimension, and construction step.</p>
-<h3><a class="anchor" id="autotoc_md2884"></a>
+<h3><a class="anchor" id="autotoc_md2885"></a>
 A Glimpse of the Schema (Conceptual)</h3>
 <p>You don't normally interact with the Core Schema directly, but let's imagine what a simplified piece might look like for a field <code>name: str = Field(min_length=3)</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># Conceptual representation - the actual structure is more complex!</span></div>
@@ -205,7 +205,7 @@ A Glimpse of the Schema (Conceptual)</h3>
 <div class="line"><span class="comment"># Output will be a complex dictionary representing the detailed schema</span></div>
 <div class="line"><span class="comment"># (Output is large and complex, not shown here for brevity)</span></div>
 </div><!-- fragment --><p>While you <em>can</em> look at <code>__pydantic_core_schema__</code>, treat it as an internal implementation detail. Its exact structure might change between Pydantic versions.</p>
-<h2><a class="anchor" id="autotoc_md2885"></a>
+<h2><a class="anchor" id="autotoc_md2886"></a>
 What is <code>pydantic-core</code>? The Efficient Construction Crew</h2>
 <p><code>pydantic-core</code> is the heart of Pydantic's performance. It's a separate library, written in Rust (a language known for speed and safety), that does the heavy lifting of validation and serialization.</p>
 <p><b>How it Works:</b></p>
@@ -221,7 +221,7 @@ What is <code>pydantic-core</code>? The Efficient Construction Crew</h2>
 <div class="line">print(User.__pydantic_serializer__)</div>
 <div class="line"><span class="comment"># Output: &lt;SchemaSerializer &#39;User&#39; ...&gt; (a pydantic-core object)</span></div>
 </div><!-- fragment --><p>This "compilation" step happens only <em>once</em> when the class is created. This makes subsequent validation and serialization extremely fast.</p>
-<h2><a class="anchor" id="autotoc_md2886"></a>
+<h2><a class="anchor" id="autotoc_md2887"></a>
 Validation Flow: Checking Incoming Materials</h2>
 <p>When you create an instance of your model or validate data:</p>
 <div class="fragment"><div class="line"><span class="comment"># Example: Validation</span></div>
@@ -254,7 +254,7 @@ Validation Flow: Checking Incoming Materials</h2>
 </code>pydantic_core.ValidationError`, which Pydantic surfaces to your Python code.</li>
 </ol>
 <p><b>Analogy:</b> The construction crew takes the delivery of materials (<code>user_data</code>) and uses the technical spec (<code>CoreSchema</code> baked into the validator) to rigorously check if everything is correct (right type, right size, etc.). If not, they issue a detailed non-compliance report (<code>ValidationError</code>).</p>
-<h2><a class="anchor" id="autotoc_md2887"></a>
+<h2><a class="anchor" id="autotoc_md2888"></a>
 Serialization Flow: Generating Reports</h2>
 <p>When you dump your model instance:</p>
 <div class="fragment"><div class="line"><span class="comment"># Example: Serialization</span></div>
@@ -276,7 +276,7 @@ Serialization Flow: Generating Reports</h2>
 <li><b>Result:</b> The serializer returns the final dictionary or JSON string.</li>
 </ol>
 <p><b>Analogy:</b> The crew uses the technical spec (<code>CoreSchema</code> baked into the serializer) to generate a standardized report (<code>dict</code> or JSON) about the constructed house (<code>model instance</code>), formatting details (like using aliases) as requested.</p>
-<h2><a class="anchor" id="autotoc_md2888"></a>
+<h2><a class="anchor" id="autotoc_md2889"></a>
 Under the Hood: The Assembly Line</h2>
 <p>Let's visualize the entire process from defining a class to using it.</p>
 <p><b>Step-by-Step:</b></p>
@@ -332,7 +332,7 @@ Under the Hood: The Assembly Line</h2>
 <li><b>Core Engine:</b> The <code>pydantic-core</code> library (Rust code, compiled). You interact with it via the <code>SchemaValidator</code> and <code>SchemaSerializer</code> objects attached to your models.</li>
 <li><b>Schema Representation:</b> The <code>CoreSchema</code> itself is defined using types from <code>pydantic_core.core_schema</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2889"></a>
+<h2><a class="anchor" id="autotoc_md2890"></a>
 Conclusion</h2>
 <p>You've now seen the engine behind Pydantic's power!</p>
 <ul>

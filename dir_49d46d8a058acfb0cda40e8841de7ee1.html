@@ -136,40 +136,40 @@ Files</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p># </p>
-<h1><a class="anchor" id="autotoc_md517"></a>
-Licensed to the Apache Software Foundation (ASF) under one</h1>
 <h1><a class="anchor" id="autotoc_md518"></a>
-or more contributor license agreements. See the NOTICE file</h1>
+Licensed to the Apache Software Foundation (ASF) under one</h1>
 <h1><a class="anchor" id="autotoc_md519"></a>
-distributed with this work for additional information</h1>
+or more contributor license agreements. See the NOTICE file</h1>
 <h1><a class="anchor" id="autotoc_md520"></a>
-regarding copyright ownership. The ASF licenses this file</h1>
+distributed with this work for additional information</h1>
 <h1><a class="anchor" id="autotoc_md521"></a>
-to you under the Apache License, Version 2.0 (the</h1>
+regarding copyright ownership. The ASF licenses this file</h1>
 <h1><a class="anchor" id="autotoc_md522"></a>
-"License"); you may not use this file except in compliance</h1>
+to you under the Apache License, Version 2.0 (the</h1>
 <h1><a class="anchor" id="autotoc_md523"></a>
+"License"); you may not use this file except in compliance</h1>
+<h1><a class="anchor" id="autotoc_md524"></a>
 with the License. You may obtain a copy of the License at</h1>
 <p># </p>
-<h1><a class="anchor" id="autotoc_md524"></a>
+<h1><a class="anchor" id="autotoc_md525"></a>
 <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></h1>
 <p># </p>
-<h1><a class="anchor" id="autotoc_md525"></a>
-Unless required by applicable law or agreed to in writing,</h1>
 <h1><a class="anchor" id="autotoc_md526"></a>
-software distributed under the License is distributed on an</h1>
+Unless required by applicable law or agreed to in writing,</h1>
 <h1><a class="anchor" id="autotoc_md527"></a>
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</h1>
+software distributed under the License is distributed on an</h1>
 <h1><a class="anchor" id="autotoc_md528"></a>
-KIND, either express or implied. See the License for the</h1>
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</h1>
 <h1><a class="anchor" id="autotoc_md529"></a>
-specific language governing permissions and limitations</h1>
+KIND, either express or implied. See the License for the</h1>
 <h1><a class="anchor" id="autotoc_md530"></a>
+specific language governing permissions and limitations</h1>
+<h1><a class="anchor" id="autotoc_md531"></a>
 under the License.</h1>
 <p>#</p>
-<h1><a class="anchor" id="autotoc_md531"></a>
+<h1><a class="anchor" id="autotoc_md532"></a>
 resdb validator code in python</h1>
-<h2><a class="anchor" id="autotoc_md532"></a>
+<h2><a class="anchor" id="autotoc_md533"></a>
 Requirements</h2>
 <ul>
 <li>python3.9+</li>
@@ -178,23 +178,23 @@ Requirements</h2>
 <li><code>$ source venv/bin/activate</code></li>
 <li><code>$ pip install -r requirements.txt</code> </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md533"></a>
+<h2><a class="anchor" id="autotoc_md534"></a>
 entrypoint</h2>
 <p><code><a class="el" href="d3/d40/validator_8py.html">validator.py</a></code> call the <code>is_valid_tx(tx_dict)</code> function with the transaction json (tx_dict) as the argument.</p>
-<h2><a class="anchor" id="autotoc_md534"></a>
+<h2><a class="anchor" id="autotoc_md535"></a>
 Transaction Validation</h2>
 <p>A transaction is said to be valid if it satisfies certain condtions or rules.</p>
 <p>We employ a simpler version of the transaction spec and validation rules specified by <a href="https://github.com/bigchaindb/BEPs/tree/master/13#transaction-validation">BigchainDB</a></p>
-<h4><a class="anchor" id="autotoc_md535"></a>
+<h4><a class="anchor" id="autotoc_md536"></a>
 JSON Schema Validation</h4>
 <p>The json structure of a transaction should be the transaction spec v2 of BigchainDB </p>
-<h4><a class="anchor" id="autotoc_md536"></a>
+<h4><a class="anchor" id="autotoc_md537"></a>
 The output.amount Rule</h4>
 <p>For all output.amount must be an integer between 1 and 9×10^18, inclusive. The reason for the upper bound is to keep amount within what a server can comfortably represent using a 64-bit signed integer, i.e. 9×10^18 is less than 2^63. </p>
-<h4><a class="anchor" id="autotoc_md537"></a>
+<h4><a class="anchor" id="autotoc_md538"></a>
 The Duplicate Transaction Rule</h4>
 <p>If a transaction is a duplicate of a previous transaction, then it’s invalid. A quick way to check that is by checking to see if a transaction with the same transaction ID is already stored. A transaction ID is the hash of the transaction.</p>
-<h4><a class="anchor" id="autotoc_md538"></a>
+<h4><a class="anchor" id="autotoc_md539"></a>
 The TRANSFER Transaction Rules</h4>
 <p>if a transaction is a <code>TRANSFER</code> transaction:</p>
 <ul>
@@ -208,7 +208,7 @@ The TRANSFER Transaction Rules</h4>
 <li>a transaction output that doesn’t exist, then it’s invalid.</li>
 <li>a transaction with an asset ID that’s different from this transaction’s asset ID, then this transaction is invalid. (The asset ID of a CREATE transaction is the same as the transaction ID. The asset ID of a TRANSFER transaction is asset.id.) Note: The first two rules prevent double spending.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md539"></a>
+<h4><a class="anchor" id="autotoc_md540"></a>
 The input.fulfillment Rule</h4>
 <p>Regardless of whether the transaction is a CREATE or TRANSFER transaction: For all inputs, input.fulfillment must be valid. </p>
 </div><!-- contents -->

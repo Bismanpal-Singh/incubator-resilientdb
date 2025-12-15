@@ -1,5 +1,10 @@
 var NAVTREEINDEX13 =
 {
+"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#abd2956be6c20d54a8112a458487e4c02":[0,0,17,0,0,7],
+"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#abd2956be6c20d54a8112a458487e4c02":[1,0,3,0,0,7],
+"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ac2cc06f174a97b777be534037c395c96":[0,0,17,0,0,6],
+"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ac2cc06f174a97b777be534037c395c96":[1,0,3,0,0,6],
+"dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ad794b3fec2f08e6acaea470aadbb079e":[0,0,17,0,0,4],
 "dc/d03/classresdb__driver_1_1connection_1_1Connection.html#ad794b3fec2f08e6acaea470aadbb079e":[1,0,3,0,0,4],
 "dc/d03/classresdb__driver_1_1connection_1_1Connection.html#aedb5d96ac802ae6ee9545eac21e7ec66":[0,0,17,0,0,3],
 "dc/d03/classresdb__driver_1_1connection_1_1Connection.html#aedb5d96ac802ae6ee9545eac21e7ec66":[1,0,3,0,0,3],
@@ -20,6 +25,8 @@ var NAVTREEINDEX13 =
 "dc/d12/classsdk_1_1ResDBKVClient.html#a3613a034c72764871dd814ee8ce93959":[1,0,8,4,0],
 "dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65":[0,0,23,4,2],
 "dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65":[1,0,8,4,2],
+"dc/d12/classsdk_1_1ResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3":[0,0,23,4,5],
+"dc/d12/classsdk_1_1ResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3":[1,0,8,4,5],
 "dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725":[0,0,23,4,3],
 "dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725":[1,0,8,4,3],
 "dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9":[0,0,23,4,1],
@@ -242,12 +249,5 @@ var NAVTREEINDEX13 =
 "dc/db0/classresdb_1_1CheckPointManager.html#ab12ae64e561933759ad360830c061d2e":[0,0,16,17,8],
 "dc/db0/classresdb_1_1CheckPointManager.html#ab12ae64e561933759ad360830c061d2e":[1,0,2,13,8],
 "dc/db0/classresdb_1_1CheckPointManager.html#ab83898cbc4b5f881ad04c96edb936d06":[0,0,16,17,44],
-"dc/db0/classresdb_1_1CheckPointManager.html#ab83898cbc4b5f881ad04c96edb936d06":[1,0,2,13,44],
-"dc/db0/classresdb_1_1CheckPointManager.html#ac0231ddee919b4ececa0c94e53d28a03":[0,0,16,17,13],
-"dc/db0/classresdb_1_1CheckPointManager.html#ac0231ddee919b4ececa0c94e53d28a03":[1,0,2,13,13],
-"dc/db0/classresdb_1_1CheckPointManager.html#ac296f642cfe10b98487f8d8b545ec8a3":[0,0,16,17,25],
-"dc/db0/classresdb_1_1CheckPointManager.html#ac296f642cfe10b98487f8d8b545ec8a3":[1,0,2,13,25],
-"dc/db0/classresdb_1_1CheckPointManager.html#aceffced8931a5a2a9c6c4a517cfe489f":[0,0,16,17,24],
-"dc/db0/classresdb_1_1CheckPointManager.html#aceffced8931a5a2a9c6c4a517cfe489f":[1,0,2,13,24],
-"dc/db0/classresdb_1_1CheckPointManager.html#ad7417f8126c6b8fa9c0f7c85a21e2568":[0,0,16,17,2]
+"dc/db0/classresdb_1_1CheckPointManager.html#ab83898cbc4b5f881ad04c96edb936d06":[1,0,2,13,44]
 };

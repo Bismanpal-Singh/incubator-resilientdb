@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/d71/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_baseagent</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2631"></a>
-autotoc_md2631</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2632"></a>
+autotoc_md2632</h2>
 <p>layout: default title: "BaseAgent" parent: "OpenManus" </p>
-<h2><a class="anchor" id="autotoc_md2632"></a>
+<h2><a class="anchor" id="autotoc_md2633"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2633"></a>
+<h1><a class="anchor" id="autotoc_md2634"></a>
 Chapter 3: BaseAgent - The Agent Blueprint</h1>
 <p>In the previous chapters, we learned about the "brain" (<a class="el" href="../../db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_201__llm.html">Chapter 1: The LLM</a>) that powers our agents and how they remember conversations using <a class="el" href="../../dc/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_202__message______memory.html">Chapter 2: Message / Memory</a>. Now, let's talk about the agent itself!</p>
 <p>Imagine you want to build different kinds of digital helpers: one that can browse the web, one that can write code, and maybe one that just answers questions. While they have different jobs, they probably share some basic features, right? They all need a name, a way to remember things, a way to know if they are busy or waiting, and a process to follow when doing their work.</p>
-<h2><a class="anchor" id="autotoc_md2634"></a>
+<h2><a class="anchor" id="autotoc_md2635"></a>
 What Problem Does <code>BaseAgent</code> Solve?</h2>
 <p>Building every agent from scratch, defining these common features over and over again, would be tedious and error-prone. It's like designing a completely new car frame, engine, and wheels every time you want to build a new car model (a sports car, a truck, a sedan). It's inefficient!</p>
 <p>This is where <code>BaseAgent</code> comes in. Think of it as the <b>master blueprint</b> or the standard <b>chassis and engine design</b> for <em>all</em> agents in OpenManus.</p>
@@ -141,7 +141,7 @@ What Problem Does <code>BaseAgent</code> Solve?</h2>
 <li>A way to run and perform its simple "echo" task.</li>
 </ul>
 <p>Instead of defining all these basics for EchoAgent, and then again for a "WeatherAgent", and again for a "CodeWriterAgent", we define them <em>once</em> in <code>BaseAgent</code>.</p>
-<h2><a class="anchor" id="autotoc_md2635"></a>
+<h2><a class="anchor" id="autotoc_md2636"></a>
 Key Concepts: The Building Blocks of an Agent</h2>
 <p><code>BaseAgent</code> (<code>app/agent/base.py</code>) defines the fundamental properties and abilities that <em>all</em> agents built using OpenManus must have. It ensures consistency and saves us from repeating code. Here are the essential parts:</p>
 <ol type="1">
@@ -158,7 +158,7 @@ Key Concepts: The Building Blocks of an Agent</h2>
 <li><code>BaseAgent</code> provides the car chassis (<code>name</code>, <code>state</code>), the engine (<code>llm</code>), the fuel tank (<code>memory</code>), and the ignition key (<code>run()</code>).</li>
 <li>The <code>step()</code> method is like the specific driving instructions (turn left, accelerate, brake) that make a sports car drive differently from a truck, even though they share the same basic parts.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2636"></a>
+<h2><a class="anchor" id="autotoc_md2637"></a>
 How Do We Use <code>BaseAgent</code>?</h2>
 <p>You typically don't use <code>BaseAgent</code> directly. It's an <b>abstract</b> class, meaning it's a template, not a finished product. You <b>build upon it</b> by creating new classes that <em>inherit</em> from <code>BaseAgent</code>.</p>
 <p>Let's imagine creating our simple <code>EchoAgent</code>:</p>
@@ -214,7 +214,7 @@ How Do We Use <code>BaseAgent</code>?</h2>
 <li>The <code>run()</code> method (which we didn't have to write, it's inherited from <code>BaseAgent</code>) would handle starting the process, calling our <code>step()</code> method, and returning the final result.</li>
 </ol>
 <p>This way, we only had to focus on the unique part – the echoing logic inside <code>step()</code> – while <code>BaseAgent</code> handled the common structure. More complex agents like <code>BrowserAgent</code> or <code>ToolCallAgent</code> (found in <code>app/agent/</code>) follow the same principle but have much more sophisticated <code>step()</code> methods, often involving thinking with the <a class="el" href="../../db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_201__llm.html">LLM</a> and using <a class="el" href="../../de/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_204__tool______toolcollection.html">Tools</a>.</p>
-<h2><a class="anchor" id="autotoc_md2637"></a>
+<h2><a class="anchor" id="autotoc_md2638"></a>
 Under the Hood: The <code>run()</code> Loop</h2>
 <p>What actually happens when you call <code>agent.run()</code>? The <code>BaseAgent</code> provides a standard execution loop:</p>
 <ol type="1">
@@ -259,7 +259,7 @@ Under the Hood: The <code>run()</code> Loop</h2>
 <div class="line">    BaseRun-&gt;&gt;MyAgent: Set state = IDLE (or keep ERROR)</div>
 <div class="line">    BaseRun--&gt;&gt;-MyAgent: Returns combined results</div>
 <div class="line">    MyAgent--&gt;&gt;-User: Returns final result string</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2638"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2639"></a>
 Code Glimpse: Inside <code>app/agent/base.py</code></h2>
 <p>Let's peek at the <code>BaseAgent</code> definition itself.</p>
 <div class="fragment"><div class="line"><span class="comment"># Simplified snippet from app/agent/base.py</span></div>
@@ -326,7 +326,7 @@ Code Glimpse: Inside <code>app/agent/base.py</code></h2>
 <li><code>@abstractmethod</code> above <code>async def step(self) -&gt; str:</code> signals that any class inheriting from <code>BaseAgent</code> <em>must</em> provide its own version of the <code>step</code> method. <code>BaseAgent</code> itself just puts <code>pass</code> (do nothing) there.</li>
 <li>Helper methods like <code>update_memory</code> are provided for convenience.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2639"></a>
+<h2><a class="anchor" id="autotoc_md2640"></a>
 Wrapping Up Chapter 3</h2>
 <p>We've learned about <code>BaseAgent</code>, the fundamental blueprint for all agents in OpenManus. It provides the common structure (<code>name</code>, <code>state</code>, <code>memory</code>, <code>llm</code>) and the core execution loop (<code>run()</code>), freeing us to focus on the unique logic of each agent by implementing the <code>step()</code> method. It acts as the chassis upon which specialized agents are built.</p>
 <p>Now that we have the agent structure, how do agents gain specific skills beyond just talking to the LLM? How can they browse the web, run code, or interact with files? They use <b>Tools</b>!</p>

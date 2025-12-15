@@ -121,18 +121,18 @@ $(function(){initNavTree('d9/d09/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_security_utilities</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1837"></a>
-autotoc_md1837</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1838"></a>
+autotoc_md1838</h2>
 <p>layout: default title: "Security Utilities" parent: "FastAPI" </p>
-<h2><a class="anchor" id="autotoc_md1838"></a>
+<h2><a class="anchor" id="autotoc_md1839"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md1839"></a>
+<h1><a class="anchor" id="autotoc_md1840"></a>
 Chapter 7: Security Utilities</h1>
 <p>Hi there! 👋 In <a class="el" href="../../dc/d8a/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_206__error__handling.html">Chapter 6: Error Handling</a>, we learned how to handle situations where things go wrong in our API, like when a user requests an item that doesn't exist. Now, let's talk about protecting our API endpoints.</p>
 <p>Imagine our online store API. Anyone should be able to browse items (<code>GET /items/</code>). But maybe only registered, logged-in users should be allowed to <em>create</em> new items (<code>POST /items/</code>) or view their own profile (<code>GET /users/me</code>). How do we ensure only the right people can access certain parts of our API?</p>
 <p>That's where <b>Security Utilities</b> come in!</p>
 <p><b>Our Goal Today:</b> Learn how FastAPI provides ready-made tools to implement common security mechanisms like username/password checks or API keys, making it easy to protect your endpoints.</p>
-<h2><a class="anchor" id="autotoc_md1840"></a>
+<h2><a class="anchor" id="autotoc_md1841"></a>
 What Problem Does This Solve?</h2>
 <p>When you build an API, some parts might be public, but others need protection. You need a way to:</p>
 <ol type="1">
@@ -147,7 +147,7 @@ What Problem Does This Solve?</h2>
 <li><b>Document Security:</b> How do you tell users of your API (in the <code>/docs</code>) that certain endpoints require authentication and how to provide it?</li>
 </ol>
 <p>Implementing these security schemes from scratch can be complex and tricky. FastAPI gives you pre-built components (like different types of locks and keys) that handle the common patterns for asking for and receiving credentials.</p>
-<h2><a class="anchor" id="autotoc_md1841"></a>
+<h2><a class="anchor" id="autotoc_md1842"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b>Security Schemes:</b> These are the standard protocols or methods used for authentication, like HTTP Basic, API Keys (in different locations), and OAuth2. FastAPI provides classes that represent these schemes (e.g., <code>HTTPBasic</code>, <code>APIKeyHeader</code>, <code>OAuth2PasswordBearer</code>). Think of these as the <em>type</em> of lock mechanism you want to install on your door.</li>
@@ -166,7 +166,7 @@ Key Concepts</h2>
 <li><b>Verifier Dependency (<code>get_current_user</code>):</b> The person or mechanism that takes the key/combination, checks if it's correct, and decides whether to let the person in.</li>
 <li><b><code>Security(get_current_user)</code>:</b> Declaring that the door requires the verifier to check the key/combination before allowing entry, and also putting a "Lock" sign on the door in the building map (<code>/docs</code>).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1842"></a>
+<h2><a class="anchor" id="autotoc_md1843"></a>
 Using Security Utilities: HTTP Basic Auth Example</h2>
 <p>Let's protect an endpoint using the simplest method: HTTP Basic Authentication. We'll create an endpoint <code>/users/me</code> that requires a valid username and password.</p>
 <p><b>Step 1: Import necessary tools</b></p>
@@ -254,10 +254,10 @@ Using Security Utilities: HTTP Basic Auth Example</h2>
 </li>
 </ol>
 <p>You've successfully protected an endpoint using HTTP Basic Auth!</p>
-<h2><a class="anchor" id="autotoc_md1843"></a>
+<h2><a class="anchor" id="autotoc_md1844"></a>
 Other Common Schemes (Briefly)</h2>
 <p>The pattern is very similar for other schemes.</p>
-<h3><a class="anchor" id="autotoc_md1844"></a>
+<h3><a class="anchor" id="autotoc_md1845"></a>
 API Key in Header</h3>
 <div class="fragment"><div class="line"><span class="comment"># --- Imports ---</span></div>
 <div class="line"><span class="keyword">from</span> fastapi.security <span class="keyword">import</span> APIKeyHeader</div>
@@ -316,7 +316,7 @@ API Key in Header</h3>
 <div class="line">):</div>
 <div class="line">    <span class="comment"># verified_key holds the result from verify_api_key (the validated key)</span></div>
 <div class="line">    <span class="keywordflow">return</span> {<span class="stringliteral">&quot;data&quot;</span>: <span class="stringliteral">&quot;sensitive data&quot;</span>, <span class="stringliteral">&quot;key&quot;</span>: verified_key}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1845"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1846"></a>
 OAuth2 Password Bearer Flow</h3>
 <p>This is common for user logins in web apps. It usually involves two endpoints: one to exchange username/password for a token (<code>/token</code>), and protected endpoints that require the token.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- Imports ---</span></div>
@@ -364,7 +364,7 @@ OAuth2 Password Bearer Flow</h3>
 <div class="line">    <span class="comment"># current_user holds the dict returned by get_current_user</span></div>
 <div class="line">    <span class="keywordflow">return</span> current_user</div>
 </div><!-- fragment --><p>The core pattern remains: Instantiate the scheme -&gt; Define a verifier dependency that uses the scheme -&gt; Protect endpoints using <code>Security(verifier_dependency)</code>.</p>
-<h2><a class="anchor" id="autotoc_md1846"></a>
+<h2><a class="anchor" id="autotoc_md1847"></a>
 How it Works Under the Hood (Simplified)</h2>
 <p>Let's trace the HTTP Basic Auth example (<code>GET /users/me</code> requiring <code>stanley</code>/<code>password123</code>):</p>
 <ol type="1">
@@ -421,7 +421,7 @@ How it Works Under the Hood (Simplified)</h2>
 <div class="line">    FastAPIApp-&gt;&gt;+PathOpFunc: Call read_current_user(username=&quot;stanley&quot;)</div>
 <div class="line">    PathOpFunc--&gt;&gt;-FastAPIApp: Return {&quot;username&quot;: &quot;stanley&quot;}</div>
 <div class="line">    FastAPIApp--&gt;&gt;-Client: Send 200 OK JSON Response</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1847"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1848"></a>
 Code Connections</h2>
 <ul>
 <li><b><code>fastapi.Security</code></b>: The function you import and use. It's a thin wrapper around <code>fastapi.params.Security</code>. (<code>fastapi/param_functions.py</code>)</li>
@@ -436,7 +436,7 @@ Code Connections</h2>
 <li><b>Dependency Injection System</b>: The core system described in <a class="el" href="../../dd/dd7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_205__dependency__injection.html">Chapter 5: Dependency Injection</a> resolves the dependencies, calling the scheme instance and then your verifier function.</li>
 <li><b>OpenAPI Integration</b>: FastAPI's OpenAPI generation logic specifically checks for <code>Security</code> dependencies and uses the associated scheme model (<code>security.model</code>) to add the correct security requirements to the schema.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1848"></a>
+<h2><a class="anchor" id="autotoc_md1849"></a>
 Conclusion</h2>
 <p>You've now learned the basics of securing your FastAPI endpoints!</p>
 <ul>

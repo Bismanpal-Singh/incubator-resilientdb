@@ -121,17 +121,17 @@ $(function(){initNavTree('d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_tool</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1523"></a>
-autotoc_md1523</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1524"></a>
+autotoc_md1524</h2>
 <p>layout: default title: "Tool" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1524"></a>
+<h2><a class="anchor" id="autotoc_md1525"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1525"></a>
+<h1><a class="anchor" id="autotoc_md1526"></a>
 Chapter 4: Tool - Equipping Your Agents</h1>
 <p>In <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Chapter 3: Task</a>, we learned how to define specific assignments (<code>Task</code>s) for our AI <code>Agent</code>s. We told the 'Travel Researcher' agent to find sunny cities and the 'Activity Planner' agent to create an itinerary.</p>
 <p>But wait... how does the 'Travel Researcher' actually <em>find</em> those cities? Can it browse the web? Can it look at weather data? By default, an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>'s "brain" (<a class="el" href="../../da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_206__llm.html">LLM</a>) is great at reasoning and generating text based on the information it already has, but it can't interact with the outside world on its own.</p>
 <p>This is where <code>Tool</code>s come in! They are the <b>special equipment and abilities</b> we give our agents to make them more capable.</p>
-<h2><a class="anchor" id="autotoc_md1526"></a>
+<h2><a class="anchor" id="autotoc_md1527"></a>
 Why Do We Need Tools?</h2>
 <p>Imagine you hire a brilliant researcher. They can think, analyze, and write reports. But if their task is "Find the best coffee shop near me right now," they need specific tools: maybe a map application, a business directory, or a review website. Without these tools, they can only guess or rely on outdated knowledge.</p>
 <p>Similarly, our AI <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s need <code>Tool</code>s to perform actions beyond simple text generation.</p>
@@ -142,7 +142,7 @@ Why Do We Need Tools?</h2>
 <li>Need it to ask another agent for help? Use the built-in <b>delegation tool</b> (<a href="../../tools/agent_tools/agent_tools.py">AgentTools</a>).</li>
 </ul>
 <p><b>Problem Solved:</b> <code>Tool</code>s extend an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>'s capabilities beyond its built-in knowledge, allowing it to interact with external systems, perform specific computations, or access real-time information.</p>
-<h2><a class="anchor" id="autotoc_md1527"></a>
+<h2><a class="anchor" id="autotoc_md1528"></a>
 What is a Tool?</h2>
 <p>Think of a <code>Tool</code> as a <b>function or capability</b> that an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> can choose to use while working on a <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>. Each <code>Tool</code> has a few key parts:</p>
 <ol type="1">
@@ -152,7 +152,7 @@ What is a Tool?</h2>
 <li><b><code>_run</code> method</b>: This is the actual code that gets executed when the agent uses the tool. It takes the arguments defined in <code>args_schema</code> and performs the action (like calling a search API or performing a calculation).</li>
 </ol>
 <p>Agents are given a list of <code>Tool</code>s they are allowed to use. When an agent is working on a task, its internal thought process might lead it to conclude that it needs a specific capability. It will then look through its available tools, read their descriptions, and if it finds a match, it will figure out the necessary arguments and execute the tool's <code>_run</code> method.</p>
-<h2><a class="anchor" id="autotoc_md1528"></a>
+<h2><a class="anchor" id="autotoc_md1529"></a>
 Equipping an Agent with a Tool</h2>
 <p>CrewAI integrates with many existing toolkits, like <code>crewai_tools</code> (install separately: &lsquo;pip install 'crewai[tools]&rsquo;&lsquo;). Let's give our 'Travel Researcher&rsquo; agent a web search tool. We'll use <code>SerperDevTool</code> as an example, which uses the Serper.dev API for Google Search results.</p>
 <p><em>(Note: Using tools like this often requires API keys. You'll need to sign up for Serper.dev and set the <code>SERPER_API_KEY</code> environment variable for this specific example to run.)</em></p>
@@ -212,7 +212,7 @@ Equipping an Agent with a Tool</h2>
 <div class="line">Thought: Okay, the search results suggest Lisbon, Seville, and Malta are good options based on sun, culture, and food. I will summarize these findings as requested.</div>
 <div class="line">Final Answer: Here are the top 3 sunny European cities for May... 1. Lisbon... 2. Seville... 3. Malta...</div>
 </div><!-- fragment --><p>The agent used the tool's <code>description</code> to know when to use it, formulated the necessary input (<code>query</code>), executed the tool, received the <code>Observation</code> (the tool's output), and then used that information to generate its <code>Final Answer</code>.</p>
-<h2><a class="anchor" id="autotoc_md1529"></a>
+<h2><a class="anchor" id="autotoc_md1530"></a>
 How Tools Work "Under the Hood"</h2>
 <p>When an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> equipped with tools runs a <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>, a fascinating interaction happens between the Agent, its <a class="el" href="../../da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_206__llm.html">LLM</a> brain, and the Tools.</p>
 <ol type="1">
@@ -303,7 +303,7 @@ How Tools Work "Under the Hood"</h2>
 <li>The framework (<code>crewai/tools/tool_usage.py</code> and <code>crewai/agents/executor.py</code>) handles the complex part: presenting tools to the LLM, parsing the LLM's decision to use a tool, calling <code>tool.run()</code>, and feeding the result back.</li>
 </ul>
 <p>A special mention goes to <code>AgentTools</code> (<code>crewai/tools/agent_tools/agent_tools.py</code>), which provides tools like <code>Delegate work to coworker</code> and <code>Ask question to coworker</code>, enabling agents within a <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> to collaborate.</p>
-<h2><a class="anchor" id="autotoc_md1530"></a>
+<h2><a class="anchor" id="autotoc_md1531"></a>
 Creating Your Own Simple Tool (Optional)</h2>
 <p>While CrewAI offers many pre-built tools, sometimes you need a custom one. Let's create a <em>very</em> basic calculator.</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> crewai.tools <span class="keyword">import</span> BaseTool</div>
@@ -356,7 +356,7 @@ Creating Your Own Simple Tool (Optional)</h2>
 <li>The <code>_run</code> method takes the <code>expression</code> string. We added a basic safety check and used a slightly safer version of <code>eval</code>. <b>Again, <code>eval</code> is generally unsafe; prefer dedicated math parsing libraries in production.</b> It returns the result as a string.</li>
 <li>We can now instantiate <code>CalculatorTool()</code> and add it to an agent's <code>tools</code> list.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1531"></a>
+<h2><a class="anchor" id="autotoc_md1532"></a>
 Conclusion</h2>
 <p>You've learned about <code>Tool</code>s – the essential equipment that gives your AI <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s superpowers! Tools allow agents to perform actions like searching the web, doing calculations, or interacting with other systems, making them vastly more useful than agents that can only generate text. We saw how to equip an agent with pre-built tools and even how to create a simple custom tool by defining its <code>name</code>, <code>description</code>, <code>args_schema</code>, and <code>_run</code> method. The <code>description</code> is key for the agent to know when and how to use its tools effectively.</p>
 <p>Now that we have Agents equipped with Tools and assigned Tasks, how does the whole <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> actually coordinate the work? Do agents work one after another? Is there a manager? That's determined by the <code>Process</code>. Let's explore that next!</p>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['parse_5fvalue_0',['parse_value',['../d7/d03/classapp_1_1JSONScalar.html#a1b94a897c13a316cc233c5e6890eef19',1,'app::JSONScalar']]],
-  ['parsedata_1',['ParseData',['../df/d01/classresdb_1_1TransactionManager.html#a0b2e79c38be3c2b7b548723b852d0a74',1,'resdb::TransactionManager::ParseData()'],['../d3/d37/classresdb_1_1KVExecutor.html#aa1cac51e4a23420c5cd1f091fb6d4a8c',1,'resdb::KVExecutor::ParseData()']]],
+  ['parsedata_1',['ParseData',['../df/d01/classresdb_1_1TransactionManager.html#a0b2e79c38be3c2b7b548723b852d0a74',1,'resdb::TransactionManager::ParseData(const std::string &amp;data)'],['../df/d01/classresdb_1_1TransactionManager.html#a8ef921fb18ed981105d9e7eac2d034e5',1,'resdb::TransactionManager::ParseData(const std::string &amp;data, uint64_t seq)'],['../d3/d37/classresdb_1_1KVExecutor.html#aa1cac51e4a23420c5cd1f091fb6d4a8c',1,'resdb::KVExecutor::ParseData(const std::string &amp;request) override'],['../d3/d37/classresdb_1_1KVExecutor.html#a68e29ccea4c327493b4b2a1ff7f8de20',1,'resdb::KVExecutor::ParseData(const std::string &amp;request, uint64_t seq) override']]],
   ['parsefromtext_2',['ParseFromText',['../d4/d47/namespaceresdb_1_1testing.html#aa17aa374848a8922ab475aac71f90945',1,'resdb::testing']]],
   ['parsesdktransaction_3',['ParseSDKTransaction',['../d5/d10/namespaceresdb.html#ac411f4b2b69ecb6aaa049332e9d10dff',1,'resdb']]],
   ['parsestring_4',['ParseString',['../d3/d81/utxo__client__tools_8cpp.html#a50abb0b321e6a6182a0f2eb771135f80',1,'utxo_client_tools.cpp']]],

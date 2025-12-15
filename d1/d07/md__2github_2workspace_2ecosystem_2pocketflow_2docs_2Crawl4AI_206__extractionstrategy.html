@@ -121,25 +121,25 @@ $(function(){initNavTree('d1/d07/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_extractionstrategy</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1435"></a>
-autotoc_md1435</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1436"></a>
+autotoc_md1436</h2>
 <p>layout: default title: "ExtractionStrategy" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1436"></a>
+<h2><a class="anchor" id="autotoc_md1437"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1437"></a>
+<h1><a class="anchor" id="autotoc_md1438"></a>
 Chapter 6: Getting Specific Data - ExtractionStrategy</h1>
 <p>In the previous chapter, <a class="el" href="../../d2/d40/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_205__relevantcontentfilter.html">Chapter 5: Focusing on What Matters - RelevantContentFilter</a>, we learned how to sift through the cleaned webpage content to keep only the parts relevant to our query or goal, producing a focused <code>fit_markdown</code>. This is great for tasks like summarization or getting the main gist of an article.</p>
 <p>But sometimes, we need more than just relevant text. Imagine you're analyzing an e-commerce website listing products. You don't just want the <em>description</em>; you need the exact <b>product name</b>, the specific <b>price</b>, the <b>customer rating</b>, and maybe the <b>SKU number</b>, all neatly organized. How do we tell Crawl4AI to find these <em>specific</em> pieces of information and return them in a structured format, like a JSON object?</p>
-<h2><a class="anchor" id="autotoc_md1438"></a>
+<h2><a class="anchor" id="autotoc_md1439"></a>
 What Problem Does <code>ExtractionStrategy</code> Solve?</h2>
 <p>Think of the content we've processed so far (like the cleaned HTML or the generated Markdown) as a detailed report delivered by a researcher. <code>RelevantContentFilter</code> helped trim the report down to the most relevant pages.</p>
 <p>Now, we need to give specific instructions to an <b>Analyst</b> to go through that focused report and pull out precise data points. We don't just want the report; we want a filled-in spreadsheet with columns for "Product Name," "Price," and "Rating."</p>
 <p><code>ExtractionStrategy</code> is the set of instructions we give to this Analyst. It defines <em>how</em> to locate and extract specific, structured information (like fields in a database or keys in a JSON object) from the content.</p>
-<h2><a class="anchor" id="autotoc_md1439"></a>
+<h2><a class="anchor" id="autotoc_md1440"></a>
 What is <code>ExtractionStrategy</code>?</h2>
 <p><code>ExtractionStrategy</code> is a core concept (a blueprint) in Crawl4AI that represents the <b>method used to extract structured data</b> from the processed content (which could be HTML or Markdown). It specifies <em>that</em> we need a way to find specific fields, but the actual <em>technique</em> used to find them can vary.</p>
 <p>This allows us to choose the best "Analyst" for the job, depending on the complexity of the website and the data we need.</p>
-<h2><a class="anchor" id="autotoc_md1440"></a>
+<h2><a class="anchor" id="autotoc_md1441"></a>
 The Different Analysts: Ways to Extract Data</h2>
 <p>Crawl4AI offers several concrete implementations (the different Analysts) for extracting structured data:</p>
 <ol type="1">
@@ -160,10 +160,10 @@ The Different Analysts: Ways to Extract Data</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1441"></a>
+<h2><a class="anchor" id="autotoc_md1442"></a>
 How to Use an <code>ExtractionStrategy</code></h2>
 <p>You tell the <code>AsyncWebCrawler</code> which extraction strategy to use (if any) by setting the <code>extraction_strategy</code> parameter within the <a class="el" href="../../db/d01/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_203__crawlerrunconfig.html">CrawlerRunConfig</a> object you pass to <code>arun</code> or <code>arun_many</code>.</p>
-<h3><a class="anchor" id="autotoc_md1442"></a>
+<h3><a class="anchor" id="autotoc_md1443"></a>
 Example 1: Extracting Data with <code>JsonCssExtractionStrategy</code></h3>
 <p>Let's imagine we want to extract the title (from the <code>&lt;h1&gt;</code> tag) and the main heading (from the <code>&lt;h1&gt;</code> tag) of the simple <code>httpbin.org/html</code> page.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter6_example_1.py</span></div>
@@ -250,7 +250,7 @@ Example 1: Extracting Data with <code>JsonCssExtractionStrategy</code></h3>
 <div class="line">  }</div>
 <div class="line">]</div>
 </div><!-- fragment --><p> <em>(Note: The actual output is a list containing one dictionary because <code>baseSelector: "body"</code> matches one element, and we extract fields relative to that.)</em></p>
-<h3><a class="anchor" id="autotoc_md1443"></a>
+<h3><a class="anchor" id="autotoc_md1444"></a>
 Example 2: Extracting Data with <code>LLMExtractionStrategy</code> (Conceptual)</h3>
 <p>Now, let's imagine we want the same information (title, heading) but using an AI. We'll provide a schema describing what we want. (Note: This requires setting up LLM access separately, e.g., API keys).</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter6_example_2.py</span></div>
@@ -350,7 +350,7 @@ Example 2: Extracting Data with <code>LLMExtractionStrategy</code> (Conceptual)<
 <div class="line">  }</div>
 <div class="line">]</div>
 </div><!-- fragment --><p> <em>(Note: LLM output format might vary slightly, but it aims to match the requested schema based on the content it reads.)</em></p>
-<h2><a class="anchor" id="autotoc_md1444"></a>
+<h2><a class="anchor" id="autotoc_md1445"></a>
 How It Works Inside (Under the Hood)</h2>
 <p>When you provide an <code>extraction_strategy</code> in the <code>CrawlerRunConfig</code>, how does <code>AsyncWebCrawler</code> use it?</p>
 <ol type="1">
@@ -387,7 +387,7 @@ How It Works Inside (Under the Hood)</h2>
 <div class="line">    AWC-&gt;&gt;AWC: Convert data to JSON String</div>
 <div class="line">    AWC-&gt;&gt;Result: Store JSON String in extracted_content</div>
 <div class="line">    AWC--&gt;&gt;User: Return CrawlResult</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1445"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1446"></a>
 Code Glimpse (<code>extraction_strategy.py</code>)</h3>
 <p>Inside the <code>crawl4ai</code> library, the file <code>extraction_strategy.py</code> defines the blueprint and the implementations.</p>
 <p><b>The Blueprint (Abstract Base Class):</b></p>
@@ -520,7 +520,7 @@ Code Glimpse (<code>extraction_strategy.py</code>)</h3>
 <div class="line">        <span class="comment"># return extracted_data</span></div>
 <div class="line">        <span class="comment"># Simplified for now:</span></div>
 <div class="line">        <span class="keywordflow">return</span> super().run(url, sections, *q, **kwargs)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1446"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1447"></a>
 Conclusion</h2>
 <p>You've learned about <code>ExtractionStrategy</code>, Crawl4AI's way of giving instructions to an "Analyst" to pull out specific, structured data from web content.</p>
 <ul>

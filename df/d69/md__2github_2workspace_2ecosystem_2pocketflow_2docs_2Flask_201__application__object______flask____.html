@@ -121,21 +121,21 @@ $(function(){initNavTree('df/d69/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_application_object___flask__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1863"></a>
-autotoc_md1863</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1864"></a>
+autotoc_md1864</h2>
 <p>layout: default title: "Application Object (Flask)" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1864"></a>
+<h2><a class="anchor" id="autotoc_md1865"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1865"></a>
+<h1><a class="anchor" id="autotoc_md1866"></a>
 Chapter 1: Application Object (<code>Flask</code>)</h1>
 <p>Welcome to your first step into the world of Flask! Flask is a "microframework" for building web applications in Python. "Micro" doesn't mean it's limited; it means Flask provides the essentials to get started quickly, letting you add features as needed.</p>
 <p>In this chapter, we'll explore the absolute heart of any Flask application: the <b>Application Object</b>.</p>
-<h2><a class="anchor" id="autotoc_md1866"></a>
+<h2><a class="anchor" id="autotoc_md1867"></a>
 What Problem Does It Solve? The Need for a Control Tower</h2>
 <p>Imagine you're building a simple website. Maybe it just needs to show "Hello, World!" when someone visits the homepage. How does the web server know <em>what</em> Python code to run when a request comes in for <code>/</code> (the homepage)? How does it manage different pages (like <code>/about</code> or <code>/contact</code>)? How does it handle settings or connect to other tools?</p>
 <p>You need a central place to manage all these tasks. Think of a busy airport: you need a <b>control tower</b> to direct planes (incoming web requests), manage runways (URL paths), and coordinate ground crew (other parts of your application).</p>
 <p>In Flask, the <code>Flask</code> object is that control tower. It's the main object you create that represents your entire web application.</p>
-<h2><a class="anchor" id="autotoc_md1867"></a>
+<h2><a class="anchor" id="autotoc_md1868"></a>
 Creating Your First Flask Application</h2>
 <p>Let's create the simplest possible Flask app. You'll need a Python file (let's call it <code>hello.py</code>).</p>
 <ol type="1">
@@ -160,7 +160,7 @@ Creating Your First Flask Application</h2>
 </li>
 </ul>
 <p>This <code>app</code> object is now ready to be configured and run.</p>
-<h2><a class="anchor" id="autotoc_md1868"></a>
+<h2><a class="anchor" id="autotoc_md1869"></a>
 Adding a Basic Route</h2>
 <p>Our <code>app</code> object doesn't do anything yet. Let's tell it what to do when someone visits the homepage (<code>/</code>). We do this using a <em>route</em>. We'll cover routing in detail in the next chapter, but here's a taste:</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (continued)</span></div>
@@ -178,7 +178,7 @@ Adding a Basic Route</h2>
 </div><!-- fragment --><ul>
 <li>&lsquo;@app.route(&rsquo;/')<code>: This is a Python decorator. It modifies the function defined right below it (</code>index<code>). It tells our</code>app<code>object: "When a web request comes in for the URL path&lt;/tt&gt;/&lt;tt&gt;, call the&lt;/tt&gt;index&lt;tt&gt;function." *</code>def index(): ...<code>: This is a simple Python function. Flask calls these "view functions." *</code>return 'Hello, World!'`: Whatever the view function returns is sent back to the user's web browser as the response.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1869"></a>
+<h2><a class="anchor" id="autotoc_md1870"></a>
 Running Your Application</h2>
 <p>How do we start the web server so people can actually visit our page? We use the <code>app</code> object's <code>run()</code> method. It's common practice to put this inside a special <code>if</code> block:</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (end of the file)</span></div>
@@ -217,7 +217,7 @@ Running Your Application</h2>
 <li>You should see the text "Hello, World!"</li>
 </ol>
 <p>You've just created and run your first Flask application! The <code>app = Flask(__name__)</code> line was the crucial first step, creating the central object that manages everything.</p>
-<h2><a class="anchor" id="autotoc_md1870"></a>
+<h2><a class="anchor" id="autotoc_md1871"></a>
 Under the Hood: What Happens When You Create <code>Flask(__name__)</code>?</h2>
 <p>While you don't <em>need</em> to know the deep internals right away, a little insight helps understanding. When you call <code>app = Flask(__name__)</code>, several things happen inside Flask (simplified):</p>
 <ol type="1">
@@ -245,7 +245,7 @@ Under the Hood: What Happens When You Create <code>Flask(__name__)</code>?</h2>
 <div class="line">    URLMap--&gt;&gt;-Flask: Map ready</div>
 <div class="line">    Flask--&gt;&gt;-UserCode: Return Flask instance (app)</div>
 </div><!-- fragment --><p>The <code>app</code> object returned is now the fully initialized "control tower," ready to register routes and handle requests.</p>
-<h2><a class="anchor" id="autotoc_md1871"></a>
+<h2><a class="anchor" id="autotoc_md1872"></a>
 Conclusion</h2>
 <p>You've learned about the most fundamental concept in Flask: the <b>Application Object</b>, created by instantiating the <code>Flask</code> class (usually as <code>app = Flask(__name__)</code>). This object acts as the central registry and controller for your entire web application. It's where you define URL routes, manage configuration, and connect various components.</p>
 <p>We saw how to create a minimal application, add a simple route using <code>@app.route()</code>, and run the development server using <code>app.run()</code>.</p>

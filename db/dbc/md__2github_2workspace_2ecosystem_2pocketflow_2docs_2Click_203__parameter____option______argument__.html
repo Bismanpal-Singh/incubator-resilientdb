@@ -121,12 +121,12 @@ $(function(){initNavTree('db/dbc/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_parameter__option___argument_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1211"></a>
-autotoc_md1211</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1212"></a>
+autotoc_md1212</h2>
 <p>layout: default title: "Parameter (Option &amp; Argument)" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1212"></a>
+<h2><a class="anchor" id="autotoc_md1213"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1213"></a>
+<h1><a class="anchor" id="autotoc_md1214"></a>
 Chapter 3: Parameter (Option / Argument) - Giving Your Commands Input</h1>
 <p>In the last chapter, <a class="el" href="../../db/d5f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_202__decorators.html">Decorators</a>, we saw how decorators like <code>@click.command()</code> and <code>@click.option()</code> act like magic wands, transforming our Python functions into CLI commands and adding features like command-line options.</p>
 <p>But how do our commands actually <em>receive</em> information from the user? If we have a command <code>greet</code>, how do we tell it <em>who</em> to greet, like <code>greet --name Alice</code>? Or if we have a <code>copy</code> command, how do we specify the source and destination files, like <code>copy report.txt backup.txt</code>?</p>
@@ -137,7 +137,7 @@ Chapter 3: Parameter (Option / Argument) - Giving Your Commands Input</h1>
 <li><b>Arguments:</b> These are typically positional values that come <em>after</em> any options. They often represent required inputs, like a filename (<code>report.txt</code>). You define them using the <code>@click.argument()</code> decorator.</li>
 </ol>
 <p>Let's see how to use them!</p>
-<h2><a class="anchor" id="autotoc_md1214"></a>
+<h2><a class="anchor" id="autotoc_md1215"></a>
 Options: The Named Inputs (<code>@click.option</code>)</h2>
 <p>Think of options like keyword arguments in Python functions. In <code>def greet(name="World"):</code>, <code>name</code> is a keyword argument with a default value. Options serve a similar purpose for your CLI.</p>
 <p>Let's modify our <code>hello</code> command from the previous chapter to accept a <code>--name</code> option.</p>
@@ -179,7 +179,7 @@ Options: The Named Inputs (<code>@click.option</code>)</h2>
 <div class="line">$ python greet_app.py hello --name Alice</div>
 <div class="line">Hello Alice!</div>
 </div><!-- fragment --><p>It works perfectly! Click parsed the <code>--name Alice</code> option and passed <code>"Alice"</code> to our <code>hello</code> function's <code>name</code> parameter. When we didn't provide the option, it used the default value <code>"World"</code>.</p>
-<h3><a class="anchor" id="autotoc_md1215"></a>
+<h3><a class="anchor" id="autotoc_md1216"></a>
 Option Flavors: Short Names and Flags</h3>
 <p>Options can have variations:</p>
 <ul>
@@ -221,7 +221,7 @@ Option Flavors: Short Names and Flags</h3>
 <div class="line">$ python greet_app_v2.py hello --shout</div>
 <div class="line">HELLO WORLD!</div>
 </div><!-- fragment --><p>Flags and short names make your CLI more flexible and conventional!</p>
-<h2><a class="anchor" id="autotoc_md1216"></a>
+<h2><a class="anchor" id="autotoc_md1217"></a>
 Arguments: The Positional Inputs (<code>@click.argument</code>)</h2>
 <p>Arguments are like positional arguments in Python functions. In <code>def copy(src, dst):</code>, <code>src</code> and <code>dst</code> are required positional arguments. Click arguments usually represent mandatory inputs that follow the command and any options.</p>
 <p>Let's create a simple command that takes two arguments, <code>SRC</code> and <code>DST</code>, representing source and destination files (though we'll just print them for now).</p>
@@ -255,7 +255,7 @@ Arguments: The Positional Inputs (<code>@click.argument</code>)</h2>
 </div><!-- fragment --><p>Click correctly captured the positional arguments and passed them to our <code>copy</code> function.</p>
 <p>Arguments are essential for inputs that are fundamental to the command's operation, like the files to operate on. Options are better suited for modifying the command's behavior.</p>
 <p><em>(Note: Arguments can also be made optional or accept variable numbers of inputs, often involving the <code>required</code> and <code>nargs</code> settings, which tie into concepts we'll explore more in <a class="el" href="../../d8/d25/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_204__paramtype.html">ParamType</a>.)</em></p>
-<h2><a class="anchor" id="autotoc_md1217"></a>
+<h2><a class="anchor" id="autotoc_md1218"></a>
 How Parameters Work Together</h2>
 <p>When you run a command like <code>python greet_app_v2.py hello --shout -n Alice</code>, Click performs a sequence of steps:</p>
 <ol type="1">
@@ -294,7 +294,7 @@ How Parameters Work Together</h2>
 <div class="line">    hello_func--&gt;&gt;PythonScript: Prints &quot;HELLO ALICE!&quot;</div>
 <div class="line">    PythonScript--&gt;&gt;Terminal: Shows output</div>
 <div class="line">    Terminal--&gt;&gt;User: Displays &quot;HELLO ALICE!&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1218"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1219"></a>
 Under the Hood: Decorators and Parameter Objects</h2>
 <p>How do <code>@click.option</code> and <code>@click.argument</code> actually work with <code>@click.command</code>?</p>
 <ol type="1">
@@ -305,7 +305,7 @@ Under the Hood: Decorators and Parameter Objects</h2>
 <li><code> **Callback Invocation (</code>core.py<code>):** After parsing and validation, Click takes the resulting values and calls the original Python function (stored as the</code>Command.callback`), passing the values as arguments.</li>
 </ol>
 <p>So, the decorators work together: <code>@option</code>/<code>@argument</code> define the parameters and temporarily attach them to the function, while <code>@command</code> collects these definitions and builds the final <code>Command</code> object, ready for parsing.</p>
-<h2><a class="anchor" id="autotoc_md1219"></a>
+<h2><a class="anchor" id="autotoc_md1220"></a>
 Conclusion</h2>
 <p>You've learned how to make your Click commands interactive by defining inputs using <b>Parameters</b>:</p>
 <ul>

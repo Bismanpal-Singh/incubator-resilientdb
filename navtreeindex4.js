@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"d3/dcb/classnodes_1_1CombineTutorial.html#a95f0666dfba125defd739a980e8e4627":[0,0,14,1,2],
+"d3/dcb/classnodes_1_1CombineTutorial.html#a95f0666dfba125defd739a980e8e4627":[1,0,1,1,2],
 "d3/dd4/classresdb__validator_1_1exceptions_1_1AmountError.html":[0,0,20,1,0],
 "d3/dd4/classresdb__validator_1_1exceptions_1_1AmountError.html":[1,0,6,0,0],
 "d3/de1/classresdb__driver_1_1exceptions_1_1InvalidSignature.html":[0,0,17,4,13],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "d4/db4/classresdb__driver_1_1exceptions_1_1TransportError.html#a6a3c232c6b5f1ce6e4fbf346925e14d5":[1,0,3,2,28,1],
 "d4/db4/classresdb__driver_1_1exceptions_1_1TransportError.html#abfc999ea44f796d55af0f38fcce2eaa4":[0,0,17,4,28,3],
 "d4/db4/classresdb__driver_1_1exceptions_1_1TransportError.html#abfc999ea44f796d55af0f38fcce2eaa4":[1,0,3,2,28,3],
-"d4/db4/classresdb__driver_1_1exceptions_1_1TransportError.html#acf010a7b0cfba488b02bdf1019d762b9":[0,0,17,4,28,2],
-"d4/db4/classresdb__driver_1_1exceptions_1_1TransportError.html#acf010a7b0cfba488b02bdf1019d762b9":[1,0,3,2,28,2],
-"d4/db5/crawl__local__files_8py.html":[2,0,4,5,2,3]
+"d4/db4/classresdb__driver_1_1exceptions_1_1TransportError.html#acf010a7b0cfba488b02bdf1019d762b9":[0,0,17,4,28,2]
 };

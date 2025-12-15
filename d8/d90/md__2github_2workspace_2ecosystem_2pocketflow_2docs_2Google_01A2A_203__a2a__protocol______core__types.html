@@ -121,18 +121,18 @@ $(function(){initNavTree('d8/d90/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_a2a_protocol___core_types</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1978"></a>
-autotoc_md1978</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1979"></a>
+autotoc_md1979</h2>
 <p>layout: default title: "A2A Protocol &amp; Core Types" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md1979"></a>
+<h2><a class="anchor" id="autotoc_md1980"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1980"></a>
+<h1><a class="anchor" id="autotoc_md1981"></a>
 Chapter 3: A2A Protocol &amp; Core Types</h1>
 <p>In the previous chapters, we learned how to find an agent using its <a class="el" href="../../d7/d4e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_201__agent__card.html">Agent Card</a> and how to give it work using a <a class="el" href="../../d2/d9c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_202__task.html">Task</a>. Think of it like finding a specific workshop (Agent Card) and submitting a work order (Task).</p>
 <p>But how do the client (who submits the order) and the agent (the workshop) actually <em>talk</em> to each other? What language do they use? If the client writes the order in English, but the workshop only understands Spanish, nothing will get done!</p>
 <p>This chapter tackles that problem: <b>How do different AI agents, possibly built by different teams using different technologies, communicate reliably?</b></p>
 <p>The answer lies in the <b>A2A Protocol</b> and its <b>Core Types</b>.</p>
-<h2><a class="anchor" id="autotoc_md1981"></a>
+<h2><a class="anchor" id="autotoc_md1982"></a>
 What is a Protocol? The Rules of the Road</h2>
 <p>Imagine trying to drive in a country where you don't know the traffic rules. Do you drive on the left or right? What do the signs mean? It would be chaos! Traffic rules are a <b>protocol</b> – a shared set of rules everyone agrees on so things run smoothly.</p>
 <p>Similarly, the <b>A2A Protocol</b> is the set of rules for how AI agents communicate. It defines:</p>
@@ -142,7 +142,7 @@ What is a Protocol? The Rules of the Road</h2>
 <li><b>The Actions:</b> <em>What</em> commands one agent can send to another (like "start a task" or "cancel a task").</li>
 </ol>
 <p>Think of it as the <b>shared language</b> for AI agents. Just like humans use languages like English or Spanish, which have grammar (rules) and vocabulary (words), the A2A protocol provides the grammar and vocabulary for agents.</p>
-<h2><a class="anchor" id="autotoc_md1982"></a>
+<h2><a class="anchor" id="autotoc_md1983"></a>
 The Grammar: JSON-RPC 2.0</h2>
 <p>For the A2A protocol, the chosen "grammar" is a standard called <b>JSON-RPC 2.0</b>. Don't let the name scare you! It's just a simple way to structure messages using JSON (JavaScript Object Notation - a very common text format for data).</p>
 <p>Here's the basic idea:</p>
@@ -200,7 +200,7 @@ The Grammar: JSON-RPC 2.0</h2>
 <div class="line">    end</div>
 <div class="line">    Note left of C: Client matches response &#39;id&#39; to original request</div>
 </div><!-- fragment --><p>This simple request/response structure using JSON-RPC is the foundation of how A2A agents talk.</p>
-<h2><a class="anchor" id="autotoc_md1983"></a>
+<h2><a class="anchor" id="autotoc_md1984"></a>
 The Vocabulary: Core Data Types</h2>
 <p>If JSON-RPC is the grammar, then the <b>Core Types</b> are the standard vocabulary – the specific kinds of "words" or data structures used within the <code>params</code> and <code>result</code> fields. We've already seen some of these!</p>
 <p>Let's recap the most important ones:</p>
@@ -250,7 +250,7 @@ The Vocabulary: Core Data Types</h2>
 <div class="line">  ]</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>If the user also wanted to attach a document for translation, the <code>parts</code> list would have two items: a <code>TextPart</code> with instructions and a <code>FilePart</code> with the document.</p>
-<h2><a class="anchor" id="autotoc_md1984"></a>
+<h2><a class="anchor" id="autotoc_md1985"></a>
 Putting It Together: The <code>tasks/send</code> Example</h2>
 <p>Remember the <code>tasks/send</code> request from Chapter 2? Let's look at the full JSON-RPC structure that the client sends over HTTP:</p>
 <div class="fragment"><div class="line">// Client Sends This (HTTP POST body to Agent&#39;s URL)</div>
@@ -289,7 +289,7 @@ Putting It Together: The <code>tasks/send</code> Example</h2>
 <div class="line">  &quot;id&quot;: &quot;client-req-001&quot; // Matches the request ID</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This exchange uses the JSON-RPC grammar (<code>method</code>, <code>params</code>, <code>result</code>, <code>id</code>) and the A2A vocabulary (<code>Task</code>, <code>Message</code>, <code>Part</code>, <code>TaskStatus</code>, <code>TaskState</code>) to communicate clearly.</p>
-<h2><a class="anchor" id="autotoc_md1985"></a>
+<h2><a class="anchor" id="autotoc_md1986"></a>
 Handling Mistakes: Errors in the Protocol</h2>
 <p>What if the client sends a request for a method the agent doesn't understand, like <code>tasks/make_coffee</code>? The agent would respond with a JSON-RPC error:</p>
 <div class="fragment"><div class="line">{</div>
@@ -311,7 +311,7 @@ Handling Mistakes: Errors in the Protocol</h2>
 <li><code>samples/js/src/schema.ts</code> (search for <code>ErrorCode</code>)</li>
 <li><code>samples/python/common/types.py</code> (search for error classes like <code>MethodNotFoundError</code>, <code>TaskNotFoundError</code>)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1986"></a>
+<h2><a class="anchor" id="autotoc_md1987"></a>
 Conclusion</h2>
 <p>The A2A Protocol acts as the universal translator for AI agents. By defining:</p>
 <ol type="1">

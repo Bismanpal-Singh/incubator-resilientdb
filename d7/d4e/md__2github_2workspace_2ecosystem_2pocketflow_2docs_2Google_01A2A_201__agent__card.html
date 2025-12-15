@@ -121,12 +121,12 @@ $(function(){initNavTree('d7/d4e/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_agent_card</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1959"></a>
-autotoc_md1959</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1960"></a>
+autotoc_md1960</h2>
 <p>layout: default title: "Agent Card" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md1960"></a>
+<h2><a class="anchor" id="autotoc_md1961"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md1961"></a>
+<h1><a class="anchor" id="autotoc_md1962"></a>
 Chapter 1: Agent Card - The AI's Business Card</h1>
 <p>Welcome to the Google Agent-to-Agent (A2A) Protocol tutorial! Imagine a world full of helpful AI assistants, or "agents." Maybe one agent is great at translating languages, another excels at summarizing long documents, and a third can book appointments. How do these agents, potentially built by different companies using different technologies, find each other and figure out how to work together?</p>
 <p>That's where the <b>Agent Card</b> comes in. It solves the problem of <b>discovery</b> – how one agent or application can learn about another agent's existence, capabilities, and how to communicate with it.</p>
@@ -135,7 +135,7 @@ Chapter 1: Agent Card - The AI's Business Card</h1>
 <li><b>You want to hire a plumber.</b> How do you find one? You might look them up online, find their website, or get their business card. This tells you their name, what services they offer (fixing leaks, installing pipes), and how to contact them (phone number, address).</li>
 <li><b>An application (or another agent) wants to use an AI agent.</b> How does it find one? It looks for the agent's <b>Agent Card</b>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1962"></a>
+<h2><a class="anchor" id="autotoc_md1963"></a>
 What is an Agent Card?</h2>
 <p>An <b>Agent Card</b> is a small, standardized file, usually named <code>agent.json</code>, that acts like a public profile or digital business card for an AI agent. It's typically hosted by the agent itself at a predictable web address.</p>
 <p>This card contains essential information:</p>
@@ -146,7 +146,7 @@ What is an Agent Card?</h2>
 <li><b>Does it have special features?</b> (Like supporting real-time updates via streaming?)</li>
 </ol>
 <p>By reading this card, other agents or applications can quickly understand if this agent is the right one for a job and exactly how to start a conversation (or, in technical terms, initiate a <a class="el" href="../../d2/d9c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_202__task.html">Task</a>).</p>
-<h2><a class="anchor" id="autotoc_md1963"></a>
+<h2><a class="anchor" id="autotoc_md1964"></a>
 Finding and Reading the Card (Discovery)</h2>
 <p>Just like many websites have a standard <code>robots.txt</code> file to tell search engines what to do, A2A agents typically make their Agent Card available at a standard path: <code>/.well-known/agent.json</code>.</p>
 <p>So, if an agent lives at <code><a href="http://my-translator-agent.com">http://my-translator-agent.com</a></code>, its Agent Card would likely be found at <code><a href="http://my-translator-agent.com/.well-known/agent.json">http://my-translator-agent.com/.well-known/agent.json</a></code>.</p>
@@ -179,7 +179,7 @@ Finding and Reading the Card (Discovery)</h2>
 <li>It uses the <code>requests</code> library to make an HTTP GET request, just like your web browser does when you visit a page.</li>
 <li>If the request is successful (HTTP status 200 OK), it takes the JSON text returned by the server and parses it into a structured <code>AgentCard</code> object that the program can easily use.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1964"></a>
+<h3><a class="anchor" id="autotoc_md1965"></a>
 Example <code>agent.json</code></h3>
 <p>Here's a simplified example of what the <code>agent.json</code> file might look like:</p>
 <div class="fragment"><div class="line">// File: /.well-known/agent.json (Example)</div>
@@ -212,7 +212,7 @@ Example <code>agent.json</code></h3>
 <li><code>defaultInputModes</code>/<code>defaultOutputModes</code>: What kind of data it generally works with (here, just plain <code>text</code>).</li>
 <li><code>skills</code>: A list of specific things this agent can do. This one has a "summarize" skill.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1965"></a>
+<h2><a class="anchor" id="autotoc_md1966"></a>
 Under the Hood: The Discovery Flow</h2>
 <p>How does fetching the Agent Card actually work between the client and the agent (server)? It's a simple web request:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -253,7 +253,7 @@ Under the Hood: The Discovery Flow</h2>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This JavaScript code does essentially the same thing as the Python example: builds the URL, fetches the content, and parses the JSON if successful.</p>
-<h2><a class="anchor" id="autotoc_md1966"></a>
+<h2><a class="anchor" id="autotoc_md1967"></a>
 Conclusion</h2>
 <p>The Agent Card is the cornerstone of discovery in the A2A protocol. It's the agent's public announcement, telling the world who it is, what it can do, and how to interact with it. By fetching and reading this simple <code>agent.json</code> file, clients can dynamically discover and prepare to communicate with diverse AI agents.</p>
 <p>Now that we understand how to <em>find</em> an agent and learn its basic properties using the Agent Card, we need to learn how to actually <em>give it work</em> to do. This brings us to the concept of a <b>Task</b>.</p>

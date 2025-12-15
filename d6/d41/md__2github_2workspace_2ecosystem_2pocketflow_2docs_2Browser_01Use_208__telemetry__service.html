@@ -121,22 +121,22 @@ $(function(){initNavTree('d6/d41/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_telemetry_service</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md963"></a>
-autotoc_md963</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md964"></a>
+autotoc_md964</h2>
 <p>layout: default title: "Telemetry Service" parent: "Browser Use" </p>
-<h2><a class="anchor" id="autotoc_md964"></a>
+<h2><a class="anchor" id="autotoc_md965"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md965"></a>
+<h1><a class="anchor" id="autotoc_md966"></a>
 Chapter 8: Telemetry Service - Helping Improve the Project (Optional)</h1>
 <p>In the <a class="el" href="../../dc/db2/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_207__data__structures____views__.html">previous chapter</a>, we explored the essential blueprints (<code>Data Structures (Views)</code>) that keep communication clear and consistent between all the parts of <code>Browser Use</code>. We saw how components like the <a class="el" href="../../de/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_201__agent.html">Agent</a> and the <a class="el" href="../../de/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_205__action__controller______registry.html">Action Controller &amp; Registry</a> use these blueprints to exchange information reliably.</p>
 <p>Now, let's think about the project itself. How do the developers who build <code>Browser Use</code> know if it's working well for users? How do they find out about common errors or which features are most popular, so they can make the tool better?</p>
-<h2><a class="anchor" id="autotoc_md966"></a>
+<h2><a class="anchor" id="autotoc_md967"></a>
 What Problem Does the Telemetry Service Solve?</h2>
 <p>Imagine you released a new tool, like <code>Browser Use</code>. You want it to be helpful, but you don't know how people are actually using it. Are they running into unexpected errors? Are certain actions (like clicking vs. scrolling) causing problems? Is the performance okay? Without some feedback, it's hard to know where to focus improvements.</p>
 <p>One way to get feedback is through bug reports or feature requests, but that only captures a small fraction of user experiences. We need a way to get a broader, anonymous picture of how the tool is performing "in the wild."</p>
 <p>The <b>Telemetry Service</b> solves this by providing an <em>optional</em> and <em>anonymous</em> way to send basic usage statistics back to the project developers. Think of it like an anonymous suggestion box or an automatic crash report that doesn't include any personal information.</p>
 <p><b>Crucially:</b> This service is designed to protect user privacy. It doesn't collect website content, personal data, or anything sensitive. It only sends anonymous statistics about the tool's operation, and <b>it can be completely disabled</b>.</p>
-<h2><a class="anchor" id="autotoc_md967"></a>
+<h2><a class="anchor" id="autotoc_md968"></a>
 Meet <code>ProductTelemetry</code>: The Anonymous Reporter</h2>
 <p>The component responsible for this is the <code>ProductTelemetry</code> service, found in <code>telemetry/service.py</code>.</p>
 <ul>
@@ -151,7 +151,7 @@ Meet <code>ProductTelemetry</code>: The Anonymous Reporter</h2>
 <li><b>Sends Data:</b> It sends this anonymous data to a secure third-party service (PostHog) used by the developers to analyze trends and identify potential issues.</li>
 <li><b>Optional:</b> You can easily turn it off.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md968"></a>
+<h2><a class="anchor" id="autotoc_md969"></a>
 How is Telemetry Used? (Mostly Automatic)</h2>
 <p>You usually don't interact with the <code>ProductTelemetry</code> service directly. Instead, other components like the <code>Agent</code> and <code>Controller</code> automatically call it at key moments.</p>
 <p><b>Example: Agent Run Start/End</b></p>
@@ -194,25 +194,25 @@ How is Telemetry Used? (Mostly Automatic)</h2>
 <li>After the loop finishes (or an error occurs), the <code>finally</code> block ensures that another <code>self.telemetry.capture()</code> call is made, this time sending an <code>AgentEndTelemetryEvent</code> with summary statistics about the run.</li>
 </ol>
 <p>Similarly, the <code>Agent.step</code> method captures an <code>AgentStepTelemetryEvent</code>, and the <code>Controller</code>'s <code>Registry</code> captures a <code>ControllerRegisteredFunctionsTelemetryEvent</code> when it's initialized. This happens automatically in the background if telemetry is enabled.</p>
-<h2><a class="anchor" id="autotoc_md969"></a>
+<h2><a class="anchor" id="autotoc_md970"></a>
 How to Disable Telemetry</h2>
 <p>If you prefer not to send any anonymous usage data, you can easily disable the Telemetry Service.</p>
 <p>Set the environment variable <code>ANONYMIZED_TELEMETRY</code> to <code>False</code>.</p>
 <p>How you set environment variables depends on your operating system:</p>
 <ul>
-<li><b>Linux/macOS (in terminal):</b> <code>bash export ANONYMIZED_TELEMETRY=False @section autotoc_md970 Now run your Python script in the same terminal python your_agent_script.py </code></li>
+<li><b>Linux/macOS (in terminal):</b> <code>bash export ANONYMIZED_TELEMETRY=False @section autotoc_md971 Now run your Python script in the same terminal python your_agent_script.py </code></li>
 <li><b>Windows (Command Prompt):</b> <code>cmd set ANONYMIZED_TELEMETRY=False python your_agent_script.py </code></li>
 <li><b>Windows (PowerShell):</b> <code>powershell $env:ANONYMIZED_TELEMETRY="False" python your_agent_script.py </code></li>
 <li><b>In Python Code (using <code>os</code> module, <em>before</em> importing <code>browser_use</code>):</b> ``&lsquo;python import os os.environ['ANONYMIZED_TELEMETRY&rsquo;] = 'False'</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md971"></a>
+<h1><a class="anchor" id="autotoc_md972"></a>
 Now import and use browser_use</h1>
 <p>from browser_use import Agent # ... other imports </p>
-<h1><a class="anchor" id="autotoc_md972"></a>
+<h1><a class="anchor" id="autotoc_md973"></a>
 ... rest of your script ...</h1>
 <p>```</p>
 <p>If this environment variable is set to <code>False</code>, the <code>ProductTelemetry</code> service will be initialized in a disabled state, and no data will be collected or sent.</p>
-<h2><a class="anchor" id="autotoc_md973"></a>
+<h2><a class="anchor" id="autotoc_md974"></a>
 How It Works Under the Hood: Sending Anonymous Data</h2>
 <p>When telemetry is enabled and an event occurs (like <code>agent.run()</code> starting):</p>
 <ol type="1">
@@ -354,7 +354,7 @@ How It Works Under the Hood: Sending Anonymous Data</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># ... other event models like AgentEndTelemetryEvent, AgentStepTelemetryEvent ...</span></div>
 </div><!-- fragment --><p>These structures ensure the data sent to PostHog is consistent and well-defined.</p>
-<h2><a class="anchor" id="autotoc_md974"></a>
+<h2><a class="anchor" id="autotoc_md975"></a>
 Conclusion</h2>
 <p>The <b>Telemetry Service</b> (<code>ProductTelemetry</code>) provides an optional and privacy-conscious way for the <code>Browser Use</code> project to gather anonymous feedback about how the tool is being used. It automatically captures events like agent runs, steps, and errors, sending anonymized statistics to developers via PostHog.</p>
 <p>This feedback loop is vital for identifying common issues, understanding feature usage, and ultimately improving the <code>Browser Use</code> library for everyone. Remember, you have full control and can easily disable this service by setting the <code>ANONYMIZED_TELEMETRY=False</code> environment variable.</p>

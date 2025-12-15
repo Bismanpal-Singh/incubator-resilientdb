@@ -121,17 +121,17 @@ $(function(){initNavTree('dc/df6/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_fastmcp_tools___tool____toolmanager__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2377"></a>
-autotoc_md2377</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2378"></a>
+autotoc_md2378</h2>
 <p>layout: default title: "FastMCP Tools (Tool, ToolManager)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2378"></a>
+<h2><a class="anchor" id="autotoc_md2379"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2379"></a>
+<h1><a class="anchor" id="autotoc_md2380"></a>
 Chapter 4: FastMCP Tools (<code>Tool</code>, <code>ToolManager</code>)</h1>
 <p>In <a class="el" href="../../d9/dfc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_203__fastmcp__resources_95757cc8f176683b04c22ceeac7ea1d5.html">Chapter 3: Sharing Data - FastMCP Resources (<code>Resource</code>, <code>ResourceManager</code>)</a>, we learned how to make data available for clients to read using <code>Resource</code> objects, like putting books in a digital library. That's great for sharing information, but what if we want the client to be able to ask the server to <em>do</em> something?</p>
 <p>Imagine you want your server to not just provide data, but to perform calculations, interact with a database, or control some hardware. For example, maybe you want a client application (like an AI assistant) to be able to ask your server, "What's 5 plus 7?". The server needs to perform the addition and send back the result.</p>
 <p>This is where <b>FastMCP Tools</b> come in. They allow your server to expose functions that clients can call remotely.</p>
-<h2><a class="anchor" id="autotoc_md2380"></a>
+<h2><a class="anchor" id="autotoc_md2381"></a>
 The Workshop Analogy: Tools and the Foreman</h2>
 <p>Think of your <code>FastMCP</code> server as a well-equipped workshop. Inside this workshop, you have various specialized tools:</p><ul>
 <li>A drill (<code>Tool</code>)</li>
@@ -146,7 +146,7 @@ The Workshop Analogy: Tools and the Foreman</h2>
 <li><b><code>ToolManager</code></b>: The internal manager within <code>FastMCP</code> that keeps track of all available <code>Tool</code> objects and handles requests to use them (the foreman). Clients interact with the <code>ToolManager</code> via <code>FastMCP</code>.</li>
 </ul>
 <p>Clients can ask the <code>ToolManager</code> (via <code>FastMCP</code>) to list all available tools (<code>listTools</code>) and then request to execute a specific tool by its name, providing the necessary arguments (<code>callTool</code>).</p>
-<h2><a class="anchor" id="autotoc_md2381"></a>
+<h2><a class="anchor" id="autotoc_md2382"></a>
 Adding Tools to Your Workshop: Using <code>@server.tool()</code></h2>
 <p>Just like we used <code>@server.resource()</code> to add data "books" to our library, <code>FastMCP</code> provides the <code>@server.tool()</code> decorator to easily add action "tools" to our workshop (managed by the <code>ToolManager</code>).</p>
 <p>Let's create a simple server with a calculator tool that can add two numbers.</p>
@@ -199,7 +199,7 @@ Adding Tools to Your Workshop: Using <code>@server.tool()</code></h2>
 <li>Call <code>callTool</code> with the name <code>add</code> and arguments like <code>{"num1": 5, "num2": 7}</code>.</li>
 <li><code>FastMCP</code> would ask the <code>ToolManager</code> to execute the <code>add</code> tool. The <code>ToolManager</code> would find your <code>add_numbers</code> function, check that the arguments match (<code>5</code> and <code>7</code> are integers), call the function, get the integer result <code>12</code>, and send it back to the client.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2382"></a>
+<h2><a class="anchor" id="autotoc_md2383"></a>
 How Clients Use Tools</h2>
 <p>You don't need to worry about writing client code right now, but it's helpful to understand the basic interaction:</p>
 <ol type="1">
@@ -207,7 +207,7 @@ How Clients Use Tools</h2>
 <li><b>Invocation:</b> The client then decides to use a specific tool. It sends a request like, "Please execute the tool named 'add' with these arguments: `num1` is `5`, `num2` is `7`." (using the MCP <code>callTool</code> method).</li>
 <li><b>Execution &amp; Response:</b> The server receives this request. <code>FastMCP</code> hands it off to the <code>ToolManager</code>. The <code>ToolManager</code> finds the correct Python function (<code>add_numbers</code>), validates and passes the arguments (<code>5</code>, <code>7</code>), executes the function, gets the return value (<code>12</code>), and sends this result back to the client.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2383"></a>
+<h2><a class="anchor" id="autotoc_md2384"></a>
 The Foreman: <code>ToolManager</code> Behind the Scenes</h2>
 <p>While you primarily interact with <code>@server.tool()</code>, the <code>ToolManager</code> is the component within <code>FastMCP</code> that does the heavy lifting for tools.</p>
 <p>When <code>FastMCP</code> starts, it creates a <code>ToolManager</code> instance. Every time you use the <code>@server.tool()</code> decorator, you're essentially telling <code>FastMCP</code> to register that function with its <code>ToolManager</code>.</p>
@@ -220,7 +220,7 @@ The Foreman: <code>ToolManager</code> Behind the Scenes</h2>
 <li>Handles potential errors during tool execution.</li>
 </ul>
 <p>You usually don't need to interact with <code>ToolManager</code> directly; <code>@server.tool()</code> is the convenient interface.</p>
-<h2><a class="anchor" id="autotoc_md2384"></a>
+<h2><a class="anchor" id="autotoc_md2385"></a>
 How Tools Work Under the Hood</h2>
 <p>Let's trace the journey of our <code>add</code> tool from definition to execution.</p>
 <p><b>1. Registration (When the server code loads):</b></p>
@@ -278,23 +278,23 @@ How Tools Work Under the Hood</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2385"></a>
+<h1><a class="anchor" id="autotoc_md2386"></a>
 Inside server/fastmcp/tools/tool_manager.py (Simplified ToolManager.add_tool)</h1>
 <p>from .base import Tool # Tool class definition is in base.py</p>
 <p>class ToolManager: </p>
-<h1><a class="anchor" id="autotoc_md2386"></a>
+<h1><a class="anchor" id="autotoc_md2387"></a>
 ... (init, get_tool, list_tools) ...</h1>
 <p>def add_tool(self, fn, name=None, description=None) -&gt; Tool: </p>
-<h1><a class="anchor" id="autotoc_md2387"></a>
+<h1><a class="anchor" id="autotoc_md2388"></a>
 1. Create a Tool object from the function</h1>
 <p>tool = Tool.from_function(fn, name=name, description=description) </p>
-<h1><a class="anchor" id="autotoc_md2388"></a>
+<h1><a class="anchor" id="autotoc_md2389"></a>
 2. Check for duplicates (optional warning)</h1>
 <p>if tool.name in self._tools: </p>
-<h1><a class="anchor" id="autotoc_md2389"></a>
+<h1><a class="anchor" id="autotoc_md2390"></a>
 ... handle duplicate ...</h1>
 <p>pass </p>
-<h1><a class="anchor" id="autotoc_md2390"></a>
+<h1><a class="anchor" id="autotoc_md2391"></a>
 3. Store the Tool object in the dictionary</h1>
 <p>self._tools[tool.name] = tool logger.debug(f"Registered tool: {tool.name}") return tool ```</p>
 <ul>
@@ -304,22 +304,22 @@ Inside server/fastmcp/tools/tool_manager.py (Simplified ToolManager.add_tool)</h
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2391"></a>
+<h1><a class="anchor" id="autotoc_md2392"></a>
 Inside server/fastmcp/tools/tool_manager.py (Simplified ToolManager.call_tool)</h1>
 <p>class ToolManager: </p>
-<h1><a class="anchor" id="autotoc_md2392"></a>
+<h1><a class="anchor" id="autotoc_md2393"></a>
 ... (init, add_tool, list_tools) ...</h1>
 <p>async def call_tool(self, name, arguments, context=None): </p>
-<h1><a class="anchor" id="autotoc_md2393"></a>
+<h1><a class="anchor" id="autotoc_md2394"></a>
 1. Find the tool by name</h1>
 <p>tool = self.get_tool(name) if not tool: raise ToolError(f"Unknown tool: {name}")</p>
-<h1><a class="anchor" id="autotoc_md2394"></a>
+<h1><a class="anchor" id="autotoc_md2395"></a>
 2. Tell the Tool object to run with the arguments</h1>
 <p>logger.debug(f"Calling tool: {name} with args: {arguments}") result = await tool.run(arguments, context=context) return result ```</p>
 <ul>
 <li>The <code>Tool.run</code> method (in <code>server/fastmcp/tools/base.py</code>) handles argument validation (using the <code>FuncMetadata</code> generated during registration) and finally calls your original Python function (<code>add_numbers</code>).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2395"></a>
+<h2><a class="anchor" id="autotoc_md2396"></a>
 Conclusion</h2>
 <p>You've now learned about FastMCP Tools, the way to expose actions and computations from your server for clients to execute.</p>
 <ul>

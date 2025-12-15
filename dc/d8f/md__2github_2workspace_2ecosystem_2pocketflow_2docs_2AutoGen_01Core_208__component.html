@@ -121,12 +121,12 @@ $(function(){initNavTree('dc/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_component</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md810"></a>
-autotoc_md810</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md811"></a>
+autotoc_md811</h2>
 <p>layout: default title: "Component" parent: "AutoGen Core" </p>
-<h2><a class="anchor" id="autotoc_md811"></a>
+<h2><a class="anchor" id="autotoc_md812"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md812"></a>
+<h1><a class="anchor" id="autotoc_md813"></a>
 Chapter 8: Component - The Standardized Building Blocks</h1>
 <p>Welcome to Chapter 8! In our journey so far, we've met several key players in AutoGen Core:</p><ul>
 <li><a class="el" href="../../d6/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_201__agent.html">Agents</a>: The workers.</li>
@@ -139,7 +139,7 @@ Chapter 8: Component - The Standardized Building Blocks</h1>
 </ul>
 <p>Now, imagine you've built a fantastic agent system using these parts. You've configured a specific <code>ChatCompletionClient</code> to use OpenAI's <code>gpt-4o</code> model, and you've set up a <code>ListMemory</code> (from Chapter 7) to store user preferences. How do you save this exact setup so you can easily recreate it later, or share it with a friend? And what if you later want to swap out the <code>gpt-4o</code> client for a different one, like Anthropic's Claude, without rewriting your agent's core logic?</p>
 <p>This is where the <b><code>Component</code></b> concept comes in. It provides a standard way to define, configure, save, and load these reusable building blocks.</p>
-<h2><a class="anchor" id="autotoc_md813"></a>
+<h2><a class="anchor" id="autotoc_md814"></a>
 Motivation: Making Setups Portable and Swappable</h2>
 <p>Think of the parts we've used so far – <code>ChatCompletionClient</code>, <code>Memory</code>, <code>Tool</code> – like specialized <b>Lego bricks</b>. Each brick has a specific function (connecting to an LLM, remembering things, performing an action).</p>
 <p>Wouldn't it be great if:</p><ol type="1">
@@ -149,7 +149,7 @@ Motivation: Making Setups Portable and Swappable</h2>
 <li>You could easily swap a "Red 2x4 Brick" for a "Blue 2x4 Brick" without having to rebuild everything around it?</li>
 </ol>
 <p>The <code>Component</code> abstraction in AutoGen Core provides exactly this! It makes your building blocks <b>configurable</b>, <b>savable</b>, <b>loadable</b>, and <b>swappable</b>.</p>
-<h2><a class="anchor" id="autotoc_md814"></a>
+<h2><a class="anchor" id="autotoc_md815"></a>
 Key Concepts: Understanding Components</h2>
 <p>Let's break down what makes the Component system work:</p>
 <ol type="1">
@@ -166,14 +166,14 @@ Key Concepts: Understanding Components</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md815"></a>
+<h1><a class="anchor" id="autotoc_md816"></a>
 From: _component_config.py (Conceptual Structure)</h1>
 <p>from pydantic import BaseModel from typing import Dict, Any</p>
 <p>class ComponentModel(BaseModel): provider: str # Path to the class (e.g., "autogen_core.memory.ListMemory") config: Dict[str, Any] # The specific settings for this instance component_type: str | None = None # Role (e.g., "memory") </p>
-<h1><a class="anchor" id="autotoc_md816"></a>
+<h1><a class="anchor" id="autotoc_md817"></a>
 ... other fields like version, description, label ...</h1>
 <p>``<code> This</code>ComponentModel` is what you typically save to a file (often as JSON or YAML).</p>
-<h2><a class="anchor" id="autotoc_md817"></a>
+<h2><a class="anchor" id="autotoc_md818"></a>
 Use Case Example: Saving and Loading <code>ListMemory</code></h2>
 <p>Let's see how this works with the <code>ListMemory</code> we used in <a class="el" href="../../da/dd4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_207__memory.html">Chapter 7: Memory</a>.</p>
 <p><b>Goal:</b></p><ol type="1">
@@ -264,7 +264,7 @@ Use Case Example: Saving and Loading <code>ListMemory</code></h2>
 <li><b>Configuration:</b> We could easily save this to a JSON/YAML file and manage it outside our Python code.</li>
 <li><b>Modularity (Conceptual):</b> If <code>ListMemory</code> and <code>VectorDBMemory</code> were both Components of type "memory", we could potentially load either one from a configuration file just by changing the <code>provider</code> and <code>config</code> in the file, without altering the agent code that <em>uses</em> the memory component (assuming the agent interacts via the standard <code>Memory</code> interface from Chapter 7).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md818"></a>
+<h2><a class="anchor" id="autotoc_md819"></a>
 Under the Hood: How Saving and Loading Work</h2>
 <p>Let's peek behind the curtain.</p>
 <p><b>Saving (<code>dump_component</code>) Flow:</b></p>
@@ -331,79 +331,79 @@ Under the Hood: How Saving and Loading Work</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md819"></a>
+<h1><a class="anchor" id="autotoc_md820"></a>
 From: _component_config.py (Simplified Concept)</h1>
 <p>from pydantic import BaseModel from typing import Type, TypeVar, Generic, ClassVar </p>
-<h1><a class="anchor" id="autotoc_md820"></a>
+<h1><a class="anchor" id="autotoc_md821"></a>
 ... other imports</h1>
 <p>ConfigT = TypeVar("ConfigT", bound=BaseModel)</p>
 <p>class Component(Generic[ConfigT]): # Generic over its config type </p>
-<h1><a class="anchor" id="autotoc_md821"></a>
+<h1><a class="anchor" id="autotoc_md822"></a>
 Required Class Variables for Concrete Components</h1>
 <p>component_type: ClassVar[str] component_config_schema: Type[ConfigT]</p>
-<h1><a class="anchor" id="autotoc_md822"></a>
+<h1><a class="anchor" id="autotoc_md823"></a>
 Required Instance Method for Saving</h1>
 <p>def _to_config(self) -&gt; ConfigT: raise NotImplementedError</p>
-<h1><a class="anchor" id="autotoc_md823"></a>
+<h1><a class="anchor" id="autotoc_md824"></a>
 Required Class Method for Loading</h1>
 <p>@classmethod def _from_config(cls, config: ConfigT) -&gt; Self: raise NotImplementedError</p>
-<h1><a class="anchor" id="autotoc_md824"></a>
-dump_component and load_component are also part of the system</h1>
 <h1><a class="anchor" id="autotoc_md825"></a>
+dump_component and load_component are also part of the system</h1>
+<h1><a class="anchor" id="autotoc_md826"></a>
 (often inherited from base classes like ComponentBase)</h1>
 <p>def dump_component(self) -&gt; ComponentModel: ... @classmethod def load_component(cls, model: ComponentModel | Dict[str, Any]) -&gt; Self: ... ```</p>
 <ul>
 <li><b><code>ComponentModel</code>:</b> As shown before, a Pydantic model to hold the <code>provider</code>, <code>config</code>, <code>type</code>, etc.</li>
 <li><b><code>dump_component</code> Implementation (Conceptual):</b> ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md826"></a>
+<h1><a class="anchor" id="autotoc_md827"></a>
 Inside ComponentBase or similar</h1>
 <p>def dump_component(self) -&gt; ComponentModel: </p>
-<h1><a class="anchor" id="autotoc_md827"></a>
+<h1><a class="anchor" id="autotoc_md828"></a>
 1. Get the specific config from the instance</h1>
 <p>obj_config: BaseModel = self._to_config() config_dict = obj_config.model_dump() # Convert to dictionary</p>
-<h1><a class="anchor" id="autotoc_md828"></a>
+<h1><a class="anchor" id="autotoc_md829"></a>
 2. Determine the provider string (class path)</h1>
 <p>provider_str = _type_to_provider_str(self.__class__) </p>
-<h1><a class="anchor" id="autotoc_md829"></a>
-(Handle overrides like self.component_provider_override)</h1>
 <h1><a class="anchor" id="autotoc_md830"></a>
+(Handle overrides like self.component_provider_override)</h1>
+<h1><a class="anchor" id="autotoc_md831"></a>
 3. Get other metadata</h1>
 <p>comp_type = self.component_type comp_version = self.component_version </p>
-<h1><a class="anchor" id="autotoc_md831"></a>
-... description, label ...</h1>
 <h1><a class="anchor" id="autotoc_md832"></a>
+... description, label ...</h1>
+<h1><a class="anchor" id="autotoc_md833"></a>
 4. Create and return the ComponentModel</h1>
 <p>model = ComponentModel( provider=provider_str, config=config_dict, component_type=comp_type, version=comp_version, </p>
-<h1><a class="anchor" id="autotoc_md833"></a>
+<h1><a class="anchor" id="autotoc_md834"></a>
 ... other metadata ...</h1>
 <p>) return model ```</p>
 <ul>
 <li><b><code>load_component</code> Implementation (Conceptual):</b> ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md834"></a>
+<h1><a class="anchor" id="autotoc_md835"></a>
 Inside ComponentLoader or similar</h1>
 <p>@classmethod def load_component(cls, model: ComponentModel | Dict[str, Any]) -&gt; Self: </p>
-<h1><a class="anchor" id="autotoc_md835"></a>
+<h1><a class="anchor" id="autotoc_md836"></a>
 1. Ensure we have a ComponentModel object</h1>
 <p>if isinstance(model, dict): loaded_model = ComponentModel(**model) else: loaded_model = model</p>
-<h1><a class="anchor" id="autotoc_md836"></a>
+<h1><a class="anchor" id="autotoc_md837"></a>
 2. Import the class based on the provider string</h1>
 <p>provider_str = loaded_model.provider </p>
-<h1><a class="anchor" id="autotoc_md837"></a>
+<h1><a class="anchor" id="autotoc_md838"></a>
 ... (handle WELL_KNOWN_PROVIDERS mapping) ...</h1>
 <p>module_path, class_name = provider_str.rsplit(".", 1) module = importlib.import_module(module_path) component_class = getattr(module, class_name)</p>
-<h1><a class="anchor" id="autotoc_md838"></a>
+<h1><a class="anchor" id="autotoc_md839"></a>
 3. Validate the class and config</h1>
 <p>if not is_component_class(component_class): # Check it's a valid Component raise TypeError(...) schema = component_class.component_config_schema validated_config = schema.model_validate(loaded_model.config)</p>
-<h1><a class="anchor" id="autotoc_md839"></a>
+<h1><a class="anchor" id="autotoc_md840"></a>
 4. Call the class's factory method to create instance</h1>
 <p>instance = component_class._from_config(validated_config)</p>
-<h1><a class="anchor" id="autotoc_md840"></a>
+<h1><a class="anchor" id="autotoc_md841"></a>
 5. Return the instance (after type checks)</h1>
 <p>return instance ```</p>
 <p>This system provides a powerful and consistent way to manage the building blocks of your AutoGen applications.</p>
-<h2><a class="anchor" id="autotoc_md841"></a>
+<h2><a class="anchor" id="autotoc_md842"></a>
 Wrapping Up</h2>
 <p>Congratulations! You've reached the end of our core concepts tour. You now understand the <code>Component</code> model – AutoGen Core's standard way to define configurable, savable, and loadable building blocks like <code>Memory</code>, <code>ChatCompletionClient</code>, <code>Tool</code>, and even aspects of <code>Agents</code> themselves.</p>
 <ul>

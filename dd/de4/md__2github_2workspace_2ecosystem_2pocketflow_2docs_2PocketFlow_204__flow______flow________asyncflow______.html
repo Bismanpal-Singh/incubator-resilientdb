@@ -121,15 +121,15 @@ $(function(){initNavTree('dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_flow___flow____asyncflow___</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2753"></a>
-autotoc_md2753</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2754"></a>
+autotoc_md2754</h2>
 <p>layout: default title: "Flow (Flow, AsyncFlow)" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2754"></a>
+<h2><a class="anchor" id="autotoc_md2755"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2755"></a>
+<h1><a class="anchor" id="autotoc_md2756"></a>
 Chapter 4: Flow (<code>Flow</code>, <code>AsyncFlow</code>)</h1>
 <p>In Chapter 3: Actions / Transitions, we saw how individual Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) can decide what should happen next by returning "action" strings, and how these actions lead to "transitions" between Nodes. But what actually manages this sequence? What's the conductor of this orchestra of Nodes? That's where <b>Flows</b> come in!</p>
-<h2><a class="anchor" id="autotoc_md2756"></a>
+<h2><a class="anchor" id="autotoc_md2757"></a>
 What Problem Do Flows Solve? Meet the Orchestrator!</h2>
 <p>Imagine you're building a simple AI application that interacts with a user:</p><ol type="1">
 <li><b>Greet User Node</b>: Displays a welcome message.</li>
@@ -147,7 +147,7 @@ What Problem Do Flows Solve? Meet the Orchestrator!</h2>
 <li><b><code>AsyncFlow</code></b>: For workflows that include asynchronous Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) (tasks that can "pause" and let other operations run, like waiting for user input or a network request).</li>
 </ul>
 <p>Let's see how to build and use them!</p>
-<h2><a class="anchor" id="autotoc_md2757"></a>
+<h2><a class="anchor" id="autotoc_md2758"></a>
 Building Your First <code>Flow</code></h2>
 <p>Let's create a simple text transformation workflow using <code>Flow</code>. It will:</p><ol type="1">
 <li>Get text input from the user.</li>
@@ -223,7 +223,7 @@ Building Your First <code>Flow</code></h2>
 <li>Based on the action returned by <code>text_input</code> (e.g., <code>"transform"</code>), the <code>Flow</code> will look at the transitions you defined and execute the next Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) (e.g., <code>text_transform</code>).</li>
 <li>This continues until a Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) returns an action for which no transition is defined, or it transitions to a Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) like <code>end_node</code> that doesn't lead anywhere else.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2758"></a>
+<h2><a class="anchor" id="autotoc_md2759"></a>
 Orchestrating Asynchronous Tasks with <code>AsyncFlow</code></h2>
 <p>What if your workflow involves tasks that wait for external operations, like fetching data from a website or waiting for a user to type something slowly? If you use a regular <code>Flow</code> and synchronous Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) for these, your whole application would freeze during these waits.</p>
 <p>This is where <code>AsyncFlow</code> and <a class="el" href="../../d7/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_205__asynchronous__processing___dbf1dc61cb3bcd98d46655d3ab8e2dd9.html">Asynchronous Processing (<code>AsyncNode</code>, <code>AsyncFlow</code>)</a> come in. <code>AsyncFlow</code> is designed to work with <code>AsyncNode</code>s, which can perform tasks asynchronously.</p>
@@ -276,7 +276,7 @@ Orchestrating Asynchronous Tasks with <code>AsyncFlow</code></h2>
 <div class="line"><span class="comment"># asyncio.run(main())</span></div>
 <div class="ttc" id="anamespacemain_html"><div class="ttname"><a href="../../d2/dc1/namespacemain.html">main</a></div><div class="ttdef"><b>Definition</b> <a href="../../dc/dba/main_8py_source.html#l00001">main.py:1</a></div></div>
 </div><!-- fragment --><p> The <code>AsyncFlow</code> will manage the <code>AsyncNode</code>s, allowing them to <code>await</code> their operations without blocking the entire event loop (if you're running other async tasks). We'll explore this more in <a class="el" href="../../d7/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_205__asynchronous__processing___dbf1dc61cb3bcd98d46655d3ab8e2dd9.html">Chapter 5: Asynchronous Processing (<code>AsyncNode</code>, <code>AsyncFlow</code>)</a>.</p>
-<h2><a class="anchor" id="autotoc_md2759"></a>
+<h2><a class="anchor" id="autotoc_md2760"></a>
 Nesting Flows: Managing Complexity</h2>
 <p>What if your workflow becomes very large and complex? You can break it down! A <b>Flow can itself be treated as a Node and nested within another Flow.</b> This is like having a project manager who oversees several team leads, and each team lead manages their own team's tasks.</p>
 <p>Consider the <code>cookbook/pocketflow-supervisor/flow.py</code> example. It has an <code>agent_inner_flow</code> which handles research, and then an outer <code>Flow</code> that uses this <code>agent_inner_flow</code> as a step, followed by a <code>SupervisorNode</code> to check the agent's work.</p>
@@ -291,7 +291,7 @@ Nesting Flows: Managing Complexity</h2>
 <div class="line"> </div>
 <div class="line">supervised_flow = Flow(start=agent_inner_flow)</div>
 </div><!-- fragment --><p> Here, <code>agent_inner_flow</code> runs completely. When it finishes, the <code>supervised_flow</code> transitions to the <code>supervisor</code> Node. This is a powerful way to create hierarchical and modular workflows.</p>
-<h2><a class="anchor" id="autotoc_md2760"></a>
+<h2><a class="anchor" id="autotoc_md2761"></a>
 Under the Hood: How Do Flows Orchestrate?</h2>
 <p>At its core, a <code>Flow</code> (or <code>AsyncFlow</code>) runs a loop that:</p><ol type="1">
 <li>Identifies the current Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) to run (starting with its <code>start_node</code>).</li>
@@ -323,9 +323,9 @@ Under the Hood: How Do Flows Orchestrate?</h2>
 </div><!-- fragment --><p><b>A Glimpse into the Code (<code>pocketflow/__init__.py</code>):</b></p>
 <p>The <code>Flow</code> class inherits from <code>BaseNode</code>, so it also has <code>prep</code>, <code>exec</code>, <code>post</code> methods. Its main job is done in its orchestration logic.</p>
 <ol type="1">
-<li><b>Initialization:</b> When you create a <code>Flow</code>, you give it a starting Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>). <code>python @section autotoc_md2761 Inside Flow class def __init__(self, start=None): super().__init__() # Initialize BaseNode parts self.start_node = start # Store the starting node </code></li>
-<li><b>Getting the Next Node:</b> The <code>get_next_node</code> method is crucial. It checks the current node's <code>successors</code> dictionary (which was populated by your transition definitions like <code>nodeA - "action" &gt;&gt; nodeB</code>). <code>python @section autotoc_md2762 Inside Flow class def get_next_node(self, current_node, action_str): @section autotoc_md2763 Try specific action, then "default" next_node = current_node.successors.get(action_str) if not next_node: # If specific action's successor not found next_node = current_node.successors.get("default") @section autotoc_md2764 ... (warnings if no successor found but some exist) ... return next_node </code></li>
-<li><b>The Orchestration Loop (<code>_orch</code>):</b> This is the heart of the <code>Flow</code>. <code>python @section autotoc_md2765 Inside Flow class (simplified) def _orch(self, shared, params=None): current_node = self.start_node last_action = None while current_node: @section autotoc_md2766 ... (set parameters for current_node if any) ... last_action = current_node._run(shared) # Run the node @section autotoc_md2767 Get the next node based on the action from the current one current_node = self.get_next_node(current_node, last_action) return last_action # Returns the very last action from the flow </code> The <code>current_node._run(shared)</code> call is what executes the <code>prep -&gt; exec -&gt; post</code> cycle of that Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>).</li>
+<li><b>Initialization:</b> When you create a <code>Flow</code>, you give it a starting Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>). <code>python @section autotoc_md2762 Inside Flow class def __init__(self, start=None): super().__init__() # Initialize BaseNode parts self.start_node = start # Store the starting node </code></li>
+<li><b>Getting the Next Node:</b> The <code>get_next_node</code> method is crucial. It checks the current node's <code>successors</code> dictionary (which was populated by your transition definitions like <code>nodeA - "action" &gt;&gt; nodeB</code>). <code>python @section autotoc_md2763 Inside Flow class def get_next_node(self, current_node, action_str): @section autotoc_md2764 Try specific action, then "default" next_node = current_node.successors.get(action_str) if not next_node: # If specific action's successor not found next_node = current_node.successors.get("default") @section autotoc_md2765 ... (warnings if no successor found but some exist) ... return next_node </code></li>
+<li><b>The Orchestration Loop (<code>_orch</code>):</b> This is the heart of the <code>Flow</code>. <code>python @section autotoc_md2766 Inside Flow class (simplified) def _orch(self, shared, params=None): current_node = self.start_node last_action = None while current_node: @section autotoc_md2767 ... (set parameters for current_node if any) ... last_action = current_node._run(shared) # Run the node @section autotoc_md2768 Get the next node based on the action from the current one current_node = self.get_next_node(current_node, last_action) return last_action # Returns the very last action from the flow </code> The <code>current_node._run(shared)</code> call is what executes the <code>prep -&gt; exec -&gt; post</code> cycle of that Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>).</li>
 </ol>
 <p>For <code>AsyncFlow</code>, the structure is very similar. It has an <code>_orch_async</code> method: </p><div class="fragment"><div class="line"><span class="comment"># Inside AsyncFlow class (conceptual)</span></div>
 <div class="line"><span class="keyword">async def </span>_orch_async(self, shared, params=None):</div>
@@ -340,7 +340,7 @@ Under the Hood: How Do Flows Orchestrate?</h2>
 <div class="line">        current_node = self.get_next_node(current_node, last_action)</div>
 <div class="line">    <span class="keywordflow">return</span> last_action</div>
 </div><!-- fragment --><p> The key difference is that it <code>await</code>s the <code>_run_async</code> method of <code>AsyncNode</code>s, allowing for non-blocking execution.</p>
-<h2><a class="anchor" id="autotoc_md2768"></a>
+<h2><a class="anchor" id="autotoc_md2769"></a>
 Conclusion</h2>
 <p>You've now learned about <b><code>Flow</code></b> and <b><code>AsyncFlow</code></b>, the orchestrators that bring your Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) together to form complete, dynamic workflows!</p><ul>
 <li>Flows define the sequence and logic of how Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) are executed.</li>

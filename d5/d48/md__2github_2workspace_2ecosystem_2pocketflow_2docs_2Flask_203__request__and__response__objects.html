@@ -121,16 +121,16 @@ $(function(){initNavTree('d5/d48/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_request_and_response_objects</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1883"></a>
-autotoc_md1883</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1884"></a>
+autotoc_md1884</h2>
 <p>layout: default title: "Request and Response Objects" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1884"></a>
+<h2><a class="anchor" id="autotoc_md1885"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1885"></a>
+<h1><a class="anchor" id="autotoc_md1886"></a>
 Chapter 3: Request and Response Objects</h1>
 <p>Welcome back! In <a class="el" href="../../d0/d63/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_202__routing__system.html">Chapter 2: Routing System</a>, we learned how Flask uses routes (<code>@app.route(...)</code>) to direct incoming web requests to the correct Python view functions. We saw how to create static routes like <code>/about</code> and dynamic routes like <code>/user/&lt;username&gt;</code>.</p>
 <p>But what exactly <em>is</em> a "web request"? And how do we send back something more sophisticated than just a plain string like &lsquo;'Hello, World!&rsquo;`? That's where <b>Request</b> and <b>Response</b> objects come into play.</p>
-<h2><a class="anchor" id="autotoc_md1886"></a>
+<h2><a class="anchor" id="autotoc_md1887"></a>
 What Problem Do They Solve? The Need for Envelopes</h2>
 <p>Think about sending and receiving mail. When you receive a letter, it's not just the message inside that matters. The envelope has important information: the sender's address, the recipient's address, maybe a stamp indicating priority. When you send a letter back, you also need an envelope to put your message in, address it correctly, and maybe specify if it's regular mail or express.</p>
 <p>In the world of web applications (specifically HTTP, the language browsers and servers speak):</p>
@@ -139,7 +139,7 @@ What Problem Do They Solve? The Need for Envelopes</h2>
 <li>The <b>Response</b> object is like the <em>outgoing mail</em> you send back. It contains the content you want to show the user (like an HTML page), the status of the request (like "OK" or "Not Found"), and any special instructions for the browser (HTTP headers, like instructions on how to cache the page).</li>
 </ul>
 <p>Flask provides easy-to-use objects to represent these two sides of the communication.</p>
-<h2><a class="anchor" id="autotoc_md1887"></a>
+<h2><a class="anchor" id="autotoc_md1888"></a>
 The Request Object: Unpacking the Incoming Mail</h2>
 <p>Inside your view functions, Flask makes a special object called <code>request</code> available. You need to import it from the <code>flask</code> library first. This object holds all the information about the incoming request that triggered your view function.</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (continued)</span></div>
@@ -168,7 +168,7 @@ The Request Object: Unpacking the Incoming Mail</h2>
 <li>Visit <code><a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a></code> in your browser.</li>
 <li>You'll see something like: "Hello! You used the GET method. Your browser is: Mozilla/5.0 (..." (your specific browser details will vary).</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1888"></a>
+<h3><a class="anchor" id="autotoc_md1889"></a>
 Getting Data from the URL (Query Parameters)</h3>
 <p>Often, data is included directly in the URL after a <code>?</code>, like <code><a href="http://127.0.0.1:5000/search?query=flask">http://127.0.0.1:5000/search?query=flask</a></code>. These are called query parameters. The <code>request</code> object provides the <code>args</code> attribute to access them.</p>
 <div class="fragment"><div class="line"><span class="comment"># hello.py (continued)</span></div>
@@ -196,7 +196,7 @@ Getting Data from the URL (Query Parameters)</h3>
 <li>Visit <code><a href="http://127.0.0.1:5000/search">http://127.0.0.1:5000/search</a></code>.</li>
 <li>You should see: "Please provide a search term using ?query=..."</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1889"></a>
+<h3><a class="anchor" id="autotoc_md1890"></a>
 Getting Data from Forms (POST Requests)</h3>
 <p>When a user submits an HTML form, the browser usually sends the data using the POST method. This data isn't in the URL; it's in the body of the request. The <code>request</code> object provides the <code>form</code> attribute to access this data.</p>
 <p>Let's create a simple login page (we won't actually log anyone in yet).</p>
@@ -244,7 +244,7 @@ Getting Data from Forms (POST Requests)</h3>
 <li>The browser will send a POST request to <code>/login</code>. The <code>process_login</code> function will handle it, and you'll see: "Attempting login for username: [your username]".</li>
 </ol>
 <p>The <code>request</code> object is your window into the data sent by the client. You'll use <code>request.args</code> for URL parameters (GET) and <code>request.form</code> for form data (POST) most often.</p>
-<h2><a class="anchor" id="autotoc_md1890"></a>
+<h2><a class="anchor" id="autotoc_md1891"></a>
 The Response Object: Crafting the Outgoing Mail</h2>
 <p>We've seen that Flask takes the return value of your view function and turns it into the HTTP response sent back to the browser.</p>
 <ul>
@@ -282,7 +282,7 @@ The Response Object: Crafting the Outgoing Mail</h2>
 <li>&lsquo;response.headers[&rsquo;...'] = '...'<code>: Allows setting custom HTTP headers. Browsers might use these for caching, security, or other purposes. Your own JavaScript code could also read them. *</code>response.set_cookie(...)<code>: A convenient way to set a cookie to be stored by the browser. *</code>response.status_code = 201<code>: Sets the HTTP status code. While</code>200<code>means "OK", other codes have specific meanings (</code>404<code>Not Found,</code>403<code>Forbidden,</code>500<code>Server Error,</code>201<code>Created,</code>302<code>Redirect, etc.). *</code>return response`: We return the response object we manually configured.</li>
 </ul>
 <p>Using <code>make_response</code> gives you fine-grained control over exactly what gets sent back to the client.</p>
-<h2><a class="anchor" id="autotoc_md1891"></a>
+<h2><a class="anchor" id="autotoc_md1892"></a>
 Under the Hood: Werkzeug and the Request/Response Cycle</h2>
 <p>Flask doesn't reinvent the wheel for handling low-level HTTP details. It uses another excellent Python library called <b>Werkzeug</b> (pronounced "verk-zoyg", German for "tool"). Flask's <code>Request</code> and <code>Response</code> objects are actually subclasses of Werkzeug's base <code>Request</code> and <code>Response</code> classes, adding some Flask-specific conveniences.</p>
 <p>Here's a simplified view of what happens when a request comes in:</p>
@@ -330,7 +330,7 @@ Under the Hood: Werkzeug and the Request/Response Cycle</h2>
 <div class="line">    WSGIServer--&gt;&gt;-Browser: Sends HTTP Response</div>
 <div class="line">    Note right of FlaskApp: Request Context is torn down</div>
 </div><!-- fragment --><p>The key takeaway is that Flask uses Werkzeug to wrap the raw incoming request data into a convenient <code>Request</code> object and helps you format your return value into a proper <code>Response</code> object to send back.</p>
-<h2><a class="anchor" id="autotoc_md1892"></a>
+<h2><a class="anchor" id="autotoc_md1893"></a>
 Conclusion</h2>
 <p>In this chapter, we explored the fundamental Request and Response objects in Flask.</p>
 <ul>

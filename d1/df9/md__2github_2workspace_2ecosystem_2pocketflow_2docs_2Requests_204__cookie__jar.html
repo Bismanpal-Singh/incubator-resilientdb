@@ -121,21 +121,21 @@ $(function(){initNavTree('d1/df9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_cookie_jar</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2939"></a>
-autotoc_md2939</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2940"></a>
+autotoc_md2940</h2>
 <p>layout: default title: "Cookie Jar" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2940"></a>
+<h2><a class="anchor" id="autotoc_md2941"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2941"></a>
+<h1><a class="anchor" id="autotoc_md2942"></a>
 Chapter 4: The Cookie Jar - Remembering Website Visits</h1>
 <p>In <a class="el" href="../../dd/d2f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_203__session.html">Chapter 3: Remembering Things - The Session Object</a>, we saw how <code>Session</code> objects are super useful for making multiple requests to the same website. A big reason they work so well is that they automatically remember <b>cookies</b> sent by the server, just like your web browser does.</p>
 <p>But <em>how</em> does a <code>Session</code> remember these cookies? Where does it keep them? Welcome to the <b>Cookie Jar</b>!</p>
-<h2><a class="anchor" id="autotoc_md2942"></a>
+<h2><a class="anchor" id="autotoc_md2943"></a>
 What's the Problem? Staying Logged In</h2>
 <p>Imagine you log in to a website. The website usually sends back a special piece of information called a <b>cookie</b>. This cookie is like a temporary ID card. When you visit other pages on that <em>same</em> website, your browser automatically shows this ID card (sends the cookie back) so the website knows you're still logged in.</p>
 <p>If you used the simple <code>requests.get()</code> function from <a class="el" href="../../d8/da9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_201__functional__api.html">Chapter 1</a> for each step, it would forget the ID card immediately after logging in. Your next request would be treated as if you were a stranger.</p>
 <p><code>Session</code> objects solve this by using a <b>Cookie Jar</b> to hold onto those ID cards (cookies) for you.</p>
-<h2><a class="anchor" id="autotoc_md2943"></a>
+<h2><a class="anchor" id="autotoc_md2944"></a>
 What are Cookies (Briefly)?</h2>
 <p>Think of cookies as little notes or name tags that websites give to your browser (or your <code>requests</code> script).</p>
 <ul>
@@ -146,7 +146,7 @@ What are Cookies (Briefly)?</h2>
 <li><b>Website:</b> "Ah, User123, I remember you. Here's the page you asked for."</li>
 </ul>
 <p>Cookies are used to remember login status, user preferences, items in a shopping cart, etc., between different page visits.</p>
-<h2><a class="anchor" id="autotoc_md2944"></a>
+<h2><a class="anchor" id="autotoc_md2945"></a>
 The Cookie Jar Analogy 🍪</h2>
 <p><code>Requests</code> uses an object called a <code>RequestsCookieJar</code> to store and manage cookies. It's very much like the cookie jar you might have in your kitchen:</p>
 <ol type="1">
@@ -155,7 +155,7 @@ The Cookie Jar Analogy 🍪</h2>
 <li><b>Sends the Right Ones Back:</b> When you make <em>another</em> request to a website using the <em>same</em> <code>Session</code>, the <code>Session</code> looks into the <code>Cookie Jar</code>, finds any cookies that belong to that website's domain, and automatically sends them back.</li>
 </ol>
 <p>This happens seamlessly when you use a <code>Session</code> object.</p>
-<h2><a class="anchor" id="autotoc_md2945"></a>
+<h2><a class="anchor" id="autotoc_md2946"></a>
 Meet <code>RequestsCookieJar</code></h2>
 <p>The specific object <code>requests</code> uses is <code>requests.cookies.RequestsCookieJar</code>. It's designed to work just like Python's standard <code>http.cookiejar.CookieJar</code> but adds some convenient features, like acting like a dictionary.</p>
 <p>Every <code>Session</code> object has its own <code>Cookie Jar</code> accessible via the <code>s.cookies</code> attribute.</p>
@@ -205,7 +205,7 @@ Meet <code>RequestsCookieJar</code></h2>
 <li>The server at <code>/cookies</code> received this header and echoed it back, confirming our cookie was sent!</li>
 </ol>
 <p>The <code>Session</code> and its <code>Cookie Jar</code> handled the persistence automatically.</p>
-<h2><a class="anchor" id="autotoc_md2946"></a>
+<h2><a class="anchor" id="autotoc_md2947"></a>
 Cookies in the Response</h2>
 <p>While the <code>Session</code> cookie jar (<code>s.cookies</code>) holds <em>all</em> cookies collected during the session's lifetime, the <a class="el" href="../../dd/d7e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_202__request______response__models.html">Request &amp; Response Models</a> also have a <code>cookies</code> attribute.</p>
 <p>The <code>response.cookies</code> attribute (also a <code>RequestsCookieJar</code>) contains <em>only</em> the cookies that were set or updated by <em>that specific response</em>. It doesn't know about cookies from previous responses in the session.</p>
@@ -240,7 +240,7 @@ Cookies in the Response</h2>
 <li><code>response_b.cookies</code> only contains <code>cookieB</code>.</li>
 <li><code>s.cookies</code> contains <em>both</em> <code>cookieA</code> and <code>cookieB</code> after the second request, because the <code>Session</code> accumulates cookies.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2947"></a>
+<h2><a class="anchor" id="autotoc_md2948"></a>
 Using the Cookie Jar Like a Dictionary</h2>
 <p>The <code>RequestsCookieJar</code> is extra friendly because you can treat it much like a Python dictionary to access or modify cookies directly.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> requests</div>
@@ -288,7 +288,7 @@ Using the Cookie Jar Like a Dictionary</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Simple access might be ambiguous or pick one arbitrarily</span></div>
 <div class="line"><span class="comment"># print(jar[&#39;pref&#39;]) # Could raise CookieConflictError or return one</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2948"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2949"></a>
 How It Works Internally</h2>
 <p>How does the <code>Session</code> manage this cookie magic?</p>
 <ol type="1">
@@ -428,7 +428,7 @@ How It Works Internally</h2>
 <div class="ttc" id="apybind__kv__service_8cpp_html_a26ae8807a2b3217bb2339bd18aaaa4e6"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#a26ae8807a2b3217bb2339bd18aaaa4e6">set</a></div><div class="ttdeci">bool set(std::string key, std::string value, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00051">pybind_kv_service.cpp:51</a></div></div>
 <div class="ttc" id="apybind__kv__service_8cpp_html_abe6524afb3a69dc9a4c314e11f96f29f"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#abe6524afb3a69dc9a4c314e11f96f29f">get</a></div><div class="ttdeci">std::string get(std::string key, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00039">pybind_kv_service.cpp:39</a></div></div>
 </div><!-- fragment --><p>The key is that <code>Session.send</code> calls <code>extract_cookies_to_jar</code> after receiving a response, and <code>PreparedRequest.prepare_cookies</code> (called via <code>Session.prepare_request</code>) calls <code>get_cookie_header</code> before sending the next one.</p>
-<h2><a class="anchor" id="autotoc_md2949"></a>
+<h2><a class="anchor" id="autotoc_md2950"></a>
 Conclusion</h2>
 <p>You've learned about the <b>Cookie Jar</b> (<code>RequestsCookieJar</code>), the mechanism <code>requests</code> (especially <code>Session</code> objects) uses to store and manage cookies. You saw:</p>
 <ul>

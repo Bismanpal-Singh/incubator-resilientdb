@@ -121,22 +121,22 @@ $(function(){initNavTree('dd/d7a/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_knowledge</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1576"></a>
-autotoc_md1576</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1577"></a>
+autotoc_md1577</h2>
 <p>layout: default title: "Knowledge" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1577"></a>
+<h2><a class="anchor" id="autotoc_md1578"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1578"></a>
+<h1><a class="anchor" id="autotoc_md1579"></a>
 Chapter 8: Knowledge - Providing External Information</h1>
 <p>In <a class="el" href="../../db/de6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_207__memory.html">Chapter 7: Memory</a>, we learned how to give our <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> the ability to remember past interactions and details using <code>Memory</code>. This helps them maintain context within a single run and potentially across runs.</p>
 <p>But what if your <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> needs access to a large body of <em>existing</em> information that isn't derived from its own conversations? Think about company documents, technical manuals, specific research papers, or a product catalog. This information exists <em>before</em> the Crew starts working. How do we give our agents access to this specific library of information?</p>
 <p>That's where <b><code>Knowledge</code></b> comes in!</p>
-<h2><a class="anchor" id="autotoc_md1579"></a>
+<h2><a class="anchor" id="autotoc_md1580"></a>
 Why Do We Need Knowledge?</h2>
 <p>Imagine you have an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> whose job is to answer customer questions about a specific product, "Widget Pro". You want this agent to <em>only</em> use the official "Widget Pro User Manual" to answer questions, not its general knowledge from the internet (which might be outdated or wrong).</p>
 <p>Without a way to provide the manual, the agent might hallucinate answers or use incorrect information. <code>Knowledge</code> allows us to load specific documents (like the user manual), process them, and make them searchable for our agents.</p>
 <p><b>Problem Solved:</b> <code>Knowledge</code> provides your <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s with access to specific, pre-defined external information sources (like documents or databases), allowing them to retrieve relevant context to enhance their understanding and task execution based on that specific information.</p>
-<h2><a class="anchor" id="autotoc_md1580"></a>
+<h2><a class="anchor" id="autotoc_md1581"></a>
 What is Knowledge?</h2>
 <p>Think of <code>Knowledge</code> as giving your <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> access to a <b>specialized, private library</b> full of specific documents or information. It consists of a few key parts:</p>
 <ol type="1">
@@ -159,7 +159,7 @@ What is Knowledge?</h2>
 <li><b>Retrieval</b>: When an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> needs information for its <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>, it queries the <code>Knowledge</code> object. This query is also embedded, and the <code>KnowledgeStorage</code> efficiently retrieves the most relevant text chunks from the original documents. These chunks are then provided to the agent as context.</li>
 </ol>
 <p>In short: <code>Knowledge</code> = Specific Info Sources + Processing/Embedding + Vector Storage + Retrieval.</p>
-<h2><a class="anchor" id="autotoc_md1581"></a>
+<h2><a class="anchor" id="autotoc_md1582"></a>
 Using Knowledge in Your Crew</h2>
 <p>Let's give our 'Product Support Agent' access to a hypothetical "widget_pro_manual.txt" file.</p>
 <p><b>1. Prepare Your Knowledge Source File:</b></p>
@@ -246,7 +246,7 @@ Using Knowledge in Your Crew</h2>
 <li>The final <code>result</code> will be the step-by-step reset instructions derived from the manual.</li>
 </ol>
 <p><em>(Alternatively, you can assign <code>Knowledge</code> at the <code>Crew</code> level using the <code>knowledge</code> parameter, making it available to all agents in the crew.)</em></p>
-<h2><a class="anchor" id="autotoc_md1582"></a>
+<h2><a class="anchor" id="autotoc_md1583"></a>
 How Knowledge Retrieval Works Internally</h2>
 <p>When an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> with assigned <code>Knowledge</code> executes a <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>:</p>
 <ol type="1">
@@ -278,7 +278,7 @@ How Knowledge Retrieval Works Internally</h2>
 <div class="line">    A-&gt;&gt;LLM: Send augmented prompt</div>
 <div class="line">    LLM--&gt;&gt;A: Generate answer based on task + manual excerpts</div>
 <div class="line">    A-&gt;&gt;A: Final Answer (Steps from manual)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1583"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1584"></a>
 Diving into the Code (High Level)</h2>
 <ul>
 <li><p class="startli"><b><code>crewai/knowledge/knowledge.py</code></b>:</p><ul>
@@ -289,15 +289,15 @@ Diving into the Code (High Level)</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1584"></a>
+<h1><a class="anchor" id="autotoc_md1585"></a>
 Simplified view from crewai/knowledge/knowledge.py</h1>
 <p>class Knowledge(BaseModel): sources: List[BaseKnowledgeSource] = Field(default_factory=list) storage: Optional[KnowledgeStorage] = Field(default=None) embedder: Optional[Dict[str, Any]] = None collection_name: Optional[str] = None</p>
 <p>def <b>init</b>(self, collection_name: str, sources: List[BaseKnowledgeSource], ...): </p>
-<h1><a class="anchor" id="autotoc_md1585"></a>
+<h1><a class="anchor" id="autotoc_md1586"></a>
 ... setup storage (e.g., KnowledgeStorage(...)) ...</h1>
 <p>self.sources = sources self.storage.initialize_knowledge_storage() self._add_sources() # Tell sources to load/chunk/embed/save</p>
 <p>def query(self, query: List[str], limit: int = 3) -&gt; List[Dict[str, Any]]: if self.storage is None: raise ValueError("Storage not initialized.") </p>
-<h1><a class="anchor" id="autotoc_md1586"></a>
+<h1><a class="anchor" id="autotoc_md1587"></a>
 Delegate search to the storage object</h1>
 <p>return self.storage.search(query, limit)</p>
 <p>def _add_sources(self): for source in self.sources: source.storage = self.storage # Give source access to storage source.add() # Source loads, chunks, embeds, and saves ```</p>
@@ -323,36 +323,36 @@ Delegate search to the storage object</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1587"></a>
+<h1><a class="anchor" id="autotoc_md1588"></a>
 Simplified view from crewai/agent.py</h1>
 <p>class Agent(BaseAgent): knowledge: Optional[Knowledge] = Field(default=None, ...) </p>
-<h1><a class="anchor" id="autotoc_md1588"></a>
+<h1><a class="anchor" id="autotoc_md1589"></a>
 ... other fields ...</h1>
 <p>def execute_task(self, task: Task, context: Optional[str] = None, ...) -&gt; str: task_prompt = task.prompt() </p>
-<h1><a class="anchor" id="autotoc_md1589"></a>
-... add memory context if applicable ...</h1>
 <h1><a class="anchor" id="autotoc_md1590"></a>
+... add memory context if applicable ...</h1>
+<h1><a class="anchor" id="autotoc_md1591"></a>
 === KNOWLEDGE RETRIEVAL ===</h1>
 <p>if self.knowledge: </p>
-<h1><a class="anchor" id="autotoc_md1591"></a>
+<h1><a class="anchor" id="autotoc_md1592"></a>
 Query the knowledge base using the task prompt</h1>
 <p>agent_knowledge_snippets = self.knowledge.query([task_prompt]) # Or task.description if agent_knowledge_snippets: </p>
-<h1><a class="anchor" id="autotoc_md1592"></a>
+<h1><a class="anchor" id="autotoc_md1593"></a>
 Format the snippets into context string</h1>
 <p>agent_knowledge_context = extract_knowledge_context(agent_knowledge_snippets) if agent_knowledge_context: </p>
-<h1><a class="anchor" id="autotoc_md1593"></a>
+<h1><a class="anchor" id="autotoc_md1594"></a>
 Add knowledge context to the prompt</h1>
 <p>task_prompt += agent_knowledge_context </p>
-<h1><a class="anchor" id="autotoc_md1594"></a>
-===========================</h1>
 <h1><a class="anchor" id="autotoc_md1595"></a>
-... add crew knowledge context if applicable ...</h1>
+===========================</h1>
 <h1><a class="anchor" id="autotoc_md1596"></a>
-... prepare tools, create agent_executor ...</h1>
+... add crew knowledge context if applicable ...</h1>
 <h1><a class="anchor" id="autotoc_md1597"></a>
+... prepare tools, create agent_executor ...</h1>
+<h1><a class="anchor" id="autotoc_md1598"></a>
 Call the LLM via agent_executor with the augmented task_prompt</h1>
 <p>result = self.agent_executor.invoke({"input": task_prompt, ...})["output"] return result ```</p>
-<h2><a class="anchor" id="autotoc_md1598"></a>
+<h2><a class="anchor" id="autotoc_md1599"></a>
 Conclusion</h2>
 <p>You've now learned about <b><code>Knowledge</code></b> in CrewAI! It's the mechanism for providing your agents with access to specific, pre-existing external information sources like documents or websites. By defining <code>KnowledgeSource</code>s, creating a <code>Knowledge</code> object, and assigning it to an <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> or <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>, you enable your agents to retrieve relevant context from these sources using vector search. This makes their responses more accurate, grounded, and aligned with the specific information you provide, distinct from the general interaction history managed by <a class="el" href="../../db/de6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_207__memory.html">Memory</a>.</p>
 <p>This concludes our introductory tour of the core concepts in CrewAI! You've learned about managing the team (<a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>), defining specialized workers (<a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>), assigning work (<a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>), equipping agents with abilities (<a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Tool</a>), setting the workflow (<a class="el" href="../../de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_205__process.html">Process</a>), powering the agent's thinking (<a class="el" href="../../da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_206__llm.html">LLM</a>), giving them recall (<a class="el" href="../../db/de6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_207__memory.html">Memory</a>), and providing external information (<a class="el" href="../../dd/d7a/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_208__knowledge.html">Knowledge</a>).</p>

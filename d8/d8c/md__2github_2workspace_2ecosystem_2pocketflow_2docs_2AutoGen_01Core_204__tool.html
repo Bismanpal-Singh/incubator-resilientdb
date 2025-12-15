@@ -121,22 +121,22 @@ $(function(){initNavTree('d8/d8c/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_tool</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md729"></a>
-autotoc_md729</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md730"></a>
+autotoc_md730</h2>
 <p>layout: default title: "Tool" parent: "AutoGen Core" </p>
-<h2><a class="anchor" id="autotoc_md730"></a>
+<h2><a class="anchor" id="autotoc_md731"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md731"></a>
+<h1><a class="anchor" id="autotoc_md732"></a>
 Chapter 4: Tool - Giving Agents Specific Capabilities</h1>
 <p>In the previous chapters, we learned about Agents as workers (<a class="el" href="../../d6/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_201__agent.html">Chapter 1</a>), how they can communicate directly or using announcements (<a class="el" href="../../d8/ddc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_202__messaging__system____topic______subscription__.html">Chapter 2</a>), and the <code>AgentRuntime</code> that manages them (<a class="el" href="../../db/ded/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_203__agentruntime.html">Chapter 3</a>).</p>
 <p>Agents can process messages and coordinate, but what if an agent needs to perform a very specific action, like looking up information online, running a piece of code, accessing a database, or even just finding out the current date? They need specialized <em>capabilities</em>.</p>
 <p>This is where the concept of a <b>Tool</b> comes in.</p>
-<h2><a class="anchor" id="autotoc_md732"></a>
+<h2><a class="anchor" id="autotoc_md733"></a>
 Motivation: Agents Need Skills!</h2>
 <p>Imagine our <code>Writer</code> agent from before. It receives facts and writes a draft. Now, let's say we want the <code>Writer</code> (or perhaps a smarter <code>Assistant</code> agent helping it) to always include the current date in the blog post title.</p>
 <p>How does the agent get the current date? It doesn't inherently know it. It needs a specific <em>skill</em> or <em>tool</em> for that.</p>
 <p>A <code>Tool</code> in AutoGen Core represents exactly this: a specific, well-defined capability that an Agent can use. Think of it like giving an employee (Agent) a specialized piece of equipment (Tool), like a calculator, a web browser, or a calendar lookup program.</p>
-<h2><a class="anchor" id="autotoc_md733"></a>
+<h2><a class="anchor" id="autotoc_md734"></a>
 Key Concepts: Understanding Tools</h2>
 <p>Let's break down what defines a Tool:</p>
 <ol type="1">
@@ -155,12 +155,12 @@ Key Concepts: Understanding Tools</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md734"></a>
+<h1><a class="anchor" id="autotoc_md735"></a>
 From: tools/_base.py (Simplified Concept)</h1>
 <p>from typing import TypedDict, Dict, Any, Sequence, NotRequired</p>
 <p>class ParametersSchema(TypedDict): type: str # Usually "object" properties: Dict[str, Any] # Defines input fields and their types required: NotRequired[Sequence[str]] # List of required field names</p>
 <p>class ToolSchema(TypedDict): name: str description: NotRequired[str] parameters: NotRequired[ParametersSchema] </p>
-<h1><a class="anchor" id="autotoc_md735"></a>
+<h1><a class="anchor" id="autotoc_md736"></a>
 'strict' flag also possible (Chapter 5 related)</h1>
 <p>``<code> This schema allows an LLM to understand: "Ah, there's a tool called&lt;/tt&gt;get_current_date` that takes no inputs and gives me the current date. I should use that now!"</code></p>
 <p><code></p><ol type="1">
@@ -168,7 +168,7 @@ From: tools/_base.py (Simplified Concept)</h1>
 </ol>
 <p></code></p>
 <p><code></code></p>
-<h2><a class="anchor" id="autotoc_md736"></a>
+<h2><a class="anchor" id="autotoc_md737"></a>
 <code>Use Case Example: Adding a <code>get_current_date</code> Tool</code></h2>
 <p><code></code></p>
 <p><code>Let's equip an agent with the ability to find the current date.</code></p>
@@ -263,7 +263,7 @@ From: tools/_base.py (Simplified Concept)</h1>
 <div class="line">ToolAgent produced result: FunctionExecutionResult(content=&#39;2023-10-27&#39;, call_id=&#39;call_date_001&#39;, is_error=False, name=&#39;get_current_date&#39;) # Date will be current date</div>
 </div><!-- fragment --><p> The <code>ToolAgent</code> received the <code>FunctionCall</code>, found the <code>date_tool</code> in its list, executed the underlying <code>get_current_date</code> function, and packaged the result (the date string) into a <code>FunctionExecutionResult</code> message. This result message can then be sent back to the agent that originally requested the tool use.</code></p>
 <p><code></code></p>
-<h2><a class="anchor" id="autotoc_md737"></a>
+<h2><a class="anchor" id="autotoc_md738"></a>
 <code>Under the Hood: How Tool Execution Works</code></h2>
 <p><code></code></p>
 <p><code>Let's visualize the typical flow when an LLM agent decides to use a tool managed by a <code>ToolAgent</code>.</code></p>
@@ -305,52 +305,52 @@ From: tools/_base.py (Simplified Concept)</h1>
 <li><b><code>FunctionTool</code> (<code>tools/_function_tool.py</code>):</b> Inherits from <code>BaseTool</code>. Its magic lies in automatically creating the <code>args_type</code> Pydantic model by inspecting the wrapped Python function's signature (<code>args_base_model_from_signature</code>). Its <code>run</code> method handles calling the original sync or async Python function. ```python </li>
 </ul>
 <p></code></p>
-<h1><a class="anchor" id="autotoc_md738"></a>
+<h1><a class="anchor" id="autotoc_md739"></a>
 <code>Inside FunctionTool (Simplified Concept)</code></h1>
 <p><code> class FunctionTool(BaseTool[BaseModel, BaseModel]): def <b>init</b>(self, func, description, ...): self._func = func self._signature = get_typed_signature(func) </code></p>
-<h1><a class="anchor" id="autotoc_md739"></a>
+<h1><a class="anchor" id="autotoc_md740"></a>
 <code>Automatically create Pydantic model for arguments</code></h1>
 <p><code> args_model = args_base_model_from_signature(...) </code></p>
-<h1><a class="anchor" id="autotoc_md740"></a>
+<h1><a class="anchor" id="autotoc_md741"></a>
 <code>Get return type from signature</code></h1>
 <p><code> return_type = self._signature.return_annotation super().__init__(args_model, return_type, ...)</code></p>
 <p><code> async def run(self, args: BaseModel, ...): </code></p>
-<h1><a class="anchor" id="autotoc_md741"></a>
+<h1><a class="anchor" id="autotoc_md742"></a>
 <code>Extract arguments from the 'args' model</code></h1>
 <p><code> kwargs = args.model_dump() </code></p>
-<h1><a class="anchor" id="autotoc_md742"></a>
+<h1><a class="anchor" id="autotoc_md743"></a>
 <code>Call the original Python function (sync or async)</code></h1>
 <p><code> result = await self._call_underlying_func(&lt;strong&gt;kwargs) return result # Must match the expected return_type ``<code></p><ul>
 <li>**</li>
 </ul>
 <p></code>ToolAgent<code>(</code>tool_agent/_tool_agent.py`): A specialized <code>RoutedAgent</code>. It registers a handler specifically for <code>FunctionCall</code> messages. ```python </code></p>
-<h1><a class="anchor" id="autotoc_md743"></a>
+<h1><a class="anchor" id="autotoc_md744"></a>
 <code>Inside ToolAgent (Simplified Concept)</code></h1>
 <p><code> class ToolAgent(RoutedAgent): def <b>init</b>(self, ..., tools: List[Tool]): super().__init__(...) self._tools = {tool.name: tool for tool in tools} # Store tools by name</code></p>
 <p><code> @message_handler # Registers this for FunctionCall messages async def handle_function_call(self, message: FunctionCall, ctx: MessageContext): </code></p>
-<h1><a class="anchor" id="autotoc_md744"></a>
+<h1><a class="anchor" id="autotoc_md745"></a>
 <code>Find the tool by name</code></h1>
 <p><code> tool = self._tools.get(message.name) if tool is None: </code></p>
-<h1><a class="anchor" id="autotoc_md745"></a>
+<h1><a class="anchor" id="autotoc_md746"></a>
 <code>Handle error: Tool not found</code></h1>
 <p><code> raise ToolNotFoundException(...) try: </code></p>
-<h1><a class="anchor" id="autotoc_md746"></a>
+<h1><a class="anchor" id="autotoc_md747"></a>
 <code>Parse arguments string into a dictionary</code></h1>
 <p><code> arguments = json.loads(message.arguments) </code></p>
-<h1><a class="anchor" id="autotoc_md747"></a>
+<h1><a class="anchor" id="autotoc_md748"></a>
 <code>Execute the tool's run_json method</code></h1>
 <p><code> result_obj = await tool.run_json(args=arguments, ...) </code></p>
-<h1><a class="anchor" id="autotoc_md748"></a>
+<h1><a class="anchor" id="autotoc_md749"></a>
 <code>Convert result object back to string if needed</code></h1>
 <p><code> result_str = tool.return_value_as_string(result_obj) </code></p>
-<h1><a class="anchor" id="autotoc_md749"></a>
+<h1><a class="anchor" id="autotoc_md750"></a>
 <code>Create the success result message</code></h1>
 <p><code> return FunctionExecutionResult(content=result_str, ...) except Exception as e: </code></p>
-<h1><a class="anchor" id="autotoc_md750"></a>
+<h1><a class="anchor" id="autotoc_md751"></a>
 <code>Handle execution errors</code></h1>
 <p><code> return FunctionExecutionResult(content=f"Error: {e}", is_error=True, ...) ``` Its core logic is: find tool -&gt; parse args -&gt; run tool -&gt; return result/error.</code></p>
 <p><code></code></p>
-<h2><a class="anchor" id="autotoc_md751"></a>
+<h2><a class="anchor" id="autotoc_md752"></a>
 <code>Next Steps</code></h2>
 <p><code></code></p>
 <p><code>You've learned how <b>Tools</b> provide specific capabilities to Agents, defined by a <b>Schema</b> that LLMs can understand. We saw how <code>FunctionTool</code> makes it easy to wrap existing Python functions and how <code>ToolAgent</code> acts as the executor for these tools.</code></p>

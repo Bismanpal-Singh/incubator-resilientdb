@@ -121,16 +121,16 @@ $(function(){initNavTree('d8/d4c/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_checkpointer___basecheckpointsaver__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2208"></a>
-autotoc_md2208</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2209"></a>
+autotoc_md2209</h2>
 <p>layout: default title: "Checkpointer (BaseCheckpointSaver)" parent: "LangGraph" </p>
-<h2><a class="anchor" id="autotoc_md2209"></a>
+<h2><a class="anchor" id="autotoc_md2210"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md2210"></a>
+<h1><a class="anchor" id="autotoc_md2211"></a>
 Chapter 6: Checkpointer (<code>BaseCheckpointSaver</code>) - Saving Your Progress</h1>
 <p>In <a class="el" href="../../de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_205__pregel__execution__engine.html">Chapter 5: Pregel Execution Engine</a>, we saw how the engine runs our graph step-by-step. But what happens if a graph takes hours to run, or if it needs to pause and wait for a human? If the program crashes or we need to stop it, do we lose all the progress?</p>
 <p>That's where <b>Checkpointers</b> come to the rescue!</p>
-<h2><a class="anchor" id="autotoc_md2211"></a>
+<h2><a class="anchor" id="autotoc_md2212"></a>
 What Problem Do Checkpointers Solve?</h2>
 <p>Imagine you're playing a long video game. You wouldn't want to start from the very beginning every time you stop playing, right? Games have save points or checkpoints that record your progress.</p>
 <p>LangGraph's <b>Checkpointer</b> does the same thing for your graph execution. It automatically saves the graph's state at certain points, usually after each step completed by the <a class="el" href="../../de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_205__pregel__execution__engine.html">Pregel Execution Engine</a>.</p>
@@ -141,7 +141,7 @@ What Problem Do Checkpointers Solve?</h2>
 <li><b>Human-in-the-Loop (HITL):</b> As we saw with <code>Interrupt</code> in <a class="el" href="../../d0/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_204__control__flow__primitives___bda35fdc89636f8ab61738c1940513a5.html">Chapter 4: Control Flow Primitives</a>, pausing the graph requires saving its state so it can be perfectly restored when the human provides input. Checkpointers are essential for this.</li>
 </ol>
 <p><b>Analogy:</b> Think of a checkpointer as an automatic "Save" button for your graph's progress. It takes snapshots of the shared "whiteboard" (<a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channels</a>) so you can always pick up where you left off.</p>
-<h2><a class="anchor" id="autotoc_md2212"></a>
+<h2><a class="anchor" id="autotoc_md2213"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b>What is Saved?</b> The checkpointer saves the current value and version of every <a class="el" href="../../df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_203__channels.html">Channel</a> in your graph's state. It also keeps track of which step the graph was on and any pending tasks (like those created by <code>Send</code>).</li>
@@ -154,7 +154,7 @@ Key Concepts</h2>
 </li>
 <li><b><code>thread_id</code> (The Save Slot Name):</b> To save and load progress correctly, you need a way to identify <em>which</em> specific run of the graph you want to work with. Think of this like naming your save file in a game. In LangGraph, this identifier is called the <code>thread_id</code>. You provide it in the <code>config</code> when you run the graph. Each unique <code>thread_id</code> represents an independent "conversation" or execution history.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2213"></a>
+<h2><a class="anchor" id="autotoc_md2214"></a>
 How to Use a Checkpointer</h2>
 <p>Using a checkpointer is straightforward. You just need to tell LangGraph <em>which</em> checkpointer to use when you compile your graph.</p>
 <p><b>Step 1: Import a Checkpointer</b></p>
@@ -270,7 +270,7 @@ How to Use a Checkpointer</h2>
 <div class="line">     print(<span class="stringliteral">&quot;Graph resumed and finished!&quot;</span>)</div>
 </div><!-- fragment --><p>When <code>interrupt()</code> was called inside the <code>request_approval</code> node, the <a class="el" href="../../de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_205__pregel__execution__engine.html">Pregel Execution Engine</a> automatically used the <code>memory_saver_hitl</code> checkpointer to save the <em>exact state</em> of the graph at that moment (including the plan). When we called <code>stream</code> again with <code>Command(resume=...)</code> and the <em>same</em> <code>config_hitl</code>, the engine loaded that saved state using the checkpointer, allowing the graph to continue exactly where it left off, now with the human's feedback.</p>
 <p><b>Without a checkpointer, <code>Interrupt</code> cannot work.</b></p>
-<h2><a class="anchor" id="autotoc_md2214"></a>
+<h2><a class="anchor" id="autotoc_md2215"></a>
 How Checkpointing Works Internally</h2>
 <p>What happens behind the scenes when a checkpointer is configured?</p>
 <p><b>Saving:</b></p>
@@ -316,7 +316,7 @@ How Checkpointing Works Internally</h2>
 <div class="line">    Engine-&gt;&gt;Engine: Restore channel states from checkpoint</div>
 <div class="line">    Engine-&gt;&gt;Engine: Prepare tasks for Step N+1</div>
 <div class="line">    Engine-&gt;&gt;App: Continue execution...</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2215"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2216"></a>
 A Peek at the Code (<code>checkpoint/base.py</code>, <code>checkpoint/memory.py</code>, <code>pregel/loop.py</code>)</h2>
 <p>Let's look at the core components:</p>
 <ul>
@@ -324,29 +324,29 @@ A Peek at the Code (<code>checkpoint/base.py</code>, <code>checkpoint/memory.py<
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2216"></a>
+<h1><a class="anchor" id="autotoc_md2217"></a>
 checkpoint/base.py (Highly Simplified)</h1>
 <p>from abc import ABC, abstractmethod from typing import Any, Mapping, Optional, Sequence, Tuple, TypedDict</p>
-<h1><a class="anchor" id="autotoc_md2217"></a>
+<h1><a class="anchor" id="autotoc_md2218"></a>
 Represents a saved checkpoint</h1>
 <p>class Checkpoint(TypedDict): channel_values: Mapping[str, Any] # Saved state of channels channel_versions: Mapping[str, int] # Internal versions versions_seen: Mapping[str, Mapping[str, int]] # Tracking for node execution </p>
-<h1><a class="anchor" id="autotoc_md2218"></a>
-... other metadata like v, ts, id, pending_sends ...</h1>
 <h1><a class="anchor" id="autotoc_md2219"></a>
+... other metadata like v, ts, id, pending_sends ...</h1>
+<h1><a class="anchor" id="autotoc_md2220"></a>
 Represents the checkpoint tuple retrieved from storage</h1>
 <p>class CheckpointTuple(NamedTuple): config: dict # The config used (includes thread_id) checkpoint: Checkpoint metadata: dict </p>
-<h1><a class="anchor" id="autotoc_md2220"></a>
+<h1><a class="anchor" id="autotoc_md2221"></a>
 ... other fields like parent_config, pending_writes ...</h1>
 <p>class BaseCheckpointSaver(ABC): </p>
-<h1><a class="anchor" id="autotoc_md2221"></a>
+<h1><a class="anchor" id="autotoc_md2222"></a>
 &mdash; Sync Methods &mdash;</h1>
 <p>@abstractmethod def get_tuple(self, config: dict) -&gt; Optional[CheckpointTuple]: """Load the checkpoint tuple for the given config.""" ...</p>
 <p>@abstractmethod def put(self, config: dict, checkpoint: Checkpoint, metadata: dict) -&gt; dict: """Save a checkpoint.""" ...</p>
-<h1><a class="anchor" id="autotoc_md2222"></a>
+<h1><a class="anchor" id="autotoc_md2223"></a>
 &mdash; Async Methods (similar structure) &mdash;</h1>
 <p>@abstractmethod async def aget_tuple(self, config: dict) -&gt; Optional[CheckpointTuple]: """Async load the checkpoint tuple.""" ...</p>
 <p>@abstractmethod async def aput(self, config: dict, checkpoint: Checkpoint, metadata: dict) -&gt; dict: """Async save a checkpoint.""" ...</p>
-<h1><a class="anchor" id="autotoc_md2223"></a>
+<h1><a class="anchor" id="autotoc_md2224"></a>
 &mdash; Other methods (list, put_writes) omitted for brevity &mdash;</h1>
 <p>``<code> The key methods are</code>get_tuple&lt;tt&gt;(to load) andput&lt;tt&gt;(to save), along with their async counterparts (aget_tuple<code>,</code>aput<code>). Any specific checkpointer (like</code>MemorySaver<code>,</code>SqliteSaver`) must provide concrete implementations for these methods.</p>
 <ul>
@@ -354,28 +354,28 @@ Represents the checkpoint tuple retrieved from storage</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2224"></a>
+<h1><a class="anchor" id="autotoc_md2225"></a>
 checkpoint/memory.py (Highly Simplified)</h1>
 <p>import threading from collections import defaultdict</p>
 <p>class MemorySaver(BaseCheckpointSaver): def <b>init</b>(self): </p>
-<h1><a class="anchor" id="autotoc_md2225"></a>
-Use a dictionary to store checkpoints in RAM</h1>
 <h1><a class="anchor" id="autotoc_md2226"></a>
+Use a dictionary to store checkpoints in RAM</h1>
+<h1><a class="anchor" id="autotoc_md2227"></a>
 Key: thread_id, Value: List of CheckpointTuples</h1>
 <p>self._checkpoints: defaultdict[str, list[CheckpointTuple]] = defaultdict(list) self._lock = threading.RLock() # To handle multiple threads safely</p>
 <p>def get_tuple(self, config: dict) -&gt; Optional[CheckpointTuple]: thread_id = config["configurable"]["thread_id"] with self._lock: if checkpoints := self._checkpoints.get(thread_id): </p>
-<h1><a class="anchor" id="autotoc_md2227"></a>
+<h1><a class="anchor" id="autotoc_md2228"></a>
 Return the latest checkpoint for this thread_id</h1>
 <p>return checkpoints[-1] return None</p>
 <p>def put(self, config: dict, checkpoint: Checkpoint, metadata: dict) -&gt; dict: thread_id = config["configurable"]["thread_id"] with self._lock: </p>
-<h1><a class="anchor" id="autotoc_md2228"></a>
+<h1><a class="anchor" id="autotoc_md2229"></a>
 Append the new checkpoint to the list for this thread_id</h1>
 <p>self._checkpoints[thread_id].append(
                     CheckpointTuple(config, checkpoint, metadata)
                 ) return {"configurable": {"thread_id": thread_id}}</p>
-<h1><a class="anchor" id="autotoc_md2229"></a>
-... async methods (aget_tuple, aput) are similar using the same dict ...</h1>
 <h1><a class="anchor" id="autotoc_md2230"></a>
+... async methods (aget_tuple, aput) are similar using the same dict ...</h1>
+<h1><a class="anchor" id="autotoc_md2231"></a>
 ... list method iterates through the dictionary ...</h1>
 <p>``<code> As you can see,</code>MemorySaver<code>just uses a standard Python dictionary (</code>self._checkpoints<code>) to store the</code>CheckpointTuple<code>for each</code>thread_id`. This is simple but not persistent.</p>
 <ul>
@@ -383,47 +383,47 @@ Append the new checkpoint to the list for this thread_id</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2231"></a>
+<h1><a class="anchor" id="autotoc_md2232"></a>
 pregel/loop.py (Conceptual Snippets)</h1>
 <p>class PregelLoop: # Base class for Sync/Async loops def <b>init</b>(self, ..., checkpointer: Optional[BaseCheckpointSaver], ...): self.checkpointer = checkpointer </p>
-<h1><a class="anchor" id="autotoc_md2232"></a>
+<h1><a class="anchor" id="autotoc_md2233"></a>
 ... other init ...</h1>
 <p>def _put_checkpoint(self, metadata: CheckpointMetadata) -&gt; None: </p>
-<h1><a class="anchor" id="autotoc_md2233"></a>
+<h1><a class="anchor" id="autotoc_md2234"></a>
 Called by the loop after a step or input processing</h1>
 <p>if self.checkpointer: </p>
-<h1><a class="anchor" id="autotoc_md2234"></a>
+<h1><a class="anchor" id="autotoc_md2235"></a>
 1. Create the Checkpoint object from current channels/state</h1>
 <p>checkpoint_data = create_checkpoint(self.checkpoint, self.channels, ...)</p>
-<h1><a class="anchor" id="autotoc_md2235"></a>
-2. Call the checkpointer's put method (sync or async)</h1>
 <h1><a class="anchor" id="autotoc_md2236"></a>
+2. Call the checkpointer's put method (sync or async)</h1>
+<h1><a class="anchor" id="autotoc_md2237"></a>
 (Uses self.submit to potentially run in background)</h1>
 <p>self.submit(self.checkpointer.put, self.checkpoint_config, checkpoint_data, metadata)</p>
-<h1><a class="anchor" id="autotoc_md2237"></a>
+<h1><a class="anchor" id="autotoc_md2238"></a>
 3. Update internal config with the new checkpoint ID</h1>
 <p>self.checkpoint_config = {"configurable": {"thread_id": ..., "checkpoint_id": checkpoint_data["id"]}}</p>
 <p>def <b>enter</b>(self): # Or <b>aenter</b> for async </p>
-<h1><a class="anchor" id="autotoc_md2238"></a>
+<h1><a class="anchor" id="autotoc_md2239"></a>
 Called when the loop starts</h1>
 <p>if self.checkpointer: </p>
-<h1><a class="anchor" id="autotoc_md2239"></a>
+<h1><a class="anchor" id="autotoc_md2240"></a>
 1. Try to load an existing checkpoint tuple</h1>
 <p>saved = self.checkpointer.get_tuple(self.checkpoint_config) else: saved = None</p>
 <p>if saved: </p>
-<h1><a class="anchor" id="autotoc_md2240"></a>
+<h1><a class="anchor" id="autotoc_md2241"></a>
 2. Restore state from the loaded checkpoint</h1>
 <p>self.checkpoint = saved.checkpoint self.checkpoint_config = saved.config </p>
-<h1><a class="anchor" id="autotoc_md2241"></a>
+<h1><a class="anchor" id="autotoc_md2242"></a>
 ... restore channels from saved.checkpoint['channel_values'] ...</h1>
 <p>else: </p>
-<h1><a class="anchor" id="autotoc_md2242"></a>
+<h1><a class="anchor" id="autotoc_md2243"></a>
 Initialize with an empty checkpoint</h1>
 <p>self.checkpoint = empty_checkpoint()</p>
-<h1><a class="anchor" id="autotoc_md2243"></a>
+<h1><a class="anchor" id="autotoc_md2244"></a>
 ... setup channels based on restored or empty checkpoint ...</h1>
 <p>return self ``<code> The</code>PregelLoop<code>uses the checkpointer's</code>get_tuple<code>method when it starts (in</code>__enter__<code>or</code>__aenter__<code>) to load any existing state. It uses the</code>put<code>method (inside</code>_put_checkpoint`) during execution to save progress.</p>
-<h2><a class="anchor" id="autotoc_md2244"></a>
+<h2><a class="anchor" id="autotoc_md2245"></a>
 Conclusion</h2>
 <p>You've learned about <b>Checkpointers (<code>BaseCheckpointSaver</code>)</b>, the mechanism that gives your LangGraph applications memory and resilience.</p>
 <ul>

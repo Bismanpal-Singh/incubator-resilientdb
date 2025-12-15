@@ -4,5 +4,6 @@ var classResDBKVClient =
     [ "Get", "d7/de4/classResDBKVClient.html#ac044a0544987a55113176a29775045c9", null ],
     [ "GetAllValues", "d7/de4/classResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65", null ],
     [ "GetRange", "d7/de4/classResDBKVClient.html#a8d047515fb969dba17dca34ab1894725", null ],
-    [ "Set", "d7/de4/classResDBKVClient.html#a03b1a9dfd82967cc4950317c361ce346", null ]
+    [ "Set", "d7/de4/classResDBKVClient.html#a03b1a9dfd82967cc4950317c361ce346", null ],
+    [ "SetWithSeq", "d7/de4/classResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3", null ]
 ];

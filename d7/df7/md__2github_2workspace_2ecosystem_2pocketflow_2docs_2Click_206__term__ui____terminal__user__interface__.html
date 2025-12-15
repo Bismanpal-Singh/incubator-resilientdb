@@ -121,12 +121,12 @@ $(function(){initNavTree('d7/df7/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_term_ui__terminal_user_interface_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1251"></a>
-autotoc_md1251</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1252"></a>
+autotoc_md1252</h2>
 <p>layout: default title: "Term UI (Terminal User Interface)" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1252"></a>
+<h2><a class="anchor" id="autotoc_md1253"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1253"></a>
+<h1><a class="anchor" id="autotoc_md1254"></a>
 Chapter 6: Term UI (Terminal User Interface)</h1>
 <p>Welcome back! In <a class="el" href="../../d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_205__context.html">Chapter 5: Context</a>, we learned how Click uses the <code>Context</code> object (<code>ctx</code>) to manage the state of a command while it's running, allowing us to share information and call other commands.</p>
 <p>So far, our commands have mostly just printed simple text. But what if we want to make our command-line tools more interactive and user-friendly? How can we:</p>
@@ -137,7 +137,7 @@ Chapter 6: Term UI (Terminal User Interface)</h1>
 <li>Make our output more visually appealing with colors or styles (like making errors red)?</li>
 </ul>
 <p>This is where Click's <b>Terminal User Interface (Term UI)</b> functions come in handy. They are Click's toolkit for talking <em>back and forth</em> with the user through the terminal.</p>
-<h2><a class="anchor" id="autotoc_md1254"></a>
+<h2><a class="anchor" id="autotoc_md1255"></a>
 Making Our Tools Talk: The Need for Term UI</h2>
 <p>Imagine you're building a tool that processes a large data file. A purely silent tool isn't very helpful. A better tool might:</p>
 <ol type="1">
@@ -148,7 +148,7 @@ Making Our Tools Talk: The Need for Term UI</h2>
 </ol>
 <p>Doing all this reliably across different operating systems (like Linux, macOS, and Windows) can be tricky. For example, getting colored text to work correctly on Windows requires special handling.</p>
 <p>Click's Term UI functions wrap up these common interactive tasks into easy-to-use functions that work consistently everywhere. Let's explore some of the most useful ones!</p>
-<h2><a class="anchor" id="autotoc_md1255"></a>
+<h2><a class="anchor" id="autotoc_md1256"></a>
 Printing with <code>click.echo()</code></h2>
 <p>We've seen <code>print()</code> in Python, but Click provides its own version: <code>click.echo()</code>. Why use it?</p>
 <ul>
@@ -175,7 +175,7 @@ Printing with <code>click.echo()</code></h2>
 <div class="line">Hello from Click!</div>
 <div class="line">Oops, something went wrong!  # (This line goes to stderr)</div>
 </div><!-- fragment --><p>Simple! For most printing in Click apps, <code>click.echo()</code> is preferred over <code>print()</code>.</p>
-<h2><a class="anchor" id="autotoc_md1256"></a>
+<h2><a class="anchor" id="autotoc_md1257"></a>
 Adding Style: <code>click.style()</code> and <code>click.secho()</code></h2>
 <p>Want to make your output stand out? Click makes it easy to add colors and styles (like bold or underline) to your text.</p>
 <ul>
@@ -203,7 +203,7 @@ Adding Style: <code>click.style()</code> and <code>click.secho()</code></h2>
 <div class="line"># Operation successful!  (in bold green)</div>
 <div class="line"># Critical error!        (in underlined red, sent to stderr)</div>
 </div><!-- fragment --><p>Click supports various colors (&lsquo;'red&rsquo;<code>,</code>'green'<code>,</code>'blue'<code>, etc.) and styles (</code>bold<code>,</code>underline<code>,</code>blink<code>,</code>reverse`). This makes your CLI output much more informative at a glance!</p>
-<h2><a class="anchor" id="autotoc_md1257"></a>
+<h2><a class="anchor" id="autotoc_md1258"></a>
 Getting User Input: <code>click.prompt()</code></h2>
 <p>Sometimes you need to ask the user for information. <code>click.prompt()</code> is designed for this. It shows a message and waits for the user to type something and press Enter.</p>
 <div class="fragment"><div class="line"><span class="comment"># prompt_example.py</span></div>
@@ -234,7 +234,7 @@ Getting User Input: <code>click.prompt()</code></h2>
 <div class="line">Enter your age: 30</div>
 <div class="line">You are 30 years old.</div>
 </div><!-- fragment --><p>If you enter something that can't be converted to the <code>type</code> (like "abc" for age), <code>click.prompt</code> will automatically show an error and ask again! It can also hide input for passwords (<code>hide_input=True</code>).</p>
-<h2><a class="anchor" id="autotoc_md1258"></a>
+<h2><a class="anchor" id="autotoc_md1259"></a>
 Asking Yes/No: <code>click.confirm()</code></h2>
 <p>A common need is asking for confirmation before doing something potentially destructive or time-consuming. <code>click.confirm()</code> handles this nicely.</p>
 <div class="fragment"><div class="line"><span class="comment"># confirm_example.py</span></div>
@@ -265,7 +265,7 @@ Asking Yes/No: <code>click.confirm()</code></h2>
 <div class="line">Starting operation...</div>
 <div class="line">Done!</div>
 </div><!-- fragment --><p>If the user types 'n' (or just presses Enter, since the default is No - indicated by <code>[y/N]</code>), the program will stop immediately because of <code>abort=True</code>. If you run <code>python confirm_example.py --yes</code>, it skips the question entirely.</p>
-<h2><a class="anchor" id="autotoc_md1259"></a>
+<h2><a class="anchor" id="autotoc_md1260"></a>
 Showing Progress: <code>click.progressbar()</code></h2>
 <p>For tasks that take a while, it's good practice to show the user that something is happening. <code>click.progressbar()</code> creates a visual progress bar. You typically use it with a Python <code>with</code> statement around a loop.</p>
 <p>Let's simulate processing a list of items:</p>
@@ -296,7 +296,7 @@ Showing Progress: <code>click.progressbar()</code></h2>
 <div class="line">Finished processing!</div>
 <div class="line"># (The bar animates in place while running)</div>
 </div><!-- fragment --><p>The progress bar automatically figures out the percentage and estimated time remaining (ETA). It makes long tasks much less mysterious for the user. You can also use it without an iterable by manually calling the <code>bar.update(increment)</code> method inside the <code>with</code> block.</p>
-<h2><a class="anchor" id="autotoc_md1260"></a>
+<h2><a class="anchor" id="autotoc_md1261"></a>
 How Term UI Works Under the Hood</h2>
 <p>These functions seem simple, but they handle quite a bit behind the scenes:</p>
 <ol type="1">
@@ -345,7 +345,7 @@ How Term UI Works Under the Hood</h2>
 <li><code>click/utils.py</code>: Contains <code>echo</code> and helpers like <code>open_stream</code>.</li>
 <li><code>click/_compat.py</code> &amp; <code>click/_winconsole.py</code>: Handle differences between Python versions and operating systems, especially for terminal I/O and color support on Windows.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1261"></a>
+<h2><a class="anchor" id="autotoc_md1262"></a>
 Conclusion</h2>
 <p>Click's <b>Term UI</b> functions are essential for creating command-line applications that are interactive, informative, and pleasant to use. You've learned how to:</p>
 <ul>

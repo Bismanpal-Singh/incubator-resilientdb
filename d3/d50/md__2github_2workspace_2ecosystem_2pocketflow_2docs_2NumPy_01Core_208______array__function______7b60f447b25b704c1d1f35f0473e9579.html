@@ -121,16 +121,16 @@ $(function(){initNavTree('d3/d50/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08___array_function___protocol___overrides___overrides__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2596"></a>
-autotoc_md2596</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2597"></a>
+autotoc_md2597</h2>
 <p>layout: default title: "__array_function__ Protocol (overrides)" parent: "NumPy Core" </p>
-<h2><a class="anchor" id="autotoc_md2597"></a>
+<h2><a class="anchor" id="autotoc_md2598"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md2598"></a>
+<h1><a class="anchor" id="autotoc_md2599"></a>
 Chapter 8: <b>array_function</b> Protocol / Overrides (<code>overrides</code>)</h1>
 <p>Welcome to the final chapter of our NumPy Core exploration! In <a class="el" href="../../d0/db5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_207__umath__module.html">Chapter 7: umath Module</a>, we learned how NumPy implements its fast, element-wise mathematical functions (<code>ufuncs</code>) using optimized C code. We've seen the core components: the <code>ndarray</code> container, <code>dtype</code> descriptions, <code>ufunc</code> operations, numeric types, printing, and the C modules (<code>multiarray</code>, <code>umath</code>) that power them.</p>
 <p>But NumPy doesn't exist in isolation. The Python scientific ecosystem is full of other libraries that also work with array-like data. Think of libraries like Dask (for parallel computing on large datasets that don't fit in memory) or CuPy (for running NumPy-like operations on GPUs). How can these <em>different</em> types of arrays work smoothly with standard NumPy functions like <code>np.sum</code>, <code>np.mean</code>, or <code>np.concatenate</code>?</p>
-<h2><a class="anchor" id="autotoc_md2599"></a>
+<h2><a class="anchor" id="autotoc_md2600"></a>
 What Problem Does <code>__array_function__</code> Solve? Speaking NumPy's Language</h2>
 <p>Imagine you have a special type of array, maybe one that lives on a GPU (like a CuPy array) or one that represents a computation spread across many machines (like a Dask array). You want to calculate the sum of its elements.</p>
 <p>Ideally, you'd just write:</p>
@@ -142,7 +142,7 @@ What Problem Does <code>__array_function__</code> Solve? Speaking NumPy's Langua
 <p>We need a way for NumPy functions to ask the input objects: "Hey, do *you* know how to handle this operation (`np.sum` in this case)?" If the object says yes, NumPy can step back and let the object take control.</p>
 <p>This is exactly what the <code>__array_function__</code> protocol (defined in NEP-18) allows. It's like a common language or negotiation rule that lets different array libraries "override" or take over the execution of NumPy functions when their objects are involved.</p>
 <p><b>Analogy:</b> Think of NumPy functions as a universal remote control. Initially, it only knows how to control NumPy-brand TVs (<code>ndarray</code>s). The <code>__array_function__</code> protocol is like adding a feature where the remote, when pointed at a different brand TV (like a CuPy array), asks the TV: "Do you understand this button (e.g., 'sum')?" If the TV responds, "Yes, here's how I do 'sum'," the remote lets the TV handle it.</p>
-<h2><a class="anchor" id="autotoc_md2600"></a>
+<h2><a class="anchor" id="autotoc_md2601"></a>
 What is the <code>__array_function__</code> Protocol?</h2>
 <p>The <code>__array_function__</code> protocol is a special method that array-like objects can implement. When a NumPy function is called with arguments that include one or more objects defining <code>__array_function__</code>, NumPy follows these steps:</p>
 <ol type="1">
@@ -162,7 +162,7 @@ What is the <code>__array_function__</code> Protocol?</h2>
 </li>
 <li><b>Fallback:</b> If <em>no</em> object's <code>__array_function__</code> method handles the call (they all return <code>NotImplemented</code>), NumPy raises a <code>TypeError</code>. <em>Crucially, NumPy usually does NOT fall back to its own default implementation on the foreign objects unless explicitly told to by the override.</em></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2601"></a>
+<h2><a class="anchor" id="autotoc_md2602"></a>
 Using <code>__array_function__</code> (Implementing a Simple Override)</h2>
 <p>Let's create a very basic array-like class that overrides <code>np.sum</code> but lets other functions pass through (by returning <code>NotImplemented</code>).</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
@@ -239,22 +239,22 @@ Using <code>__array_function__</code> (Implementing a Simple Override)</h2>
 <li>When we call <code>np.mean(my_arr)</code>, NumPy again calls <code>__array_function__</code>. This time, our method returns <code>NotImplemented</code>. Since no other arguments handle it, NumPy raises a <code>TypeError</code> because it doesn't know how to calculate the mean of <code>MySimpleArray</code> by default.</li>
 </ol>
 <p>This example demonstrates how an external library object can selectively take control of NumPy functions. Libraries like CuPy or Dask implement <code>__array_function__</code> much more thoroughly, handling many NumPy functions to perform operations on their specific data representations (GPU arrays, distributed arrays).</p>
-<h2><a class="anchor" id="autotoc_md2602"></a>
+<h2><a class="anchor" id="autotoc_md2603"></a>
 A Glimpse Under the Hood (<code>overrides.py</code>)</h2>
 <p>How does NumPy actually manage this dispatching process? The logic lives primarily in the <code>numpy/core/overrides.py</code> module.</p>
 <ol type="1">
 <li><b>Decorator:</b> Many NumPy functions (especially those intended to be public and potentially overridden) are decorated with <code>@array_function_dispatch(...)</code> or a similar helper (<code>@array_function_from_dispatcher</code>). You can see this decorator used in files like <code>numpy/core/function_base.py</code> (for <code>linspace</code>, <code>logspace</code>, etc.) or <code>numpy/core/numeric.py</code> (for <code>sum</code>, <code>mean</code>, etc. indirectly via ufunc machinery). ```python </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2603"></a>
+<h1><a class="anchor" id="autotoc_md2604"></a>
 Example from numpy/core/function_base.py (simplified)</h1>
 <p>from numpy._core import overrides</p>
 <p>array_function_dispatch = functools.partial( overrides.array_function_dispatch, module='numpy')</p>
 <p>def _linspace_dispatcher(start, stop, num=None, ...): </p>
-<h1><a class="anchor" id="autotoc_md2604"></a>
+<h1><a class="anchor" id="autotoc_md2605"></a>
 This helper identifies arguments relevant for dispatch</h1>
 <p>return (start, stop)</p>
 <p>@array_function_dispatch(_linspace_dispatcher) # Decorator applied! def linspace(start, stop, num=50, ...): </p>
-<h1><a class="anchor" id="autotoc_md2605"></a>
+<h1><a class="anchor" id="autotoc_md2606"></a>
 ... Actual implementation for NumPy arrays ...</h1>
 <p>pass ``<code></p><ol type="1">
 <li>**Dispatcher Class:** The decorator wraps the original function (like</li>
@@ -298,7 +298,7 @@ This helper identifies arguments relevant for dispatch</h1>
 <div class="line">    CustomArr--&gt;&gt;NumPyFunc: Return result (e.g., 10)</div>
 <div class="line">    NumPyFunc--&gt;&gt;User: Return result (10)</div>
 </div><!-- fragment --><p>The <code>numpy/core/overrides.py</code> file defines the Python-level infrastructure (<code>array_function_dispatch</code>, <code>_ArrayFunctionDispatcher</code>), while the core logic for efficiently finding and sorting implementing arguments (<code>_get_implementing_args</code>) is implemented in C for performance.</p>
-<h2><a class="anchor" id="autotoc_md2606"></a>
+<h2><a class="anchor" id="autotoc_md2607"></a>
 Conclusion</h2>
 <p>The <code>__array_function__</code> protocol is a powerful mechanism that makes NumPy far more extensible and integrated with the wider Python ecosystem. You've learned:</p>
 <ul>

@@ -143,6 +143,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3613a034c72764871dd814ee8ce93959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b1a9dfd82967cc4950317c361ce346" id="r_a03b1a9dfd82967cc4950317c361ce346"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03b1a9dfd82967cc4950317c361ce346">Set</a> (const std::string &amp;key, const std::string &amp;data)</td></tr>
 <tr class="separator:a03b1a9dfd82967cc4950317c361ce346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f92b83d183d949fbf4c4e3a473f10e3" id="r_a7f92b83d183d949fbf4c4e3a473f10e3"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f92b83d183d949fbf4c4e3a473f10e3">SetWithSeq</a> (const std::string &amp;key, const std::string &amp;data)</td></tr>
+<tr class="separator:a7f92b83d183d949fbf4c4e3a473f10e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac044a0544987a55113176a29775045c9" id="r_ac044a0544987a55113176a29775045c9"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac044a0544987a55113176a29775045c9">Get</a> (const std::string &amp;key)</td></tr>
 <tr class="separator:ac044a0544987a55113176a29775045c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72cf313b6de6084626f0c2d0340f2d65" id="r_a72cf313b6de6084626f0c2d0340f2d65"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72cf313b6de6084626f0c2d0340f2d65">GetAllValues</a> ()</td></tr>
@@ -269,7 +271,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00039">39</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
 
 </div>
 </div>
@@ -288,7 +290,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00067">67</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
 
 </div>
 </div>
@@ -311,7 +313,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00065">65</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00079">79</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
 
 </div>
 </div>
@@ -335,6 +337,29 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00031">31</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7f92b83d183d949fbf4c4e3a473f10e3" name="a7f92b83d183d949fbf4c4e3a473f10e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f92b83d183d949fbf4c4e3a473f10e3">&#9670;&#160;</a></span>SetWithSeq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t sdk::ResDBKVClient::SetWithSeq </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html#l00039">39</a> of file <a class="el" href="../../d3/d2c/resdb__kv__client_8cpp_source.html">resdb_kv_client.cpp</a>.</p>
 
 </div>
 </div>

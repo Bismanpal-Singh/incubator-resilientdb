@@ -121,17 +121,17 @@ $(function(){initNavTree('dc/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_message___memory</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2620"></a>
-autotoc_md2620</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2621"></a>
+autotoc_md2621</h2>
 <p>layout: default title: "Message &amp; Memory" parent: "OpenManus" </p>
-<h2><a class="anchor" id="autotoc_md2621"></a>
+<h2><a class="anchor" id="autotoc_md2622"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2622"></a>
+<h1><a class="anchor" id="autotoc_md2623"></a>
 Chapter 2: Message / Memory - Remembering the Conversation</h1>
 <p>In <a class="el" href="../../db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_201__llm.html">Chapter 1: The LLM - Your Agent's Brainpower</a>, we learned how our agent uses the <code>LLM</code> class to access its "thinking" capabilities. But just like humans, an agent needs to remember what was said earlier in a conversation to make sense of new requests and respond appropriately.</p>
 <p>Imagine asking a friend: "What was the first thing I asked you?". If they have no memory, they can't answer! Agents face the same problem. They need a way to store the conversation history.</p>
 <p>This is where <code>Message</code> and <code>Memory</code> come in.</p>
-<h2><a class="anchor" id="autotoc_md2623"></a>
+<h2><a class="anchor" id="autotoc_md2624"></a>
 What Problem Do They Solve?</h2>
 <p>Think about a simple chat:</p>
 <ol type="1">
@@ -145,10 +145,10 @@ What Problem Do They Solve?</h2>
 <li>Represent each individual turn (like your question or the agent's answer) clearly.</li>
 <li>Store these turns in order, creating a log of the conversation.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2624"></a>
+<h2><a class="anchor" id="autotoc_md2625"></a>
 The Key Concepts: Message and Memory</h2>
 <p>Let's break these down:</p>
-<h3><a class="anchor" id="autotoc_md2625"></a>
+<h3><a class="anchor" id="autotoc_md2626"></a>
 1. Message: A Single Turn in the Chat</h3>
 <p>A <code>Message</code> object is like a single speech bubble in a chat interface. It represents one specific thing said by someone (or something) at a particular point in the conversation.</p>
 <p>Every <code>Message</code> has two main ingredients:</p>
@@ -163,7 +163,7 @@ The Key Concepts: Message and Memory</h2>
 <li><b><code>content</code></b>: <em>What</em> was said? This is the actual text of the message. (e.g., "What's the weather like in London?")</li>
 </ul>
 <p>There are also optional parts for more advanced uses, like <code>tool_calls</code> (when the assistant decides to use a tool) or <code>base64_image</code> (if an image is included in the message), but <code>role</code> and <code>content</code> are the basics.</p>
-<h3><a class="anchor" id="autotoc_md2626"></a>
+<h3><a class="anchor" id="autotoc_md2627"></a>
 2. Memory: The Conversation Log</h3>
 <p>The <code>Memory</code> object is simply a container, like a list or a notebook, that holds a sequence of <code>Message</code> objects.</p>
 <ul>
@@ -172,7 +172,7 @@ The Key Concepts: Message and Memory</h2>
 <li>Agents look at the <code>Memory</code> before deciding what to do next, giving them context.</li>
 </ul>
 <p>Think of <code>Memory</code> as the agent's short-term memory for the current interaction.</p>
-<h2><a class="anchor" id="autotoc_md2627"></a>
+<h2><a class="anchor" id="autotoc_md2628"></a>
 How Do We Use Them?</h2>
 <p>Let's see how you'd typically work with <code>Message</code> and <code>Memory</code> in OpenManus (often, the agent framework handles some of this automatically, but it's good to understand the pieces).</p>
 <p><b>1. Creating Messages:</b></p>
@@ -266,7 +266,7 @@ How Do We Use Them?</h2>
 </li>
 <li>With this context, the LLM can correctly infer that "What about Spain?" means "What is the capital of Spain?".</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2628"></a>
+<h2><a class="anchor" id="autotoc_md2629"></a>
 Under the Hood: How It Works</h2>
 <p><code>Memory</code> is conceptually simple. It's primarily a wrapper around a standard Python list, ensuring messages are stored correctly and providing convenient methods.</p>
 <p>Here's a simplified flow of how an agent uses memory:</p>
@@ -392,7 +392,7 @@ Under the Hood: How It Works</h2>
 <li>When generating a response (<code>generate_response</code>), it retrieves the history using <code>self.memory.to_dict_list()</code> and passes it to <code>self.llm.ask</code>.</li>
 <li>It then adds the LLM's response back into memory as an <code>assistant</code> message.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2629"></a>
+<h2><a class="anchor" id="autotoc_md2630"></a>
 Wrapping Up Chapter 2</h2>
 <p>You've now learned about <code>Message</code> (a single conversational turn with a role and content) and <code>Memory</code> (the ordered list storing these messages). Together, they provide the crucial context agents need to understand conversations and respond coherently. They act as the agent's short-term memory or chat log.</p>
 <p>We have the brain (<a class="el" href="../../db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_201__llm.html">LLM</a>) and the memory (<code>Message</code>/<code>Memory</code>). Now we need something to orchestrate the process – to receive input, consult memory, use the LLM, potentially use tools, and manage its state. That's the job of the Agent itself.</p>

@@ -121,16 +121,16 @@ $(function(){initNavTree('d6/def/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_ufunc__universal_function_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2525"></a>
-autotoc_md2525</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2526"></a>
+autotoc_md2526</h2>
 <p>layout: default title: "ufunc (universal function)" parent: "NumPy Core" </p>
-<h2><a class="anchor" id="autotoc_md2526"></a>
+<h2><a class="anchor" id="autotoc_md2527"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2527"></a>
+<h1><a class="anchor" id="autotoc_md2528"></a>
 Chapter 3: ufunc (Universal Function)</h1>
 <p>Welcome back! In <a class="el" href="../../de/d16/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_201__ndarray____n__dimensional__array__.html">Chapter 1: ndarray (N-dimensional array)</a>, we met the <code>ndarray</code>, NumPy's powerful container for numerical data. In <a class="el" href="../../d6/d31/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_202__dtype____data__type__object__.html">Chapter 2: dtype (Data Type Object)</a>, we learned how <code>dtype</code>s specify the exact <em>kind</em> of data stored within those arrays.</p>
 <p>Now, let's tackle a fundamental question: How does NumPy actually <em>perform calculations</em> on these arrays so quickly? If you have two large arrays, <code>a</code> and <code>b</code>, why is <code>a + b</code> massively faster than using a Python <code>for</code> loop? The answer lies in a special type of function: the <b>ufunc</b>.</p>
-<h2><a class="anchor" id="autotoc_md2528"></a>
+<h2><a class="anchor" id="autotoc_md2529"></a>
 What Problem Do ufuncs Solve? Speeding Up Element-wise Math</h2>
 <p>Imagine you have temperature readings from a sensor stored in a NumPy array, and you need to convert them from Celsius to Fahrenheit. The formula is <code>F = C * 9/5 + 32</code>.</p>
 <p>With standard Python lists, you'd loop through each temperature:</p>
@@ -158,7 +158,7 @@ What Problem Do ufuncs Solve? Speeding Up Element-wise Math</h2>
 <div class="line">print(fahrenheit_array)</div>
 <div class="line"><span class="comment"># Output: [ 32.  50.  68.  86. 212.]</span></div>
 </div><!-- fragment --><p> Look how clean that is! We just wrote the math formula directly using the array. But <em>how</em> does NumPy execute <code>*</code>, <code>/</code>, and <code>+</code> so efficiently on <em>every element</em> without a visible loop? This magic is powered by ufuncs.</p>
-<h2><a class="anchor" id="autotoc_md2529"></a>
+<h2><a class="anchor" id="autotoc_md2530"></a>
 What is a ufunc (Universal Function)?</h2>
 <p>A <b>ufunc</b> (Universal Function) is a special type of function in NumPy designed to operate on <code>ndarray</code>s <b>element by element</b>. Think of them as super-powered mathematical functions specifically built for NumPy arrays.</p>
 <p>Examples include <code>np.add</code>, <code>np.subtract</code>, <code>np.multiply</code>, <code>np.sin</code>, <code>np.cos</code>, <code>np.exp</code>, <code>np.sqrt</code>, <code>np.maximum</code>, <code>np.equal</code>, and many more.</p>
@@ -173,7 +173,7 @@ What is a ufunc (Universal Function)?</h2>
 <li><b>Type Casting:</b> Ufuncs can intelligently handle inputs with different <a class="el" href="../../d6/d31/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_202__dtype____data__type__object__.html">Chapter 2: dtype (Data Type Object)</a>s. For instance, if you add an <code>int32</code> array and a <code>float64</code> array, the ufunc might decide to convert the integers to <code>float64</code> before performing the addition to avoid losing precision, returning a <code>float64</code> array. This happens according to well-defined casting rules.</li>
 <li><b>Optional Output Arrays (<code>out</code> argument):</b> You can tell a ufunc to place its result into an <em>existing</em> array instead of creating a new one. This can save memory, especially when working with very large arrays or inside loops.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2530"></a>
+<h2><a class="anchor" id="autotoc_md2531"></a>
 Using ufuncs</h2>
 <p>You use ufuncs just like regular Python functions, but you pass NumPy arrays as arguments. Many common mathematical operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>**</code>, <code>==</code>, <code>&lt;</code>, etc.) also call ufuncs behind the scenes when used with NumPy arrays.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
@@ -218,7 +218,7 @@ Using ufuncs</h2>
 <div class="line"><span class="comment"># b = [5 6 7 8 9]</span></div>
 <div class="line"><span class="comment"># result (after np.add(a, b, out=result)) = [ 5  7  9 11 13]</span></div>
 </div><!-- fragment --><p> Instead of creating a <em>new</em> array for the sum, <code>np.add</code> placed the values directly into <code>result</code>.</p>
-<h2><a class="anchor" id="autotoc_md2531"></a>
+<h2><a class="anchor" id="autotoc_md2532"></a>
 A Glimpse Under the Hood</h2>
 <p>So, what happens internally when you call, say, <code>np.add(array1, array2)</code>?</p>
 <ol type="1">
@@ -251,13 +251,13 @@ A Glimpse Under the Hood</h2>
 <div class="line">    C_API--&gt;&gt;P: Return result ndarray</div>
 </div><!-- fragment --><p><b>Where is the Code?</b></p>
 <ul>
-<li>The ufunc objects themselves are typically defined in C, often generated by helper scripts like <code>numpy/core/code_generators/generate_umath.py</code>. This script reads definitions (like those in the <code>defdict</code> variable within the script) specifying the ufunc's name, inputs, outputs, and the C functions to use for different type combinations. <code>python @section autotoc_md2532 Snippet from generate_umath.py's defdict for 'add' 'add': Ufunc(2, 1, Zero, # nin=2, nout=1, identity=0 docstrings.get('numpy._core.umath.add'), 'PyUFunc_AdditionTypeResolver', # Function for type resolution TD('?', cfunc_alias='logical_or', ...), # Loop for bools TD(no_bool_times_obj, dispatch=[...]), # Loops for numeric types @section autotoc_md2533 ... loops for datetime, object ... indexed=intfltcmplx # Types supporting indexed access ), </code></li>
+<li>The ufunc objects themselves are typically defined in C, often generated by helper scripts like <code>numpy/core/code_generators/generate_umath.py</code>. This script reads definitions (like those in the <code>defdict</code> variable within the script) specifying the ufunc's name, inputs, outputs, and the C functions to use for different type combinations. <code>python @section autotoc_md2533 Snippet from generate_umath.py's defdict for 'add' 'add': Ufunc(2, 1, Zero, # nin=2, nout=1, identity=0 docstrings.get('numpy._core.umath.add'), 'PyUFunc_AdditionTypeResolver', # Function for type resolution TD('?', cfunc_alias='logical_or', ...), # Loop for bools TD(no_bool_times_obj, dispatch=[...]), # Loops for numeric types @section autotoc_md2534 ... loops for datetime, object ... indexed=intfltcmplx # Types supporting indexed access ), </code></li>
 <li>The Python functions you call (like <code>numpy.add</code>) are often thin wrappers defined in places like <code>numpy/core/umath.py</code> or <code>numpy/core/numeric.py</code>. These Python functions essentially just retrieve the corresponding C ufunc object and trigger its execution mechanism.</li>
 <li>The core C machinery for handling ufunc dispatch (finding the right loop), broadcasting, and executing the loops resides within the compiled <code>_multiarray_umath</code> C extension module. We'll touch upon these modules in <a class="el" href="../../db/d8b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_206__multiarray__module.html">Chapter 6: multiarray Module</a> and <a class="el" href="../../d0/db5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_207__umath__module.html">Chapter 7: umath Module</a>.</li>
 <li>Helper Python modules like <code>numpy/core/_methods.py</code> provide Python implementations for array methods (like <code>.sum()</code>, <code>.mean()</code>, <code>.max()</code>) which often leverage the underlying ufunc's reduction capabilities.</li>
 <li>Error handling during ufunc execution (e.g., division by zero, invalid operations) can be configured using functions like <code>seterr</code> defined in <code>numpy/core/_ufunc_config.py</code>, and specific exception types like <code>UFuncTypeError</code> from <code>numpy/core/_exceptions.py</code> might be raised if things go wrong (e.g., no suitable loop found for the input types).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2534"></a>
+<h2><a class="anchor" id="autotoc_md2535"></a>
 Conclusion</h2>
 <p>Ufuncs are the powerhouses behind NumPy's speed for element-wise operations. You've learned:</p>
 <ul>

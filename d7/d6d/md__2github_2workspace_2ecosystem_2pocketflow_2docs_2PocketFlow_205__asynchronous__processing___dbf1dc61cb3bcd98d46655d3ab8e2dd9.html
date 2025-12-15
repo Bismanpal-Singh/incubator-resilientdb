@@ -121,15 +121,15 @@ $(function(){initNavTree('d7/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_asynchronous_processing___asyncnode____asyncflow___</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2770"></a>
-autotoc_md2770</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2771"></a>
+autotoc_md2771</h2>
 <p>layout: default title: "Asynchronous Processing (AsyncNode, AsyncFlow)" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2771"></a>
+<h2><a class="anchor" id="autotoc_md2772"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2772"></a>
+<h1><a class="anchor" id="autotoc_md2773"></a>
 Chapter 5: Asynchronous Processing (<code>AsyncNode</code>, <code>AsyncFlow</code>)</h1>
 <p>In Chapter 4: Flow (<code>Flow</code>, <code>AsyncFlow</code>), we learned how <code>Flow</code> and <code>AsyncFlow</code> orchestrate sequences of Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) to create complete applications. Now, we're going to zoom in on a powerful feature that <code>AsyncFlow</code> enables: <b>Asynchronous Processing</b>. This is key to building AI applications that feel responsive and can handle tasks that involve waiting, like calling web APIs or interacting with users.</p>
-<h2><a class="anchor" id="autotoc_md2773"></a>
+<h2><a class="anchor" id="autotoc_md2774"></a>
 The Problem: Waiting Can Be Wasteful!</h2>
 <p>Imagine you're building an AI assistant that needs to:</p><ol type="1">
 <li>Ask the user for a city name.</li>
@@ -142,7 +142,7 @@ The Problem: Waiting Can Be Wasteful!</h2>
 <li>An <b>asynchronous chef</b> is much more efficient! They can start chopping vegetables for dish A, put it on the stove to simmer, and <em>while it's simmering</em> (a waiting period), they can start preparing dish B, or perhaps clean up. They don't idly wait; they switch to other tasks that can be done.</li>
 </ul>
 <p>PocketFlow's <code>AsyncNode</code> and <code>AsyncFlow</code> let your AI application be like that efficient, asynchronous chef.</p>
-<h2><a class="anchor" id="autotoc_md2774"></a>
+<h2><a class="anchor" id="autotoc_md2775"></a>
 What is Asynchronous Processing?</h2>
 <p>Asynchronous processing allows your program to start a potentially long-running task (like an API call or waiting for user input) and then, instead of freezing and waiting for it to complete, it can switch to doing other work. When the long-running task eventually finishes, the program can pick up where it left off with that task.</p>
 <p>This is especially crucial for <b>I/O-bound tasks</b>. "I/O" stands for Input/Output, like:</p><ul>
@@ -155,7 +155,7 @@ What is Asynchronous Processing?</h2>
 <li><code>async def</code> is used to define an asynchronous function (also called a "coroutine").</li>
 <li><code>await</code> is used inside an <code>async</code> function to pause its execution until an awaited task (another coroutine or an I/O operation) completes. While paused, other asynchronous tasks can run.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2775"></a>
+<h2><a class="anchor" id="autotoc_md2776"></a>
 Meet <code>AsyncNode</code>: The Asynchronous Worker</h2>
 <p>In PocketFlow, an <code>AsyncNode</code> is a special type of Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) designed for asynchronous operations. It looks very similar to a regular <code>Node</code>, but its core methods (<code>prep</code>, <code>exec</code>, <code>post</code>) are defined as <code>async</code> functions:</p>
 <ul>
@@ -189,7 +189,7 @@ Meet <code>AsyncNode</code>: The Asynchronous Worker</h2>
 <li>All methods are <code>async def</code>.</li>
 <li><code>exec_async</code> uses <code>await asyncio.sleep(2)</code> to pause for 2 seconds. If this were a real application, it might be <code>await http_client.get(...)</code>. While this <code>await</code> is active, other asynchronous tasks in your program could run.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2776"></a>
+<h2><a class="anchor" id="autotoc_md2777"></a>
 Orchestrating with <code>AsyncFlow</code></h2>
 <p>To run <code>AsyncNode</code>s, you need an <code>AsyncFlow</code>. As we saw in Chapter 4: Flow (<code>Flow</code>, <code>AsyncFlow</code>), an <code>AsyncFlow</code> can manage both <code>AsyncNode</code>s and regular <code>Node</code>s. When it encounters an <code>AsyncNode</code>, it will correctly <code>await</code> its asynchronous methods.</p>
 <p>Let's set up an <code>AsyncFlow</code> to use our <code>WeatherFetcherNode</code>.</p>
@@ -233,7 +233,7 @@ Orchestrating with <code>AsyncFlow</code></h2>
 <li>&lsquo;Final shared data: {'city_name&rsquo;: 'London', 'weather_report': 'Sunny in London'}` is printed.</li>
 </ol>
 <p>The key is that during the 2-second "API call," a well-structured asynchronous application wouldn't be frozen. It could be handling other user requests, updating a UI, or performing other background tasks.</p>
-<h2><a class="anchor" id="autotoc_md2777"></a>
+<h2><a class="anchor" id="autotoc_md2778"></a>
 What Happens Under the Hood?</h2>
 <p>When an <code>AsyncFlow</code> runs an <code>AsyncNode</code>, it leverages Python's <code>asyncio</code> event loop.</p>
 <ol type="1">
@@ -274,10 +274,10 @@ What Happens Under the Hood?</h2>
 <div class="line">    AFlow--&gt;&gt;UserApp: Flow complete (shared is updated)</div>
 </div><!-- fragment --><p><b>Diving into PocketFlow's Code (Simplified):</b></p>
 <ul>
-<li><b><code>AsyncNode</code>'s Execution (<code>pocketflow/__init__.py</code>):</b> The <code>AsyncNode</code> has an <code>_run_async</code> method: <code>python @section autotoc_md2778 Inside AsyncNode class async def _run_async(self, shared): p = await self.prep_async(shared) e = await self._exec(p) # _exec calls exec_async with retries return await self.post_async(shared, p, e) </code> And its <code>_exec</code> method handles calling <code>exec_async</code> (and retries, similar to <code>Node</code> but <code>async</code>): <code>python @section autotoc_md2779 Inside AsyncNode class (simplified _exec) async def _exec(self, prep_res): @section autotoc_md2780 ... (retry loop) ... try: return await self.exec_async(prep_res) # Key: await exec_async except Exception as e: @section autotoc_md2781 ... (fallback logic) ... </code></li>
-<li><b><code>AsyncFlow</code>'s Orchestration (<code>pocketflow/__init__.py</code>):</b> The <code>AsyncFlow</code> has an <code>_orch_async</code> method that handles running nodes: <code>python @section autotoc_md2782 Inside AsyncFlow class async def _orch_async(self, shared, params=None): curr, p, last_action = self.start_node, (params or {}), None while curr: @section autotoc_md2783 ... (set params for current node) ... if isinstance(curr, AsyncNode): last_action = await curr._run_async(shared) # AWAIT AsyncNode else: last_action = curr._run(shared) # Run sync Node normally curr = self.get_next_node(curr, last_action) return last_action </code> Notice how it checks if <code>curr</code> is an <code>AsyncNode</code> and uses <code>await curr._run_async(shared)</code> if it is. Otherwise, for regular synchronous Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>), it calls <code>curr._run(shared)</code> directly.</li>
+<li><b><code>AsyncNode</code>'s Execution (<code>pocketflow/__init__.py</code>):</b> The <code>AsyncNode</code> has an <code>_run_async</code> method: <code>python @section autotoc_md2779 Inside AsyncNode class async def _run_async(self, shared): p = await self.prep_async(shared) e = await self._exec(p) # _exec calls exec_async with retries return await self.post_async(shared, p, e) </code> And its <code>_exec</code> method handles calling <code>exec_async</code> (and retries, similar to <code>Node</code> but <code>async</code>): <code>python @section autotoc_md2780 Inside AsyncNode class (simplified _exec) async def _exec(self, prep_res): @section autotoc_md2781 ... (retry loop) ... try: return await self.exec_async(prep_res) # Key: await exec_async except Exception as e: @section autotoc_md2782 ... (fallback logic) ... </code></li>
+<li><b><code>AsyncFlow</code>'s Orchestration (<code>pocketflow/__init__.py</code>):</b> The <code>AsyncFlow</code> has an <code>_orch_async</code> method that handles running nodes: <code>python @section autotoc_md2783 Inside AsyncFlow class async def _orch_async(self, shared, params=None): curr, p, last_action = self.start_node, (params or {}), None while curr: @section autotoc_md2784 ... (set params for current node) ... if isinstance(curr, AsyncNode): last_action = await curr._run_async(shared) # AWAIT AsyncNode else: last_action = curr._run(shared) # Run sync Node normally curr = self.get_next_node(curr, last_action) return last_action </code> Notice how it checks if <code>curr</code> is an <code>AsyncNode</code> and uses <code>await curr._run_async(shared)</code> if it is. Otherwise, for regular synchronous Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>), it calls <code>curr._run(shared)</code> directly.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2784"></a>
+<h2><a class="anchor" id="autotoc_md2785"></a>
 Benefits of Asynchronous Processing</h2>
 <ol type="1">
 <li><b>Responsiveness:</b> Your application doesn't freeze while waiting for I/O tasks. This is vital for user interfaces or servers handling multiple requests.</li>
@@ -285,7 +285,7 @@ Benefits of Asynchronous Processing</h2>
 <li><b>Efficient Resource Usage:</b> Threads can be resource-intensive. <code>asyncio</code> often uses a single thread more efficiently by switching between tasks during their I/O wait times.</li>
 </ol>
 <p>Use <code>AsyncNode</code> and <code>AsyncFlow</code> when your workflow involves tasks that spend significant time waiting for external operations.</p>
-<h2><a class="anchor" id="autotoc_md2785"></a>
+<h2><a class="anchor" id="autotoc_md2786"></a>
 Conclusion</h2>
 <p>You've now unlocked the power of asynchronous processing in PocketFlow with <code>AsyncNode</code> and <code>AsyncFlow</code>!</p><ul>
 <li>Asynchronous operations prevent your application from freezing during I/O-bound tasks like API calls.</li>

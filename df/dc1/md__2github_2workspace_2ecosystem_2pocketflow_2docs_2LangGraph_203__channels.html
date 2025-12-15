@@ -121,17 +121,17 @@ $(function(){initNavTree('df/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_channels</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2142"></a>
-autotoc_md2142</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2143"></a>
+autotoc_md2143</h2>
 <p>layout: default title: "Channels" parent: "LangGraph" </p>
-<h2><a class="anchor" id="autotoc_md2143"></a>
+<h2><a class="anchor" id="autotoc_md2144"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2144"></a>
+<h1><a class="anchor" id="autotoc_md2145"></a>
 Chapter 3: Channels - The Communication System</h1>
 <p>In <a class="el" href="../../df/d8e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_201__graph______stategraph.html">Chapter 1: Graph / StateGraph</a>, we learned about the <code>StateGraph</code> as the blueprint for our application, holding the shared "whiteboard" or state. In <a class="el" href="../../dc/d09/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_202__nodes______pregelnode____.html">Chapter 2: Nodes (<code>PregelNode</code>)</a>, we met the "workers" or Nodes that perform tasks and read/write to this whiteboard.</p>
 <p>But how does this "whiteboard" <em>actually</em> work? How does the information written by one node reliably get seen by the next? What happens if multiple nodes try to write to the <em>same part</em> of the whiteboard at roughly the same time?</p>
 <p>This is where <b>Channels</b> come in. They are the fundamental mechanism for communication and state management within a <code>StateGraph</code>.</p>
-<h2><a class="anchor" id="autotoc_md2145"></a>
+<h2><a class="anchor" id="autotoc_md2146"></a>
 What Problem Do Channels Solve?</h2>
 <p>Imagine our simple graph from Chapter 1:</p>
 <div class="fragment"><div class="line"><span class="comment"># State: {&#39;value&#39;: int}</span></div>
@@ -145,7 +145,7 @@ What Problem Do Channels Solve?</h2>
 <li><b>Storage:</b> How the value for a specific key in the state is stored.</li>
 <li><b>Update Logic:</b> How incoming updates for that key are combined or processed.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2146"></a>
+<h2><a class="anchor" id="autotoc_md2147"></a>
 Channels: Mailboxes for Your State</h2>
 <p>Think of the shared state (our "whiteboard") not as one big surface, but as a collection of <b>mailboxes</b>.</p>
 <ul>
@@ -155,7 +155,7 @@ Channels: Mailboxes for Your State</h2>
 </ul>
 <p>This mailbox concept ensures that updates intended for <code>"value"</code> only affect <code>"value"</code>, and updates for another key (say, <code>"messages"</code>) would go into <em>its</em> own separate mailbox.</p>
 <p><b>Crucially, each mailbox (Channel) has specific rules about how incoming mail (updates) is handled.</b> Does the new mail replace the old one? Is it added to a list? Is it mathematically combined with the previous value? These rules are defined by the <b>Channel Type</b>.</p>
-<h2><a class="anchor" id="autotoc_md2147"></a>
+<h2><a class="anchor" id="autotoc_md2148"></a>
 How Channels Work: The Update Cycle</h2>
 <p>Here's a step-by-step view of how channels manage state during graph execution:</p>
 <ol type="1">
@@ -168,7 +168,7 @@ How Channels Work: The Update Cycle</h2>
 <li><code> **Channel Provides Value:** The Channel provides its current stored value (e.g.,</code>6`) to the Engine, which passes it to the node.</li>
 </ol>
 <p>This ensures that state updates are handled consistently according to predefined rules for each piece of state.</p>
-<h2><a class="anchor" id="autotoc_md2148"></a>
+<h2><a class="anchor" id="autotoc_md2149"></a>
 Common Channel Types: Defining the Rules</h2>
 <p>LangGraph provides several types of Channels, each with different update logic. You usually define which channel type to use for a state key when you define your state <code>TypedDict</code>, often using <code>typing.Annotated</code>.</p>
 <p>Here are the most common ones:</p>
@@ -182,16 +182,16 @@ Common Channel Types: Defining the Rules</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2149"></a>
+<h1><a class="anchor" id="autotoc_md2150"></a>
 channels/last_value.py (Simplified)</h1>
 <p>class LastValue(Generic[Value], BaseChannel[Value, Value, Value]): </p>
-<h1><a class="anchor" id="autotoc_md2150"></a>
+<h1><a class="anchor" id="autotoc_md2151"></a>
 ... (initializer, etc.)</h1>
 <p>value: Any = MISSING # Stores the single, last value</p>
 <p>def update(self, values: Sequence[Value]) -&gt; bool: if len(values) == 0: # No updates this step return False </p>
-<h1><a class="anchor" id="autotoc_md2151"></a>
-If multiple updates in one step, only the last one matters!</h1>
 <h1><a class="anchor" id="autotoc_md2152"></a>
+If multiple updates in one step, only the last one matters!</h1>
+<h1><a class="anchor" id="autotoc_md2153"></a>
 Example: if values = [update1, update2], self.value becomes update2</h1>
 <p>self.value = values[-1] return True</p>
 <p>def get(self) -&gt; Value: if self.value is MISSING: raise EmptyChannelError() return self.value # Return the currently stored last value <code></p><ul>
@@ -199,7 +199,7 @@ Example: if values = [update1, update2], self.value becomes update2</h1>
 </ul>
 <p></code>python from typing import TypedDict</p>
 <p>class MyState(TypedDict): </p>
-<h1><a class="anchor" id="autotoc_md2153"></a>
+<h1><a class="anchor" id="autotoc_md2154"></a>
 Because we didn't use Annotated, LangGraph defaults to LastValue[int]</h1>
 <p>value: int user_query: str # Also defaults to LastValue[str] ```</p>
 <ol type="1">
@@ -212,32 +212,32 @@ Because we didn't use Annotated, LangGraph defaults to LastValue[int]</h1>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2154"></a>
+<h1><a class="anchor" id="autotoc_md2155"></a>
 channels/binop.py (Simplified)</h1>
 <p>import operator from typing import Callable</p>
 <p>class BinaryOperatorAggregate(Generic[Value], BaseChannel[Value, Value, Value]): </p>
-<h1><a class="anchor" id="autotoc_md2155"></a>
+<h1><a class="anchor" id="autotoc_md2156"></a>
 ... (initializer stores the operator and identity value)</h1>
 <p>value: Any = MISSING operator: Callable[[Value, Value], Value]</p>
 <p>def update(self, values: Sequence[Value]) -&gt; bool: if not values: return False </p>
-<h1><a class="anchor" id="autotoc_md2156"></a>
+<h1><a class="anchor" id="autotoc_md2157"></a>
 Start with the first value if the channel was empty</h1>
 <p>if self.value is MISSING: self.value = values[0] values = values[1:] </p>
-<h1><a class="anchor" id="autotoc_md2157"></a>
+<h1><a class="anchor" id="autotoc_md2158"></a>
 Apply the operator for all subsequent values</h1>
 <p>for val in values: self.value = self.operator(self.value, val) return True</p>
 <p>def get(self) -&gt; Value: </p>
-<h1><a class="anchor" id="autotoc_md2158"></a>
+<h1><a class="anchor" id="autotoc_md2159"></a>
 ... (return self.value, handling MISSING)</h1>
 <p><code></p><ul>
 <li>**How to Use (Explicitly with `Annotated`):** </li>
 </ul>
 <p></code>python import operator from typing import TypedDict, Annotated from langgraph.channels import BinaryOperatorAggregate</p>
 <p>class AgentState(TypedDict): </p>
-<h1><a class="anchor" id="autotoc_md2159"></a>
+<h1><a class="anchor" id="autotoc_md2160"></a>
 Use Annotated to specify the channel type and operator</h1>
 <p>total_score: Annotated[int, BinaryOperatorAggregate(int, operator.add)] </p>
-<h1><a class="anchor" id="autotoc_md2160"></a>
+<h1><a class="anchor" id="autotoc_md2161"></a>
 ^^^ state key 'total_score' will use BinaryOperatorAggregate with addition</h1>
 <p>```</p>
 <ol type="1">
@@ -250,38 +250,38 @@ Use Annotated to specify the channel type and operator</h1>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2161"></a>
+<h1><a class="anchor" id="autotoc_md2162"></a>
 channels/topic.py (Simplified)</h1>
 <p>from typing import Sequence, List, Union</p>
 <p>class Topic(Generic[Value], BaseChannel[Sequence[Value], Union[Value, list[Value]], list[Value]]): </p>
-<h1><a class="anchor" id="autotoc_md2162"></a>
+<h1><a class="anchor" id="autotoc_md2163"></a>
 ... (initializer sets accumulate flag)</h1>
 <p>values: list[Value] accumulate: bool</p>
 <p>def update(self, updates: Sequence[Union[Value, list[Value]]]) -&gt; bool: old_len = len(self.values) </p>
-<h1><a class="anchor" id="autotoc_md2163"></a>
+<h1><a class="anchor" id="autotoc_md2164"></a>
 Clear list if not accumulating</h1>
 <p>if not self.accumulate: self.values = [] </p>
-<h1><a class="anchor" id="autotoc_md2164"></a>
+<h1><a class="anchor" id="autotoc_md2165"></a>
 Flatten and extend the list with new updates</h1>
 <p>new_values = list(flatten(updates)) # flatten handles list-of-lists self.values.extend(new_values) return len(self.values) != old_len # Return True if list changed</p>
 <p>def get(self) -&gt; Sequence[Value]: </p>
-<h1><a class="anchor" id="autotoc_md2165"></a>
+<h1><a class="anchor" id="autotoc_md2166"></a>
 ... (return list(self.values), handling empty)</h1>
 <p><code></p><ul>
 <li>**How to Use (Explicitly with `Annotated`):** </li>
 </ul>
 <p></code>python from typing import TypedDict, Annotated, List from langgraph.channels import Topic</p>
 <p>class ChatState(TypedDict): </p>
-<h1><a class="anchor" id="autotoc_md2166"></a>
-Use Annotated to specify the Topic channel</h1>
 <h1><a class="anchor" id="autotoc_md2167"></a>
+Use Annotated to specify the Topic channel</h1>
+<h1><a class="anchor" id="autotoc_md2168"></a>
 The final type hint for the state is List[str]</h1>
 <p>chat_history: Annotated[List[str], Topic(str, accumulate=True)] </p>
-<h1><a class="anchor" id="autotoc_md2168"></a>
+<h1><a class="anchor" id="autotoc_md2169"></a>
 ^^^ state key 'chat_history' will use Topic to accumulate strings</h1>
 <p>```</p>
 <p>There are other specialized channels like <code>EphemeralValue</code> (clears after reading) and <code>Context</code> (allows passing values down without modifying state), but <code>LastValue</code>, <code>BinaryOperatorAggregate</code>, and <code>Topic</code> are the most fundamental.</p>
-<h2><a class="anchor" id="autotoc_md2169"></a>
+<h2><a class="anchor" id="autotoc_md2170"></a>
 Channels in Action: Our Simple Graph Revisited</h2>
 <p>Let's trace our <code>adder</code> -&gt; <code>multiplier</code> graph again, focusing on the implicit <code>LastValue</code> channel for the <code>"value"</code> key:</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> TypedDict</div>
@@ -344,7 +344,7 @@ Channels in Action: Our Simple Graph Revisited</h2>
 <div class="line">    Engine-&gt;&gt;App: Execution finished, final state {&#39;value&#39;: 12}</div>
 <div class="line">    App-&gt;&gt;User: Return final state {&#39;value&#39;: 12}</div>
 </div><!-- fragment --><p>The <code>LastValue</code> channel ensures that the output of <code>adder</code> correctly overwrites the initial state before <code>multiplier</code> reads it.</p>
-<h2><a class="anchor" id="autotoc_md2170"></a>
+<h2><a class="anchor" id="autotoc_md2171"></a>
 Example: Using <code>BinaryOperatorAggregate</code> Explicitly</h2>
 <p>Let's modify the state to <em>sum</em> values instead of overwriting them.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> operator</div>
@@ -395,7 +395,7 @@ Example: Using <code>BinaryOperatorAggregate</code> Explicitly</h2>
 <div class="line">--- Final State ---</div>
 <div class="line">{&#39;value&#39;: 15}</div>
 </div><!-- fragment --><p>Because we used <code>Annotated[int, BinaryOperatorAggregate(int, operator.add)]</code>, the <code>"value"</code> channel now <em>adds</em> incoming updates (<code>5</code> then <code>10</code>) to its current state, resulting in a final sum of <code>15</code>.</p>
-<h2><a class="anchor" id="autotoc_md2171"></a>
+<h2><a class="anchor" id="autotoc_md2172"></a>
 How <code>StateGraph</code> Finds the Right Channel</h2>
 <p>You might wonder how <code>StateGraph</code> knows whether to use <code>LastValue</code> or something else. When you initialize <code>StateGraph(MyState)</code>, it inspects your state schema (<code>MyState</code>).</p>
 <ul>
@@ -443,7 +443,7 @@ How <code>StateGraph</code> Finds the Right Channel</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># --- In StateGraph.__init__ ---</span></div>
 <div class="line"><span class="comment"># self._add_schema(state_schema) # This calls _get_channels</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2172"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2173"></a>
 Under the Hood: <code>BaseChannel</code></h2>
 <p>All channel types inherit from a base class called <code>BaseChannel</code>. This class defines the common interface that the <a class="el" href="../../de/d73/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_205__pregel__execution__engine.html">Pregel Execution Engine</a> uses to interact with any channel.</p>
 <div class="fragment"><div class="line"><span class="comment"># channels/base.py (Simplified Abstract Base Class)</span></div>
@@ -482,7 +482,7 @@ Under the Hood: <code>BaseChannel</code></h2>
 <div class="line">        <span class="keywordflow">pass</span></div>
 <div class="ttc" id="apybind__kv__service_8cpp_html_abe6524afb3a69dc9a4c314e11f96f29f"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#abe6524afb3a69dc9a4c314e11f96f29f">get</a></div><div class="ttdeci">std::string get(std::string key, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00039">pybind_kv_service.cpp:39</a></div></div>
 </div><!-- fragment --><p>The specific logic for <code>LastValue</code>, <code>Topic</code>, <code>BinaryOperatorAggregate</code>, etc., is implemented within their respective <code>update</code> and <code>get</code> methods, adhering to this common interface. The <code>checkpoint</code> and <code>from_checkpoint</code> methods are crucial for saving and loading the graph's state, which we'll explore more in <a class="el" href="../../d8/d4c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LangGraph_206__checkpointer______basecheckpointsaver____.html">Chapter 6: Checkpointer (<code>BaseCheckpointSaver</code>)</a>.</p>
-<h2><a class="anchor" id="autotoc_md2173"></a>
+<h2><a class="anchor" id="autotoc_md2174"></a>
 Conclusion</h2>
 <p>You've learned about <b>Channels</b>, the crucial communication and state management system within LangGraph's <code>StateGraph</code>.</p>
 <ul>

@@ -429,6 +429,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a5285e59a982e46c95d72f2bb08c4dc55" id="r_a5285e59a982e46c95d72f2bb08c4dc55"><td class="memTemplParams" colspan="2">template&lt;typename ConsensusProtocol&gt; </td></tr>
 <tr class="memitem:a5285e59a982e46c95d72f2bb08c4dc55"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d4/d2d/classresdb_1_1ServiceNetwork.html">ServiceNetwork</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5285e59a982e46c95d72f2bb08c4dc55">CustomGenerateResDBServer</a> (char *config_file, char *private_key_file, char *cert_file, std::unique_ptr&lt; <a class="el" href="../../df/d01/classresdb_1_1TransactionManager.html">TransactionManager</a> &gt; executor, std::unique_ptr&lt; <a class="el" href="../../d6/dd9/classresdb_1_1CustomQuery.html">CustomQuery</a> &gt; query_executor, std::function&lt; void(<a class="el" href="../../db/ddb/classresdb_1_1ResDBConfig.html">ResDBConfig</a> *config)&gt; config_handler=nullptr)</td></tr>
 <tr class="separator:a5285e59a982e46c95d72f2bb08c4dc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67842a19269800fb4efcff8d4082118b" id="r_a67842a19269800fb4efcff8d4082118b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; ReplicaInfo &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67842a19269800fb4efcff8d4082118b">ReadConfig</a> (const std::string &amp;file_name)</td></tr>
+<tr class="separator:a67842a19269800fb4efcff8d4082118b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa55fc1c659f788583d9b656c93a8455b" id="r_aa55fc1c659f788583d9b656c93a8455b"><td class="memItemLeft" align="right" valign="top">ResConfigData&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa55fc1c659f788583d9b656c93a8455b">ReadConfigFromFile</a> (const std::string &amp;file_name)</td></tr>
+<tr class="separator:aa55fc1c659f788583d9b656c93a8455b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -454,7 +458,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d16/resdb__config__utils_8h_source.html#l00034">34</a> of file <a class="el" href="../../d3/d16/resdb__config__utils_8h_source.html">resdb_config_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d16/resdb__config__utils_8h_source.html#l00035">35</a> of file <a class="el" href="../../d3/d16/resdb__config__utils_8h_source.html">resdb_config_utils.h</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1030,26 @@ template&lt;typename ConsensusProtocol&gt; </div>
 </div>
 </div>
 <a id="a67842a19269800fb4efcff8d4082118b" name="a67842a19269800fb4efcff8d4082118b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67842a19269800fb4efcff8d4082118b">&#9670;&#160;</a></span>ReadConfig()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a67842a19269800fb4efcff8d4082118b">&#9670;&#160;</a></span>ReadConfig() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; ReplicaInfo &gt; resdb::ReadConfig </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>file_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d97/resdb__config__utils_8cpp_source.html#l00124">124</a> of file <a class="el" href="../../d7/d97/resdb__config__utils_8cpp_source.html">resdb_config_utils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a67842a19269800fb4efcff8d4082118b" name="a67842a19269800fb4efcff8d4082118b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67842a19269800fb4efcff8d4082118b">&#9670;&#160;</a></span>ReadConfig() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1045,7 +1068,26 @@ template&lt;typename ConsensusProtocol&gt; </div>
 </div>
 </div>
 <a id="aa55fc1c659f788583d9b656c93a8455b" name="aa55fc1c659f788583d9b656c93a8455b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa55fc1c659f788583d9b656c93a8455b">&#9670;&#160;</a></span>ReadConfigFromFile()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa55fc1c659f788583d9b656c93a8455b">&#9670;&#160;</a></span>ReadConfigFromFile() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResConfigData resdb::ReadConfigFromFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>file_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d97/resdb__config__utils_8cpp_source.html#l00103">103</a> of file <a class="el" href="../../d7/d97/resdb__config__utils_8cpp_source.html">resdb_config_utils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa55fc1c659f788583d9b656c93a8455b" name="aa55fc1c659f788583d9b656c93a8455b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa55fc1c659f788583d9b656c93a8455b">&#9670;&#160;</a></span>ReadConfigFromFile() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

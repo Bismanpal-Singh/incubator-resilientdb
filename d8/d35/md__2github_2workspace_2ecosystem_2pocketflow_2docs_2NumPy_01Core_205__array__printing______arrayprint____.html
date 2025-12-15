@@ -121,15 +121,15 @@ $(function(){initNavTree('d8/d35/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_array_printing___arrayprint__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2546"></a>
-autotoc_md2546</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2547"></a>
+autotoc_md2547</h2>
 <p>layout: default title: "Array Printing (arrayprint)" parent: "NumPy Core" </p>
-<h2><a class="anchor" id="autotoc_md2547"></a>
+<h2><a class="anchor" id="autotoc_md2548"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2548"></a>
+<h1><a class="anchor" id="autotoc_md2549"></a>
 Chapter 5: Array Printing (<code>arrayprint</code>)</h1>
 <p>In the previous chapter, <a class="el" href="../../d4/d1f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_204__numeric__types______numerictypes____.html">Chapter 4: Numeric Types (<code>numerictypes</code>)</a>, we explored the different kinds of data NumPy can store in its arrays, like <code>int32</code>, <code>float64</code>, and more. Now that we know about the arrays (<a class="el" href="../../de/d16/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_201__ndarray____n__dimensional__array__.html"><code>ndarray</code></a>), their data types (<a class="el" href="../../d6/d31/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_202__dtype____data__type__object__.html"><code>dtype</code></a>), the functions that operate on them (<a class="el" href="../../d6/def/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_203__ufunc____universal__function__.html"><code>ufunc</code></a>), and the specific number types (<code>numerictypes</code>), a practical question arises: How do we actually <em>look</em> at these arrays, especially if they are very large?</p>
-<h2><a class="anchor" id="autotoc_md2549"></a>
+<h2><a class="anchor" id="autotoc_md2550"></a>
 What Problem Does <code>arrayprint</code> Solve? Making Arrays Readable</h2>
 <p>Imagine you have a NumPy array representing a large image, maybe with millions of pixel values. Or perhaps you have simulation data with thousands of temperature readings.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
@@ -142,7 +142,7 @@ What Problem Does <code>arrayprint</code> Solve? Making Arrays Readable</h2>
 <div class="line"><span class="comment"># print(list(large_array)) # &lt;-- Don&#39;t run this! It would be too long.</span></div>
 </div><!-- fragment --><p>If NumPy just dumped <em>all</em> the numbers onto your screen whenever you tried to display a large array, it would be overwhelming and useless. We need a way to show the array's contents in a concise, human-friendly format. How can we get a <em>sense</em> of the array's data without printing every single element?</p>
 <p>This is the job of NumPy's <b>array printing</b> mechanism, often referred to internally by the name of its main Python module, <code>arrayprint</code>.</p>
-<h2><a class="anchor" id="autotoc_md2550"></a>
+<h2><a class="anchor" id="autotoc_md2551"></a>
 What is Array Printing (<code>arrayprint</code>)?</h2>
 <p><code>arrayprint</code> is NumPy's <b>"pretty printer"</b> for <code>ndarray</code> objects. It's responsible for converting a NumPy array into a nicely formatted string representation that's easy to read and understand when you display it (e.g., in your Python console, Jupyter notebook, or using the <code>print()</code> function).</p>
 <p>Think of it like getting a summary report instead of the raw database dump. <code>arrayprint</code> intelligently decides how to show the array, considering things like:</p>
@@ -163,10 +163,10 @@ What is Array Printing (<code>arrayprint</code>)?</h2>
 </div><!-- fragment --><p><b>Output:</b></p>
 <div class="fragment"><div class="line">[   0    1    2 ... 1997 1998 1999]</div>
 </div><!-- fragment --><p>Instead of 2000 numbers flooding the screen, NumPy smartly printed only the first three and the last three, with <code>...</code> in between. This gives us a good idea of the array's contents (a sequence starting from 0) without being overwhelming.</p>
-<h2><a class="anchor" id="autotoc_md2551"></a>
+<h2><a class="anchor" id="autotoc_md2552"></a>
 Key Features and Options</h2>
 <p><code>arrayprint</code> has several options you can control to change how arrays are displayed.</p>
-<h3><a class="anchor" id="autotoc_md2552"></a>
+<h3><a class="anchor" id="autotoc_md2553"></a>
 1. Summarization (<code>threshold</code> and <code>edgeitems</code>)</h3>
 <ul>
 <li><code>threshold</code>: The total number of array elements that triggers summarization. If the array's <code>size</code> is greater than <code>threshold</code>, the array gets summarized. (Default: 1000)</li>
@@ -200,7 +200,7 @@ Key Features and Options</h2>
 <div class="line">With threshold=5, edgeitems=2:</div>
 <div class="line">[0 1 ... 8 9]</div>
 </div><!-- fragment --><p> You can see how lowering the <code>threshold</code> caused the array (size 10) to be summarized, and <code>edgeitems</code> controlled how many elements were shown at the ends.</p>
-<h3><a class="anchor" id="autotoc_md2553"></a>
+<h3><a class="anchor" id="autotoc_md2554"></a>
 2. Floating-Point Precision (<code>precision</code> and <code>suppress</code>)</h3>
 <ul>
 <li><code>precision</code>: Controls the number of digits displayed after the decimal point for floats. (Default: 8)</li>
@@ -232,7 +232,7 @@ Key Features and Options</h2>
 <div class="line">With precision=3, suppress=True:</div>
 <div class="line">[0.123 0.    2.987]</div>
 </div><!-- fragment --><p> Notice how <code>precision</code> changed the rounding, and <code>suppress=True</code> made the very small number (<code>1.5e-10</code>) display as <code>0.</code> and switched from scientific notation to fixed-point for the others. There's also a <code>floatmode</code> option for more fine-grained control over float formatting (e.g., 'fixed', 'unique').</p>
-<h3><a class="anchor" id="autotoc_md2554"></a>
+<h3><a class="anchor" id="autotoc_md2555"></a>
 3. Line Width (<code>linewidth</code>)</h3>
 <ul>
 <li><code>linewidth</code>: The maximum number of characters allowed per line before wrapping. (Default: 75)</li>
@@ -259,7 +259,7 @@ Key Features and Options</h2>
 <div class="line"> [0.4 0.5 0.6 0.7]</div>
 <div class="line"> [0.8 0.9 1.  1.1]]</div>
 </div><!-- fragment --><p> <em>(Note: The output might not actually wrap here because the lines are short. If the array was wider, you'd see the rows break across multiple lines with the narrower <code>linewidth</code> setting.)</em></p>
-<h3><a class="anchor" id="autotoc_md2555"></a>
+<h3><a class="anchor" id="autotoc_md2556"></a>
 4. Other Options</h3>
 <ul>
 <li><code>nanstr</code>: String representation for Not a Number. (Default: 'nan')</li>
@@ -267,7 +267,7 @@ Key Features and Options</h2>
 <li><code>sign</code>: Control sign display for floats ('-', '+', or ' ').</li>
 <li><code>formatter</code>: A dictionary to provide completely custom formatting functions for specific data types (like bool, int, float, datetime, etc.). This is more advanced.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2556"></a>
+<h2><a class="anchor" id="autotoc_md2557"></a>
 Using and Customizing Array Printing</h2>
 <p>You usually interact with array printing implicitly just by displaying an array:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
@@ -355,7 +355,7 @@ Using and Customizing Array Printing</h2>
 <div class="line"> [ 32.  855.2 362.1 434.9 133.5 148.1 522.6 725.1 395.5 377.9]</div>
 <div class="line"> [332.7 782.2 587.3 320.3 905.5 412.8 378.  911.9 972.1 400.2]</div>
 <div class="line">...</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2557"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2558"></a>
 A Glimpse Under the Hood</h2>
 <p>What happens when you call <code>print(my_array)</code>?</p>
 <ol type="1">
@@ -396,7 +396,7 @@ A Glimpse Under the Hood</h2>
 <div class="line">    NDArray--&gt;&gt;Python: Return formatted string</div>
 <div class="line">    Python--&gt;&gt;User: Display formatted string</div>
 </div><!-- fragment --><p>The core logic resides in <code>numpy/core/arrayprint.py</code>. This file contains <code>array2string</code>, <code>array_repr</code>, <code>array_str</code>, and various formatter classes (<code>FloatingFormat</code>, <code>IntegerFormat</code>, <code>BoolFormat</code>, <code>ComplexFloatingFormat</code>, <code>DatetimeFormat</code>, <code>TimedeltaFormat</code>, <code>StructuredVoidFormat</code>, etc.). The global print options themselves are managed using Python's <code>contextvars</code> in <code>numpy/core/printoptions.py</code>, allowing settings to be changed globally or temporarily within a context.</p>
-<h2><a class="anchor" id="autotoc_md2558"></a>
+<h2><a class="anchor" id="autotoc_md2559"></a>
 Conclusion</h2>
 <p>You've now learned how NumPy takes potentially huge and complex arrays and turns them into readable string representations using its <code>arrayprint</code> mechanism. Key takeaways:</p>
 <ul>

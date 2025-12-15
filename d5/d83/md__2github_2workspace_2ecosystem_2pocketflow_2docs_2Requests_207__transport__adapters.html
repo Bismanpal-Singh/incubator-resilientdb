@@ -121,21 +121,21 @@ $(function(){initNavTree('d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_transport_adapters</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2975"></a>
-autotoc_md2975</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2976"></a>
+autotoc_md2976</h2>
 <p>layout: default title: "Transport Adapters" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2976"></a>
+<h2><a class="anchor" id="autotoc_md2977"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2977"></a>
+<h1><a class="anchor" id="autotoc_md2978"></a>
 Chapter 7: Transport Adapters - Custom Delivery Routes</h1>
 <p>In the previous chapter, <a class="el" href="../../d0/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_206__exception__hierarchy.html">Chapter 6: Exception Hierarchy</a>, we learned how <code>requests</code> signals problems like network errors or bad responses. Most of the time, we rely on the default way <code>requests</code> handles sending our requests and managing connections.</p>
 <p>But what if the default way isn't quite right for a specific website or service? What if you need to tell <code>requests</code> <em>exactly</em> how to handle connections or retries for URLs starting with <code><a href="http://">http://</a></code> or <code><a href="https://">https://</a></code>, or maybe even for a completely custom scheme like <code>myprotocol://</code>?</p>
-<h2><a class="anchor" id="autotoc_md2978"></a>
+<h2><a class="anchor" id="autotoc_md2979"></a>
 The Problem: Needing Special Handling</h2>
 <p>Imagine you're interacting with an API that's known to be a bit unreliable. Sometimes requests to it fail temporarily, but succeed if you just try again a second later. The default <code>requests</code> behavior might not retry enough times, or maybe you want to retry only on specific error codes.</p>
 <p>Or perhaps you need to connect to a server using very specific security settings (SSL/TLS versions or ciphers) that aren't the default.</p>
 <p>How can you customize <em>how</em> <code>requests</code> sends requests and manages connections for specific types of URLs?</p>
-<h2><a class="anchor" id="autotoc_md2979"></a>
+<h2><a class="anchor" id="autotoc_md2980"></a>
 Meet Transport Adapters: The Delivery Services</h2>
 <p>This is where <b>Transport Adapters</b> come in!</p>
 <p>Think of a <code>requests</code> <a class="el" href="../../dd/d2f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_203__session.html">Session</a> object like a customer ordering packages online. The customer (Session) wants to send a package (a web request) to a specific address (a URL).</p>
@@ -146,7 +146,7 @@ Meet Transport Adapters: The Delivery Services</h2>
 <li>That delivery service then handles all the details of picking up, transporting, and delivering the package (sending the request, managing connections, handling retries, etc.).</li>
 </ul>
 <p>In <code>requests</code>, a Transport Adapter defines <em>how</em> requests are actually sent and connections are managed for specific <b>URL schemes</b> (like <code><a href="http://">http://</a></code> or <code><a href="https://">https://</a></code>).</p>
-<h2><a class="anchor" id="autotoc_md2980"></a>
+<h2><a class="anchor" id="autotoc_md2981"></a>
 The Default Delivery Service: <code>HTTPAdapter</code></h2>
 <p>By default, when you create a <code>Session</code> object, it automatically sets up the standard "delivery services" for web addresses:</p>
 <ul>
@@ -162,7 +162,7 @@ The Default Delivery Service: <code>HTTPAdapter</code></h2>
 <li><b>Basic Retries:</b> Handling some low-level connection retries (though often you might want more control).</li>
 </ol>
 <p>So, when you use a <code>Session</code> and make a <code>GET</code> request to <code><a href="https://example.com">https://example.com</a></code>, the Session looks up the adapter for <code><a href="https://">https://</a></code>, finds the default <code>HTTPAdapter</code>, and hands the request off to it for delivery.</p>
-<h2><a class="anchor" id="autotoc_md2981"></a>
+<h2><a class="anchor" id="autotoc_md2982"></a>
 Mounting Adapters: Choosing Your Delivery Service</h2>
 <p>How does a <code>Session</code> know which adapter to use for which URL prefix? It uses a mechanism called <b>mounting</b>.</p>
 <p>Think of it like telling your <code>Session</code> customer: "For any address starting with `https://`, use this specific delivery service (adapter)."</p>
@@ -221,7 +221,7 @@ Mounting Adapters: Choosing Your Delivery Service</h2>
 <li><code> Requests to other HTTPS sites like</code><a href="https://google.com">https://google.com</a><code>will still use the original default adapter mounted for the shorter</code><a href="https://">https://</a><code>prefix.</code></li>
 <li><code> The</code>s.get_adapter(url)` method shows how the session selects the adapter based on the longest matching prefix.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2982"></a>
+<h2><a class="anchor" id="autotoc_md2983"></a>
 Use Case: Customizing Retries</h2>
 <p>Let's go back to the unreliable API example. We want to configure <code>requests</code> to automatically retry requests to <code><a href="https://flaky-api.example.com">https://flaky-api.example.com</a></code> up to 5 times if certain errors occur (like temporary server errors or connection issues).</p>
 <p>The <code>HTTPAdapter</code>'s retry logic is controlled by a <code>Retry</code> object from the underlying <code>urllib3</code> library. We can create our own <code>Retry</code> object with custom settings and pass it to a <em>new</em> <code>HTTPAdapter</code> instance.</p>
@@ -282,7 +282,7 @@ Use Case: Customizing Retries</h2>
 <li>Requests to <code><a href="https://httpbin.org">https://httpbin.org</a></code> don't match the specific prefix, so they fall back to the default adapter mounted for <code><a href="https://">https://</a></code>, which has default retry behavior.</li>
 </ol>
 <p>This allows fine-grained control over connection handling for different destinations.</p>
-<h2><a class="anchor" id="autotoc_md2983"></a>
+<h2><a class="anchor" id="autotoc_md2984"></a>
 How It Works Internally: The Session-Adapter Dance</h2>
 <p>Let's trace the steps when you call <code>session.get(url)</code>:</p>
 <ol type="1">
@@ -468,7 +468,7 @@ How It Works Internally: The Session-Adapter Dance</h2>
 <div class="line"> </div>
 <div class="line">    # ... other helper methods (cert_verify, proxy_manager_for, request_url) ...</div>
 </div><!-- fragment --><p>The key idea is that the <code>Session</code> finds the right <code>Adapter</code> using <code>mount</code> prefixes, and then the <code>Adapter</code> uses <code>urllib3</code> to handle the low-level details of connection pooling, retries, and HTTP communication.</p>
-<h2><a class="anchor" id="autotoc_md2984"></a>
+<h2><a class="anchor" id="autotoc_md2985"></a>
 Other Use Cases</h2>
 <p>Besides custom retries, you might use Transport Adapters for:</p>
 <ul>
@@ -477,7 +477,7 @@ Other Use Cases</h2>
 <li><b>Testing:</b> You could create a custom adapter that doesn't actually make network requests but returns predefined responses, useful for testing your application without hitting real servers.</li>
 <li><b>Custom Protocols:</b> If you needed to interact with a non-HTTP protocol, you could theoretically write a custom <code>BaseAdapter</code> subclass to handle it.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2985"></a>
+<h2><a class="anchor" id="autotoc_md2986"></a>
 Conclusion</h2>
 <p>You've learned about <b>Transport Adapters</b>, the pluggable backends that <code>requests</code> uses to handle the actual sending of requests and management of connections for different URL schemes (<code><a href="http://">http://</a></code>, <code><a href="https://">https://</a></code>, etc.).</p>
 <ul>

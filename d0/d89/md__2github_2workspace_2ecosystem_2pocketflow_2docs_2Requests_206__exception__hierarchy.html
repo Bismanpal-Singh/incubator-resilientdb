@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/d89/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_exception_hierarchy</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2965"></a>
-autotoc_md2965</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2966"></a>
+autotoc_md2966</h2>
 <p>layout: default title: "Exception Hierarchy" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2966"></a>
+<h2><a class="anchor" id="autotoc_md2967"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md2967"></a>
+<h1><a class="anchor" id="autotoc_md2968"></a>
 Chapter 6: When Things Go Wrong - The Exception Hierarchy</h1>
 <p>In <a class="el" href="../../d7/df0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_205__authentication__handlers.html">Chapter 5: Authentication Handlers</a>, we learned how to prove our identity to websites that require login or API keys. We assumed our requests would work if we provided the correct credentials.</p>
 <p>But what happens when things <em>don't</em> go as planned? The internet isn't always reliable. Websites go down, networks have hiccups, URLs might be typed incorrectly, or servers might just be having a bad day. How does <code>requests</code> tell us about these problems, and how can we handle them gracefully in our code?</p>
-<h2><a class="anchor" id="autotoc_md2968"></a>
+<h2><a class="anchor" id="autotoc_md2969"></a>
 The Problem: Dealing with Request Failures</h2>
 <p>Imagine you're building a script to check the weather using an online weather API. You use <code>requests.get()</code> to fetch the weather data. What could go wrong?</p>
 <ul>
@@ -146,7 +146,7 @@ The Problem: Dealing with Request Failures</h2>
 <li><b>Understand</b> <em>what kind</em> of error it was (network issue? timeout? bad URL?).</li>
 <li><b>React</b> appropriately (e.g., print a helpful message, try again later, use a default value).</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2969"></a>
+<h2><a class="anchor" id="autotoc_md2970"></a>
 The Solution: A Family Tree of Errors</h2>
 <p><code>Requests</code> helps us by using a system of specific error messages called <b>exceptions</b>. When something goes wrong, <code>requests</code> doesn't just give up silently; it <b>raises an exception</b>.</p>
 <p>Think of it like a doctor diagnosing an illness. A doctor doesn't just say "You're sick." They give a specific diagnosis: "You have the flu," or "You have a broken arm," or "You have allergies." Each diagnosis tells you something specific about the problem and how to treat it.</p>
@@ -168,7 +168,7 @@ The Solution: A Family Tree of Errors</h2>
 </li>
 </ul>
 <p>This hierarchy allows you to decide how specific you want to be when handling errors.</p>
-<h2><a class="anchor" id="autotoc_md2970"></a>
+<h2><a class="anchor" id="autotoc_md2971"></a>
 Key Members of the Exception Family</h2>
 <p>All <code>requests</code> exceptions live inside the <code>requests.exceptions</code> module. You usually import the main <code>requests</code> library and access them like <code>requests.exceptions.ConnectionError</code>.</p>
 <p>Here are some of the most common ones you'll encounter:</p>
@@ -192,7 +192,7 @@ Key Members of the Exception Family</h2>
 <li><b><code>requests.exceptions.InvalidURL</code></b>: The URL was malformed in some way.</li>
 <li><b><code>requests.exceptions.InvalidSchema</code></b>: The URL scheme was not recognized (e.g., <code><a href="ftp://">ftp://</a></code> might not be supported by default).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2971"></a>
+<h2><a class="anchor" id="autotoc_md2972"></a>
 Handling Exceptions: The <code>try...except</code> Block</h2>
 <p>How do we use this hierarchy in our code? We use Python's <code>try...except</code> block.</p>
 <ol type="1">
@@ -310,7 +310,7 @@ Handling Exceptions: The <code>try...except</code> Block</h2>
 <li>This allows us to provide specific feedback or recovery logic for different error scenarios.</li>
 </ul>
 <p><b>Inheritance Benefit:</b> If you write <code>except requests.exceptions.Timeout as e:</code>, this block will catch <em>both</em> <code>ConnectTimeout</code> and <code>ReadTimeout</code> because they inherit from <code>Timeout</code>.</p>
-<h2><a class="anchor" id="autotoc_md2972"></a>
+<h2><a class="anchor" id="autotoc_md2973"></a>
 How It Works Internally: Wrapping Lower-Level Errors</h2>
 <p><code>Requests</code> doesn't handle network connections directly. It uses a lower-level library called <code>urllib3</code> under the hood (managed via <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Transport Adapters</a>). When <code>urllib3</code> encounters a network problem (like a connection error or timeout), it raises its <em>own</em> specific exceptions (e.g., <code>urllib3.exceptions.MaxRetryError</code>, <code>urllib3.exceptions.NewConnectionError</code>, <code>urllib3.exceptions.ReadTimeoutError</code>).</p>
 <p><code>Requests</code> catches these <code>urllib3</code> exceptions inside its <a class="el" href="../../d5/d83/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_207__transport__adapters.html">Transport Adapters</a> (specifically, the <code>HTTPAdapter.send</code> method) and then <b>raises its own corresponding exception</b> from the <code>requests.exceptions</code> hierarchy. This simplifies things for you – you only need to worry about catching <code>requests</code> exceptions, not the underlying <code>urllib3</code> ones.</p>
@@ -443,7 +443,7 @@ How It Works Internally: Wrapping Lower-Level Errors</h2>
 <div class="line">        <span class="comment"># ... (build and return the Response object if successful) ...</span></div>
 <div class="line">        <span class="keywordflow">return</span> self.build_response(request, resp)</div>
 </div><!-- fragment --><p>This wrapping makes your life easier by providing a consistent set of exceptions (<code>requests.exceptions</code>) to handle, regardless of the underlying <code>urllib3</code> details.</p>
-<h2><a class="anchor" id="autotoc_md2973"></a>
+<h2><a class="anchor" id="autotoc_md2974"></a>
 Conclusion</h2>
 <p>You've learned about the <code>requests</code> <b>Exception Hierarchy</b> – a family tree of error types that <code>requests</code> raises when things go wrong.</p>
 <ul>

@@ -1,5 +1,9 @@
 var NAVTREEINDEX6 =
 {
+"d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#ada4d67e1fec7d392638421f8d7f8702d":[0,0,20,5,2,35],
+"d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#ada4d67e1fec7d392638421f8d7f8702d":[1,0,6,4,2,35],
+"d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#adce788c83cc8cc0f59548b0cd015b27e":[0,0,20,5,2,38],
+"d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#adce788c83cc8cc0f59548b0cd015b27e":[1,0,6,4,2,38],
 "d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#add4b7f05b7f989dcaa9d70e956674a51":[0,0,20,5,2,23],
 "d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#add4b7f05b7f989dcaa9d70e956674a51":[1,0,6,4,2,23],
 "d5/d13/classresdb__validator_1_1transaction_1_1Transaction.html#ae1234bb4d3ba4e94146d5c72f03b4b3d":[0,0,20,5,2,21],
@@ -245,9 +249,5 @@ var NAVTREEINDEX6 =
 "d5/df9/classContractClient.html#af35f57de929a5b151bf49ba8a883cea0":[1,0,10,1],
 "d6/d00/global__state_8h.html":[2,0,5,1,1,8],
 "d6/d00/global__state_8h_source.html":[2,0,5,1,1,8],
-"d6/d05/classresdb_1_1contract_1_1GlobalState.html":[0,0,16,3,5],
-"d6/d05/classresdb_1_1contract_1_1GlobalState.html":[1,0,2,1,5],
-"d6/d05/classresdb_1_1contract_1_1GlobalState.html#a42804b9b0151a682c7ff12d75e365b75":[0,0,16,3,5,4],
-"d6/d05/classresdb_1_1contract_1_1GlobalState.html#a42804b9b0151a682c7ff12d75e365b75":[1,0,2,1,5,4],
-"d6/d05/classresdb_1_1contract_1_1GlobalState.html#a5ae308491934a265ca773942ecd7fce8":[0,0,16,3,5,0]
+"d6/d05/classresdb_1_1contract_1_1GlobalState.html":[0,0,16,3,5]
 };

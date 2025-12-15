@@ -121,18 +121,18 @@ $(function(){initNavTree('dd/d41/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_a2a_client_implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1999"></a>
-autotoc_md1999</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2000"></a>
+autotoc_md2000</h2>
 <p>layout: default title: "A2A Client Implementation" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md2000"></a>
+<h2><a class="anchor" id="autotoc_md2001"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2001"></a>
+<h1><a class="anchor" id="autotoc_md2002"></a>
 Chapter 5: A2A Client Implementation</h1>
 <p>In the <a class="el" href="../../d6/dcb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_204__a2a__server__implementation.html">previous chapter</a>, we learned how to build the "embassy" for our AI agent – the <b>A2A Server</b>. This server listens for incoming requests, acting as the official entry point for our agent according to the A2A protocol rules.</p>
 <p>But how does someone actually <em>visit</em> this embassy and make a request? If you build a fantastic translation agent server, how does your chat application, or another AI agent, actually <em>use</em> it to translate text?</p>
 <p>This chapter tackles that problem: <b>How do we build the component that <em>initiates</em> communication with an A2A agent server?</b></p>
 <p>This is the job of the <b>A2A Client Implementation</b>.</p>
-<h2><a class="anchor" id="autotoc_md2002"></a>
+<h2><a class="anchor" id="autotoc_md2003"></a>
 What is an A2A Client? The Agent's Customer</h2>
 <p>Think about how you use the web:</p>
 <ul>
@@ -152,15 +152,15 @@ What is an A2A Client? The Agent's Customer</h2>
 <li><b>Understands the Reply:</b> It receives the server's JSON-RPC response, checks for success or errors, and parses the results (like the initial <code>Task</code> object or streaming updates).</li>
 </ol>
 <p>Essentially, the A2A Client is the part of your application (or another agent) that <em>consumes</em> the services offered by an A2A agent server.</p>
-<h2><a class="anchor" id="autotoc_md2003"></a>
+<h2><a class="anchor" id="autotoc_md2004"></a>
 Why Do We Need It?</h2>
 <p>Your application's core logic (e.g., the chat interface, the document summarizer UI) shouldn't need to worry about the messy details of JSON-RPC formatting, HTTP headers, or handling network connections.</p>
 <p>The A2A Client acts as an <b>intermediary</b> or <b>adapter</b>. It provides a cleaner, simpler way for your application code to interact with a remote A2A agent. Your application can just say, "Client, please send this message to the agent," and the client handles all the protocol details.</p>
-<h2><a class="anchor" id="autotoc_md2004"></a>
+<h2><a class="anchor" id="autotoc_md2005"></a>
 Using an A2A Client Library</h2>
 <p>Just like we used <code>A2AServer</code> libraries to simplify building the server in <a class="el" href="../../d6/dcb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_204__a2a__server__implementation.html">Chapter 4</a>, the <code>Google A2A</code> project provides <code>A2AClient</code> libraries to make building the client side easier.</p>
 <p>Let's see how we might use these libraries in JavaScript and Python to talk to the "Echo Agent" server we discussed previously.</p>
-<h3><a class="anchor" id="autotoc_md2005"></a>
+<h3><a class="anchor" id="autotoc_md2006"></a>
 JavaScript Example (using <code>A2AClient</code> from the library)</h3>
 <p>Imagine we're building a simple command-line tool (<code>cli.ts</code>) that lets a user chat with our Echo Agent running at <code><a href="http://localhost:4000">http://localhost:4000</a></code>.</p>
 <div class="fragment"><div class="line">// File: samples/js/src/cli.ts (Simplified Snippet)</div>
@@ -220,7 +220,7 @@ JavaScript Example (using <code>A2AClient</code> from the library)</h3>
 <div class="line">Received Agent Event: { status: { state: &#39;completed&#39;, message: { role: &#39;agent&#39;, parts: [ { text: &#39;You said: Hello Echo Agent!&#39; } ] } } }</div>
 <div class="line">Agent stream finished.</div>
 </div><!-- fragment --><p>The client library takes care of the underlying network communication and event parsing.</p>
-<h3><a class="anchor" id="autotoc_md2006"></a>
+<h3><a class="anchor" id="autotoc_md2007"></a>
 Python Example (using <code>A2AClient</code> from the library)</h3>
 <p>Let's create a similar command-line tool in Python (<code>cli/__main__.py</code>) talking to an agent at <code><a href="http://localhost:5000">http://localhost:5000</a></code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># File: samples/python/hosts/cli/__main__.py (Simplified Snippet)</span></div>
@@ -280,7 +280,7 @@ Python Example (using <code>A2AClient</code> from the library)</h3>
 <div class="line">Received Agent Event: {&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;result&quot;: {&quot;status&quot;: {&quot;state&quot;: &quot;completed&quot;, &quot;message&quot;: {&quot;role&quot;: &quot;agent&quot;, &quot;parts&quot;: [{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;You said: Hi Python Agent!&quot;}]}}}}</div>
 <div class="line">Agent stream finished.</div>
 </div><!-- fragment --><p>In both examples, the <code>A2AClient</code> library provides a high-level interface (<code>sendTaskSubscribe</code>, <code>send_task_streaming</code>, <code>sendTask</code>, <code>send_task</code>) that simplifies the process of communicating with an A2A server.</p>
-<h2><a class="anchor" id="autotoc_md2007"></a>
+<h2><a class="anchor" id="autotoc_md2008"></a>
 Under the Hood: How the Client Works</h2>
 <p>What's happening inside the <code>A2AClient</code> library when you call a method like <code>sendTaskSubscribe</code>?</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -332,7 +332,7 @@ Under the Hood: How the Client Works</h2>
 <li><b>Return/Yield Result:</b> The library returns the parsed result (for non-streaming) or yields the parsed events (for streaming) to your application code.</li>
 </ol>
 <p>The client libraries (like <code>samples/js/src/client/client.ts</code> and <code>samples/python/common/client/client.py</code>) contain internal helper functions (e.g., <code>_makeHttpRequest</code>, <code>_handleJsonResponse</code>, <code>_handleStreamingResponse</code> in the JS client; <code>_send_request</code> in the Python client) to manage these steps.</p>
-<h2><a class="anchor" id="autotoc_md2008"></a>
+<h2><a class="anchor" id="autotoc_md2009"></a>
 Conclusion</h2>
 <p>The <b>A2A Client</b> is the component that <em>initiates</em> conversations with A2A agent servers. It acts on behalf of your application or another agent, translating simple method calls (like "send this message") into correctly formatted A2A protocol requests (JSON-RPC over HTTP).</p>
 <p>It handles the complexities of:</p>

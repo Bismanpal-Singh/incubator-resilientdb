@@ -121,12 +121,12 @@ $(function(){initNavTree('df/dc9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_dbimpl</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2280"></a>
-autotoc_md2280</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2281"></a>
+autotoc_md2281</h2>
 <p>layout: default title: "DBImpl" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2281"></a>
+<h2><a class="anchor" id="autotoc_md2282"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2282"></a>
+<h1><a class="anchor" id="autotoc_md2283"></a>
 Chapter 4: DBImpl - The Database General Manager</h1>
 <p>In the previous chapters, we've explored some key ingredients of LevelDB:</p><ul>
 <li><a class="el" href="../../d2/dbb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_201__table______sstable______tablecache.html">SSTables</a> for storing data permanently on disk.</li>
@@ -134,12 +134,12 @@ Chapter 4: DBImpl - The Database General Manager</h1>
 <li>The <a class="el" href="../../df/d85/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_203__write__ahead__log____wal________logwriter__logreader.html">Write-Ahead Log (WAL)</a> for ensuring durability even if the system crashes.</li>
 </ul>
 <p>But how do all these pieces work together? Who tells LevelDB to write to the WAL first, <em>then</em> the MemTable? Who decides when the MemTable is full and needs to be flushed to an SSTable? Who coordinates reading data from both memory <em>and</em> disk files?</p>
-<h2><a class="anchor" id="autotoc_md2283"></a>
+<h2><a class="anchor" id="autotoc_md2284"></a>
 What's the Problem? Orchestrating Everything</h2>
 <p>Imagine a large library. You have librarians putting books on shelves (SSTables), a front desk clerk taking newly returned books (MemTable), and a security guard logging everyone who enters (WAL). But someone needs to be in charge of the whole operation – the <b>General Manager</b>.</p>
 <p>This manager doesn't shelve every book themselves, but they direct the staff, manage the budget, decide when to rearrange sections (compaction), and handle emergencies (recovery). Without a manager, it would be chaos!</p>
 <p>LevelDB needs a similar central coordinator to manage all its different parts and ensure they work together smoothly and correctly.</p>
-<h2><a class="anchor" id="autotoc_md2284"></a>
+<h2><a class="anchor" id="autotoc_md2285"></a>
 DBImpl: The General Manager of LevelDB</h2>
 <p>The <code>DBImpl</code> class is the heart of LevelDB's implementation. It's the <b>General Manager</b> of our database library. It doesn't <em>contain</em> the data itself (that's in MemTables and SSTables), but it <b>orchestrates</b> almost every operation.</p>
 <ul>
@@ -150,7 +150,7 @@ DBImpl: The General Manager of LevelDB</h2>
 <li>It handles the recovery process when the database starts up.</li>
 </ul>
 <p>Almost every interaction you have with a LevelDB database object ultimately goes through <code>DBImpl</code>.</p>
-<h2><a class="anchor" id="autotoc_md2285"></a>
+<h2><a class="anchor" id="autotoc_md2286"></a>
 Key Responsibilities of DBImpl</h2>
 <p>Think of the <code>DBImpl</code> general manager juggling several key tasks:</p>
 <ol type="1">
@@ -161,7 +161,7 @@ Key Responsibilities of DBImpl</h2>
 <li><b>Snapshot Management:</b> Handling requests to create and release snapshots, which provide a consistent view of the database at a specific point in time.</li>
 </ol>
 <p><code>DBImpl</code> uses other components extensively to perform these tasks. It holds references to the active MemTable (<code>mem_</code>), the immutable MemTable (<code>imm_</code>), the WAL (<code>log_</code>), the <code>TableCache</code>, and the <code>VersionSet</code> (which tracks all the SSTable files).</p>
-<h2><a class="anchor" id="autotoc_md2286"></a>
+<h2><a class="anchor" id="autotoc_md2287"></a>
 How DBImpl Handles Writes</h2>
 <p>Let's trace a simple <code>Put</code> operation:</p>
 <ol type="1">
@@ -245,7 +245,7 @@ How DBImpl Handles Writes</h2>
 <div class="line">        DBImpl-&gt;&gt;WriterQueue: Remove writer, Signal next</div>
 <div class="line">        DBImpl--&gt;&gt;App: Return Error Status</div>
 <div class="line">    end</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2287"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2288"></a>
 How DBImpl Handles Reads</h2>
 <p>Reading data involves checking different places in a specific order to ensure the most recent value is found:</p>
 <ol type="1">
@@ -336,7 +336,7 @@ How DBImpl Handles Reads</h2>
 <div class="line">            DBImpl--&gt;&gt;App: Return value / NotFound</div>
 <div class="line">        end</div>
 <div class="line">    end</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2288"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2289"></a>
 Managing Background Work (Compaction)</h2>
 <p><code>DBImpl</code> is responsible for kicking off background work. It doesn't <em>do</em> the compaction itself (that logic is largely within <a class="el" href="../../df/d5d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_208__compaction.html">Compaction</a> and <a class="el" href="../../d2/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_206__version______versionset.html">VersionSet</a>), but it manages the <em>triggering</em> and the background thread.</p>
 <ul>
@@ -394,7 +394,7 @@ Managing Background Work (Compaction)</h2>
 <div class="line">    J --&gt; K[&quot;Mark BG Scheduled = false&quot;]</div>
 <div class="line">    K --&gt; L[&quot;Signal Waiting Threads&quot;]</div>
 <div class="line">    L --&gt; B</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2289"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2290"></a>
 Recovery on Startup</h2>
 <p>When you open a database, <code>DBImpl::Open</code> orchestrates the recovery process:</p>
 <ol type="1">
@@ -448,7 +448,7 @@ Recovery on Startup</h2>
 <div class="line">}</div>
 <div class="line"><span class="comment">// After loop, handle the final state of &#39;mem&#39;</span></div>
 </div><!-- fragment --><p><b>Explanation:</b> This loop reads each record (a <code>WriteBatch</code>) from the log file using <code>reader.ReadRecord</code>. It then applies the batch's changes directly to an in-memory <code>MemTable</code> (<code>InsertInto(&amp;batch, mem)</code>), effectively replaying the lost writes. It even handles flushing this MemTable if it fills up during the recovery process.</p>
-<h2><a class="anchor" id="autotoc_md2290"></a>
+<h2><a class="anchor" id="autotoc_md2291"></a>
 The DBImpl Class (Code Glimpse)</h2>
 <p>The definition of <code>DBImpl</code> in <code>db_impl.h</code> shows the key components it manages:</p>
 <div class="fragment"><div class="line"><span class="comment">// --- Simplified from db/db_impl.h ---</span></div>
@@ -525,7 +525,7 @@ The DBImpl Class (Code Glimpse)</h2>
 <div class="line">  CompactionStats stats_[config::kNumLevels] GUARDED_BY(mutex_);</div>
 <div class="line">};</div>
 </div><!-- fragment --><p><b>Explanation:</b> This header shows <code>DBImpl</code> inheriting from the public <code>DB</code> interface. It contains references to essential components like the <code>Env</code>, <code>Options</code>, <code>TableCache</code>, <code>MemTable</code> (<code>mem_</code> and <code>imm_</code>), WAL (<code>log_</code>, <code>logfile_</code>), and <code>VersionSet</code>. Crucially, it also has a <code>mutex_</code> to protect shared state accessed by multiple threads (foreground application threads and background compaction threads) and condition variables (<code>background_work_finished_signal_</code>) to allow threads to wait for background work.</p>
-<h2><a class="anchor" id="autotoc_md2291"></a>
+<h2><a class="anchor" id="autotoc_md2292"></a>
 Conclusion</h2>
 <p><code>DBImpl</code> is the central nervous system of LevelDB. It doesn't store the data itself, but it acts as the <b>General Manager</b>, receiving requests and coordinating the actions of all the other specialized components like the MemTable, WAL, VersionSet, and TableCache. It handles the intricate dance between fast in-memory writes, durable logging, persistent disk storage, background maintenance, and safe recovery. Understanding <code>DBImpl</code>'s role is key to seeing how all the pieces of LevelDB fit together to create a functional database.</p>
 <p>One tool <code>DBImpl</code> uses to make writes efficient and atomic is the <code>WriteBatch</code>. Let's see how that works next.</p>

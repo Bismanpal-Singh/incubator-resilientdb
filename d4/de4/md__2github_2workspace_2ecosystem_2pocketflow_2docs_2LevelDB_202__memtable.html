@@ -121,20 +121,20 @@ $(function(){initNavTree('d4/de4/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_memtable</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2258"></a>
-autotoc_md2258</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2259"></a>
+autotoc_md2259</h2>
 <p>layout: default title: "MemTable" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2259"></a>
+<h2><a class="anchor" id="autotoc_md2260"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2260"></a>
+<h1><a class="anchor" id="autotoc_md2261"></a>
 Chapter 2: MemTable</h1>
 <p>In <a class="el" href="../../d2/dbb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_201__table______sstable______tablecache.html">Chapter 1: Table / SSTable &amp; TableCache</a>, we learned how LevelDB stores the bulk of its data permanently on disk in sorted, immutable files called SSTables. We also saw how the <code>TableCache</code> helps access these files efficiently.</p>
 <p>But imagine you're updating your data frequently – adding new users, changing scores, deleting temporary items. Writing every tiny change directly to a new SSTable file on disk would be incredibly slow, like carving every single note onto a stone tablet! We need a faster way to handle recent changes.</p>
-<h2><a class="anchor" id="autotoc_md2261"></a>
+<h2><a class="anchor" id="autotoc_md2262"></a>
 What's the Problem? Slow Disk Writes for Every Change</h2>
 <p>Disk drives (even fast SSDs) are much slower than your computer's main memory (RAM). If LevelDB wrote every <code>Put</code> or <code>Delete</code> operation straight to an SSTable file, your application would constantly be waiting for the disk, making it feel sluggish.</p>
 <p>How can we accept new writes quickly but still eventually store them permanently on disk?</p>
-<h2><a class="anchor" id="autotoc_md2262"></a>
+<h2><a class="anchor" id="autotoc_md2263"></a>
 MemTable: The Fast In-Memory Notepad</h2>
 <p>LevelDB's solution is the <b>MemTable</b>. Think of it as a <b>temporary notepad</b> or a <b>scratchpad</b> that lives entirely in your computer's fast RAM.</p>
 <ol type="1">
@@ -146,7 +146,7 @@ MemTable: The Fast In-Memory Notepad</h2>
 <p>So, when you write data:</p>
 <p><em>Your Application</em> -&gt; <code>Put("user123", "data")</code> -&gt; <b>MemTable</b> (Fast RAM write!)</p>
 <p>This makes write operations feel almost instantaneous to your application.</p>
-<h2><a class="anchor" id="autotoc_md2263"></a>
+<h2><a class="anchor" id="autotoc_md2264"></a>
 How Reads Use the MemTable</h2>
 <p>When you try to read data using <code>Get(key)</code>, LevelDB is smart. It knows the most recent data might still be on the "notepad" (MemTable). So, it checks there <em>first</em>:</p>
 <ol type="1">
@@ -190,7 +190,7 @@ How Reads Use the MemTable</h2>
 <div class="line">            LevelDB--&gt;&gt;Client: Return &quot;old_value&quot; / NotFound</div>
 <div class="line">        end</div>
 <div class="line">    end</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2264"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2265"></a>
 What Happens When the Notepad Fills Up?</h2>
 <p>The MemTable lives in RAM, which is limited. We can't just keep adding data to it forever. LevelDB has a configured size limit for the MemTable ( <code>options.write_buffer_size</code>, often a few megabytes).</p>
 <p>When the MemTable gets close to this size:</p>
@@ -220,7 +220,7 @@ What Happens When the Notepad Fills Up?</h2>
 <div class="line">    end</div>
 <div class="line"> </div>
 <div class="line">    style G fill:#f9f,stroke:#333,stroke-width:2px</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2265"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2266"></a>
 Under the Hood: Keeping it Sorted with a SkipList</h2>
 <p>We mentioned that the MemTable keeps keys sorted. Why?</p>
 <ol type="1">
@@ -269,7 +269,7 @@ Under the Hood: Keeping it Sorted with a SkipList</h2>
 <div class="line">  <span class="comment">// Constructor, Ref/Unref omitted for brevity...</span></div>
 <div class="line">};</div>
 </div><!-- fragment --><p>This header shows the <code>MemTable</code> class uses an <code>Arena</code> for memory management and a <code>Table</code> (which is a <code>SkipList</code>) to store the data.</p>
-<h2><a class="anchor" id="autotoc_md2266"></a>
+<h2><a class="anchor" id="autotoc_md2267"></a>
 Adding and Getting Data (Code View)</h2>
 <p>Let's look at simplified versions of <code>Add</code> and <code>Get</code>.</p>
 <p><b>Adding an Entry:</b></p>
@@ -362,7 +362,7 @@ Adding and Getting Data (Code View)</h2>
 </li>
 <li><b>Not Found:</b> If no matching key is found, it returns <code>false</code>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2267"></a>
+<h2><a class="anchor" id="autotoc_md2268"></a>
 Conclusion</h2>
 <p>The <b>MemTable</b> is LevelDB's crucial in-memory cache for recent writes. It acts like a fast notepad:</p>
 <ul>

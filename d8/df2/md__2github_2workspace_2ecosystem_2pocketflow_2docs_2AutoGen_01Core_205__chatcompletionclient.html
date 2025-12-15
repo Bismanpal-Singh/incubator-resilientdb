@@ -121,12 +121,12 @@ $(function(){initNavTree('d8/df2/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_chatcompletionclient</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md753"></a>
-autotoc_md753</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md754"></a>
+autotoc_md754</h2>
 <p>layout: default title: "ChatCompletionClient" parent: "AutoGen Core" </p>
-<h2><a class="anchor" id="autotoc_md754"></a>
+<h2><a class="anchor" id="autotoc_md755"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md755"></a>
+<h1><a class="anchor" id="autotoc_md756"></a>
 Chapter 5: ChatCompletionClient - Talking to the Brains</h1>
 <p>So far, we've learned about:</p><ul>
 <li><a class="el" href="../../d6/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_201__agent.html">Agents</a>: The workers in our system.</li>
@@ -136,7 +136,7 @@ Chapter 5: ChatCompletionClient - Talking to the Brains</h1>
 </ul>
 <p>But how does an agent actually <em>think</em> or <em>generate text</em>? Many powerful agents rely on Large Language Models (LLMs) – think of models like GPT-4, Claude, or Gemini – as their "brains". How does an agent in AutoGen Core communicate with these external LLM services?</p>
 <p>This is where the <b><code>ChatCompletionClient</code></b> comes in. It's the dedicated component for talking to LLMs.</p>
-<h2><a class="anchor" id="autotoc_md756"></a>
+<h2><a class="anchor" id="autotoc_md757"></a>
 Motivation: Bridging the Gap to LLMs</h2>
 <p>Imagine you want to build an agent that can summarize long articles.</p><ol type="1">
 <li>You give the agent an article (as a message).</li>
@@ -147,7 +147,7 @@ Motivation: Bridging the Gap to LLMs</h2>
 </ol>
 <p>How does the agent handle the technical details of connecting to the LLM's specific API, formatting the request correctly, sending it over the internet, and understanding the response?</p>
 <p>The <code>ChatCompletionClient</code> solves this! Think of it as the <b>standard phone line and translator</b> connecting your agent to the LLM service. You tell the client <em>what</em> to say (the conversation history and instructions), and it handles <em>how</em> to say it to the specific LLM and translates the LLM's reply back into a standard format.</p>
-<h2><a class="anchor" id="autotoc_md757"></a>
+<h2><a class="anchor" id="autotoc_md758"></a>
 Key Concepts: Understanding the LLM Communicator</h2>
 <p>Let's break down the <code>ChatCompletionClient</code>:</p>
 <ol type="1">
@@ -175,7 +175,7 @@ Key Concepts: Understanding the LLM Communicator</h2>
 </li>
 <li><b>Token Tracking:</b> The client automatically tracks token usage (<code>prompt_tokens</code>, <code>completion_tokens</code>) for each call. You can query the total usage via methods like <code>total_usage()</code>. This is vital for monitoring costs, as most LLM APIs charge based on tokens.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md758"></a>
+<h2><a class="anchor" id="autotoc_md759"></a>
 Use Case Example: Summarizing Text with an LLM</h2>
 <p>Let's build a simplified scenario where we use a <code>ChatCompletionClient</code> to ask an LLM to summarize text.</p>
 <p><b>Goal:</b> Send text to an LLM via a client and get a summary back.</p>
@@ -272,7 +272,7 @@ Use Case Example: Summarizing Text with an LLM</h2>
 <li>Process the <code>CreateResult</code> (e.g., extract the summary text, check for function calls if tools were provided).</li>
 <li>Potentially send the result as a new message to another agent or return it.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md759"></a>
+<h2><a class="anchor" id="autotoc_md760"></a>
 Under the Hood: How the Client Talks to the LLM</h2>
 <p>What happens when you call <code>await client.create(...)</code>?</p>
 <p><b>Conceptual Flow:</b></p>
@@ -310,17 +310,17 @@ Under the Hood: How the Client Talks to the LLM</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md760"></a>
+<h1><a class="anchor" id="autotoc_md761"></a>
 From: models/_model_client.py (Simplified ABC)</h1>
 <p>from abc import ABC, abstractmethod from typing import Sequence, Optional, Mapping, Any, AsyncGenerator, Union from ._types import LLMMessage, CreateResult, RequestUsage from ..tools import Tool, ToolSchema from .. import CancellationToken</p>
 <p>class ChatCompletionClient(ABC): @abstractmethod async def create( self, messages: Sequence[LLMMessage], *, tools: Sequence[Tool | ToolSchema] = [], json_output: Optional[bool] = None, # Hint for JSON mode extra_create_args: Mapping[str, Any] = {}, # API-specific args cancellation_token: Optional[CancellationToken] = None, ) -&gt; CreateResult: ... # The core method</p>
 <p>@abstractmethod def create_stream( self, # Similar to create, but yields results incrementally </p>
-<h1><a class="anchor" id="autotoc_md761"></a>
+<h1><a class="anchor" id="autotoc_md762"></a>
 ... parameters ...</h1>
 <p>) -&gt; AsyncGenerator[Union[str, CreateResult], None]: ...</p>
 <p>@abstractmethod def total_usage(self) -&gt; RequestUsage: ... # Get total tracked usage</p>
 <p>@abstractmethod def count_tokens(self, messages: Sequence[LLMMessage], *, tools: Sequence[Tool | ToolSchema] = []) -&gt; int: ... # Estimate token count</p>
-<h1><a class="anchor" id="autotoc_md762"></a>
+<h1><a class="anchor" id="autotoc_md763"></a>
 Other methods like close(), actual_usage(), remaining_tokens(), model_info...</h1>
 <p>``<code> Concrete classes like</code>OpenAIChatCompletionClient<code>,</code>AnthropicChatCompletionClient` etc., implement these methods using the specific libraries and API calls for each service.</p>
 <ul>
@@ -328,13 +328,13 @@ Other methods like close(), actual_usage(), remaining_tokens(), model_info...</h
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md763"></a>
+<h1><a class="anchor" id="autotoc_md764"></a>
 From: models/_types.py (Simplified)</h1>
 <p>from pydantic import BaseModel from typing import List, Union, Literal from .. import FunctionCall # From Chapter 4 context</p>
 <p>class SystemMessage(BaseModel): content: str type: Literal["SystemMessage"] = "SystemMessage"</p>
 <p>class UserMessage(BaseModel): content: Union[str, List[Union[str, Image]]] # Can include images! source: str type: Literal["UserMessage"] = "UserMessage"</p>
 <p>class AssistantMessage(BaseModel): content: Union[str, List[FunctionCall]] # Can be text or function calls source: str type: Literal["AssistantMessage"] = "AssistantMessage"</p>
-<h1><a class="anchor" id="autotoc_md764"></a>
+<h1><a class="anchor" id="autotoc_md765"></a>
 FunctionExecutionResultMessage also exists here...</h1>
 <p>```</p>
 <ul>
@@ -342,16 +342,16 @@ FunctionExecutionResultMessage also exists here...</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md765"></a>
+<h1><a class="anchor" id="autotoc_md766"></a>
 From: models/_types.py (Simplified)</h1>
 <p>from pydantic import BaseModel from dataclasses import dataclass from typing import Union, List, Optional from .. import FunctionCall</p>
 <p>@dataclass class RequestUsage: prompt_tokens: int completion_tokens: int</p>
 <p>FinishReasons = Literal["stop", "length", "function_calls", "content_filter", "unknown"]</p>
 <p>class CreateResult(BaseModel): finish_reason: FinishReasons content: Union[str, List[FunctionCall]] # LLM output usage: RequestUsage # Token usage for this call cached: bool </p>
-<h1><a class="anchor" id="autotoc_md766"></a>
+<h1><a class="anchor" id="autotoc_md767"></a>
 Optional fields like logprobs, thought...</h1>
 <p>``<code> Using these standard types ensures that agent logic can work consistently, even if you switch the underlying LLM service by using a different</code>ChatCompletionClient` implementation.</p>
-<h2><a class="anchor" id="autotoc_md767"></a>
+<h2><a class="anchor" id="autotoc_md768"></a>
 Next Steps</h2>
 <p>You now understand the role of <code>ChatCompletionClient</code> as the crucial link between AutoGen agents and the powerful capabilities of Large Language Models. It provides a standard way to send conversational history and tool definitions, receive generated text or function call requests, and track token usage.</p>
 <p>Managing the conversation history (<code>messages</code>) sent to the client is very important. How do you ensure the LLM has the right context, especially after tool calls have happened?</p>

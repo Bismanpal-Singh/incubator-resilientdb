@@ -121,16 +121,16 @@ $(function(){initNavTree('dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_worker</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1047"></a>
-autotoc_md1047</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1048"></a>
+autotoc_md1048</h2>
 <p>layout: default title: "Worker" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md1048"></a>
+<h2><a class="anchor" id="autotoc_md1049"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1049"></a>
+<h1><a class="anchor" id="autotoc_md1050"></a>
 Chapter 5: Worker - The Task Doer</h1>
 <p>In <a class="el" href="../../d3/dd5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_204__broker__connection____amqp__.html">Chapter 4: Broker Connection (AMQP)</a>, we learned how Celery uses a message broker, like a postal service, to send task messages. When you call <code>add.delay(2, 2)</code>, a message asking to run the <code>add</code> task with arguments <code>(2, 2)</code> gets dropped into a mailbox (the broker queue).</p>
 <p>But who actually checks that mailbox, picks up the message, and performs the addition? That's the job of the <b>Celery Worker</b>.</p>
-<h2><a class="anchor" id="autotoc_md1050"></a>
+<h2><a class="anchor" id="autotoc_md1051"></a>
 What Problem Does the Worker Solve?</h2>
 <p>Imagine our workshop analogy again. You've defined the blueprint for a job (<a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Task</a>) and you've dropped the work order into the central inbox (<a class="el" href="../../d3/dd5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_204__broker__connection____amqp__.html">Broker Connection (AMQP)</a>). Now you need an actual employee or a machine to:</p>
 <ol type="1">
@@ -141,7 +141,7 @@ What Problem Does the Worker Solve?</h2>
 <li>Mark the order as complete.</li>
 </ol>
 <p>The <b>Celery Worker</b> is that employee or machine. It's a separate program (process) that you run, whose sole purpose is to execute the tasks you send to the broker. Without a worker running, your task messages would just sit in the queue forever, waiting for someone to process them.</p>
-<h2><a class="anchor" id="autotoc_md1051"></a>
+<h2><a class="anchor" id="autotoc_md1052"></a>
 Starting Your First Worker</h2>
 <p>Running a worker is typically done from your command line or terminal. You need to tell the worker where to find your <a class="el" href="../../d3/d58/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_201__celery__app.html">Celery App</a> instance (which holds the configuration, including the broker address and the list of known tasks).</p>
 <p>Assuming you have:</p><ul>
@@ -197,7 +197,7 @@ Starting Your First Worker</h2>
 <li><code>[tasks]</code>: A list of all the tasks the worker discovered (like our <code>tasks.add</code> and <code>tasks.send_welcome_email</code>). If your tasks don't show up here, the worker won't be able to run them!</li>
 </ul>
 <p>The final <code>celery@yourhostname ready.</code> message means the worker is connected and waiting for jobs!</p>
-<h2><a class="anchor" id="autotoc_md1052"></a>
+<h2><a class="anchor" id="autotoc_md1053"></a>
 What the Worker Does</h2>
 <p>Now that the worker is running, let's trace what happens when you send a task (e.g., from <code>run_tasks.py</code> in <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Chapter 3: Task</a>):</p>
 <ol type="1">
@@ -213,7 +213,7 @@ What the Worker Does</h2>
 <li><b>Acknowledge:</b> The worker sends an "acknowledgement" (ack) back to the broker. This tells the broker, "I finished processing this message successfully, you can delete it from the queue." This ensures tasks aren't lost if a worker crashes mid-execution (the message would remain on the queue for another worker to pick up).</li>
 <li><b>Wait Again:</b> The worker goes back to waiting for the next message.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1053"></a>
+<h2><a class="anchor" id="autotoc_md1054"></a>
 Running Multiple Workers and Concurrency</h2>
 <ul>
 <li><b>Multiple Workers:</b> You can start multiple worker processes by running the <code>celery worker</code> command again, perhaps on different machines or in different terminals on the same machine. They will all connect to the same broker and pull tasks from the queue, allowing you to process tasks in parallel and scale your application.</li>
@@ -226,7 +226,7 @@ Running Multiple Workers and Concurrency</h2>
 </li>
 </ul>
 <p>For beginners, sticking with the default <b>prefork</b> pool is usually fine. Just know that the worker can likely handle multiple tasks simultaneously.</p>
-<h2><a class="anchor" id="autotoc_md1054"></a>
+<h2><a class="anchor" id="autotoc_md1055"></a>
 How It Works Internally (Simplified)</h2>
 <p>Let's visualize the worker's main job: processing a single task.</p>
 <ol type="1">
@@ -260,7 +260,7 @@ How It Works Internally (Simplified)</h2>
 <div class="line">    Pool--&gt;&gt;WorkerMain: Result=12 for task_id</div>
 <div class="line">    Note over WorkerMain: (Optionally) Store 12 in Result Backend</div>
 <div class="line">    WorkerMain-&gt;&gt;Broker: Acknowledge task_id is complete</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1055"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1056"></a>
 Code Dive: Where Worker Logic Lives</h2>
 <ul>
 <li><b>Command Line Entry Point (<code>celery/bin/worker.py</code>):</b> This script handles parsing the command-line arguments (<code>-A</code>, <code>-l</code>, <code>-c</code>, <code>-P</code>, etc.) when you run <code>celery worker ...</code>. It ultimately creates and starts a <code>WorkController</code> instance. (See <code>worker()</code> function in the file).</li>
@@ -308,7 +308,7 @@ Code Dive: Where Worker Logic Lives</h2>
 <div class="line"><span class="comment"># Start the event loop to wait for messages</span></div>
 <div class="line">connection.drain_events()</div>
 </div><!-- fragment --><p>This illustrates the fundamental cycle: receive -&gt; decode -&gt; find task -&gt; execute via pool -&gt; handle result -&gt; acknowledge. The actual code involves much more detail regarding error handling, state management, different protocols, rate limiting, etc., managed through the bootstep system.</p>
-<h2><a class="anchor" id="autotoc_md1056"></a>
+<h2><a class="anchor" id="autotoc_md1057"></a>
 Conclusion</h2>
 <p>You've now met the <b>Celery Worker</b>, the essential component that actually <em>runs</em> your tasks.</p>
 <ul>

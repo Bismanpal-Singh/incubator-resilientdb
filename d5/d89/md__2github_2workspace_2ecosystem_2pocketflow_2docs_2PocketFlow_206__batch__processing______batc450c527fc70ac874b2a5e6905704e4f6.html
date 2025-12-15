@@ -121,18 +121,18 @@ $(function(){initNavTree('d5/d89/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_batch_processing___batchnode____batchflow____asyncparallelbatchnode___</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2787"></a>
-autotoc_md2787</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2788"></a>
+autotoc_md2788</h2>
 <p>layout: default title: "Batch Processing (BatchNode, BatchFlow, AsyncParallelBatchNode)" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2788"></a>
+<h2><a class="anchor" id="autotoc_md2789"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md2789"></a>
+<h1><a class="anchor" id="autotoc_md2790"></a>
 Chapter 6: Batch Processing (<code>BatchNode</code>, <code>BatchFlow</code>, <code>AsyncParallelBatchNode</code>)</h1>
 <p>In <a class="el" href="../../d7/d6d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_205__asynchronous__processing___dbf1dc61cb3bcd98d46655d3ab8e2dd9.html">Chapter 5: Asynchronous Processing (<code>AsyncNode</code>, <code>AsyncFlow</code>)</a>, we explored how <code>AsyncNode</code> and <code>AsyncFlow</code> help build responsive applications that can handle waiting for tasks like API calls. Now, what if you need to perform a similar operation on <em>many</em> different items? For example, imagine you have a document, and you want to translate it into ten different languages. Doing this one by one, or even coordinating many asynchronous calls manually, can be cumbersome. PocketFlow provides specialized tools for exactly this: <b>Batch Processing</b>.</p>
 <p>Batch processing in PocketFlow allows you to efficiently apply a piece of logic to a collection of items, simplifying the code and often improving performance, especially with parallel execution.</p>
 <p>Our main use case for this chapter will be: <b>Translating a single document into multiple target languages.</b></p>
 <p>Let's explore the tools PocketFlow offers for this:</p>
-<h2><a class="anchor" id="autotoc_md2790"></a>
+<h2><a class="anchor" id="autotoc_md2791"></a>
 1. <code>BatchNode</code>: The Sequential Worker for Batches</h2>
 <p>A <code>BatchNode</code> is designed to process a list of items one after the other (sequentially). It's like a meticulous librarian who takes a stack of books and processes each one individually before moving to the next.</p>
 <p><b>How it Works:</b></p><ol type="1">
@@ -175,7 +175,7 @@ Chapter 6: Batch Processing (<code>BatchNode</code>, <code>BatchFlow</code>, <co
 <li><code>post</code>: Receives <code>exec_res_list</code>, which is a list of dictionaries (one from each <code>exec</code> call). It then aggregates these results and stores the final statistics in <code>shared</code>.</li>
 </ul>
 <p>This <code>BatchNode</code> processes each chunk sequentially.</p>
-<h2><a class="anchor" id="autotoc_md2791"></a>
+<h2><a class="anchor" id="autotoc_md2792"></a>
 2. <code>AsyncParallelBatchNode</code>: The Concurrent Worker for Batches</h2>
 <p>What if processing each item involves waiting (like an API call), and you want to do them concurrently to save time? That's where <code>AsyncParallelBatchNode</code> comes in. It's like <code>BatchNode</code> but for asynchronous operations that can run in parallel. Imagine a team of librarians, each given a book from the stack, processing them all at the same time.</p>
 <p><b>How it Works:</b></p><ol type="1">
@@ -219,7 +219,7 @@ Chapter 6: Batch Processing (<code>BatchNode</code>, <code>BatchFlow</code>, <co
 <li><code>post_async</code>: Gets the list of all translation results and, in the full example, saves them to files.</li>
 </ul>
 <p>This drastically speeds up the overall translation process compared to doing them one by one.</p>
-<h2><a class="anchor" id="autotoc_md2792"></a>
+<h2><a class="anchor" id="autotoc_md2793"></a>
 3. <code>BatchFlow</code>: Running a Sub-Workflow Multiple Times</h2>
 <p>Sometimes, the "logic" you want to apply to a collection isn't just a single <code>exec</code> method, but a whole sub-workflow (which could be a single Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>) or a more complex Flow (<code>Flow</code>, <code>AsyncFlow</code>)). You want to run this sub-workflow multiple times, each time with slightly different <em>parameters</em>. This is what <code>BatchFlow</code> is for.</p>
 <p>Think of a film director who has a specific scene (the sub-workflow) and wants to shoot it multiple times, but each time with different actors or lighting (the parameters).</p>
@@ -265,7 +265,7 @@ Chapter 6: Batch Processing (<code>BatchNode</code>, <code>BatchFlow</code>, <co
 <li><code>ImageBatchFlow.prep</code>: Generates a list of parameter dictionaries. Each dictionary specifies an input image and a filter type, e.g., <code>[{"input_image_path": "cat.jpg", "filter_type": "grayscale"}, {"input_image_path": "cat.jpg", "filter_type": "blur"}, ...]</code>.</li>
 <li>When <code>image_processor.run()</code> is called, the <code>base_processing_logic</code> (Flow (<code>Flow</code>, <code>AsyncFlow</code>)) will be executed for <em>each</em> of these parameter dictionaries. The <code>LoadImage</code> node inside <code>base_processing_logic</code> would then use <code>params["input_image_path"]</code>, and <code>ApplyFilter</code> would use <code>params["filter_type"]</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2793"></a>
+<h2><a class="anchor" id="autotoc_md2794"></a>
 4. <code>AsyncParallelBatchFlow</code>: Running Sub-Workflows in Parallel</h2>
 <p>Just as <code>AsyncParallelBatchNode</code> is the concurrent version of <code>BatchNode</code>, <code>AsyncParallelBatchFlow</code> is the concurrent version of <code>BatchFlow</code>. It runs the multiple executions of its sub-workflow <em>in parallel</em>.</p>
 <p>This is like having multiple film crews, each with their own set, shooting different variations of the same scene (sub-workflow with different parameters) all at the same time.</p>
@@ -291,7 +291,7 @@ Chapter 6: Batch Processing (<code>BatchNode</code>, <code>BatchFlow</code>, <co
 <div class="line"><span class="comment"># parallel_processor = ImageParallelBatchFlow(start=async_base_logic)</span></div>
 <div class="line"><span class="comment"># await parallel_processor.run_async(initial_shared_data)</span></div>
 </div><!-- fragment --><p> This would run the <code>async_base_logic</code> for each image-filter combination in parallel, potentially speeding up processing if the sub-workflow involves <code>await</code>able operations.</p>
-<h2><a class="anchor" id="autotoc_md2794"></a>
+<h2><a class="anchor" id="autotoc_md2795"></a>
 Under the Hood: A Glimpse</h2>
 <p>Let's briefly see how these batch components achieve their magic, using simplified logic.</p>
 <p><b><code>BatchNode</code></b> Its <code>_exec</code> method essentially loops through the items from <code>prep</code> and calls its parent's <code>_exec</code> (which eventually calls your <code>exec</code> method) for each one. </p><div class="fragment"><div class="line"><span class="comment"># pocketflow/__init__.py (BatchNode simplified)</span></div>
@@ -372,7 +372,7 @@ Under the Hood: A Glimpse</h2>
 <div class="line">            tasks.append(task)</div>
 <div class="line">        await asyncio.gather(*tasks) <span class="comment"># Run all sub-workflow instances concurrently</span></div>
 <div class="line">        <span class="keywordflow">return</span> await self.post_async(shared, param_list, <span class="keywordtype">None</span>)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2795"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2796"></a>
 Conclusion</h2>
 <p>Batch processing tools in PocketFlow—<code>BatchNode</code>, <code>AsyncParallelBatchNode</code>, <code>BatchFlow</code>, and <code>AsyncParallelBatchFlow</code>—provide powerful and convenient ways to handle collections of items or run workflows multiple times with varying parameters.</p><ul>
 <li>Use <b><code>BatchNode</code></b> for sequential processing of a list of items where <code>exec</code> defines the logic for one item.</li>

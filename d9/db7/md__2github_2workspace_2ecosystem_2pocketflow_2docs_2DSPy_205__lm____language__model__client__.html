@@ -121,12 +121,12 @@ $(function(){initNavTree('d9/db7/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_lm__language_model_client_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1653"></a>
-autotoc_md1653</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1654"></a>
+autotoc_md1654</h2>
 <p>layout: default title: "LM (Language Model Client)" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1654"></a>
+<h2><a class="anchor" id="autotoc_md1655"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md1655"></a>
+<h1><a class="anchor" id="autotoc_md1656"></a>
 Chapter 5: LM (Language Model Client) - The Engine Room</h1>
 <p>In <a class="el" href="../../d5/d3c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_204__predict.html">Chapter 4: Predict</a>, we saw how <code>dspy.Predict</code> takes a <a class="el" href="../../d4/dfe/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_202__signature.html">Signature</a> and input data to magically generate an output. We used our <code>translator</code> example:</p>
 <div class="fragment"><div class="line"><span class="comment"># translator = dspy.Predict(TranslateToFrench)</span></div>
@@ -148,7 +148,7 @@ Chapter 5: LM (Language Model Client) - The Engine Room</h1>
 <li>A peek under the hood at how the connection works.</li>
 </ul>
 <p>Let's connect our program to an AI brain!</p>
-<h2><a class="anchor" id="autotoc_md1656"></a>
+<h2><a class="anchor" id="autotoc_md1657"></a>
 What Does the LM Client Do?</h2>
 <p>When a module like <code>dspy.Predict</code> needs an LM to generate text, it doesn't make the raw API call itself. Instead, it relies on the configured <b>LM Client</b>. The LM Client handles several important tasks:</p>
 <ol type="1">
@@ -160,7 +160,7 @@ What Does the LM Client Do?</h2>
 <li><b>Caching:</b> To save time and money, the LM Client usually caches responses. If you make the exact same request again, it can return the saved result instantly instead of calling the LM API again.</li>
 </ol>
 <p>Essentially, the LM Client abstracts away all the messy details of talking to different AI models, giving your DSPy program a clean and consistent engine to rely on.</p>
-<h2><a class="anchor" id="autotoc_md1657"></a>
+<h2><a class="anchor" id="autotoc_md1658"></a>
 Configuring Which LM to Use</h2>
 <p>So, how do you tell DSPy <em>which</em> LM engine to use? You do this using <code>dspy.settings.configure</code>.</p>
 <p>First, you need to import and create an instance of the specific client for your desired LM provider. DSPy integrates with many models primarily through the <code>litellm</code> library, but also provides direct wrappers for common ones like OpenAI.</p>
@@ -172,16 +172,16 @@ Configuring Which LM to Use</h2>
 <p class="startli">``&lsquo;python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1658"></a>
-Use the generic dspy.LM for LiteLLM integration</h1>
 <h1><a class="anchor" id="autotoc_md1659"></a>
+Use the generic dspy.LM for LiteLLM integration</h1>
+<h1><a class="anchor" id="autotoc_md1660"></a>
 Model name follows 'provider/model_name&rsquo; format for many models</h1>
 <p>turbo = dspy.LM(model='openai/gpt-3.5-turbo', max_tokens=100)</p>
-<h1><a class="anchor" id="autotoc_md1660"></a>
-Or, if you prefer the dedicated OpenAI client wrapper (functionally similar for basic use)</h1>
 <h1><a class="anchor" id="autotoc_md1661"></a>
-from dspy.models.openai import OpenAI</h1>
+Or, if you prefer the dedicated OpenAI client wrapper (functionally similar for basic use)</h1>
 <h1><a class="anchor" id="autotoc_md1662"></a>
+from dspy.models.openai import OpenAI</h1>
+<h1><a class="anchor" id="autotoc_md1663"></a>
 turbo = OpenAI(model='gpt-3.5-turbo', max_tokens=100)</h1>
 <p>``<code> This creates an object</code>turbo<code>that knows how to talk to the</code>gpt-3.5-turbo<code>model via OpenAI's API (using</code>litellm`'s connection logic) and will limit responses to 100 tokens by default.</p>
 <ol type="1">
@@ -206,7 +206,7 @@ turbo = OpenAI(model='gpt-3.5-turbo', max_tokens=100)</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Now DSPy modules will use the local Llama 3 model via Ollama</span></div>
 </div><!-- fragment --><p>You only need to configure the LM <b>once</b> (usually at the start of your script).</p>
-<h2><a class="anchor" id="autotoc_md1663"></a>
+<h2><a class="anchor" id="autotoc_md1664"></a>
 How Modules Use the Configured LM</h2>
 <p>Remember our <code>translator</code> module from <a class="el" href="../../d5/d3c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_204__predict.html">Chapter 4: Predict</a>?</p>
 <div class="fragment"><div class="line"><span class="comment"># Define signature (same as before)</span></div>
@@ -226,7 +226,7 @@ How Modules Use the Configured LM</h2>
 <div class="line">result = translator(english_sentence=<span class="stringliteral">&quot;Hello, how are you?&quot;</span>)</div>
 <div class="line">print(result.french_sentence)</div>
 </div><!-- fragment --><p>Notice that we didn't pass <code>turbo</code> or <code>claude_haiku</code> or <code>local_llama</code> directly to <code>dspy.Predict</code>. When <code>translator(...)</code> is called, <code>dspy.Predict</code> internally asks <code>dspy.settings</code> for the currently configured <code>lm</code>. It then uses that client object to handle the actual LM interaction.</p>
-<h2><a class="anchor" id="autotoc_md1664"></a>
+<h2><a class="anchor" id="autotoc_md1665"></a>
 The Power of Swapping LMs</h2>
 <p>This setup makes it incredibly easy to experiment with different language models. Want to see if Claude does a better job at translation than GPT-3.5? Just change the configuration!</p>
 <div class="fragment"><div class="line"><span class="comment"># --- Experiment 1: Using GPT-3.5 Turbo ---</span></div>
@@ -255,7 +255,7 @@ The Power of Swapping LMs</h2>
 <div class="line">Testing with Claude 3 Haiku...</div>
 <div class="line">Claude 3 Haiku: Où se trouve la bibliothèque ?</div>
 </div><!-- fragment --><p>Look at that! We changed the underlying AI brain just by modifying the <code>dspy.settings.configure</code> call. The core logic of our <code>translator</code> module remained untouched. This flexibility is a key advantage of DSPy.</p>
-<h2><a class="anchor" id="autotoc_md1665"></a>
+<h2><a class="anchor" id="autotoc_md1666"></a>
 How It Works Under the Hood (A Peek)</h2>
 <p>Let's trace what happens when <code>translator(english_sentence=...)</code> runs:</p>
 <ol type="1">
@@ -373,7 +373,7 @@ How It Works Under the Hood (A Peek)</h2>
 <div class="line"><span class="comment"># parsed_result = self._parse_output(output_text) # Parse based on signature</span></div>
 <div class="line"><span class="comment"># return Prediction(**parsed_result)</span></div>
 </div><!-- fragment --><p>The key is that modules interact with the standard <code>BaseLM</code> interface (primarily its <code>__call__</code> method), and the specific LM client implementation handles the rest.</p>
-<h2><a class="anchor" id="autotoc_md1666"></a>
+<h2><a class="anchor" id="autotoc_md1667"></a>
 Conclusion</h2>
 <p>You've now demystified the <b>LM (Language Model Client)</b>! It's the essential engine connecting your DSPy programs to the power of large language models.</p>
 <ul>

@@ -121,16 +121,16 @@ $(function(){initNavTree('d1/dce/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_writebatch</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2293"></a>
-autotoc_md2293</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2294"></a>
+autotoc_md2294</h2>
 <p>layout: default title: "WriteBatch" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2294"></a>
+<h2><a class="anchor" id="autotoc_md2295"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2295"></a>
+<h1><a class="anchor" id="autotoc_md2296"></a>
 Chapter 5: WriteBatch - Grouping Changes Together</h1>
 <p>Welcome back! In <a class="el" href="../../df/dc9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_204__dbimpl.html">Chapter 4: DBImpl</a>, we saw how <code>DBImpl</code> acts as the general manager, coordinating writes, reads, and background tasks. We learned that when you call <code>Put</code> or <code>Delete</code>, <code>DBImpl</code> handles writing to the <a class="el" href="../../df/d85/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_203__write__ahead__log____wal________logwriter__logreader.html">Write-Ahead Log (WAL)</a> and then updating the <a class="el" href="../../d4/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_202__memtable.html">MemTable</a>.</p>
 <p>But what if you need to make <em>multiple</em> changes that should happen <em>together</em>?</p>
-<h2><a class="anchor" id="autotoc_md2296"></a>
+<h2><a class="anchor" id="autotoc_md2297"></a>
 What's the Problem? Making Multiple Changes Atomically</h2>
 <p>Imagine you're managing game scores. When Player A beats Player B, you need to do two things: increase Player A's score and decrease Player B's score.</p>
 <div class="fragment"><div class="line">// Goal: Increase playerA score, decrease playerB score</div>
@@ -138,7 +138,7 @@ What's the Problem? Making Multiple Changes Atomically</h2>
 <div class="line">db-&gt;Put(options, &quot;score_playerB&quot;, &quot;49&quot;);</div>
 </div><!-- fragment --><p>What happens if the system crashes right <em>after</em> the first <code>Put</code> but <em>before</em> the second <code>Put</code>? Player A gets a point, but Player B <em>doesn't</em> lose one. The scores are now inconsistent! This isn't good.</p>
 <p>We need a way to tell LevelDB: "Please perform these *multiple* operations (like updating both scores) as a single, indivisible unit. Either *all* of them should succeed, or *none* of them should." This property is called <b>atomicity</b>.</p>
-<h2><a class="anchor" id="autotoc_md2297"></a>
+<h2><a class="anchor" id="autotoc_md2298"></a>
 WriteBatch: The Atomic To-Do List</h2>
 <p>LevelDB provides the <code>WriteBatch</code> class to solve this exact problem.</p>
 <p>Think of a <code>WriteBatch</code> like making a <b>shopping list</b> before you go to the store, or giving a librarian a list of multiple transactions to perform all at once (check out book A, return book B).</p>
@@ -179,7 +179,7 @@ WriteBatch: The Atomic To-Do List</h2>
 <li>We call <code>batch.Put</code> and <code>batch.Delete</code>. These methods modify the <code>batch</code> object itself, not the database. They are very fast as they just record the desired operations internally.</li>
 <li>We call <code>db-&gt;Write</code> with the completed <code>batch</code>. LevelDB now takes this list and applies it atomically. Thanks to the <a class="el" href="../../df/d85/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_203__write__ahead__log____wal________logwriter__logreader.html">WAL</a>, even if the system crashes <em>during</em> the <code>db-&gt;Write</code> call, recovery will ensure either all changes from the batch are applied or none are.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2298"></a>
+<h2><a class="anchor" id="autotoc_md2299"></a>
 Performance Benefit Too!</h2>
 <p>Besides atomicity, <code>WriteBatch</code> also often improves performance when making multiple changes:</p>
 <ul>
@@ -187,7 +187,7 @@ Performance Benefit Too!</h2>
 <li><b>Single Lock Acquisition:</b> The <code>DBImpl</code> only needs to acquire its internal lock once for the entire <code>Write</code> call, rather than once per operation.</li>
 </ul>
 <p>So, even if you don't strictly <em>need</em> atomicity, using <code>WriteBatch</code> for bulk updates can be faster.</p>
-<h2><a class="anchor" id="autotoc_md2299"></a>
+<h2><a class="anchor" id="autotoc_md2300"></a>
 Under the Hood: How WriteBatch Works</h2>
 <p>What happens inside LevelDB when you call <code>db-&gt;Write(options, &amp;batch)</code>?</p>
 <ol type="1">
@@ -224,7 +224,7 @@ Under the Hood: How WriteBatch Works</h2>
 <div class="line">    end</div>
 <div class="line">    MemTable--&gt;&gt;DBImpl: MemTable Updates Done</div>
 <div class="line">    DBImpl--&gt;&gt;App: Write Successful</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2300"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2301"></a>
 WriteBatch Internals (Code View)</h2>
 <p>Let's peek at the code.</p>
 <p><b>Adding to the Batch:</b></p>
@@ -330,7 +330,7 @@ WriteBatch Internals (Code View)</h2>
 <li>It calls <code>b-&gt;Iterate(&amp;inserter)</code>. The <code>Iterate</code> method (code not shown, but it reverses the serialization process) parses the <code>rep_</code> string. For each operation it finds, it calls the appropriate method on the <code>inserter</code> object (<code>Put</code> or <code>Delete</code>).</li>
 <li>The <code>inserter.Put</code> and <code>inserter.Delete</code> methods simply call <code>mem_-&gt;Add</code>, passing along the correct sequence number (which increments for each operation within the batch) and the type (<code>kTypeValue</code> or <code>kTypeDeletion</code>).</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2301"></a>
+<h2><a class="anchor" id="autotoc_md2302"></a>
 Conclusion</h2>
 <p>The <code>WriteBatch</code> is a simple yet powerful tool in LevelDB. It allows you to:</p>
 <ol type="1">

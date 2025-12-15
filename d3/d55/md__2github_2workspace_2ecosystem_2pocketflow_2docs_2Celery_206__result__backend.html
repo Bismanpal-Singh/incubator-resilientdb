@@ -121,17 +121,17 @@ $(function(){initNavTree('d3/d55/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_result_backend</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1058"></a>
-autotoc_md1058</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1059"></a>
+autotoc_md1059</h2>
 <p>layout: default title: "Result Backend" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md1059"></a>
+<h2><a class="anchor" id="autotoc_md1060"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1060"></a>
+<h1><a class="anchor" id="autotoc_md1061"></a>
 Chapter 6: Result Backend - Checking Your Task's Homework</h1>
 <p>In <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Chapter 5: Worker</a>, we met the Celery Worker, the diligent entity that picks up task messages from the <a class="el" href="../../d3/dd5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_204__broker__connection____amqp__.html">Broker Connection (AMQP)</a> and executes the code defined in our <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Task</a>.</p>
 <p>But what happens after the worker finishes a task? What if the task was supposed to calculate something, like <code>add(2, 2)</code>? How do we, back in our main application, find out the answer (<code>4</code>)? Or even just know if the task finished successfully or failed?</p>
 <p>This is where the <b>Result Backend</b> comes in. It's like a dedicated place to check the status and results of the homework assigned to the workers.</p>
-<h2><a class="anchor" id="autotoc_md1061"></a>
+<h2><a class="anchor" id="autotoc_md1062"></a>
 What Problem Does the Result Backend Solve?</h2>
 <p>Imagine you give your Celery worker a math problem: "What is 123 + 456?". The worker goes away, calculates the answer (579), and... then what?</p>
 <p>If you don't tell the worker <em>where</em> to put the answer, it just disappears! You, back in your main program, have no idea if the worker finished, if it got the right answer, or if it encountered an error.</p>
@@ -146,7 +146,7 @@ What Problem Does the Result Backend Solve?</h2>
 <li>The <b>Worker</b> puts the completed homework (result and status) into a specific folder (identified by the task ID).</li>
 <li>Your <b>Application</b> can later look inside that folder (using the task ID) to see the results.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1062"></a>
+<h2><a class="anchor" id="autotoc_md1063"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b>Storage:</b> It's a place to store task results and states. This could be Redis, a relational database (like PostgreSQL or MySQL), MongoDB, RabbitMQ (using RPC), and others.</li>
@@ -155,7 +155,7 @@ Key Concepts</h2>
 <li><b>Return Value / Exception:</b> If the task finishes successfully (<code>SUCCESS</code>), the backend stores the value the task function returned. If it fails (<code>FAILURE</code>), it stores details about the exception that occurred.</li>
 <li><b><code>AsyncResult</code> Object:</b> When you call <code>task.delay()</code> or <code>task.apply_async()</code>, Celery gives you back an <code>AsyncResult</code> object. This object holds the task's ID and provides methods to interact with the result backend (check status, get the result, etc.).</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1063"></a>
+<h2><a class="anchor" id="autotoc_md1064"></a>
 How to Use a Result Backend</h2>
 <p><b>1. Configure It!</b></p>
 <p>First, you need to tell your Celery app <em>where</em> the result backend is located. You do this using the <code>result_backend</code> configuration setting, just like you set the <code>broker_url</code> in <a class="el" href="../../d7/df5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_202__configuration.html">Chapter 2: Configuration</a>.</p>
@@ -289,7 +289,7 @@ How to Use a Result Backend</h2>
 <div class="line">  File &quot;/path/to/your/project/celery_app.py&quot;, line ..., in fail_sometimes</div>
 <div class="line">    raise ValueError(&quot;Something went wrong!&quot;)</div>
 <div class="line">ValueError: Something went wrong!</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1064"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1065"></a>
 How It Works Internally</h2>
 <ol type="1">
 <li><b>Task Sent:</b> Your application calls <code>add.delay(10, 20)</code>. It sends a message to the <b>Broker</b> and gets back an <code>AsyncResult</code> object containing the unique <code>task_id</code>.</li>
@@ -344,7 +344,7 @@ How It Works Internally</h2>
 <div class="line">        ResultBackend--&gt;&gt;AsyncResult: Return {&#39;status&#39;: &#39;SUCCESS&#39;, &#39;result&#39;: 30, ...}</div>
 <div class="line">    end</div>
 <div class="line">    AsyncResult--&gt;&gt;Client: Return 30</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1065"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1066"></a>
 Code Dive: Storing and Retrieving Results</h2>
 <ul>
 <li><b>Backend Loading (<code>celery/app/backends.py</code>):</b> When Celery starts, it uses the <code>result_backend</code> URL to look up the correct backend class (e.g., <code>RedisBackend</code>, <code>DatabaseBackend</code>, <code>RPCBackend</code>) using functions like <code>by_url</code> and <code>by_name</code>. These map URL schemes (<code>redis://</code>, <code>db+postgresql://</code>, <code>rpc://</code>) or aliases ('redis', 'db', 'rpc') to the actual Python classes. The mapping is defined in <code>BACKEND_ALIASES</code>.</li>
@@ -353,26 +353,26 @@ Code Dive: Storing and Retrieving Results</h2>
 <p class="startli">``&lsquo;python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1066"></a>
+<h1><a class="anchor" id="autotoc_md1067"></a>
 Simplified from backends/base.py (inside BaseKeyValueStoreBackend)</h1>
 <p>def _store_result(self, task_id, result, state, traceback=None, request=None, **kwargs): </p>
-<h1><a class="anchor" id="autotoc_md1067"></a>
+<h1><a class="anchor" id="autotoc_md1068"></a>
 1. Prepare the metadata dictionary</h1>
 <p>meta = self._get_result_meta(result=result, state=state, traceback=traceback, request=request) meta['task_id&rsquo;] = bytes_to_str(task_id) # Ensure task_id is str</p>
-<h1><a class="anchor" id="autotoc_md1068"></a>
-(Check if already successfully stored to prevent overwrites - omitted for brevity)</h1>
 <h1><a class="anchor" id="autotoc_md1069"></a>
+(Check if already successfully stored to prevent overwrites - omitted for brevity)</h1>
+<h1><a class="anchor" id="autotoc_md1070"></a>
 2. Encode the metadata (e.g., to JSON or pickle)</h1>
 <p>encoded_meta = self.encode(meta)</p>
-<h1><a class="anchor" id="autotoc_md1070"></a>
+<h1><a class="anchor" id="autotoc_md1071"></a>
 3. Get the specific key for this task</h1>
 <p>key = self.get_key_for_task(task_id) # e.g., b'celery-task-meta-&lt;task_id&gt;'</p>
-<h1><a class="anchor" id="autotoc_md1071"></a>
-4. Call the specific backend's 'set' method (implemented by RedisBackend etc.)</h1>
 <h1><a class="anchor" id="autotoc_md1072"></a>
+4. Call the specific backend's 'set' method (implemented by RedisBackend etc.)</h1>
+<h1><a class="anchor" id="autotoc_md1073"></a>
 It might also set an expiry time (self.expires)</h1>
 <p>try: self._set_with_state(key, encoded_meta, state) # Calls self.set(key, encoded_meta) except Exception as exc: </p>
-<h1><a class="anchor" id="autotoc_md1073"></a>
+<h1><a class="anchor" id="autotoc_md1074"></a>
 Handle potential storage errors, maybe retry</h1>
 <p>raise BackendStoreError(...) from exc</p>
 <p>return result # Returns the original (unencoded) result ``<code> The</code>self.set()<code>method is implemented by the concrete backend (e.g.,</code>RedisBackend.set<code>uses</code>redis-py<code>client's</code>setex<code>or</code>set` command).</p>
@@ -381,27 +381,27 @@ Handle potential storage errors, maybe retry</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1074"></a>
+<h1><a class="anchor" id="autotoc_md1075"></a>
 Simplified from backends/base.py (inside SyncBackendMixin)</h1>
 <p>def wait_for(self, task_id, timeout=None, interval=0.5, no_ack=True, on_interval=None): """Wait for task and return its result meta.""" self._ensure_not_eager() # Check if running in eager mode</p>
 <p>time_elapsed = 0.0</p>
 <p>while True: </p>
-<h1><a class="anchor" id="autotoc_md1075"></a>
+<h1><a class="anchor" id="autotoc_md1076"></a>
 1. Get metadata from backend (calls self._get_task_meta_for)</h1>
 <p>meta = self.get_task_meta(task_id)</p>
-<h1><a class="anchor" id="autotoc_md1076"></a>
+<h1><a class="anchor" id="autotoc_md1077"></a>
 2. Check if the task is in a final state</h1>
 <p>if meta['status'] in states.READY_STATES: return meta # Return the full metadata dict</p>
-<h1><a class="anchor" id="autotoc_md1077"></a>
+<h1><a class="anchor" id="autotoc_md1078"></a>
 3. Call interval callback if provided</h1>
 <p>if on_interval: on_interval()</p>
-<h1><a class="anchor" id="autotoc_md1078"></a>
+<h1><a class="anchor" id="autotoc_md1079"></a>
 4. Sleep to avoid busy-waiting</h1>
 <p>time.sleep(interval) time_elapsed += interval</p>
-<h1><a class="anchor" id="autotoc_md1079"></a>
+<h1><a class="anchor" id="autotoc_md1080"></a>
 5. Check for timeout</h1>
 <p>if timeout and time_elapsed &gt;= timeout: raise TimeoutError('The operation timed out.') ``<code> The</code>self.get_task_meta(task_id)<code>eventually calls</code>self._get_task_meta_for(task_id)<code>, which in</code>BaseKeyValueStoreBackend<code>uses</code>self.get(key)<code>(e.g.,</code>RedisBackend.get<code>uses</code>redis-py<code>client's</code>GET<code>command) and then decodes the result using</code>self.decode_result`.</p>
-<h2><a class="anchor" id="autotoc_md1080"></a>
+<h2><a class="anchor" id="autotoc_md1081"></a>
 Conclusion</h2>
 <p>You've learned about the crucial <b>Result Backend</b>:</p>
 <ul>

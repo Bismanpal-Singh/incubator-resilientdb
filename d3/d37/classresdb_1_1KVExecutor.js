@@ -13,6 +13,7 @@ var classresdb_1_1KVExecutor =
     [ "GetTopHistory", "d3/d37/classresdb_1_1KVExecutor.html#a580829e2d906f08cd25dbbd7657ecca2", null ],
     [ "GetWithVersion", "d3/d37/classresdb_1_1KVExecutor.html#a8d11dc1175612cfda038e34291bae2a3", null ],
     [ "ParseData", "d3/d37/classresdb_1_1KVExecutor.html#aa1cac51e4a23420c5cd1f091fb6d4a8c", null ],
+    [ "ParseData", "d3/d37/classresdb_1_1KVExecutor.html#a68e29ccea4c327493b4b2a1ff7f8de20", null ],
     [ "Set", "d3/d37/classresdb_1_1KVExecutor.html#a230a544463aecad106a9656abd936360", null ],
     [ "SetWithVersion", "d3/d37/classresdb_1_1KVExecutor.html#aff681cee595d813ba4bb2c3edda4e490", null ]
 ];

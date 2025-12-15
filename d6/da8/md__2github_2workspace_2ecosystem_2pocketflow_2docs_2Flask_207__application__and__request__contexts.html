@@ -121,21 +121,21 @@ $(function(){initNavTree('d6/da8/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_application_and_request_contexts</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1936"></a>
-autotoc_md1936</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1937"></a>
+autotoc_md1937</h2>
 <p>layout: default title: "Application and Request Contexts" parent: "Flask" </p>
-<h2><a class="anchor" id="autotoc_md1937"></a>
+<h2><a class="anchor" id="autotoc_md1938"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md1938"></a>
+<h1><a class="anchor" id="autotoc_md1939"></a>
 Chapter 7: Application and Request Contexts</h1>
 <p>Welcome back! In <a class="el" href="../../d9/d88/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_206__configuration______config____.html">Chapter 6: Configuration (<code>Config</code>)</a>, we learned how to manage settings for our Flask application using the <code>app.config</code> object. And in <a class="el" href="../../d2/d15/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Flask_205__context__globals______current__a0f66e55a619b85550f70ee0df6dbdc86.html">Chapter 5: Context Globals (<code>current_app</code>, <code>request</code>, <code>session</code>, <code>g</code>)</a>, we met special variables like <code>request</code> and <code>current_app</code> that seem to magically know about the current request or application.</p>
 <p>But how does Flask keep track of which request is which, especially if multiple users are accessing our web app at the same time? How does it ensure that <code>request</code> refers to <em>User A's</em> request when handling User A, and <em>User B's</em> request when handling User B? This magic is managed by <b>Application and Request Contexts</b>.</p>
-<h2><a class="anchor" id="autotoc_md1939"></a>
+<h2><a class="anchor" id="autotoc_md1940"></a>
 What Problem Do They Solve? Keeping Things Separate</h2>
 <p>Imagine you're working at a busy service desk. Many people come up asking for different things simultaneously. You need a way to keep each person's request and related information separate from everyone else's. You can't just use one shared notepad for everyone – that would be chaos! Instead, for each person, you might create a temporary folder or workspace to hold their specific documents and details while you help them.</p>
 <p>In a web application, your Flask server might be handling requests from many different users at the same time. Each request has its own data (like form submissions or URL parameters) and potentially its own user session. Storing this information in simple global variables in your Python code would be disastrous, as data from one request could overwrite or interfere with data from another.</p>
 <p>Flask uses <b>Contexts</b> to solve this problem. Contexts act like those temporary, isolated workspaces. They ensure that variables like <code>request</code>, <code>session</code>, <code>current_app</code>, and <code>g</code> always point to the information relevant to the <em>specific task</em> Flask is currently working on (usually, handling one particular incoming web request).</p>
-<h2><a class="anchor" id="autotoc_md1940"></a>
+<h2><a class="anchor" id="autotoc_md1941"></a>
 The Two Main Types of Contexts</h2>
 <p>Flask has two primary types of contexts:</p>
 <ol type="1">
@@ -162,7 +162,7 @@ The Two Main Types of Contexts</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">Request   </td><td class="markdownTableBodyLeft">Temporary Meeting Room   </td><td class="markdownTableBodyLeft"><code>request</code>, <code>session</code>   </td><td class="markdownTableBodyLeft">Handling a single web request   </td><td class="markdownTableBodyLeft">Created/destroyed for each web request   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1941"></a>
+<h2><a class="anchor" id="autotoc_md1942"></a>
 How Flask Uses Contexts Automatically (During Requests)</h2>
 <p>Most of the time, you don't need to worry about manually managing contexts. When a browser sends a request to your Flask application:</p>
 <ol type="1">
@@ -178,7 +178,7 @@ How Flask Uses Contexts Automatically (During Requests)</h2>
 <li><b>Context Popping:</b> After the response is sent, Flask <em>pops</em> the <code>RequestContext</code> (and the <code>AppContext</code> if it was pushed along with it). This cleans up the workspace, effectively deactivating those specific <code>request</code>, <code>session</code>, and <code>g</code> objects for that request.</li>
 </ol>
 <p>This automatic push/pop mechanism ensures that each request is handled in its own isolated context, preventing data clashes between concurrent requests.</p>
-<h2><a class="anchor" id="autotoc_md1942"></a>
+<h2><a class="anchor" id="autotoc_md1943"></a>
 Manually Pushing Contexts (Outside Requests)</h2>
 <p>What if you need to access application settings or resources <em>outside</em> of a typical web request? For example, maybe you have a separate Python script (<code>init_db.py</code>) that needs to initialize your database using configuration stored in <code>app.config</code>. Since there's no incoming web request, Flask won't automatically create any contexts.</p>
 <p>In these cases, you need to manually push an <b>Application Context</b> using <code>app.app_context()</code>.</p>
@@ -252,7 +252,7 @@ Manually Pushing Contexts (Outside Requests)</h2>
 <div class="line">    print(<span class="stringliteral">&quot;Outside context.&quot;</span>)</div>
 <div class="line">    <span class="comment"># Trying to call get_user_agent_info() here would fail because</span></div>
 <div class="line">    <span class="comment"># the request context has been popped.</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1943"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1944"></a>
 Under the Hood: Context Locals and Stacks</h2>
 <p>How does Flask actually manage these contexts and make the globals like <code>request</code> point to the right object?</p>
 <p>Historically, Flask used thread-local storage and maintained stacks of contexts for each thread. When <code>request</code> was accessed, it would look at the top of the request context stack <em>for the current thread</em>.</p>
@@ -294,7 +294,7 @@ Under the Hood: Context Locals and Stacks</h2>
 <div class="line">    Note over Contexts: Context globals are now unbound for this request</div>
 <div class="line">    FlaskApp--&gt;&gt;-Browser: Sends HTTP Response</div>
 </div><!-- fragment --><p>This diagram shows that Flask sets up (pushes) the context before calling your view and tears it down (pops) afterwards, allowing the proxies like <code>request</code> to find the right data while your code runs.</p>
-<h2><a class="anchor" id="autotoc_md1944"></a>
+<h2><a class="anchor" id="autotoc_md1945"></a>
 Conclusion</h2>
 <p>Contexts are fundamental to how Flask manages state during the lifecycle of the application and individual requests. They provide isolated workspaces to prevent data from different requests interfering with each other.</p>
 <ul>

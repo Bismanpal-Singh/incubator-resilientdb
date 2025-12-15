@@ -121,17 +121,17 @@ $(function(){initNavTree('d3/d58/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_celery_app</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md979"></a>
-autotoc_md979</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md980"></a>
+autotoc_md980</h2>
 <p>layout: default title: "Celery App" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md980"></a>
+<h2><a class="anchor" id="autotoc_md981"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md981"></a>
+<h1><a class="anchor" id="autotoc_md982"></a>
 Chapter 1: The Celery App - Your Task Headquarters</h1>
 <p>Welcome to the world of Celery! If you've ever thought, "I wish this slow part of my web request could run somewhere else later," or "How can I process this huge amount of data without freezing my main application?", then Celery is here to help.</p>
 <p>Celery allows you to run code (we call these "tasks") separately from your main application, either in the background on the same machine or distributed across many different machines.</p>
 <p>But how do you tell Celery <em>what</em> tasks to run and <em>how</em> to run them? That's where the <b>Celery App</b> comes in.</p>
-<h2><a class="anchor" id="autotoc_md982"></a>
+<h2><a class="anchor" id="autotoc_md983"></a>
 What Problem Does the Celery App Solve?</h2>
 <p>Imagine you're building a website. When a user uploads a profile picture, you need to resize it into different formats (thumbnail, medium, large). Doing this immediately when the user clicks "upload" can make the request slow and keep the user waiting.</p>
 <p>Ideally, you want to:</p><ol type="1">
@@ -141,7 +141,7 @@ What Problem Does the Celery App Solve?</h2>
 </ol>
 <p>Celery helps with step 3. But you need a central place to define the "resize image" task and configure <em>how</em> it should be run (e.g., where to send the request to resize, where to store the result). The <b>Celery App</b> is that central place.</p>
 <p>Think of it like the main application object in web frameworks like Flask or Django. It's the starting point, the brain, the headquarters for everything Celery-related in your project.</p>
-<h2><a class="anchor" id="autotoc_md983"></a>
+<h2><a class="anchor" id="autotoc_md984"></a>
 Creating Your First Celery App</h2>
 <p>Getting started is simple. You just need to create an instance of the <code>Celery</code> class.</p>
 <p>Let's create a file named <code>celery_app.py</code>:</p>
@@ -166,7 +166,7 @@ Creating Your First Celery App</h2>
 </li>
 </ul>
 <p>That's it! You now have a <code>Celery</code> application instance named <code>app</code>. This <code>app</code> object is your main tool for working with Celery.</p>
-<h2><a class="anchor" id="autotoc_md984"></a>
+<h2><a class="anchor" id="autotoc_md985"></a>
 Defining a Task with the App</h2>
 <p>Now that we have our <code>app</code>, how do we define a task? We use the <code>@app.task</code> decorator.</p>
 <p>Let's modify <code>celery_app.py</code>:</p>
@@ -195,7 +195,7 @@ Defining a Task with the App</h2>
 <li>Now, <code>app</code> knows about a task called <code>celery_app.add</code> (Celery automatically generates the name based on the module <code>celery_app</code> and function <code>add</code>).</li>
 <li>We'll learn all about <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Task</a>s in Chapter 3.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md985"></a>
+<h2><a class="anchor" id="autotoc_md986"></a>
 Sending a Task (Conceptual)</h2>
 <p>How do we actually <em>run</em> this <code>add</code> task in the background? We use methods like <code>.delay()</code> or <code>.apply_async()</code> on the task object itself.</p>
 <div class="fragment"><div class="line"><span class="comment"># In a separate Python script or interpreter, after importing &#39;add&#39; from celery_app.py</span></div>
@@ -219,7 +219,7 @@ Sending a Task (Conceptual)</h2>
 </ul>
 <p>A separate program, called a Celery <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a>, needs to be running. This worker watches the broker for new task messages, executes the corresponding task function, and (optionally) stores the result in the backend. We'll learn how to run a worker in Chapter 5.</p>
 <p>The key takeaway here is that the <b>Celery App</b> holds the configuration needed (<code>broker</code> and <code>backend</code> URLs) for <code>add.delay()</code> to know <em>where</em> to send the task message and potentially where the result will be stored.</p>
-<h2><a class="anchor" id="autotoc_md986"></a>
+<h2><a class="anchor" id="autotoc_md987"></a>
 How It Works Internally (High-Level)</h2>
 <p>Let's visualize the process of creating the app and sending a task:</p>
 <ol type="1">
@@ -250,7 +250,7 @@ How It Works Internally (High-Level)</h2>
 <div class="line">    Broker--&gt;&gt;AddTask: Acknowledgment (message sent)</div>
 <div class="line">    AddTask--&gt;&gt;Client: Return AsyncResult (promise)</div>
 </div><!-- fragment --><p>This diagram shows how the <code>Celery App</code> acts as the central coordinator, holding configuration and enabling the task (<code>add</code>) to send its execution request to the Broker.</p>
-<h2><a class="anchor" id="autotoc_md987"></a>
+<h2><a class="anchor" id="autotoc_md988"></a>
 Code Dive: Inside the <code>Celery</code> Class</h2>
 <p>Let's peek at some relevant code snippets (simplified for clarity).</p>
 <p><b>Initialization (<code>app/base.py</code>)</b></p>
@@ -359,7 +359,7 @@ Code Dive: Inside the <code>Celery</code> Class</h2>
 <li>Get a connection/producer from the pool (<code>self.producer_or_acquire</code>).</li>
 <li>Create the <code>AsyncResult</code> using the app's result class (<code>self.AsyncResult</code>).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md988"></a>
+<h2><a class="anchor" id="autotoc_md989"></a>
 Conclusion</h2>
 <p>You've learned that the <code>Celery App</code> is the essential starting point for any Celery project.</p>
 <ul>

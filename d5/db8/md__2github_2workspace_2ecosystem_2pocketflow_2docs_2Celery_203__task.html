@@ -121,20 +121,20 @@ $(function(){initNavTree('d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_task</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1012"></a>
-autotoc_md1012</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1013"></a>
+autotoc_md1013</h2>
 <p>layout: default title: "Task" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md1013"></a>
+<h2><a class="anchor" id="autotoc_md1014"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1014"></a>
+<h1><a class="anchor" id="autotoc_md1015"></a>
 Chapter 3: Task - The Job Description</h1>
 <p>In <a class="el" href="../../d3/d58/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_201__celery__app.html">Chapter 1: The Celery App</a>, we set up our Celery headquarters, and in <a class="el" href="../../d7/df5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_202__configuration.html">Chapter 2: Configuration</a>, we learned how to give it instructions. Now, we need to define the <em>actual work</em> we want Celery to do. This is where <b>Tasks</b> come in.</p>
-<h2><a class="anchor" id="autotoc_md1015"></a>
+<h2><a class="anchor" id="autotoc_md1016"></a>
 What Problem Does a Task Solve?</h2>
 <p>Imagine you have a specific job that needs doing, like "Resize this image to thumbnail size" or "Send a welcome email to this new user." In Celery, each of these specific jobs is represented by a <b>Task</b>.</p>
 <p>A Task is like a <b>job description</b> or a <b>recipe</b>. It contains the exact steps (the code) needed to complete a specific piece of work. You write this recipe once as a Python function, and then you can tell Celery to follow that recipe whenever you need that job done, potentially many times with different inputs (like resizing different images or sending emails to different users).</p>
 <p>The key benefit is that you don't run the recipe immediately yourself. You hand the recipe (the Task) and the ingredients (the arguments, like the image file or the user's email) over to Celery. Celery then finds an available helper (a <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a>) who knows how to follow that specific recipe and lets them do the work in the background. This keeps your main application free to do other things.</p>
-<h2><a class="anchor" id="autotoc_md1016"></a>
+<h2><a class="anchor" id="autotoc_md1017"></a>
 Defining Your First Task</h2>
 <p>Defining a task in Celery is surprisingly simple. You just take a regular Python function and "decorate" it using <code>@app.task</code>. Remember our <code>app</code> object from <a class="el" href="../../d3/d58/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_201__celery__app.html">Chapter 1</a>? We use its <code>task</code> decorator.</p>
 <p>Let's create a file, perhaps named <code>tasks.py</code>, to hold our task definitions:</p>
@@ -170,7 +170,7 @@ Defining Your First Task</h2>
 <li><b>Registration</b>: The <code>@app.task</code> decorator automatically <em>registers</em> this function with our Celery <code>app</code>. Now, <code>app</code> knows about a task named <code>tasks.add</code> and another named <code>tasks.send_welcome_email</code> (Celery creates the name from <code>module_name.function_name</code>). Workers connected to this <code>app</code> will be able to find and execute this code when requested.</li>
 </ol>
 <p><em>Self-Host Note:</em> If you are running this code, make sure you have a <code>celery_app.py</code> file containing your Celery app instance as shown in previous chapters, and that the <code>tasks.py</code> file can import <code>app</code> from it.</p>
-<h2><a class="anchor" id="autotoc_md1017"></a>
+<h2><a class="anchor" id="autotoc_md1018"></a>
 Sending a Task for Execution</h2>
 <p>Okay, we've written our recipes (<code>add</code> and <code>send_welcome_email</code>). How do we tell Celery, "Please run the `add` recipe with the numbers 5 and 7"?</p>
 <p>We <b>don't call the function directly</b> like <code>add(5, 7)</code>. If we did that, it would just run immediately in our current program, which defeats the purpose of using Celery!</p>
@@ -218,7 +218,7 @@ Sending a Task for Execution</h2>
 <li><b><code>result_promise_... = ...</code></b>: Both <code>.delay()</code> and <code>apply_async()</code> return an <code>AsyncResult</code> object immediately. This is <em>not</em> the actual result of the task (like <code>12</code> for <code>add(5, 7)</code>). It's more like a receipt or a tracking number (notice the <code>.id</code> attribute). You can use this object later to check if the task finished and what its result was, but only if you've set up a <a class="el" href="../../d3/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_206__result__backend.html">Result Backend</a> (Chapter 6).</li>
 <li><b>The Worker</b>: Sending the task only puts the message on the queue. A separate process, the Celery <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a> (Chapter 5), needs to be running. The worker constantly watches the queue, picks up messages, finds the corresponding task function (using the name like <code>tasks.add</code>), and executes it with the provided arguments.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1018"></a>
+<h2><a class="anchor" id="autotoc_md1019"></a>
 How It Works Internally (Simplified)</h2>
 <p>Let's trace the journey of defining and sending our <code>add</code> task:</p>
 <ol type="1">
@@ -279,34 +279,34 @@ How It Works Internally (Simplified)</h2>
 <div class="line">    Worker-&gt;&gt;Worker: 8. Execute add(5, 7) -&gt; returns 12</div>
 <div class="line">    Note over Worker: (Optionally store result in Backend)</div>
 <div class="line">    Worker-&gt;&gt;Broker: 9. Acknowledge message completion</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1019"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1020"></a>
 Code Dive: Task Creation and Sending</h2>
 <ul>
 <li><p class="startli">**Task Definition (<code>@app.task</code>)**: This decorator is defined in <code>celery/app/base.py</code> within the <code>Celery</code> class method <code>task</code>. It ultimately calls <code>_task_from_fun</code>.</p>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1020"></a>
+<h1><a class="anchor" id="autotoc_md1021"></a>
 Simplified from celery/app/base.py</h1>
 <p>class Celery: </p>
-<h1><a class="anchor" id="autotoc_md1021"></a>
+<h1><a class="anchor" id="autotoc_md1022"></a>
 ...</h1>
 <p>def task(self, *args, **opts): </p>
-<h1><a class="anchor" id="autotoc_md1022"></a>
+<h1><a class="anchor" id="autotoc_md1023"></a>
 ... handles decorator arguments ...</h1>
 <p>def _create_task_cls(fun): </p>
-<h1><a class="anchor" id="autotoc_md1023"></a>
+<h1><a class="anchor" id="autotoc_md1024"></a>
 Returns a Task instance or a Proxy that creates one later</h1>
 <p>ret = self._task_from_fun(fun, **opts) return ret return _create_task_cls</p>
 <p>def _task_from_fun(self, fun, name=None, base=None, bind=False, **options): </p>
-<h1><a class="anchor" id="autotoc_md1024"></a>
+<h1><a class="anchor" id="autotoc_md1025"></a>
 Generate name like 'tasks.add' if not given</h1>
 <p>name = name or self.gen_task_name(fun.__name__, fun.__module__) base = base or self.Task # The base Task class (from celery.app.task)</p>
 <p>if name not in self._tasks: # If not already registered... </p>
-<h1><a class="anchor" id="autotoc_md1025"></a>
+<h1><a class="anchor" id="autotoc_md1026"></a>
 Dynamically create a Task class wrapping the function</h1>
 <p>task = type(fun.__name__, (base,), { 'app': self, # Link task back to this app instance! 'name': name, 'run': staticmethod(fun), # The actual function to run '<b>doc</b>': fun.__doc__, '<b>module</b>': fun.__module__, </p>
-<h1><a class="anchor" id="autotoc_md1026"></a>
+<h1><a class="anchor" id="autotoc_md1027"></a>
 ... other options ...</h1>
 <p>})() # Instantiate the new Task class self._tasks[task.name] = task # Add to app's registry! task.bind(self) # Perform binding steps else: task = self._tasks[name] # Task already exists return task ``<code> This shows how the decorator essentially creates a specialized object (an instance of a class derived from</code>celery.app.task.Task<code>) that wraps your original function and registers it with the</code>app` under a specific name.</p>
 <ul>
@@ -314,25 +314,25 @@ Dynamically create a Task class wrapping the function</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1027"></a>
+<h1><a class="anchor" id="autotoc_md1028"></a>
 Simplified from celery/app/task.py</h1>
 <p>class Task: </p>
-<h1><a class="anchor" id="autotoc_md1028"></a>
+<h1><a class="anchor" id="autotoc_md1029"></a>
 ...</h1>
 <p>def delay(self, *args, **kwargs): """Shortcut for apply_async(args, kwargs)""" return self.apply_async(args, kwargs)</p>
 <p>def apply_async(self, args=None, kwargs=None, ..., **options): </p>
-<h1><a class="anchor" id="autotoc_md1029"></a>
-... argument checking, option processing ...</h1>
 <h1><a class="anchor" id="autotoc_md1030"></a>
+... argument checking, option processing ...</h1>
+<h1><a class="anchor" id="autotoc_md1031"></a>
 Get the app associated with this task instance</h1>
 <p>app = self._get_app()</p>
-<h1><a class="anchor" id="autotoc_md1031"></a>
+<h1><a class="anchor" id="autotoc_md1032"></a>
 If always_eager is set, run locally instead of sending</h1>
 <p>if app.conf.task_always_eager: return self.apply(args, kwargs, ...) # Runs inline</p>
-<h1><a class="anchor" id="autotoc_md1032"></a>
+<h1><a class="anchor" id="autotoc_md1033"></a>
 The main path: tell the app to send the task message</h1>
 <p>return app.send_task( self.name, args, kwargs, task_type=self, **options # Includes things like countdown, eta, queue etc. ) ``<code> You can see how</code>.delay<code>just calls</code>.apply_async<code>, which then (usually) delegates the actual message sending to the</code>app.send_task<code>method we saw briefly in [Chapter 1](<a class="el" href="../../d3/d90/01__celery__app_8md.html">01_celery_app.md</a>). The</code>app` uses its configuration to know <em>how</em> and <em>where</em> to send the message.</p>
-<h2><a class="anchor" id="autotoc_md1033"></a>
+<h2><a class="anchor" id="autotoc_md1034"></a>
 Conclusion</h2>
 <p>You've learned the core concept of a Celery <b>Task</b>:</p>
 <ul>

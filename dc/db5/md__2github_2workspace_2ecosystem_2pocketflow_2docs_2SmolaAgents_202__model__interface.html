@@ -121,22 +121,22 @@ $(function(){initNavTree('dc/db5/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_model_interface</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md3028"></a>
-autotoc_md3028</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md3029"></a>
+autotoc_md3029</h2>
 <p>layout: default title: "Model Interface" parent: "SmolaAgents" </p>
-<h2><a class="anchor" id="autotoc_md3029"></a>
+<h2><a class="anchor" id="autotoc_md3030"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md3030"></a>
+<h1><a class="anchor" id="autotoc_md3031"></a>
 Chapter 2: Model Interface - Your Agent's Universal Translator</h1>
 <p>Welcome back! In <a class="el" href="../../dc/d92/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_201__multistepagent.html">Chapter 1: The MultiStepAgent - Your Task Orchestrator</a>, we met the <code>MultiStepAgent</code>, our AI project manager. We learned that it follows a "Think -&gt; Act -&gt; Observe" cycle to solve tasks. A crucial part of the "Think" phase is consulting its "brain" – a Large Language Model (LLM).</p>
 <p>But wait... there are so many different LLMs out there! OpenAI's GPT-4, Anthropic's Claude, Google's Gemini, open-source models you can run locally like Llama or Mistral... How can our agent talk to all of them without needing completely different code for each one?</p>
 <p>This is where the <b>Model Interface</b> comes in!</p>
-<h2><a class="anchor" id="autotoc_md3031"></a>
+<h2><a class="anchor" id="autotoc_md3032"></a>
 The Problem: Too Many Remotes!</h2>
 <p>Imagine you have several TVs at home, each from a different brand (Sony, Samsung, LG). Each TV comes with its own specific remote control. To watch TV, you need to find the <em>right</em> remote and know <em>its specific buttons</em>. It's a hassle!</p>
 <p><img src="https://img.icons8.com/cotton/64/000000/remote-control.png" alt="Different TV Remotes" class="inline"/> <img src="https://img.icons8.com/fluency/48/000000/remote-control.png" alt="Different TV Remotes" class="inline"/> <img src="https://img.icons8.com/color/48/000000/remote-control.png" alt="Different TV Remotes" class="inline"/></p>
 <p>Different LLMs are like those different TVs. Each has its own way of being "controlled" – its own API (Application Programming Interface) or library with specific functions, required inputs, and ways of giving back answers. If our <code>MultiStepAgent</code> had to learn the specific "remote control commands" for every possible LLM, our code would become very complicated very quickly!</p>
-<h2><a class="anchor" id="autotoc_md3032"></a>
+<h2><a class="anchor" id="autotoc_md3033"></a>
 The Solution: The Universal Remote (Model Interface)</h2>
 <p>Wouldn't it be great if you had <em>one</em> universal remote that could control <em>all</em> your TVs? You'd just press "Power", "Volume Up", or "Channel Down", and the universal remote would figure out how to send the correct signal to whichever TV you're using.</p>
 <p><img src="https://img.icons8.com/office/80/000000/remote-control.png" alt="Universal Remote" class="inline"/> -&gt; Controls -&gt; <img src="https://img.icons8.com/color/48/000000/tv.png" alt="Sony TV" class="inline"/> <img src="https://img.icons8.com/color/48/000000/tv-on.png" alt="Samsung TV" class="inline"/> <img src="https://img.icons8.com/emoji/48/000000/television.png" alt="LG TV" class="inline"/></p>
@@ -154,7 +154,7 @@ The Solution: The Universal Remote (Model Interface)</h2>
 </li>
 </ul>
 <p>So, the <code>MultiStepAgent</code> only needs to learn how to use the <em>one</em> universal remote (the Model Interface), not the specific commands for every LLM "TV".</p>
-<h2><a class="anchor" id="autotoc_md3033"></a>
+<h2><a class="anchor" id="autotoc_md3034"></a>
 How It Works: The Standard <code>__call__</code></h2>
 <p>The magic of the Model Interface lies in its simplicity from the agent's perspective. All Model Interfaces in <code>SmolaAgents</code> work the same way: you "call" them like a function, passing in the conversation history.</p>
 <p>Think of it like pressing the main button on our universal remote.</p>
@@ -170,7 +170,7 @@ How It Works: The Standard <code>__call__</code></h2>
 </li>
 <li><b>Output:</b> It translates the LLM's raw response back into a standard <code>ChatMessage</code> object. This object contains the LLM's text response and, importantly, might include structured information if the LLM decided the agent should use a <a class="el" href="../../d4/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_203__tool.html">Tool</a>. The agent knows exactly how to read this <code>ChatMessage</code>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3034"></a>
+<h2><a class="anchor" id="autotoc_md3035"></a>
 Using a Model Interface</h2>
 <p>Let's see how you'd actually <em>use</em> one. <code>SmolaAgents</code> comes with several built-in Model Interfaces. A very useful one is <code>LiteLLMModel</code>, which uses the <code>litellm</code> library to connect to hundreds of different LLM providers (OpenAI, Anthropic, Cohere, Azure, local models via Ollama, etc.) with minimal code changes!</p>
 <p><b>Step 1: Choose and Initialize Your Model Interface</b></p>
@@ -243,15 +243,15 @@ Using a Model Interface</h2>
 <div class="line"><span class="comment"># Action:</span></div>
 <div class="line"><span class="comment"># </span></div>
 </div><!-- fragment --><p> json </p>
-<h1><a class="anchor" id="autotoc_md3035"></a>
-{</h1>
 <h1><a class="anchor" id="autotoc_md3036"></a>
-"action": "search",</h1>
+{</h1>
 <h1><a class="anchor" id="autotoc_md3037"></a>
-"action_input": "Capital of France"</h1>
+"action": "search",</h1>
 <h1><a class="anchor" id="autotoc_md3038"></a>
-}</h1>
+"action_input": "Capital of France"</h1>
 <h1><a class="anchor" id="autotoc_md3039"></a>
+}</h1>
+<h1><a class="anchor" id="autotoc_md3040"></a>
 ```</h1>
 <div class="fragment"><div class="line">**Explanation:**</div>
 <div class="line">*   The agent prepares a list of `messages_for_llm`.</div>
@@ -282,54 +282,54 @@ Using a Model Interface</h2>
 <div class="line"> </div>
 <div class="line">*   **Base Class (`Model`):** Defines the common structure, including the `__call__` method that all specific interfaces must implement.</div>
 </div><!-- fragment --><p> python </p>
-<h1><a class="anchor" id="autotoc_md3040"></a>
+<h1><a class="anchor" id="autotoc_md3041"></a>
 &mdash; File: models.py (Simplified Model base class) &mdash;</h1>
 <p>from typing import List, Dict, Optional from .tools import Tool # Reference to Tool concept</p>
 <p>@dataclass class ChatMessage: # Simplified representation of the standard response role: str content: Optional[str] = None tool_calls: Optional[List[dict]] = None # For tool usage (Chapter 3) </p>
-<h1><a class="anchor" id="autotoc_md3041"></a>
+<h1><a class="anchor" id="autotoc_md3042"></a>
 ... other fields ...</h1>
 <p>class Model: def <b>init</b>(self, **kwargs): self.kwargs = kwargs # Stores model-specific settings </p>
-<h1><a class="anchor" id="autotoc_md3042"></a>
-...</h1>
 <h1><a class="anchor" id="autotoc_md3043"></a>
+...</h1>
+<h1><a class="anchor" id="autotoc_md3044"></a>
 The standard "button" our agent presses!</h1>
 <p>def <b>call</b>( self, messages: List[Dict[str, str]], stop_sequences: Optional[List[str]] = None, tools_to_call_from: Optional[List[Tool]] = None, **kwargs, ) -&gt; ChatMessage: </p>
-<h1><a class="anchor" id="autotoc_md3044"></a>
+<h1><a class="anchor" id="autotoc_md3045"></a>
 Each specific model interface implements this method</h1>
 <p>raise NotImplementedError("Subclasses must implement the __call__ method.")</p>
 <p>def _prepare_completion_kwargs(self, messages, **kwargs) -&gt; Dict: </p>
-<h1><a class="anchor" id="autotoc_md3045"></a>
-Helper to format messages and parameters for the backend</h1>
 <h1><a class="anchor" id="autotoc_md3046"></a>
+Helper to format messages and parameters for the backend</h1>
+<h1><a class="anchor" id="autotoc_md3047"></a>
 ... translation logic ...</h1>
 <p>pass ```</p>
 <ul>
 <li><b>Specific Implementation (<code>LiteLLMModel</code>):</b> Inherits from <code>Model</code> and implements <code>__call__</code> using the <code>litellm</code> library. ```python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3047"></a>
+<h1><a class="anchor" id="autotoc_md3048"></a>
 &mdash; File: models.py (Simplified LiteLLMModel <b>call</b>) &mdash;</h1>
 <p>import litellm # The library that talks to many LLMs</p>
 <p>class LiteLLMModel(Model): def <b>init</b>(self, model_id: str, **kwargs): super().__init__(**kwargs) self.model_id = model_id </p>
-<h1><a class="anchor" id="autotoc_md3048"></a>
+<h1><a class="anchor" id="autotoc_md3049"></a>
 LiteLLM typically uses environment variables for API keys</h1>
 <p>def <b>call</b>( self, messages: List[Dict[str, str]], stop_sequences: Optional[List[str]] = None, tools_to_call_from: Optional[List[Tool]] = None, **kwargs, ) -&gt; ChatMessage: </p>
-<h1><a class="anchor" id="autotoc_md3049"></a>
+<h1><a class="anchor" id="autotoc_md3050"></a>
 1. Prepare arguments using the helper</h1>
 <p>completion_kwargs = self._prepare_completion_kwargs( messages=messages, stop_sequences=stop_sequences, tools_to_call_from=tools_to_call_from, model=self.model_id, # Tell litellm which model </p>
-<h1><a class="anchor" id="autotoc_md3050"></a>
+<h1><a class="anchor" id="autotoc_md3051"></a>
 ... other parameters ...</h1>
 <p>**kwargs, )</p>
-<h1><a class="anchor" id="autotoc_md3051"></a>
-2. Call the actual backend via litellm</h1>
 <h1><a class="anchor" id="autotoc_md3052"></a>
+2. Call the actual backend via litellm</h1>
+<h1><a class="anchor" id="autotoc_md3053"></a>
 This hides the complexity of different API calls!</h1>
 <p>response = litellm.completion(**completion_kwargs)</p>
-<h1><a class="anchor" id="autotoc_md3053"></a>
-3. Parse the response into our standard ChatMessage</h1>
 <h1><a class="anchor" id="autotoc_md3054"></a>
+3. Parse the response into our standard ChatMessage</h1>
+<h1><a class="anchor" id="autotoc_md3055"></a>
 (Simplified - actual parsing involves more details)</h1>
 <p>raw_message = response.choices[0].message chat_message = ChatMessage( role=raw_message.role, content=raw_message.content, tool_calls=raw_message.tool_calls # If the LLM requested a tool ) </p>
-<h1><a class="anchor" id="autotoc_md3055"></a>
+<h1><a class="anchor" id="autotoc_md3056"></a>
 ... store token counts, raw response etc. ...</h1>
 <p>return chat_message ```</p>
 <p><b>Explanation:</b></p><ul>
@@ -339,7 +339,7 @@ This hides the complexity of different API calls!</h1>
 <li>The result is then parsed back into the standard <code>ChatMessage</code> format.</li>
 </ul>
 <p>The beauty is that the <code>MultiStepAgent</code> only ever interacts with the <code>__call__</code> method, regardless of whether it's using <code>LiteLLMModel</code>, <code>TransformersModel</code> (for local models), or another interface.</p>
-<h2><a class="anchor" id="autotoc_md3056"></a>
+<h2><a class="anchor" id="autotoc_md3057"></a>
 Conclusion</h2>
 <p>The Model Interface is a vital piece of the <code>SmolaAgents</code> puzzle. It acts as a universal translator or remote control, allowing your <code>MultiStepAgent</code> to seamlessly communicate with a wide variety of Large Language Models without getting bogged down in the specific details of each one.</p>
 <p>You've learned:</p>

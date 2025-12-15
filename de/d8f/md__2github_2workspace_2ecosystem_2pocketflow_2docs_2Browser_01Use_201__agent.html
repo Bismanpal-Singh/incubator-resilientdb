@@ -121,21 +121,21 @@ $(function(){initNavTree('de/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_agent</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md846"></a>
-autotoc_md846</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md847"></a>
+autotoc_md847</h2>
 <p>layout: default title: "Agent" parent: "Browser Use" </p>
-<h2><a class="anchor" id="autotoc_md847"></a>
+<h2><a class="anchor" id="autotoc_md848"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md848"></a>
+<h1><a class="anchor" id="autotoc_md849"></a>
 Chapter 1: The Agent - Your Browser Assistant's Brain</h1>
 <p>Welcome to the <code>Browser Use</code> tutorial! We're excited to help you learn how to automate web tasks using the power of Large Language Models (LLMs).</p>
 <p>Imagine you want to perform a simple task, like searching Google for "cute cat pictures" and clicking on the very first image result. For a human, this is easy! You open your browser, type in the search, look at the results, and click.</p>
 <p>But how do you tell a computer program to do this? It needs to understand the goal, look at the webpage like a human does, decide what to click or type next, and then actually perform those actions. This is where the <b>Agent</b> comes in.</p>
-<h2><a class="anchor" id="autotoc_md849"></a>
+<h2><a class="anchor" id="autotoc_md850"></a>
 What Problem Does the Agent Solve?</h2>
 <p>The Agent is the core orchestrator, the "brain" or "project manager" of your browser automation task. It connects all the different pieces needed to achieve your goal. Without the Agent, you'd have a bunch of tools (like a browser controller and an LLM) but no central coordinator telling them what to do and when.</p>
 <p>The Agent solves the problem of turning a high-level goal (like "find cat pictures") into concrete actions on a webpage, using intelligence to adapt to what it "sees" in the browser.</p>
-<h2><a class="anchor" id="autotoc_md850"></a>
+<h2><a class="anchor" id="autotoc_md851"></a>
 Meet the Agent: Your Project Manager</h2>
 <p>Think of the <code>Agent</code> like a project manager overseeing a complex task. It doesn't do <em>all</em> the work itself, but it coordinates specialists:</p>
 <ol type="1">
@@ -146,7 +146,7 @@ Meet the Agent: Your Project Manager</h2>
 <li><b>Observes the Results (BrowserContext):</b> After the Controller acts, the Agent uses the <a class="el" href="../../dd/da5/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_203__browsercontext.html">BrowserContext</a> again to see the new state of the webpage (e.g., the Google search results page).</li>
 <li><b>Repeats:</b> The Agent repeats steps 2-5, continuously consulting the LLM, instructing the Controller, and observing the results, until the original task is complete or it reaches a stopping point.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md851"></a>
+<h2><a class="anchor" id="autotoc_md852"></a>
 Using the Agent: A Simple Example</h2>
 <p>Let's see how you might use the Agent in Python code. Don't worry about understanding every detail yet; focus on the main idea. We're setting up the Agent with our task and the necessary components.</p>
 <div class="fragment"><div class="line"><span class="comment"># --- Simplified Example ---</span></div>
@@ -217,7 +217,7 @@ Using the Agent: A Simple Example</h2>
 <li>Eventually, the LLM will hopefully tell the Agent the task is "done".</li>
 <li><code>agent.run()</code> finishes and returns the <code>history</code> object containing details of what happened.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md852"></a>
+<h2><a class="anchor" id="autotoc_md853"></a>
 How it Works Under the Hood: The Agent Loop</h2>
 <p>Let's visualize the process with a simple diagram:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -255,19 +255,19 @@ How it Works Under the Hood: The Agent Loop</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md853"></a>
+<h1><a class="anchor" id="autotoc_md854"></a>
 &mdash; File: agent/service.py (Simplified <b>init</b>) &mdash;</h1>
 <p>class Agent: def <b>init</b>( self, task: str, llm: BaseChatModel, browser_context: BrowserContext, controller: Controller, </p>
-<h1><a class="anchor" id="autotoc_md854"></a>
+<h1><a class="anchor" id="autotoc_md855"></a>
 ... other settings like use_vision, max_failures, etc.</h1>
 <p>**kwargs ): self.task = task self.llm = llm self.browser_context = browser_context self.controller = controller self.settings = AgentSettings(**kwargs) # Store various settings self.state = AgentState() # Internal state (step count, failures, etc.)</p>
-<h1><a class="anchor" id="autotoc_md855"></a>
+<h1><a class="anchor" id="autotoc_md856"></a>
 Setup message manager for history, using the task and system prompt</h1>
 <p>self._message_manager = MessageManager( task=self.task, system_message=self.settings.system_prompt_class(...).get_system_message(), settings=MessageManagerSettings(...) </p>
-<h1><a class="anchor" id="autotoc_md856"></a>
+<h1><a class="anchor" id="autotoc_md857"></a>
 ... more setup ...</h1>
 <p>) </p>
-<h1><a class="anchor" id="autotoc_md857"></a>
+<h1><a class="anchor" id="autotoc_md858"></a>
 ... other initializations ...</h1>
 <p>logger.info("Agent initialized.") ```</p>
 <ol type="1">
@@ -275,19 +275,19 @@ Setup message manager for history, using the task and system prompt</h1>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md858"></a>
+<h1><a class="anchor" id="autotoc_md859"></a>
 &mdash; File: agent/service.py (Simplified run method) &mdash;</h1>
 <p>class Agent: </p>
-<h1><a class="anchor" id="autotoc_md859"></a>
+<h1><a class="anchor" id="autotoc_md860"></a>
 ... (init) ...</h1>
 <p>async def run(self, max_steps: int = 100) -&gt; AgentHistoryList: self._log_agent_run() # Log start event try: for step_num in range(max_steps): if self.state.stopped or self.state.consecutive_failures &gt;= self.settings.max_failures: break # Stop conditions</p>
-<h1><a class="anchor" id="autotoc_md860"></a>
+<h1><a class="anchor" id="autotoc_md861"></a>
 Wait if paused</h1>
 <p>while self.state.paused: await asyncio.sleep(0.2)</p>
 <p>step_info = AgentStepInfo(step_number=step_num, max_steps=max_steps) await self.step(step_info) # &lt;&lt;&lt; Execute one step of the loop</p>
 <p>if self.state.history.is_done(): await self.log_completion() # Log success/failure break # Exit loop if agent signaled 'done' else: logger.info("Max steps reached.") # Ran out of steps</p>
 <p>finally: </p>
-<h1><a class="anchor" id="autotoc_md861"></a>
+<h1><a class="anchor" id="autotoc_md862"></a>
 ... (cleanup, telemetry, potentially save history/gif) ...</h1>
 <p>pass return self.state.history # Return the recorded history ```</p>
 <ol type="1">
@@ -302,38 +302,38 @@ Wait if paused</h1>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md862"></a>
+<h1><a class="anchor" id="autotoc_md863"></a>
 &mdash; File: agent/service.py (Simplified step method) &mdash;</h1>
 <p>class Agent: </p>
-<h1><a class="anchor" id="autotoc_md863"></a>
+<h1><a class="anchor" id="autotoc_md864"></a>
 ... (init, run) ...</h1>
 <p>async def step(self, step_info: Optional[AgentStepInfo] = None) -&gt; None: logger.info(f"📍 Step {self.state.n_steps}") state = None model_output = None result: list[ActionResult] = []</p>
 <p>try: </p>
-<h1><a class="anchor" id="autotoc_md864"></a>
+<h1><a class="anchor" id="autotoc_md865"></a>
 1. Get current state from the browser</h1>
 <p>state = await self.browser_context.get_state() # Uses BrowserContext</p>
-<h1><a class="anchor" id="autotoc_md865"></a>
+<h1><a class="anchor" id="autotoc_md866"></a>
 2. Add state (+ previous result) to message history for LLM context</h1>
 <p>self._message_manager.add_state_message(state, self.state.last_result, ...)</p>
-<h1><a class="anchor" id="autotoc_md866"></a>
+<h1><a class="anchor" id="autotoc_md867"></a>
 3. Get LLM's decision on the next action(s)</h1>
 <p>input_messages = self._message_manager.get_messages() model_output = await self.get_next_action(input_messages) # Calls the LLM</p>
 <p>self.state.n_steps += 1 # Increment step counter</p>
-<h1><a class="anchor" id="autotoc_md867"></a>
+<h1><a class="anchor" id="autotoc_md868"></a>
 4. Execute the action(s) using the Controller</h1>
 <p>result = await self.multi_act(model_output.action) # Uses Controller self.state.last_result = result # Store result for next step's context</p>
-<h1><a class="anchor" id="autotoc_md868"></a>
+<h1><a class="anchor" id="autotoc_md869"></a>
 5. Record step details (actions, results, state snapshot)</h1>
 <p>self._make_history_item(model_output, state, result, ...)</p>
 <p>self.state.consecutive_failures = 0 # Reset failure count on success</p>
 <p>except Exception as e: </p>
-<h1><a class="anchor" id="autotoc_md869"></a>
+<h1><a class="anchor" id="autotoc_md870"></a>
 Handle errors, increment failure count, maybe retry later</h1>
 <p>result = await self._handle_step_error(e) self.state.last_result = result </p>
-<h1><a class="anchor" id="autotoc_md870"></a>
+<h1><a class="anchor" id="autotoc_md871"></a>
 ... (finally block for logging/telemetry) ...</h1>
 <p>```</p>
-<h2><a class="anchor" id="autotoc_md871"></a>
+<h2><a class="anchor" id="autotoc_md872"></a>
 Conclusion</h2>
 <p>You've now met the <code>Agent</code>, the central coordinator in <code>Browser Use</code>. You learned that it acts like a project manager, taking your high-level task, consulting an LLM for step-by-step planning, managing the history, and instructing a <code>Controller</code> to perform actions within a <code>BrowserContext</code>.</p>
 <p>The Agent's effectiveness heavily relies on how well we instruct the LLM planner. In the next chapter, we'll dive into exactly that: crafting the <b>System Prompt</b> to guide the LLM's behavior.</p>

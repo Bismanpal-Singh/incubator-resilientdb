@@ -121,12 +121,12 @@ $(function(){initNavTree('da/dd4/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_memory</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md789"></a>
-autotoc_md789</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md790"></a>
+autotoc_md790</h2>
 <p>layout: default title: "Memory" parent: "AutoGen Core" </p>
-<h2><a class="anchor" id="autotoc_md790"></a>
+<h2><a class="anchor" id="autotoc_md791"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md791"></a>
+<h1><a class="anchor" id="autotoc_md792"></a>
 Chapter 7: Memory - The Agent's Notebook</h1>
 <p>In <a class="el" href="../../dd/dc3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2AutoGen_01Core_206__chatcompletioncontext.html">Chapter 6: ChatCompletionContext</a>, we saw how agents manage the <em>short-term</em> history of a single conversation before talking to an LLM. It's like remembering what was just said in the last few minutes.</p>
 <p>But what if an agent needs to remember things for much longer, across <em>multiple</em> conversations or tasks? For example, imagine an assistant agent that learns your preferences:</p><ul>
@@ -135,10 +135,10 @@ Chapter 7: Memory - The Agent's Notebook</h1>
 </ul>
 <p>How does it remember that preference? The short-term <code>ChatCompletionContext</code> might have forgotten the earlier instruction, especially if using a strategy like <code>BufferedChatCompletionContext</code>. The agent needs a <b>long-term memory</b>.</p>
 <p>This is where the <b><code>Memory</code></b> abstraction comes in. Think of it as the agent's <b>long-term notebook or database</b>. While <code>ChatCompletionContext</code> is the scratchpad for the current chat, <code>Memory</code> holds persistent information the agent can add to or look up later.</p>
-<h2><a class="anchor" id="autotoc_md792"></a>
+<h2><a class="anchor" id="autotoc_md793"></a>
 Motivation: Remembering Across Conversations</h2>
 <p>Our goal is to give an agent the ability to store a piece of information (like a user preference) and retrieve it later to influence its behavior, even in a completely new conversation. <code>Memory</code> provides the mechanism for this long-term storage and retrieval.</p>
-<h2><a class="anchor" id="autotoc_md793"></a>
+<h2><a class="anchor" id="autotoc_md794"></a>
 Key Concepts: How the Notebook Works</h2>
 <ol type="1">
 <li><p class="startli"><b>What it Stores (<code>MemoryContent</code>):</b> Agents can store various types of information in their memory. This could be:</p><ul>
@@ -149,10 +149,10 @@ Key Concepts: How the Notebook Works</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md794"></a>
+<h1><a class="anchor" id="autotoc_md795"></a>
 From: memory/_base_memory.py (Simplified Concept)</h1>
 <p>from pydantic import BaseModel from typing import Any, Dict, Union</p>
-<h1><a class="anchor" id="autotoc_md795"></a>
+<h1><a class="anchor" id="autotoc_md796"></a>
 Represents one entry in the memory notebook</h1>
 <p>class MemoryContent(BaseModel): content: Union[str, bytes, Dict[str, Any]] # The actual data mime_type: str # What kind of data (e.g., "text/plain") metadata: Dict[str, Any] | None = None # Extra info (optional) ``` This standard format helps manage different kinds of memories.</p>
 <ol type="1">
@@ -170,7 +170,7 @@ Represents one entry in the memory notebook</h1>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md796"></a>
+<h2><a class="anchor" id="autotoc_md797"></a>
 Use Case Example: Remembering User Preferences with <code>ListMemory</code></h2>
 <p>Let's implement our user preference use case using the simple <code>ListMemory</code>.</p>
 <p><b>Goal:</b></p><ol type="1">
@@ -291,7 +291,7 @@ Use Case Example: Remembering User Preferences with <code>ListMemory</code></h2>
 <div class="line"><span class="comment"># Direct query result:</span></div>
 <div class="line"><span class="comment"># - Content: User prefers all communication to be written in a formal style., Type: text/plain</span></div>
 </div><!-- fragment --><p> This shows how an agent could specifically look things up in its notebook.</p>
-<h2><a class="anchor" id="autotoc_md797"></a>
+<h2><a class="anchor" id="autotoc_md798"></a>
 Under the Hood: How <code>ListMemory</code> Injects Context</h2>
 <p>Let's trace the <code>update_context</code> call for <code>ListMemory</code>.</p>
 <p><b>Conceptual Flow:</b></p>
@@ -328,10 +328,10 @@ Under the Hood: How <code>ListMemory</code> Injects Context</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md798"></a>
+<h1><a class="anchor" id="autotoc_md799"></a>
 From: memory/_base_memory.py (Simplified ABC)</h1>
 <p>from abc import ABC, abstractmethod </p>
-<h1><a class="anchor" id="autotoc_md799"></a>
+<h1><a class="anchor" id="autotoc_md800"></a>
 ... other imports: MemoryContent, MemoryQueryResult, UpdateContextResult, ChatCompletionContext</h1>
 <p>class Memory(ABC): component_type = "memory"</p>
 <p>@abstractmethod async def update_context(self, model_context: ChatCompletionContext) -&gt; UpdateContextResult: ...</p>
@@ -344,34 +344,34 @@ From: memory/_base_memory.py (Simplified ABC)</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md800"></a>
+<h1><a class="anchor" id="autotoc_md801"></a>
 From: memory/_list_memory.py (Simplified)</h1>
 <p>from typing import List </p>
-<h1><a class="anchor" id="autotoc_md801"></a>
+<h1><a class="anchor" id="autotoc_md802"></a>
 ... other imports: Memory, MemoryContent, ..., SystemMessage, ChatCompletionContext</h1>
 <p>class ListMemory(Memory): def <b>init</b>(self, ..., memory_contents: List[MemoryContent] | None = None): </p>
-<h1><a class="anchor" id="autotoc_md802"></a>
+<h1><a class="anchor" id="autotoc_md803"></a>
 Stores memory items in a simple list</h1>
 <p>self._contents: List[MemoryContent] = memory_contents or []</p>
 <p>async def add(self, content: MemoryContent, ...) -&gt; None: """Add new content to the internal list.""" self._contents.append(content)</p>
 <p>async def query(self, query: str | MemoryContent = "", ...) -&gt; MemoryQueryResult: """Return all memories, ignoring the query.""" </p>
-<h1><a class="anchor" id="autotoc_md803"></a>
+<h1><a class="anchor" id="autotoc_md804"></a>
 Simple implementation: just return everything</h1>
 <p>return MemoryQueryResult(results=self._contents)</p>
 <p>async def update_context(self, model_context: ChatCompletionContext) -&gt; UpdateContextResult: """Add all memories as a SystemMessage to the chat context.""" if not self._contents: # Do nothing if memory is empty return UpdateContextResult(memories=MemoryQueryResult(results=[]))</p>
-<h1><a class="anchor" id="autotoc_md804"></a>
+<h1><a class="anchor" id="autotoc_md805"></a>
 Format all memories into a numbered list string</h1>
 <p>memory_strings = [f"{i}. {str(mem.content)}" for i, mem in enumerate(self._contents, 1)] memory_context_str = "Relevant memory content...\n" + "\n".join(memory_strings) + "\n"</p>
-<h1><a class="anchor" id="autotoc_md805"></a>
+<h1><a class="anchor" id="autotoc_md806"></a>
 Add this string as a SystemMessage to the provided chat context</h1>
 <p>await model_context.add_message(SystemMessage(content=memory_context_str))</p>
-<h1><a class="anchor" id="autotoc_md806"></a>
+<h1><a class="anchor" id="autotoc_md807"></a>
 Return info about which memories were added</h1>
 <p>return UpdateContextResult(memories=MemoryQueryResult(results=self._contents))</p>
-<h1><a class="anchor" id="autotoc_md807"></a>
+<h1><a class="anchor" id="autotoc_md808"></a>
 ... clear(), close(), config methods ...</h1>
 <p>``<code> This shows the straightforward logic of</code>ListMemory<code>: store in a list, retrieve the whole list, and inject the whole list as a single system message into the chat context. More complex memories might use smarter retrieval (e.g., based on the</code>query<code>in</code>query()<code>or the last message in</code>update_context`) and inject memories differently.</p>
-<h2><a class="anchor" id="autotoc_md808"></a>
+<h2><a class="anchor" id="autotoc_md809"></a>
 Next Steps</h2>
 <p>You've learned about <code>Memory</code>, AutoGen Core's mechanism for giving agents long-term recall beyond the immediate conversation (<code>ChatCompletionContext</code>). We saw how <code>MemoryContent</code> holds information, <code>add</code> stores it, <code>query</code> retrieves it, and <code>update_context</code> injects relevant memories into the LLM's working context. We explored the simple <code>ListMemory</code> as a basic example.</p>
 <p>Memory systems are crucial for agents that learn, adapt, or need to maintain state across interactions.</p>

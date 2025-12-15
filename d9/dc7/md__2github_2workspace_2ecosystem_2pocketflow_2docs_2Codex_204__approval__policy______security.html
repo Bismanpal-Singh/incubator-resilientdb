@@ -121,17 +121,17 @@ $(function(){initNavTree('d9/dc7/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_approval_policy___security</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1308"></a>
-autotoc_md1308</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1309"></a>
+autotoc_md1309</h2>
 <p>layout: default title: "Approval Policy &amp; Security" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1309"></a>
+<h2><a class="anchor" id="autotoc_md1310"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md1310"></a>
+<h1><a class="anchor" id="autotoc_md1311"></a>
 Chapter 4: Approval Policy &amp; Security</h1>
 <p>In the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">previous chapter</a>, we saw how the <b>Agent Loop</b> acts like Codex's brain, talking to the AI and figuring out what steps to take. Sometimes, the AI might suggest actions that could change things on your computer, like modifying a file or running a command in your terminal (e.g., <code>git commit</code>, <code>npm install</code>, or even <code>rm important_file.txt</code>!).</p>
 <p>This sounds powerful, but also a little scary, right? What if the AI misunderstands and suggests deleting the wrong file? We need a way to control how much power Codex has.</p>
 <p>That's exactly what the <b>Approval Policy &amp; Security</b> system does. It's like a security guard standing between the AI's suggestions and your actual computer.</p>
-<h2><a class="anchor" id="autotoc_md1311"></a>
+<h2><a class="anchor" id="autotoc_md1312"></a>
 What's the Big Idea? The Security Guard</h2>
 <p>Imagine you're visiting a secure building. Depending on your pass, you have different levels of access:</p>
 <ul>
@@ -140,7 +140,7 @@ What's the Big Idea? The Security Guard</h2>
 <li><b>Full Access Badge (<code>full-auto</code> mode):</b> You can go almost anywhere (modify files, run commands), but for potentially sensitive actions (like running commands), the guard might escort you to a special monitored room (a "sandbox") to ensure safety.</li>
 </ul>
 <p>The Approval Policy in Codex works just like these passes. It lets <em>you</em> choose how much autonomy Codex has when it suggests potentially risky actions.</p>
-<h2><a class="anchor" id="autotoc_md1312"></a>
+<h2><a class="anchor" id="autotoc_md1313"></a>
 Key Concepts: The Approval Modes</h2>
 <p>Codex offers different levels of autonomy, which you can usually set with a command-line flag like <code>--approval-mode</code> or when you first configure it. These are the main modes:</p>
 <ol type="1">
@@ -163,7 +163,7 @@ Key Concepts: The Approval Modes</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1313"></a>
+<h2><a class="anchor" id="autotoc_md1314"></a>
 How it Works in Practice</h2>
 <p>When the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> receives a suggestion from the AI to perform an action (like applying a patch or running a shell command), it doesn't just blindly execute it. Instead, it checks the current Approval Policy you've set.</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -197,7 +197,7 @@ How it Works in Practice</h2>
 </ol>
 <p>If the policy had been <code>full-auto</code>, the decision in Step 3 might have been <code>auto-approve</code> (with <code>runInSandbox: true</code>), and the Agent Loop would have skipped asking you (Steps 4 &amp; 5) and gone straight to execution (Step 6), but inside the sandbox.</p>
 <p>If the action was applying a file patch and the policy was <code>auto-edit</code> or <code>full-auto</code>, the decision might also be <code>auto-approve</code> (checking if the file path is allowed), skipping the user prompt.</p>
-<h2><a class="anchor" id="autotoc_md1314"></a>
+<h2><a class="anchor" id="autotoc_md1315"></a>
 Under the Hood: The <code>approvals.ts</code> Logic</h2>
 <p>The core logic for making these decisions lives in <code>codex-cli/src/approvals.ts</code>. A key function here is <code>canAutoApprove</code>.</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/approvals.ts (Simplified)</div>
@@ -335,7 +335,7 @@ Under the Hood: The <code>approvals.ts</code> Logic</h2>
 <div class="line">  return convertSummaryToResult(summary);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This shows how <code>canAutoApprove</code> is called first. If it returns <code>ask-user</code>, the <code>getCommandConfirmation</code> callback (which triggers the UI prompt) is invoked. Only if the assessment is <code>auto-approve</code> or the user explicitly approves does the code proceed to actually execute the command using <code>execCommand</code>, passing the <code>runInSandbox</code> flag determined by the policy check.</p>
-<h2><a class="anchor" id="autotoc_md1315"></a>
+<h2><a class="anchor" id="autotoc_md1316"></a>
 Conclusion</h2>
 <p>The Approval Policy &amp; Security system is Codex's safety net. It puts you in control, letting you choose the balance between letting the AI work autonomously and requiring manual confirmation for actions that could affect your system. By understanding the <code>suggest</code>, <code>auto-edit</code>, and <code>full-auto</code> modes, you can configure Codex to operate in a way that matches your comfort level with automation and risk. This system works hand-in-hand with the <a class="el" href="../../d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_203__agent__loop.html">Agent Loop</a> to intercept potentially risky actions and enforce the rules you've set, sometimes using sandboxing (as we'll see later) for an extra layer of protection.</p>
 <p>Now that we know how Codex decides <em>whether</em> to perform an action, how does it actually understand the AI's response, especially when the AI wants to use a tool like running a command or applying a patch?</p>

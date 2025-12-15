@@ -121,16 +121,16 @@ $(function(){initNavTree('db/d5f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_decorators</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1201"></a>
-autotoc_md1201</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1202"></a>
+autotoc_md1202</h2>
 <p>layout: default title: "Decorators" parent: "Click" </p>
-<h2><a class="anchor" id="autotoc_md1202"></a>
+<h2><a class="anchor" id="autotoc_md1203"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1203"></a>
+<h1><a class="anchor" id="autotoc_md1204"></a>
 Chapter 2: Decorators: Magic Wands for Your Functions</h1>
 <p>In <a class="el" href="../../dd/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_201__command______group.html">Chapter 1: Commands and Groups</a>, we learned how to create basic command-line actions (<code>Command</code>) and group them together (<code>Group</code>). You might have noticed those strange <code>@click.command()</code> and <code>@click.group()</code> lines above our functions. What are they, and why do we use them?</p>
 <p>Those are <b>Decorators</b>, and they are the heart of how you build Click applications! Think of them as special annotations or modifiers you place <em>on top</em> of your Python functions to give them command-line superpowers.</p>
-<h2><a class="anchor" id="autotoc_md1204"></a>
+<h2><a class="anchor" id="autotoc_md1205"></a>
 Why Decorators? Making Life Easier</h2>
 <p>Imagine you didn't have decorators. To create a simple command like <code>hello</code> from Chapter 1, you might have to write something like this (this is <em>not</em> real Click code, just an illustration):</p>
 <div class="fragment"><div class="line"><span class="comment"># NOT how Click works, but imagine...</span></div>
@@ -170,7 +170,7 @@ Why Decorators? Making Life Easier</h2>
 <div class="line">  hello()</div>
 </div><!-- fragment --><p>Much cleaner, right? The <code>@click.command()</code> decorator handles creating the <code>Command</code> object, figuring out the name (<code>hello</code>), and grabbing the help text from the docstring (<code>"""..."""</code>) all automatically!</p>
 <p>Decorators let you <em>declare</em> what you want ("this function is a command") right next to the function's code, making your CLI definition much more readable and concise.</p>
-<h2><a class="anchor" id="autotoc_md1205"></a>
+<h2><a class="anchor" id="autotoc_md1206"></a>
 What is a Decorator in Python? (A Quick Peek)</h2>
 <p>Before diving deeper into Click's decorators, let's understand what a decorator <em>is</em> in Python itself.</p>
 <p>In Python, a decorator is essentially a function that takes another function as input and returns a <em>modified</em> version of that function. It's like wrapping a gift: you still have the original gift inside, but the wrapping adds something extra.</p>
@@ -196,7 +196,7 @@ What is a Decorator in Python? (A Quick Peek)</h2>
 <div class="line">Something is happening after the function is called.</div>
 </div><!-- fragment --><p>See? <code>simple_decorator</code> took our <code>say_whee</code> function and wrapped it with extra print statements. The <code>@simple_decorator</code> line is equivalent to writing <code>say_whee = simple_decorator(say_whee)</code> after defining <code>say_whee</code>.</p>
 <p>Click's decorators (<code>@click.command</code>, <code>@click.group</code>, etc.) do something similar, but instead of just printing, they wrap your function inside Click's <code>Command</code> or <code>Group</code> objects and configure them.</p>
-<h2><a class="anchor" id="autotoc_md1206"></a>
+<h2><a class="anchor" id="autotoc_md1207"></a>
 Click's Main Decorators</h2>
 <p>Click provides several decorators. The most common ones you'll use are:</p>
 <ul>
@@ -206,7 +206,7 @@ Click's Main Decorators</h2>
 <li><code>@click.argument()</code>: Adds an <em>argument</em> (like a required filename) to your command. Arguments are typically required and positional.</li>
 </ul>
 <p>We already saw <code>@click.command</code> and <code>@click.group</code> in Chapter 1. Let's focus on how decorators streamline adding commands to groups and introduce options.</p>
-<h2><a class="anchor" id="autotoc_md1207"></a>
+<h2><a class="anchor" id="autotoc_md1208"></a>
 Decorators in Action: Simplifying Groups and Adding Options</h2>
 <p>Remember the <code>multi_app.py</code> example from Chapter 1? We had to define the group <code>cli</code> and the commands <code>hello</code> and <code>goodbye</code> separately, then manually attach them using <code>cli.add_command()</code>.</p>
 <div class="fragment"><div class="line"><span class="comment"># multi_app_v1.py (from Chapter 1)</span></div>
@@ -297,7 +297,7 @@ Decorators in Action: Simplifying Groups and Adding Options</h2>
 <div class="line">$ python multi_app_v2.py hello --name Alice</div>
 <div class="line">Hello Alice!</div>
 </div><!-- fragment --><p>It works! Decorators made adding the command to the group cleaner, and adding the option was as simple as adding another decorator line and a function parameter. We'll learn much more about configuring options and arguments in the next chapter, <a class="el" href="../../db/dbc/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Click_203__parameter____option______argument__.html">Parameter (Option / Argument)</a>.</p>
-<h2><a class="anchor" id="autotoc_md1208"></a>
+<h2><a class="anchor" id="autotoc_md1209"></a>
 How Click Decorators Work (Under the Hood)</h2>
 <p>So what's the "magic" behind these <code>@</code> symbols in Click?</p>
 <ol type="1">
@@ -332,7 +332,7 @@ How Click Decorators Work (Under the Hood)</h2>
 <div class="line"> </div>
 <div class="line">    Note over PythonInterpreter: &#39;hello&#39; in the code now refers to the Command object</div>
 </div><!-- fragment --><p>The key takeaway is that decorators allow Click to gather all the necessary information (function logic, command name, help text, options, arguments) right where you define the function, and build the corresponding Click objects behind the scenes. You can find the implementation details in <code>click/decorators.py</code> and <code>click/core.py</code>. The <code>_param_memo</code> helper function in <code>decorators.py</code> is often used internally by <code>@option</code> and <code>@argument</code> to attach parameter info to the function before <code>@command</code> processes it.</p>
-<h2><a class="anchor" id="autotoc_md1209"></a>
+<h2><a class="anchor" id="autotoc_md1210"></a>
 Conclusion</h2>
 <p>Decorators are fundamental to Click's design philosophy. They provide a clean, readable, and <em>declarative</em> way to turn your Python functions into powerful command-line interface components.</p>
 <p>You've learned:</p>

@@ -121,17 +121,17 @@ $(function(){initNavTree('d9/df6/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_fields__fieldinfo___field_function_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2831"></a>
-autotoc_md2831</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2832"></a>
+autotoc_md2832</h2>
 <p>layout: default title: "Fields (FieldInfo &amp; Field function)" parent: "Pydantic Core" </p>
-<h2><a class="anchor" id="autotoc_md2832"></a>
+<h2><a class="anchor" id="autotoc_md2833"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2833"></a>
+<h1><a class="anchor" id="autotoc_md2834"></a>
 Chapter 2: Customizing Your Blueprint's Rooms - Fields</h1>
 <p>In <a class="el" href="../../d7/d22/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_201__basemodel.html">Chapter 1: BaseModel - Your Data Blueprint</a>, we learned how <code>BaseModel</code> acts like a blueprint for our data, defining the expected structure and types using simple Python type hints. We saw how Pydantic uses this blueprint to parse, validate, and serialize data.</p>
 <p>But what if we need more specific instructions for certain parts of our blueprint? What if a room needs a specific paint color (a default value)? Or what if the blueprint uses one name for a room ("Lounge"), but the construction crew knows it by another name ("Living Room") (an alias)?</p>
 <p>This is where Pydantic's <b>Fields</b> come in. They allow us to add these extra details and constraints to the attributes within our models.</p>
-<h2><a class="anchor" id="autotoc_md2834"></a>
+<h2><a class="anchor" id="autotoc_md2835"></a>
 Why Customize Fields?</h2>
 <p>Let's go back to our <code>User</code> model:</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</div>
@@ -146,7 +146,7 @@ Why Customize Fields?</h2>
 <li><b>Basic Rules:</b> What if we know <code>age</code> must always be a positive number?</li>
 </ol>
 <p>Simply using type hints (<code>str</code>, <code>int</code>) doesn't cover these cases. We need a way to add more <em>metadata</em> (extra information) to our fields.</p>
-<h2><a class="anchor" id="autotoc_md2835"></a>
+<h2><a class="anchor" id="autotoc_md2836"></a>
 Introducing <code>Field()</code>: Adding Notes to the Blueprint</h2>
 <p>Pydantic provides the <code>Field()</code> function precisely for this purpose. You use it as the <em>default value</em> when defining an attribute on your model, and pass arguments to it to specify the extra details.</p>
 <p>Think of it like adding specific notes or requirements to a room on your building blueprint.</p>
@@ -180,7 +180,7 @@ Introducing <code>Field()</code>: Adding Notes to the Blueprint</h2>
 <p>ge&lt;tt&gt;(greater than or equal),lt&lt;tt&gt;(less than),le&lt;tt&gt;(less than or equal): Basic numeric constraints. *min_length<code>,</code>max_length<code>: Constraints for strings, lists, etc. *</code>description`: A human-readable description, often used for generating documentation or schemas.</p><ul>
 <li>...and many more!</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2836"></a>
+<h2><a class="anchor" id="autotoc_md2837"></a>
 Using Models with <code>Field()</code></h2>
 <p>Let's see how our customized <code>User</code> model behaves:</p>
 <p><b>1. Using Defaults:</b></p>
@@ -250,7 +250,7 @@ Using Models with <code>Field()</code></h2>
 <div class="line"><span class="stringliteral">      Input should be greater than 0 [type=greater_than, context={&#39;gt&#39;: 0}, ...]</span></div>
 <div class="line"><span class="stringliteral">    &quot;&quot;&quot;</span></div>
 </div><!-- fragment --><p>Pydantic enforced the <code>min_length=3</code> and <code>gt=0</code> constraints we added via <code>Field()</code>, giving helpful errors when the rules were violated.</p>
-<h2><a class="anchor" id="autotoc_md2837"></a>
+<h2><a class="anchor" id="autotoc_md2838"></a>
 What is <code>FieldInfo</code>? The Architect's Specification</h2>
 <p>So, you use the <code>Field()</code> function to add notes to your blueprint. But how does Pydantic <em>store</em> and <em>use</em> this information internally?</p>
 <p>When Pydantic processes your model definition, it takes the information you provided in <code>Field()</code> (and the type hint) and bundles it all up into an internal object called <code>FieldInfo</code>.</p>
@@ -272,7 +272,7 @@ What is <code>FieldInfo</code>? The Architect's Specification</h2>
 <div class="line"><span class="comment"># Expected Output:</span></div>
 <div class="line"><span class="comment"># FieldInfo(annotation=Union[str, NoneType], required=False, default=None, description=&#39;The user email address&#39;)</span></div>
 </div><!-- fragment --><p>You can see how the <code>FieldInfo</code> object holds all the details: the <code>annotation</code> (type), <code>default</code>, <code>alias</code>, <code>description</code>, and even the constraints like <code>MinLen(min_length=3)</code> and <code>Gt(gt=0)</code> stored in its <code>metadata</code> attribute.</p>
-<h2><a class="anchor" id="autotoc_md2838"></a>
+<h2><a class="anchor" id="autotoc_md2839"></a>
 Under the Hood: From <code>Field()</code> to <code>FieldInfo</code></h2>
 <p>Let's revisit the model creation process from Chapter 1, now including <code>Field()</code>.</p>
 <p><b>High-Level Steps:</b></p>
@@ -387,7 +387,7 @@ Under the Hood: From <code>Field()</code> to <code>FieldInfo</code></h2>
 <div class="line">    <span class="keywordflow">return</span> fields, <a class="code hl_function" href="../../d7/da6/pybind__kv__service_8cpp.html#a26ae8807a2b3217bb2339bd18aaaa4e6">set</a>() <span class="comment"># Returns dict of field names to FieldInfo objects</span></div>
 <div class="ttc" id="apybind__kv__service_8cpp_html_a26ae8807a2b3217bb2339bd18aaaa4e6"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#a26ae8807a2b3217bb2339bd18aaaa4e6">set</a></div><div class="ttdeci">bool set(std::string key, std::string value, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00051">pybind_kv_service.cpp:51</a></div></div>
 </div><!-- fragment --><p>This process ensures that all the configuration you provide via <code>Field()</code> is captured systematically in <code>FieldInfo</code> objects, ready to be used for generating the validation/serialization schema.</p>
-<h2><a class="anchor" id="autotoc_md2839"></a>
+<h2><a class="anchor" id="autotoc_md2840"></a>
 Conclusion</h2>
 <p>You've now learned how to add detailed configuration to your <code>BaseModel</code> fields using the <code>Field()</code> function:</p>
 <ul>

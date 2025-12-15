@@ -121,19 +121,19 @@ $(function(){initNavTree('db/dc5/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">01_llm</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2611"></a>
-autotoc_md2611</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2612"></a>
+autotoc_md2612</h2>
 <p>layout: default title: "LLM" parent: "OpenManus" </p>
-<h2><a class="anchor" id="autotoc_md2612"></a>
+<h2><a class="anchor" id="autotoc_md2613"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md2613"></a>
+<h1><a class="anchor" id="autotoc_md2614"></a>
 Chapter 1: The LLM - Your Agent's Brainpower</h1>
 <p>Welcome to the OpenManus tutorial! We're thrilled to have you on board. Let's start with the absolute core of any intelligent agent: the "brain" that does the thinking and understanding. In OpenManus, this brainpower comes from something called a <b>Large Language Model (LLM)</b>, and we interact with it using our <code>LLM</code> class.</p>
-<h2><a class="anchor" id="autotoc_md2614"></a>
+<h2><a class="anchor" id="autotoc_md2615"></a>
 What's the Big Deal with LLMs?</h2>
 <p>Imagine you have access to an incredibly smart expert who understands language, can reason, write, summarize, and even generate creative ideas. That's kind of what an LLM (like GPT-4, Claude, or Llama) is! These are massive AI models trained on vast amounts of text and data, making them capable of understanding and generating human-like text.</p>
 <p>They are the engine that drives the "intelligence" in AI applications like chatbots, writing assistants, and, of course, the agents you'll build with OpenManus.</p>
-<h2><a class="anchor" id="autotoc_md2615"></a>
+<h2><a class="anchor" id="autotoc_md2616"></a>
 Why Do We Need an <code>LLM</code> Class?</h2>
 <p>Okay, so LLMs are powerful. Can't our agent just talk directly to them?</p>
 <p>Well, it's a bit more complicated than a casual chat. Talking to these big AI models usually involves:</p>
@@ -155,7 +155,7 @@ Why Do We Need an <code>LLM</code> Class?</h2>
 </ul>
 <p>It hides all that complexity, giving your agent a simple way to "ask" the LLM something.</p>
 <p><b>Use Case:</b> Let's say we want our agent to simply answer the question: "What is the capital of France?" The <code>LLM</code> class will handle all the background work to get that answer from the actual AI model.</p>
-<h2><a class="anchor" id="autotoc_md2616"></a>
+<h2><a class="anchor" id="autotoc_md2617"></a>
 How Do Agents Use the <code>LLM</code> Class?</h2>
 <p>In OpenManus, agents (which we'll learn more about in <a class="el" href="../../d0/d71/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_203__baseagent.html">Chapter 3: BaseAgent</a>) have an <code>llm</code> component built-in. Usually, you don't even need to create it manually; the agent does it for you when it starts up, using settings from your configuration file (<code>config/config.toml</code>).</p>
 <p>The primary way an agent uses the <code>LLM</code> class is through its <code>ask</code> method.</p>
@@ -197,7 +197,7 @@ How Do Agents Use the <code>LLM</code> Class?</h2>
 <div class="line">LLM Response: The capital of France is Paris.</div>
 </div><!-- fragment --><p>See? We just asked a question and got an answer, without worrying about API keys, JSON formatting, or network errors! The <code>LLM</code> class handled it all.</p>
 <p>There's also a more advanced method called <code>ask_tool</code>, which allows the LLM to use specific <a class="el" href="../../de/db0/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2OpenManus_204__tool______toolcollection.html">Tools</a>, but we'll cover that later. For now, <code>ask</code> is the main way to get text responses.</p>
-<h2><a class="anchor" id="autotoc_md2617"></a>
+<h2><a class="anchor" id="autotoc_md2618"></a>
 Under the Hood: What Happens When You <code>ask</code>?</h2>
 <p>Let's peek behind the curtain. When your agent calls <code>llm.ask(...)</code>, several things happen in sequence:</p>
 <ol type="1">
@@ -288,7 +288,7 @@ Under the Hood: What Happens When You <code>ask</code>?</h2>
 <li>Other errors will be caught by the final <code>except Exception</code>, logged, and re-raised, allowing the <code>@retry</code> mechanism to decide whether to try again.</li>
 </ul>
 <p>This shows how the <code>LLM</code> class uses libraries like <code>tenacity</code> to add resilience without cluttering the main logic of your agent.</p>
-<h2><a class="anchor" id="autotoc_md2618"></a>
+<h2><a class="anchor" id="autotoc_md2619"></a>
 Wrapping Up Chapter 1</h2>
 <p>You've learned about the core "brain" – the Large Language Model (LLM) – and why we need the <code>LLM</code> class in OpenManus to interact with it smoothly. This class acts as a vital interface, handling API complexities, errors, and token counting, providing your agents with simple <code>ask</code> (and <code>ask_tool</code>) methods.</p>
 <p>Now that we understand how to communicate with the LLM, we need a way to structure the conversation – keeping track of who said what. That's where Messages and Memory come in.</p>

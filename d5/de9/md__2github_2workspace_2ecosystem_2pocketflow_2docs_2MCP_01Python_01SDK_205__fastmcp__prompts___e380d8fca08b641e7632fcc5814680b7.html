@@ -121,17 +121,17 @@ $(function(){initNavTree('d5/de9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">05_fastmcp_prompts___prompt____promptmanager__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2397"></a>
-autotoc_md2397</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2398"></a>
+autotoc_md2398</h2>
 <p>layout: default title: "FastMCP Prompts (Prompt, PromptManager)" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2398"></a>
+<h2><a class="anchor" id="autotoc_md2399"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md2399"></a>
+<h1><a class="anchor" id="autotoc_md2400"></a>
 Chapter 5: Reusable Chat Starters - FastMCP Prompts (<code>Prompt</code>, <code>PromptManager</code>)</h1>
 <p>In <a class="el" href="../../dc/df6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_204__fastmcp__tools______tool________toolmanager____.html">Chapter 4: FastMCP Tools (<code>Tool</code>, <code>ToolManager</code>)</a>, we learned how to give our server specific <em>actions</em> it can perform, like a calculator tool. But modern AI often involves conversations, especially with Large Language Models (LLMs). How do we manage the instructions and conversation starters we send to these models?</p>
 <p>Imagine you want to build an AI assistant tool that can summarize text. You'll need to tell the underlying LLM <em>what</em> to do (summarize) and <em>what</em> text to summarize. You might also want to provide specific instructions like "Keep the summary under 50 words." You'll probably need variations of this prompt for different tasks. Writing this message structure over and over again in your tool code would be repetitive and hard to manage.</p>
 <p>This is where <b>FastMCP Prompts</b> come in. They provide a way to create reusable templates for generating sequences of messages, perfect for starting conversations with LLMs or structuring requests.</p>
-<h2><a class="anchor" id="autotoc_md2400"></a>
+<h2><a class="anchor" id="autotoc_md2401"></a>
 The Mad Libs Analogy: Prompts and the Prompt Manager</h2>
 <p>Think of a <b><code>Prompt</code></b> like a <b>Mad Libs story template</b>. A Mad Libs template has a pre-written story with blanks (like <code>___(noun)___</code> or <code>___(verb)___</code>). You define the structure and the blanks.</p>
 <ul>
@@ -141,7 +141,7 @@ The Mad Libs Analogy: Prompts and the Prompt Manager</h2>
 <li><b><code>PromptManager</code></b>: Like a folder or binder holding all your different Mad Libs templates. It's the part of <code>FastMCP</code> that stores and helps you find and use (<code>render</code>) your defined <code>Prompt</code> templates.</li>
 </ul>
 <p>Clients (like an AI application) can ask the <code>PromptManager</code> (via <code>FastMCP</code>) to list available prompt templates (<code>listPrompts</code>) and then request a specific, filled-in prompt sequence using its name and arguments (<code>getPrompt</code>).</p>
-<h2><a class="anchor" id="autotoc_md2401"></a>
+<h2><a class="anchor" id="autotoc_md2402"></a>
 Creating Your First Prompt Template: Using <code>@server.prompt()</code></h2>
 <p>Just like <code>@server.tool()</code> and <code>@server.resource()</code>, <code>FastMCP</code> provides a simple decorator, <code>@server.prompt()</code>, to easily define these message templates using Python functions.</p>
 <p>Let's create a prompt template for our text summarization task.</p>
@@ -233,7 +233,7 @@ Creating Your First Prompt Template: Using <code>@server.prompt()</code></h2>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This makes it easy for client applications to get consistently formatted prompts for various tasks without needing to know the exact text structure themselves.</p>
-<h2><a class="anchor" id="autotoc_md2402"></a>
+<h2><a class="anchor" id="autotoc_md2403"></a>
 Returning Different Message Types</h2>
 <p>Your prompt function can return various things, and <code>FastMCP</code> will try to convert them into the standard <code>Message</code> format (like <code>UserMessage</code> or <code>AssistantMessage</code>):</p>
 <ul>
@@ -264,7 +264,7 @@ Returning Different Message Types</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># ... (run block) ...</span></div>
 </div><!-- fragment --><p>This flexibility lets you structure complex conversational prompts easily.</p>
-<h2><a class="anchor" id="autotoc_md2403"></a>
+<h2><a class="anchor" id="autotoc_md2404"></a>
 How Prompts Work Under the Hood</h2>
 <p>Using <code>@server.prompt()</code> is straightforward, but what's happening inside <code>FastMCP</code> and its <code>PromptManager</code>?</p>
 <p><b>1. Registration (When the server code loads):</b></p>
@@ -336,23 +336,23 @@ How Prompts Work Under the Hood</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2404"></a>
+<h1><a class="anchor" id="autotoc_md2405"></a>
 Inside server/fastmcp/prompts/manager.py (Simplified PromptManager.add_prompt)</h1>
 <p>from .base import Prompt</p>
 <p>class PromptManager: </p>
-<h1><a class="anchor" id="autotoc_md2405"></a>
+<h1><a class="anchor" id="autotoc_md2406"></a>
 ... (init, get_prompt, list_prompts) ...</h1>
 <p>def add_prompt(self, prompt: Prompt) -&gt; Prompt: </p>
-<h1><a class="anchor" id="autotoc_md2406"></a>
+<h1><a class="anchor" id="autotoc_md2407"></a>
 Check for duplicates...</h1>
 <p>if prompt.name in self._prompts: </p>
-<h1><a class="anchor" id="autotoc_md2407"></a>
+<h1><a class="anchor" id="autotoc_md2408"></a>
 ... handle duplicate ...</h1>
 <p>pass </p>
-<h1><a class="anchor" id="autotoc_md2408"></a>
+<h1><a class="anchor" id="autotoc_md2409"></a>
 Store the Prompt object</h1>
 <p>self._prompts[prompt.name] = prompt return prompt</p>
-<h1><a class="anchor" id="autotoc_md2409"></a>
+<h1><a class="anchor" id="autotoc_md2410"></a>
 Note: Prompt.from_function (in base.py) does the function inspection.</h1>
 <p>```</p>
 <ul>
@@ -362,45 +362,45 @@ Note: Prompt.from_function (in base.py) does the function inspection.</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2410"></a>
+<h1><a class="anchor" id="autotoc_md2411"></a>
 Inside server/fastmcp/prompts/manager.py (Simplified PromptManager.render_prompt)</h1>
 <p>class PromptManager: </p>
-<h1><a class="anchor" id="autotoc_md2411"></a>
+<h1><a class="anchor" id="autotoc_md2412"></a>
 ... (other methods) ...</h1>
 <p>async def render_prompt(self, name, arguments=None): </p>
-<h1><a class="anchor" id="autotoc_md2412"></a>
+<h1><a class="anchor" id="autotoc_md2413"></a>
 1. Find the prompt object by name</h1>
 <p>prompt = self.get_prompt(name) if not prompt: raise ValueError(f"Unknown prompt: {name}")</p>
-<h1><a class="anchor" id="autotoc_md2413"></a>
+<h1><a class="anchor" id="autotoc_md2414"></a>
 2. Tell the Prompt object to render itself</h1>
 <p>return await prompt.render(arguments) ```</p>
 <ul>
 <li><code>base.py</code>: <code>Prompt.render</code> validates arguments and calls the stored function (<code>self.fn</code>). It then processes the function's return value into a list of <code>Message</code> objects.</li>
 </ul>
 <p>```python </p>
-<h1><a class="anchor" id="autotoc_md2414"></a>
+<h1><a class="anchor" id="autotoc_md2415"></a>
 Inside server/fastmcp/prompts/base.py (Simplified Prompt.render)</h1>
 <p>class Prompt: </p>
-<h1><a class="anchor" id="autotoc_md2415"></a>
+<h1><a class="anchor" id="autotoc_md2416"></a>
 ... (init, from_function, PromptArgument) ...</h1>
 <p>async def render(self, arguments=None): </p>
-<h1><a class="anchor" id="autotoc_md2416"></a>
-Validate required arguments...</h1>
 <h1><a class="anchor" id="autotoc_md2417"></a>
+Validate required arguments...</h1>
+<h1><a class="anchor" id="autotoc_md2418"></a>
 ...</h1>
 <p>try: </p>
-<h1><a class="anchor" id="autotoc_md2418"></a>
+<h1><a class="anchor" id="autotoc_md2419"></a>
 Call the original decorated function</h1>
 <p>result = self.fn(**(arguments or {})) if inspect.iscoroutine(result): # Handle async functions result = await result</p>
-<h1><a class="anchor" id="autotoc_md2419"></a>
-Convert result to list of Message objects</h1>
 <h1><a class="anchor" id="autotoc_md2420"></a>
+Convert result to list of Message objects</h1>
+<h1><a class="anchor" id="autotoc_md2421"></a>
 (Handles strings, dicts, Message objects, lists)</h1>
 <p>messages: list[Message] = [] </p>
-<h1><a class="anchor" id="autotoc_md2421"></a>
+<h1><a class="anchor" id="autotoc_md2422"></a>
 ... (conversion logic using message_validator) ...</h1>
 <p>return messages except Exception as e: raise ValueError(f"Error rendering prompt {self.name}: {e}") ```</p>
-<h2><a class="anchor" id="autotoc_md2422"></a>
+<h2><a class="anchor" id="autotoc_md2423"></a>
 Conclusion</h2>
 <p>You've learned about FastMCP Prompts, a powerful way to manage reusable message templates, especially useful for interacting with language models.</p>
 <ul>

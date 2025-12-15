@@ -121,16 +121,16 @@ $(function(){initNavTree('d4/d1f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_numeric_types___numerictypes__</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2536"></a>
-autotoc_md2536</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2537"></a>
+autotoc_md2537</h2>
 <p>layout: default title: "Numeric Types (numerictypes)" parent: "NumPy Core" </p>
-<h2><a class="anchor" id="autotoc_md2537"></a>
+<h2><a class="anchor" id="autotoc_md2538"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2538"></a>
+<h1><a class="anchor" id="autotoc_md2539"></a>
 Chapter 4: Numeric Types (<code>numerictypes</code>)</h1>
 <p>Hello again! In <a class="el" href="../../d6/def/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_203__ufunc____universal__function__.html">Chapter 3: ufunc (Universal Function)</a>, we saw how NumPy uses universal functions (<code>ufuncs</code>) to perform fast calculations on arrays. We learned that these <code>ufuncs</code> operate element by element and can handle different data types using optimized C loops.</p>
 <p>But what exactly <em>are</em> all the different data types that NumPy knows about? We touched on <code>dtype</code> objects in <a class="el" href="../../d6/d31/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_202__dtype____data__type__object__.html">Chapter 2: dtype (Data Type Object)</a>, which <em>describe</em> the type of data in an array (like '64-bit integer' or '32-bit float'). Now, we'll look at the actual <b>types themselves</b> – the specific building blocks like <code>numpy.int32</code>, <code>numpy.float64</code>, etc., and how they relate to each other. This collection and classification system is handled within the <code>numerictypes</code> concept in NumPy's core.</p>
-<h2><a class="anchor" id="autotoc_md2539"></a>
+<h2><a class="anchor" id="autotoc_md2540"></a>
 What Problem Do <code>numerictypes</code> Solve? Organizing the Data Ingredients</h2>
 <p>Imagine you're organizing a huge pantry. You have different kinds of items: grains, spices, canned goods, etc. Within grains, you have rice, oats, quinoa. Within rice, you might have basmati, jasmine, brown rice.</p>
 <p>NumPy's data types are similar. It has many specific types of numbers (<code>int8</code>, <code>int16</code>, <code>int32</code>, <code>int64</code>, <code>float16</code>, <code>float32</code>, <code>float64</code>, etc.) and other kinds of data (<code>bool</code>, <code>complex</code>, <code>datetime</code>). Just having a list of all these types isn't very organized.</p>
@@ -141,7 +141,7 @@ What Problem Do <code>numerictypes</code> Solve? Organizing the Data Ingredients
 <li>Provide convenient <b>shortcuts or aliases</b> (e.g., maybe <code>np.double</code> is just another name for <code>np.float64</code>).</li>
 </ol>
 <p>The <code>numerictypes</code> concept in NumPy provides this structured catalog or "family tree" for all its scalar data types. It helps NumPy (and you!) understand how different data types are related, which is crucial for operations like choosing the right <code>ufunc</code> loop or deciding the output type of a calculation (type promotion).</p>
-<h2><a class="anchor" id="autotoc_md2540"></a>
+<h2><a class="anchor" id="autotoc_md2541"></a>
 What are Numeric Types (<code>numerictypes</code>)?</h2>
 <p>In NumPy, <code>numerictypes</code> refers to the collection of <b>scalar type objects</b> themselves (like the Python classes <code>numpy.int32</code>, <code>numpy.float64</code>, <code>numpy.bool_</code>) and the <b>hierarchy</b> that organizes them.</p>
 <p>Think back to the <code>dtype</code> object from Chapter 2. The <code>dtype</code> object <em>describes</em> the data type of an array. The actual type it's describing <em>is</em> one of these numeric types (or more accurately, a scalar type, since it includes non-numbers like <code>bool_</code> and <code>str_</code>).</p>
@@ -162,7 +162,7 @@ What are Numeric Types (<code>numerictypes</code>)?</h2>
 <div class="line"><span class="comment"># This &lt;class &#39;numpy.int32&#39;&gt; is one of NumPy&#39;s scalar types</span></div>
 <div class="line"><span class="comment"># managed under the numerictypes concept.</span></div>
 </div><!-- fragment --><p>So, <code>numerictypes</code> defines the actual classes like <code>np.int32</code>, <code>np.float64</code>, <code>np.integer</code>, <code>np.floating</code>, etc., that form the basis of NumPy's type system.</p>
-<h2><a class="anchor" id="autotoc_md2541"></a>
+<h2><a class="anchor" id="autotoc_md2542"></a>
 The Type Hierarchy: A Family Tree</h2>
 <p>NumPy organizes its scalar types into a hierarchy, much like biological classification (Kingdom &gt; Phylum &gt; Class &gt; Order...). This helps group related types.</p>
 <p>At the top is <code>np.generic</code>, the base class for all NumPy scalars. Below that, major branches include <code>np.number</code>, <code>np.flexible</code>, <code>np.bool_</code>, etc.</p>
@@ -228,7 +228,7 @@ The Type Hierarchy: A Family Tree</h2>
 <div class="line">print(f<span class="stringliteral">&quot;issubclass(np.int32, np.integer): {issubclass(np.int32, np.integer)}&quot;</span>)</div>
 <div class="line"><span class="comment"># Output: issubclass(np.int32, np.integer): True</span></div>
 </div><!-- fragment --><p> This hierarchy is useful for understanding how NumPy treats different types, especially during calculations where types might need to be promoted (e.g., adding an <code>int32</code> and a <code>float64</code> usually results in a <code>float64</code>).</p>
-<h2><a class="anchor" id="autotoc_md2542"></a>
+<h2><a class="anchor" id="autotoc_md2543"></a>
 Common Types and Aliases</h2>
 <p>While NumPy defines many specific types (like <code>np.int8</code>, <code>np.uint16</code>, <code>np.float16</code>), you'll most often encounter these:</p>
 <ul>
@@ -266,7 +266,7 @@ Common Types and Aliases</h2>
 <div class="line"><span class="comment"># They refer to the same underlying type</span></div>
 <div class="line">print(f<span class="stringliteral">&quot;Is np.float64 the same as np.double? {np.float64 is np.double}&quot;</span>)</div>
 <div class="line"><span class="comment"># Output: Is np.float64 the same as np.double? True</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2543"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2544"></a>
 A Glimpse Under the Hood</h2>
 <p>How does NumPy define all these types and their relationships? It's mostly done in Python code within the <code>numpy.core</code> submodule.</p>
 <ol type="1">
@@ -319,7 +319,7 @@ A Glimpse Under the Hood</h2>
 <div class="line"><span class="comment"># When you do np.dtype(&#39;double&#39;), NumPy uses sctypeDict (or similar logic)</span></div>
 <div class="line"><span class="comment"># to find that &#39;double&#39; means np.float64.</span></div>
 </div><!-- fragment --><p>This setup provides a flexible and organized way to manage NumPy's rich set of data types.</p>
-<h2><a class="anchor" id="autotoc_md2544"></a>
+<h2><a class="anchor" id="autotoc_md2545"></a>
 Conclusion</h2>
 <p>You've now explored the world of NumPy's <code>numerictypes</code>! You learned:</p>
 <ul>

@@ -121,20 +121,20 @@ $(function(){initNavTree('df/d85/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_write_ahead_log__wal____logwriter_logreader</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2269"></a>
-autotoc_md2269</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2270"></a>
+autotoc_md2270</h2>
 <p>layout: default title: "Write-Ahead Log (WAL)" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2270"></a>
+<h2><a class="anchor" id="autotoc_md2271"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2271"></a>
+<h1><a class="anchor" id="autotoc_md2272"></a>
 Chapter 3: Write-Ahead Log (WAL) &amp; LogWriter/LogReader</h1>
 <p>In <a class="el" href="../../d4/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_202__memtable.html">Chapter 2: MemTable</a>, we saw how LevelDB uses an in-memory <code>MemTable</code> (like a fast notepad) to quickly accept new writes (<code>Put</code> or <code>Delete</code>) before they are eventually flushed to an <a class="el" href="../../d2/dbb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_201__table______sstable______tablecache.html">SSTable</a> file on disk.</p>
 <p>This is great for speed! But what if the unthinkable happens? Imagine you've just written some important data. It's sitting safely in the <code>MemTable</code> in RAM, but <em>before</em> LevelDB gets a chance to write it to a permanent SSTable file, the power cord gets kicked out, or the server crashes!</p>
 <p>Uh oh. Since RAM is volatile, anything in the <code>MemTable</code> that hadn't been saved to disk is <b>gone</b> forever when the power goes out. That's not very reliable for a database!</p>
-<h2><a class="anchor" id="autotoc_md2272"></a>
+<h2><a class="anchor" id="autotoc_md2273"></a>
 What's the Problem? Losing Data on Crashes</h2>
 <p>How can LevelDB make sure that once your write operation <em>returns successfully</em>, the data is safe, even if the system crashes immediately afterwards? Relying only on the <code>MemTable</code> isn't enough because it lives in volatile RAM. We need a way to make writes durable (permanent) much sooner.</p>
-<h2><a class="anchor" id="autotoc_md2273"></a>
+<h2><a class="anchor" id="autotoc_md2274"></a>
 Write-Ahead Log (WAL): The Database's Safety Journal</h2>
 <p>LevelDB's solution is the <b>Write-Ahead Log (WAL)</b>, often just called the <b>log</b>.</p>
 <p>Think of the WAL as a <b>ship's logbook</b> or a <b>court reporter's transcript</b>.</p>
@@ -160,7 +160,7 @@ Write-Ahead Log (WAL): The Database's Safety Journal</h2>
 <div class="line">    MemTable--&gt;&gt;LevelDB: Add successful</div>
 <div class="line">    LevelDB--&gt;&gt;App: Write successful</div>
 </div><!-- fragment --><p>This "write-ahead" step ensures durability.</p>
-<h2><a class="anchor" id="autotoc_md2274"></a>
+<h2><a class="anchor" id="autotoc_md2275"></a>
 What Happens During Recovery? Replaying the Logbook</h2>
 <p>Now, let's say the server crashes and restarts. LevelDB needs to recover its state. How does the WAL help?</p>
 <ol type="1">
@@ -170,7 +170,7 @@ What Happens During Recovery? Replaying the Logbook</h2>
 <li><b>Recovery Complete:</b> Once the entire WAL is replayed, the <code>MemTable</code> is back to the state it was in right before the crash. LevelDB can now continue operating normally, accepting new reads and writes. The data from the WAL is now safely in the new <code>MemTable</code>, ready to be flushed to an SSTable later.</li>
 </ol>
 <p>The WAL file essentially acts as a temporary backup for the <code>MemTable</code> until the <code>MemTable</code>'s contents are permanently stored in an SSTable. Once a <code>MemTable</code> is successfully flushed to an SSTable, the corresponding WAL file is no longer needed and can be deleted.</p>
-<h2><a class="anchor" id="autotoc_md2275"></a>
+<h2><a class="anchor" id="autotoc_md2276"></a>
 LogWriter: Appending to the Log</h2>
 <p>The component responsible for writing records to the WAL file is <code>log::Writer</code>. Think of it as the dedicated writer making entries in our ship's logbook.</p>
 <p>When LevelDB processes a write operation (often coming from a <a class="el" href="../../d1/dce/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_205__writebatch.html">WriteBatch</a>, which we'll see later), it serializes the batch of changes into a single chunk of data (a <code>Slice</code>) and asks the <code>log::Writer</code> to add it to the current log file.</p>
@@ -259,7 +259,7 @@ LogWriter: Appending to the Log</h2>
 <li><code>EmitPhysicalRecord</code> prepends a small header (<code>kHeaderSize</code>, 7 bytes) containing a checksum (for detecting corruption), the length of this fragment, and the <code>RecordType</code> (<code>kFullType</code>, <code>kFirstType</code>, <code>kMiddleType</code>, or <code>kLastType</code>).</li>
 <li>The <code>RecordType</code> tells the <code>LogReader</code> later how to reassemble these fragments back into the original complete record.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2276"></a>
+<h2><a class="anchor" id="autotoc_md2277"></a>
 LogReader: Reading the Log for Recovery</h2>
 <p>The counterpart to <code>LogWriter</code> is <code>log::Reader</code>. This is the component used during database startup (recovery) to read the records back from a WAL file. Think of it as the person carefully reading the ship's logbook after an incident.</p>
 <p>The <code>log::Reader</code> reads the log file sequentially, block by block. It parses the physical record headers, verifies checksums, and pieces together the fragments (<code>kFirstType</code>, <code>kMiddleType</code>, <code>kLastType</code>) to reconstruct the original data records that were passed to <code>AddRecord</code>.</p>
@@ -399,7 +399,7 @@ LogReader: Reading the Log for Recovery</h2>
 <li>Based on the <code>record_type</code>, <code>ReadRecord</code> either returns the complete record (<code>kFullType</code>), starts assembling fragments (<code>kFirstType</code>), appends fragments (<code>kMiddleType</code>), or finishes assembling and returns the record (<code>kLastType</code>).</li>
 <li>It manages the <code>scratch</code> buffer to hold the fragments being assembled.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2277"></a>
+<h2><a class="anchor" id="autotoc_md2278"></a>
 Recovery Process Diagram</h2>
 <p>Here's how the WAL is used during database startup if a crash occurred:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -432,7 +432,7 @@ Recovery Process Diagram</h2>
 <div class="line">        Note right of LevelDB: Clean shutdown or new DB. No log replay needed.</div>
 <div class="line">    end</div>
 <div class="line">    LevelDB--&gt;&gt;App: Database Opened Successfully</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2278"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2279"></a>
 Conclusion</h2>
 <p>The <b>Write-Ahead Log (WAL)</b> is a critical component for ensuring <b>durability</b> in LevelDB. By writing every operation to an append-only log file on disk <em>before</em> applying it to the in-memory <code>MemTable</code> and acknowledging the write, LevelDB guarantees that no acknowledged data is lost even if the server crashes.</p>
 <ul>

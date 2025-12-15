@@ -121,12 +121,12 @@ $(function(){initNavTree('d3/db0/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">04_custom_logic__decorators___annotated_helpers_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2866"></a>
-autotoc_md2866</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2867"></a>
+autotoc_md2867</h2>
 <p>layout: default title: "Custom Logic (Decorators &amp; Annotated Helpers)" parent: "Pydantic Core" </p>
-<h2><a class="anchor" id="autotoc_md2867"></a>
+<h2><a class="anchor" id="autotoc_md2868"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md2868"></a>
+<h1><a class="anchor" id="autotoc_md2869"></a>
 Chapter 4: Custom Logic (Decorators &amp; Annotated Helpers)</h1>
 <p>In <a class="el" href="../../d0/d6f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_203__configuration____configdict______configwrapper__.html">Chapter 3: Configuration (ConfigDict / ConfigWrapper)</a>, we learned how to set global rules for our data blueprints using <code>model_config</code>. But what if we need more specific, custom rules or transformations that go beyond simple settings?</p>
 <p>Imagine you need rules like:</p><ul>
@@ -136,7 +136,7 @@ Chapter 4: Custom Logic (Decorators &amp; Annotated Helpers)</h1>
 <li>"When validating, convert incoming usernames to lowercase automatically."</li>
 </ul>
 <p>These require custom code logic. Pydantic provides flexible ways to inject this custom logic directly into the validation and serialization processes.</p>
-<h2><a class="anchor" id="autotoc_md2869"></a>
+<h2><a class="anchor" id="autotoc_md2870"></a>
 Why Custom Logic?</h2>
 <p>Standard type hints (<code>str</code>, <code>int</code>), <a class="el" href="../../d9/df6/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_202__fields____fieldinfo______field__function__.html">Fields</a> (<code>Field(gt=0)</code>), and <a class="el" href="../../d0/d6f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_203__configuration____configdict______configwrapper__.html">Configuration</a> (&lsquo;ConfigDict(extra='forbid&rsquo;)`) cover many common cases. However, sometimes the rules are more complex or specific to your application's needs.</p>
 <p>For example, checking if a password meets complexity requirements (length, uppercase, numbers, symbols) or ensuring consistency between multiple fields (<code>start_date &lt; end_date</code>) requires writing your own Python functions.</p>
@@ -149,10 +149,10 @@ Why Custom Logic?</h2>
 <li><b>Serializers</b> are like specifying custom <em>formatting rules</em> for the final report (converting your data back to simple types like dicts or JSON).</li>
 </ul>
 <p>Let's explore these mechanisms.</p>
-<h2><a class="anchor" id="autotoc_md2870"></a>
+<h2><a class="anchor" id="autotoc_md2871"></a>
 Decorators: Adding Logic via Methods</h2>
 <p>Decorators are a standard Python feature. They are functions that modify or enhance other functions or methods. Pydantic uses decorators to let you designate specific methods in your <code>BaseModel</code> as custom validators or serializers.</p>
-<h3><a class="anchor" id="autotoc_md2871"></a>
+<h3><a class="anchor" id="autotoc_md2872"></a>
 <code>@field_validator</code>: Checking Individual Fields</h3>
 <p>The <code>@field_validator</code> decorator lets you add custom validation logic for one or more specific fields <em>after</em> Pydantic has performed its initial type checks and coercion.</p>
 <p><b>Use Case:</b> Let's ensure a <code>username</code> field doesn't contain spaces.</p>
@@ -204,7 +204,7 @@ Decorators: Adding Logic via Methods</h2>
 <li><code> If the value is okay, we **must return it**. You could also transform the value here (e.g.,</code>return v.lower()`).</li>
 </ol>
 <p><code>@field_validator</code> has a <code>mode</code> argument (&lsquo;'before&rsquo;<code>or</code>'after'<code>, default is</code>'after'<code>).</code>'after'<code>(as shown) runs *after* Pydantic's internal validation for the field type.</code>'before'` runs <em>before</em>, giving you the raw input value.</p>
-<h3><a class="anchor" id="autotoc_md2872"></a>
+<h3><a class="anchor" id="autotoc_md2873"></a>
 <code>@model_validator</code>: Checking the Whole Model</h3>
 <p>Sometimes, validation depends on multiple fields interacting. The <code>@model_validator</code> decorator lets you run logic that involves the entire model's data.</p>
 <p><b>Use Case:</b> Ensure <code>end_date</code> is after <code>start_date</code>.</p>
@@ -259,7 +259,7 @@ Decorators: Adding Logic via Methods</h2>
 </ol>
 <p></code>self`** (the model instance).</p>
 <p><code>@model_validator</code> also supports &lsquo;mode='before&rsquo;<code>, where the method runs *before* individual field validation. In</code>'before'<code>mode, the method receives the class (</code>cls`) and the raw input data (usually a dictionary) and must return the (potentially modified) data dictionary to be used for further validation.</p>
-<h3><a class="anchor" id="autotoc_md2873"></a>
+<h3><a class="anchor" id="autotoc_md2874"></a>
 <code>@field_serializer</code>: Customizing Field Output</h3>
 <p>This decorator lets you control how a specific field is converted (serialized) when you call methods like <code>model_dump()</code> or <code>model_dump_json()</code>.</p>
 <p><b>Use Case:</b> Serialize a <code>date</code> object as a simple <code>"YYYY-MM-DD"</code> string.</p>
@@ -304,7 +304,7 @@ Decorators: Adding Logic via Methods</h2>
 <li>When</li>
 </ol>
 <p></code>model_dump()<code>or</code>model_dump_json()<code>is called, Pydantic uses this method for the</code>event_date` field instead of its default date serialization.</p>
-<h3><a class="anchor" id="autotoc_md2874"></a>
+<h3><a class="anchor" id="autotoc_md2875"></a>
 <code>@model_serializer</code>: Customizing Model Output</h3>
 <p>This allows custom logic for serializing the entire model object.</p>
 <p><b>Use Case:</b> Add a calculated <code>duration_days</code> field during serialization.</p>
@@ -354,7 +354,7 @@ Decorators: Adding Logic via Methods</h2>
 <li><code> This dictionary is used by</code>model_dump()<code>and</code>model_dump_json()`.</li>
 </ol>
 <p>There's also a &lsquo;mode='wrap&rsquo;<code>for</code>@model_serializer<code>(and</code>@field_serializer<code>) which is more advanced. It gives you a</code>handler` function to call the <em>next</em> serialization step (either Pydantic's default or another wrapper), allowing you to modify the result <em>around</em> the standard logic.</p>
-<h2><a class="anchor" id="autotoc_md2875"></a>
+<h2><a class="anchor" id="autotoc_md2876"></a>
 <code>Annotated</code> Helpers: Attaching Logic to Type Hints</h2>
 <p>Python's <code>typing.Annotated</code> allows adding extra metadata to type hints. Pydantic leverages this to let you attach validation and serialization logic directly inline with your field definitions.</p>
 <p><b>Analogy:</b> Instead of separate instruction sheets (decorators), this is like putting specific instruction tags directly onto an item in the blueprint.</p>
@@ -447,7 +447,7 @@ Decorators: Adding Logic via Methods</h2>
 <li>**Decorators (<code>@field_validator</code>, etc.):** Keep logic tightly coupled with the model class definition. Good if the logic intrinsically belongs to the model or needs access to <code>cls</code> or <code>self</code>. Can feel more object-oriented.</li>
 <li><b><code>Annotated</code> Helpers (<code>AfterValidator</code>, etc.):</b> Allow defining reusable validation/serialization functions outside the model. Good for applying the same logic across different models or fields. Can make type hints more verbose but keeps the model body cleaner.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2876"></a>
+<h2><a class="anchor" id="autotoc_md2877"></a>
 Under the Hood: Wiring Up the Logic</h2>
 <p>How does Pydantic discover and apply this custom logic?</p>
 <p><b>Decorators:</b></p><ol type="1">
@@ -568,7 +568,7 @@ Under the Hood: Wiring Up the Logic</h2>
 <div class="line"><span class="comment"># schema_generator uses the &#39;decorators&#39; object to add validation/serialization</span></div>
 <div class="line"><span class="comment"># steps to the core schema based on the stored decorator info.</span></div>
 </div><!-- fragment --><p>Both decorators and <code>Annotated</code> helpers ultimately achieve the same goal: embedding custom Python functions into the Pydantic validation and serialization pipeline by modifying the underlying <a class="el" href="../../d0/d56/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Pydantic_01Core_205__core__schema______validation__serialization.html">Core Schema</a>.</p>
-<h2><a class="anchor" id="autotoc_md2877"></a>
+<h2><a class="anchor" id="autotoc_md2878"></a>
 Conclusion</h2>
 <p>You've learned two powerful ways to add custom logic to your Pydantic models:</p>
 <ul>

@@ -121,16 +121,16 @@ $(function(){initNavTree('d8/d3f/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_actions___transitions_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2733"></a>
-autotoc_md2733</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2734"></a>
+autotoc_md2734</h2>
 <p>layout: default title: "Actions / Transitions" parent: "PocketFlow" </p>
-<h2><a class="anchor" id="autotoc_md2734"></a>
+<h2><a class="anchor" id="autotoc_md2735"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md2735"></a>
+<h1><a class="anchor" id="autotoc_md2736"></a>
 Chapter 3: Actions / Transitions</h1>
 <p>In <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Chapter 2: Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>, we learned that Nodes are the individual workers in our PocketFlow application, each performing a specific task. We also touched upon the <code>post</code> method of a Node, mentioning that it can return an "action" string. Now, it's time to explore exactly what these "actions" are and how they create "transitions," guiding the workflow dynamically.</p>
 <p>Imagine you're building an AI research assistant. After the AI receives your question, it needs to decide: should it search the web for more information, or does it already have enough context to answer? This decision point, and acting upon it, is where Actions and Transitions shine.</p>
-<h2><a class="anchor" id="autotoc_md2736"></a>
+<h2><a class="anchor" id="autotoc_md2737"></a>
 What are Actions and Transitions?</h2>
 <p><b>Actions</b> and <b>Transitions</b> are the mechanism by which a PocketFlow <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a> determines the next <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> to execute.</p>
 <ul>
@@ -139,7 +139,7 @@ What are Actions and Transitions?</h2>
 </ul>
 <p>Think of it like a "Choose Your Own Adventure" book. At the end of a section (a <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> finishing its task), you might be told, "If you want to open the door, turn to page 42. If you want to look under the bed, turn to page 55." The "open the door" part is the "action," and "turn to page 42" is the "transition."</p>
 <p>This allows your workflow to be dynamic and intelligent, not just a fixed sequence of steps.</p>
-<h2><a class="anchor" id="autotoc_md2737"></a>
+<h2><a class="anchor" id="autotoc_md2738"></a>
 How to Use Actions and Transitions</h2>
 <p>Let's break down how you implement this, using our AI research assistant idea from <code>cookbook/pocketflow-a2a/</code>.</p>
 <p><b>1. A Node Returns an Action String</b></p>
@@ -227,7 +227,7 @@ How to Use Actions and Transitions</h2>
 <li><code>supervisor - "retry" &gt;&gt; agent_flow</code>: This is a specific action-based transition. If the <code>supervisor</code> Node's <code>post</code> method returns <code>"retry"</code>, the flow goes back to <code>agent_flow</code>.</li>
 </ul>
 <p>If a Node's <code>post</code> returns <code>None</code>, and there's a default transition defined (e.g., <code>node1 &gt;&gt; node2</code>), then <code>node2</code> will be executed. If there's no specific transition for the returned action <em>and</em> no default transition, the <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a> typically ends for that branch.</p>
-<h2><a class="anchor" id="autotoc_md2738"></a>
+<h2><a class="anchor" id="autotoc_md2739"></a>
 What Happens Under the Hood? (A Simplified View)</h2>
 <ol type="1">
 <li><b>Node Execution:</b> Your <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a> runs a <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>.</li>
@@ -263,42 +263,42 @@ What Happens Under the Hood? (A Simplified View)</h2>
 <ol type="1">
 <li><b>Storing Transitions:</b> The <code>BaseNode</code> class (which all <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> and <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flows (<code>Flow</code>, <code>AsyncFlow</code>)</a> inherit from) has a <code>next</code> method to define successors: ```python </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2739"></a>
+<h1><a class="anchor" id="autotoc_md2740"></a>
 Inside BaseNode class (pocketflow/__init__.py)</h1>
 <p>class BaseNode: def <b>init</b>(self): self.successors = {} # Stores action -&gt; next_node mapping </p>
-<h1><a class="anchor" id="autotoc_md2740"></a>
+<h1><a class="anchor" id="autotoc_md2741"></a>
 ... other initializations ...</h1>
 <p>def next(self, node, action="default"): </p>
-<h1><a class="anchor" id="autotoc_md2741"></a>
+<h1><a class="anchor" id="autotoc_md2742"></a>
 ... (warning if overwriting) ...</h1>
 <p>self.successors[action] = node return node # Allows chaining <code> The cool `node - "action" &gt;&gt; next_node` syntax is made possible by Python's special methods (`__sub__` for `-` and `__rshift__` for `&gt;&gt;`): </code>python </p>
-<h1><a class="anchor" id="autotoc_md2742"></a>
+<h1><a class="anchor" id="autotoc_md2743"></a>
 Inside BaseNode class (pocketflow/__init__.py)</h1>
 <p>def <b>sub</b>(self, action_str): # When you do 'node - "action_str"' if isinstance(action_str, str): return _ConditionalTransition(self, action_str) </p>
-<h1><a class="anchor" id="autotoc_md2743"></a>
+<h1><a class="anchor" id="autotoc_md2744"></a>
 ... error handling ...</h1>
 <p>class _ConditionalTransition: # A temporary helper object def <b>init</b>(self, src_node, action_name): self.src_node, self.action_name = src_node, action_name</p>
 <p>def <b>rshift</b>(self, target_node): # When you do '... &gt;&gt; target_node' return self.src_node.next(target_node, self.action_name) <code> And for the default transition `node1 &gt;&gt; node2`: </code>python </p>
-<h1><a class="anchor" id="autotoc_md2744"></a>
+<h1><a class="anchor" id="autotoc_md2745"></a>
 Inside BaseNode class (pocketflow/__init__.py)</h1>
 <p>def <b>rshift</b>(self, other_node): # When you do 'node1 &gt;&gt; other_node' return self.next(other_node) # Calls .next() with action="default" ``<code> So, these operators are just convenient ways to populate the</code>successors<code>dictionary of a [Node (</code>BaseNode<code>,</code>Node<code>,</code>AsyncNode`)](<a class="el" href="../../d0/dd7/02__node______basenode________node________asyncnode_______8md.html">02_node___basenode____node____asyncnode___.md</a>).</p>
 <ol type="1">
 <li><b>Flow Orchestration and Using Actions:</b> The <code>Flow</code> class has an <code>_orch</code> (orchestration) method that manages running <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> in sequence. ```python </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2745"></a>
+<h1><a class="anchor" id="autotoc_md2746"></a>
 Inside Flow class (pocketflow/__init__.py)</h1>
 <p>class Flow(BaseNode): </p>
-<h1><a class="anchor" id="autotoc_md2746"></a>
+<h1><a class="anchor" id="autotoc_md2747"></a>
 ...</h1>
 <p>def get_next_node(self, current_node, action_str): </p>
-<h1><a class="anchor" id="autotoc_md2747"></a>
+<h1><a class="anchor" id="autotoc_md2748"></a>
 Tries the specific action, then "default"</h1>
 <p>next_node = current_node.successors.get(action_str) if not next_node: # If specific action not found next_node = current_node.successors.get("default")</p>
-<h1><a class="anchor" id="autotoc_md2748"></a>
+<h1><a class="anchor" id="autotoc_md2749"></a>
 ... (warning if action not found and successors exist) ...</h1>
 <p>return next_node</p>
 <p>def _orch(self, shared, params=None): current_node = self.start_node last_action = None while current_node: </p>
-<h1><a class="anchor" id="autotoc_md2749"></a>
+<h1><a class="anchor" id="autotoc_md2750"></a>
 ... (set params for current_node) ...</h1>
 <p>last_action = current_node._run(shared) # Node returns an action current_node = self.get_next_node(current_node, last_action) return last_action # Returns the last action from the entire flow ``<code> The</code>_orch<code>method:</p><ul>
 <li>Starts with the</li>
@@ -313,7 +313,7 @@ Tries the specific action, then "default"</h1>
 <li>If</li>
 </ul>
 <p></code>get_next_node<code>returns a [Node (</code>BaseNode<code>,</code>Node<code>,</code>AsyncNode<code>)](<a class="el" href="../../d0/dd7/02__node______basenode________node________asyncnode_______8md.html">02_node___basenode____node____asyncnode___.md</a>), the loop continues. If it returns</code>None` (no transition found), the loop (and thus the flow for that path) ends.</p>
-<h2><a class="anchor" id="autotoc_md2750"></a>
+<h2><a class="anchor" id="autotoc_md2751"></a>
 Analogy: A Mail Sorter</h2>
 <p>Think of a <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a> as a mail processing station.</p><ul>
 <li>It receives a package (data via <code>prep</code> from the <a class="el" href="../../d1/d94/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_201__shared__state______shared____dictionary____.html">shared dictionary</a>).</li>
@@ -321,7 +321,7 @@ Analogy: A Mail Sorter</h2>
 <li>Then, its <code>post</code> method looks at the package and decides which destination bin it should go to next. It writes a "destination code" (the action string like <code>"LOCAL_DELIVERY"</code> or <code>"INTERNATIONAL_FORWARD"</code>) on the package.</li>
 <li>The <a class="el" href="../../dd/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_204__flow______flow________asyncflow______.html">Flow (<code>Flow</code>, <code>AsyncFlow</code>)</a> is like the conveyor belt system. It reads the "destination code" and uses its routing rules (the <code>node - "code" &gt;&gt; next_station</code> definitions) to send the package to the correct next station. If there's no specific code, it might send it to a "default processing" station.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2751"></a>
+<h2><a class="anchor" id="autotoc_md2752"></a>
 Conclusion</h2>
 <p>Actions and Transitions are the control flow mechanism in PocketFlow. They allow you to build dynamic and responsive workflows where the path of execution can change based on the outcomes of individual <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Nodes (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>.</p><ul>
 <li>A <a class="el" href="../../dc/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2PocketFlow_202__node______basenode________node________asyncnode______.html">Node (<code>BaseNode</code>, <code>Node</code>, <code>AsyncNode</code>)</a>'s <code>post</code> method returns an <b>action string</b>.</li>

@@ -121,17 +121,17 @@ $(function(){initNavTree('dd/d81/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_system_prompt</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md873"></a>
-autotoc_md873</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md874"></a>
+autotoc_md874</h2>
 <p>layout: default title: "System Prompt" parent: "Browser Use" </p>
-<h2><a class="anchor" id="autotoc_md874"></a>
+<h2><a class="anchor" id="autotoc_md875"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md875"></a>
+<h1><a class="anchor" id="autotoc_md876"></a>
 Chapter 2: The System Prompt - Setting the Rules for Your AI Assistant</h1>
 <p>In <a class="el" href="../../de/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_201__agent.html">Chapter 1: The Agent</a>, we met the <code>Agent</code>, our project manager for automating browser tasks. We saw it consults a Large Language Model (LLM) – the "planner" – to decide the next steps based on the current state of the webpage. But how does the Agent tell the LLM <em>how</em> it should think, behave, and respond? Just giving it the task isn't enough!</p>
 <p>Imagine hiring a new assistant. You wouldn't just say, "Organize my files!" You'd give them specific instructions: "Please sort the files alphabetically by client name, put them in the blue folders, and give me a summary list when you're done." Without these rules, the assistant might do something completely different!</p>
 <p>The <b>System Prompt</b> solves this exact problem for our LLM. It's the set of core instructions and rules we give the LLM at the very beginning, telling it exactly how to act as a browser automation assistant and, crucially, how to format its responses so the <code>Agent</code> can understand them.</p>
-<h2><a class="anchor" id="autotoc_md876"></a>
+<h2><a class="anchor" id="autotoc_md877"></a>
 What is the System Prompt? The AI's Rulebook</h2>
 <p>Think of the System Prompt like the AI assistant's fundamental operating manual, its "Prime Directive," or the rules of a board game. It defines:</p>
 <ol type="1">
@@ -143,7 +143,7 @@ What is the System Prompt? The AI's Rulebook</h2>
 <li><b>Response Format:</b> The <em>exact</em> structure (JSON format) its thoughts and planned actions must follow.</li>
 </ol>
 <p>Without this rulebook, the LLM might just chat casually, give vague suggestions, or produce output in a format the <code>Agent</code> code can't parse. The System Prompt ensures the LLM behaves like the specialized tool we need.</p>
-<h2><a class="anchor" id="autotoc_md877"></a>
+<h2><a class="anchor" id="autotoc_md878"></a>
 Why is the Response Format So Important?</h2>
 <p>This is a critical point. The <code>Agent</code> code isn't a human reading the LLM's response. It's a program expecting data in a very specific structure. The System Prompt tells the LLM to <em>always</em> respond in a JSON format that looks something like this (simplified):</p>
 <div class="fragment"><div class="line">{</div>
@@ -172,7 +172,7 @@ Why is the Response Format So Important?</h2>
 <li>It passes these actions (like <code>input_text</code> or <code>press_keys</code>) to the <a class="el" href="../../de/dc1/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Browser_01Use_205__action__controller______registry.html">Action Controller &amp; Registry</a> to execute them in the browser.</li>
 </ul>
 <p>If the LLM responded with just "Okay, I'll type 'cute cat pictures' into the search bar and press Enter," the <code>Agent</code> wouldn't know <em>which</em> element index corresponds to the search bar or exactly which actions to call. The strict JSON format is essential for automation.</p>
-<h2><a class="anchor" id="autotoc_md878"></a>
+<h2><a class="anchor" id="autotoc_md879"></a>
 A Peek Inside the Rulebook (<code>system_prompt.md</code>)</h2>
 <p>The actual instructions live in a text file within the <code>Browser Use</code> library: <code>browser_use/agent/system_prompt.md</code>. It's quite detailed, but here's a tiny snippet focusing on the response format rule:</p>
 <div class="fragment"><div class="line"># Response Rules</div>
@@ -185,7 +185,7 @@ A Peek Inside the Rulebook (<code>system_prompt.md</code>)</h2>
 <div class="line">2. ACTIONS: You can specify multiple actions in the list... Use maximum {{max_actions}} actions...</div>
 </div><!-- fragment --><p> <em>(This is heavily simplified! The real file has many more rules about element interaction, error handling, task completion, etc.)</em></p>
 <p>This file clearly defines the JSON structure (<code>current_state</code> and <code>action</code>) and other crucial behaviors required from the LLM.</p>
-<h2><a class="anchor" id="autotoc_md879"></a>
+<h2><a class="anchor" id="autotoc_md880"></a>
 How the Agent Uses the System Prompt</h2>
 <p>The <code>Agent</code> uses a helper class called <code>SystemPrompt</code> (found in <code>agent/prompts.py</code>) to manage these rules. Here's the flow:</p>
 <ol type="1">
@@ -242,7 +242,7 @@ How the Agent Uses the System Prompt</h2>
 <div class="line"><span class="comment">#     # This system_message_for_llm is then passed to the Message Manager.</span></div>
 <div class="line"><span class="comment"># )</span></div>
 </div><!-- fragment --><p>This code shows how the <code>SystemPrompt</code> class finds and reads the <code>system_prompt.md</code> file and prepares the instructions as a <code>SystemMessage</code> ready for the LLM conversation.</p>
-<h2><a class="anchor" id="autotoc_md880"></a>
+<h2><a class="anchor" id="autotoc_md881"></a>
 Under the Hood: Initialization and Conversation Flow</h2>
 <p>Let's visualize how the System Prompt fits into the Agent's setup and interaction loop:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -319,7 +319,7 @@ Under the Hood: Initialization and Conversation Flow</h2>
 <div class="line">        <span class="comment"># ... rest of initialization ...</span></div>
 <div class="line">        logger.info(<span class="stringliteral">&quot;Agent initialized with System Prompt.&quot;</span>)</div>
 </div><!-- fragment --><p>When the <code>Agent</code> runs its loop (<code>agent.run()</code> calls <code>agent.step()</code>), it asks the <code>MessageManager</code> for the current conversation history (<code>self._message_manager.get_messages()</code>). The <code>MessageManager</code> always ensures that the <code>SystemMessage</code> (containing the rules) is the very first item in that history list sent to the LLM.</p>
-<h2><a class="anchor" id="autotoc_md881"></a>
+<h2><a class="anchor" id="autotoc_md882"></a>
 Conclusion</h2>
 <p>The System Prompt is the essential rulebook that governs the LLM's behavior within the <code>Browser Use</code> framework. It tells the LLM how to interpret the browser state, what actions it can take, and most importantly, dictates the exact JSON format for its responses. This structured communication is key to enabling the <code>Agent</code> to reliably understand the LLM's plan and execute browser automation tasks.</p>
 <p>Without a clear System Prompt, the LLM would be like an untrained assistant – potentially intelligent, but unable to follow the specific procedures needed for the job.</p>

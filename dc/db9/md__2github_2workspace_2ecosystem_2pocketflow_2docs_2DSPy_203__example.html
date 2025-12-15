@@ -121,12 +121,12 @@ $(function(){initNavTree('dc/db9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_example</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1632"></a>
-autotoc_md1632</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1633"></a>
+autotoc_md1633</h2>
 <p>layout: default title: "Example" parent: "DSPy" </p>
-<h2><a class="anchor" id="autotoc_md1633"></a>
+<h2><a class="anchor" id="autotoc_md1634"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1634"></a>
+<h1><a class="anchor" id="autotoc_md1635"></a>
 Chapter 3: Example - Your Data Points</h1>
 <p>In <a class="el" href="../../d4/dfe/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_202__signature.html">Chapter 2: Signature</a>, we learned how to define the <em>task</em> for a DSPy module using <code>Signatures</code> – specifying the inputs, outputs, and instructions. It's like writing a recipe card.</p>
 <p>But sometimes, just giving instructions isn't enough. Imagine teaching someone to translate by just giving the rule "Translate English to French". They might struggle! It often helps to show them a few <em>examples</em> of correct translations.</p>
@@ -145,7 +145,7 @@ Chapter 3: Example - Your Data Points</h1>
 <li>How to mark specific fields as inputs using <code>.with_inputs()</code>.</li>
 </ul>
 <p>Let's dive into representing our data!</p>
-<h2><a class="anchor" id="autotoc_md1635"></a>
+<h2><a class="anchor" id="autotoc_md1636"></a>
 What is a <code>dspy.Example</code>?</h2>
 <p>A <code>dspy.Example</code> is a fundamental data structure in DSPy designed to hold the information for a single instance of your task. It essentially acts like a flexible container (similar to a Python dictionary) where you store key-value pairs.</p>
 <p>Crucially, the <b>keys</b> in your <code>Example</code> should generally match the <b>field names</b> you defined in your <a class="el" href="../../d4/dfe/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_202__signature.html">Signature</a>.</p>
@@ -160,7 +160,7 @@ What is a <code>dspy.Example</code>?</h2>
 <div class="line">    french_sentence = dspy.OutputField(desc=<span class="stringliteral">&quot;The translated sentence in French&quot;</span>)</div>
 </div><!-- fragment --><p>This signature has two fields: <code>english_sentence</code> (input) and <code>french_sentence</code> (output).</p>
 <p>An <code>Example</code> representing one instance of this task would need to contain values for these keys.</p>
-<h2><a class="anchor" id="autotoc_md1636"></a>
+<h2><a class="anchor" id="autotoc_md1637"></a>
 Creating an Example</h2>
 <p>Creating a <code>dspy.Example</code> is straightforward. You can initialize it with keyword arguments, where the argument names match the fields you care about (usually your Signature fields).</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> dspy</div>
@@ -188,7 +188,7 @@ Creating an Example</h2>
 <div class="line">print(f<span class="stringliteral">&quot;Example 2 English: {example2.english_sentence}&quot;</span>)</div>
 </div><!-- fragment --><p><b>Output:</b></p>
 <div class="fragment"><div class="line">Example 2 English: How are you?</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1637"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1638"></a>
 Why Use Examples? The Three Main Roles</h2>
 <p><code>Example</code> objects are the standard way DSPy handles data, and they are used in three critical ways:</p>
 <ol type="1">
@@ -197,7 +197,7 @@ Why Use Examples? The Three Main Roles</h2>
 <li><b>Evaluation Data:</b> How do you know if your DSPy program is working correctly? You test it on a dataset! The <code>dspy.evaluate</code> module (<a class="el" href="../../d5/daa/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2DSPy_207__evaluate.html">Chapter 7: Evaluate</a>) takes a list of <code>dspy.Example</code> objects (your test set or development set) and measures your program's performance against the expected outputs (labels) in those examples.</li>
 </ol>
 <p>In all these cases, <code>dspy.Example</code> provides a consistent way to package and manage your data points.</p>
-<h2><a class="anchor" id="autotoc_md1638"></a>
+<h2><a class="anchor" id="autotoc_md1639"></a>
 Marking Inputs: <code>.with_inputs()</code></h2>
 <p>Often, especially during training and evaluation, DSPy needs to know which fields in your <code>Example</code> represent the <em>inputs</em> to your program and which represent the <em>outputs</em> or <em>labels</em> (the ground truth answers).</p>
 <p>The <code>.with_inputs()</code> method allows you to explicitly mark certain keys as input fields. This method returns a <em>new</em> <code>Example</code> object with this input information attached, leaving the original unchanged.</p>
@@ -223,11 +223,11 @@ Marking Inputs: <code>.with_inputs()</code></h2>
 <li><code>input_marked_example.labels()</code> returns a new <code>Example</code> containing the remaining fields (the outputs/labels).</li>
 </ul>
 <p>This distinction is vital for evaluation (comparing predictions against labels) and optimization (knowing what the program receives vs. what it should produce). Datasets loaded within DSPy often automatically handle marking inputs for you based on common conventions.</p>
-<h2><a class="anchor" id="autotoc_md1639"></a>
+<h2><a class="anchor" id="autotoc_md1640"></a>
 How It Works Under the Hood (A Peek)</h2>
 <p>The <code>dspy.Example</code> object is fundamentally quite simple. It's designed to behave much like a Python dictionary but with some added conveniences like attribute-style access (<code>example.field</code>) and the special <code>.with_inputs()</code> method.</p>
 <ol type="1">
-<li><b>Storage:</b> Internally, an <code>Example</code> uses a dictionary (often named <code>_store</code>) to hold all the key-value pairs you provide. <code>python @section autotoc_md1640 Conceptual internal structure example = dspy.Example(question="What is DSPy?", answer="A framework...") @section autotoc_md1641 example._store == {'question': 'What is DSPy?', 'answer': 'A framework...'} </code></li>
+<li><b>Storage:</b> Internally, an <code>Example</code> uses a dictionary (often named <code>_store</code>) to hold all the key-value pairs you provide. <code>python @section autotoc_md1641 Conceptual internal structure example = dspy.Example(question="What is DSPy?", answer="A framework...") @section autotoc_md1642 example._store == {'question': 'What is DSPy?', 'answer': 'A framework...'} </code></li>
 <li><b>Attribute Access:</b> When you access <code>example.question</code>, Python's magic methods (<code>__getattr__</code>) look up &lsquo;'question&rsquo;<code>in the internal</code>_store<code>. Similarly, setting</code>example.new_field = value<code>uses</code>__setattr__<code>to update the</code>_store<code>.</code></li>
 <li><code> **</code>.with_inputs()<code>:** This method creates a *copy* of the current</code>Example<code>'s</code>_store<code>. It then stores the provided input keys (like</code>{'english_sentence'}<code>) in a separate internal attribute (like</code>_input_keys<code>) on the *new* copied object. It doesn't modify the original</code>Example<code>.</code></li>
 <li><code> **</code>.inputs()<code>and</code>.labels()<code>:** These methods check the</code>_input_keys<code>attribute.</code>.inputs()<code>creates a new</code>Example<code>containing only the key-value pairs whose keys are *in*</code>_input_keys<code>.</code>.labels()<code>creates a new</code>Example<code>containing the key-value pairs whose keys are *not* in</code>_input_keys`.</li>
@@ -288,7 +288,7 @@ How It Works Under the Hood (A Peek)</h2>
 <div class="ttc" id="anamespacekeys_html"><div class="ttname"><a href="../../dc/d84/namespacekeys.html">keys</a></div><div class="ttdef"><b>Definition</b> <a href="../../d8/de6/keys_8py_source.html#l00001">keys.py:1</a></div></div>
 <div class="ttc" id="apybind__kv__service_8cpp_html_a26ae8807a2b3217bb2339bd18aaaa4e6"><div class="ttname"><a href="../../d7/da6/pybind__kv__service_8cpp.html#a26ae8807a2b3217bb2339bd18aaaa4e6">set</a></div><div class="ttdeci">bool set(std::string key, std::string value, std::string config_path)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da6/pybind__kv__service_8cpp_source.html#l00051">pybind_kv_service.cpp:51</a></div></div>
 </div><!-- fragment --><p>The key idea is that <code>dspy.Example</code> provides a convenient and standardized wrapper around your data points, making it easy to use them for few-shot examples, training, and evaluation, while also allowing you to specify which parts are inputs versus labels.</p>
-<h2><a class="anchor" id="autotoc_md1642"></a>
+<h2><a class="anchor" id="autotoc_md1643"></a>
 Conclusion</h2>
 <p>You've now mastered <code>dspy.Example</code>, the way DSPy represents individual data points!</p>
 <ul>

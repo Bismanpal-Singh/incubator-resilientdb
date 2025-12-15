@@ -164,61 +164,78 @@ $(function(){initNavTree('d3/d2c/resdb__kv__client_8cpp_source.html','../../'); 
 </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9">   39</a></span>std::unique_ptr&lt;std::string&gt; <a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9">ResDBKVClient::Get</a>(<span class="keyword">const</span> std::string &amp;key) {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  KVRequest request;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  request.set_cmd(KVRequest::GET);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  request.set_key(key);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  KVResponse response;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <span class="keywordflow">return</span> std::make_unique&lt;std::string&gt;(response.value());</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3">   39</a></span>int64_t <a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3">ResDBKVClient::SetWithSeq</a>(<span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                                   <span class="keyword">const</span> std::string &amp;data) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  KVRequest request;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  request.set_cmd(KVRequest::SET);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  request.set_key(key);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  request.set_value(data);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  KVResponse response;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keywordflow">return</span> response.seq();</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
 </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65">   52</a></span>std::unique_ptr&lt;std::string&gt; <a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65">ResDBKVClient::GetAllValues</a>() {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  KVRequest request;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  request.set_cmd(KVRequest::GETALLVALUES);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  KVResponse response;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  }</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="keywordflow">return</span> std::make_unique&lt;std::string&gt;(response.value());</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9">   54</a></span>std::unique_ptr&lt;std::string&gt; <a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9">ResDBKVClient::Get</a>(<span class="keyword">const</span> std::string &amp;key) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  KVRequest request;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  request.set_cmd(KVRequest::GET);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  request.set_key(key);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  KVResponse response;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="keywordflow">return</span> std::make_unique&lt;std::string&gt;(response.value());</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}</div>
 </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>std::unique_ptr&lt;std::string&gt;</div>
-<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725">   65</a></span><a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725">ResDBKVClient::GetRange</a>(<span class="keyword">const</span> std::string &amp;min_key,</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                        <span class="keyword">const</span> std::string &amp;max_key) {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  KVRequest request;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  request.set_cmd(KVRequest::GETRANGE);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  request.set_key(min_key);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  request.set_value(max_key);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  KVResponse response;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keywordflow">return</span> std::make_unique&lt;std::string&gt;(response.value());</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65">   67</a></span>std::unique_ptr&lt;std::string&gt; <a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65">ResDBKVClient::GetAllValues</a>() {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  KVRequest request;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  request.set_cmd(KVRequest::GETALLVALUES);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  KVResponse response;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keywordflow">return</span> std::make_unique&lt;std::string&gt;(response.value());</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
 </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>} <span class="comment">// namespace sdk</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="}">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725">   79</a></span>std::unique_ptr&lt;std::string&gt; <a class="code hl_function" href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725">ResDBKVClient::GetRange</a>(</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keyword">const</span> std::string &amp;min_key, <span class="keyword">const</span> std::string &amp;max_key) {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  KVRequest request;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  request.set_cmd(KVRequest::GETRANGE);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  request.set_key(min_key);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  request.set_value(max_key);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  KVResponse response;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">SendRequest</a>(request, &amp;response);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <span class="keywordflow">if</span> (ret != 0) {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send request fail, ret:&quot;</span> &lt;&lt; ret;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="keywordflow">return</span> std::make_unique&lt;std::string&gt;(response.value());</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}  <span class="comment">// namespace sdk</span></div>
 <div class="ttc" id="aclassresdb_1_1ResDBConfig_html"><div class="ttname"><a href="../../db/ddb/classresdb_1_1ResDBConfig.html">resdb::ResDBConfig</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d9a/resdb__config_8h_source.html#l00028">resdb_config.h:28</a></div></div>
 <div class="ttc" id="aclassresdb_1_1TransactionConstructor_html_a16fb166890904f6e6466aa552e771e82"><div class="ttname"><a href="../../d0/da5/classresdb_1_1TransactionConstructor.html#a16fb166890904f6e6466aa552e771e82">resdb::TransactionConstructor::SendRequest</a></div><div class="ttdeci">int SendRequest(const google::protobuf::Message &amp;message, Request::Type type=Request::TYPE_CLIENT_REQUEST)</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dfc/transaction__constructor_8cpp_source.html#l00063">transaction_constructor.cpp:63</a></div></div>
 <div class="ttc" id="aclassresdb_1_1TransactionConstructor_html_ac1de2bffadf5aad20407b7999f7b1b9c"><div class="ttname"><a href="../../d0/da5/classresdb_1_1TransactionConstructor.html#ac1de2bffadf5aad20407b7999f7b1b9c">resdb::TransactionConstructor::TransactionConstructor</a></div><div class="ttdeci">TransactionConstructor(const ResDBConfig &amp;config)</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dfc/transaction__constructor_8cpp_source.html#l00026">transaction_constructor.cpp:26</a></div></div>
 <div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a03b1a9dfd82967cc4950317c361ce346"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a03b1a9dfd82967cc4950317c361ce346">sdk::ResDBKVClient::Set</a></div><div class="ttdeci">int Set(const std::string &amp;key, const std::string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="#l00031">resdb_kv_client.cpp:31</a></div></div>
 <div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a3613a034c72764871dd814ee8ce93959"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a3613a034c72764871dd814ee8ce93959">sdk::ResDBKVClient::ResDBKVClient</a></div><div class="ttdeci">ResDBKVClient(const resdb::ResDBConfig &amp;config)</div><div class="ttdef"><b>Definition</b> <a href="#l00028">resdb_kv_client.cpp:28</a></div></div>
-<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a72cf313b6de6084626f0c2d0340f2d65"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65">sdk::ResDBKVClient::GetAllValues</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; GetAllValues()</div><div class="ttdef"><b>Definition</b> <a href="#l00052">resdb_kv_client.cpp:52</a></div></div>
-<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a8d047515fb969dba17dca34ab1894725"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725">sdk::ResDBKVClient::GetRange</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; GetRange(const std::string &amp;min_key, const std::string &amp;max_key)</div><div class="ttdef"><b>Definition</b> <a href="#l00065">resdb_kv_client.cpp:65</a></div></div>
-<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_ac044a0544987a55113176a29775045c9"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9">sdk::ResDBKVClient::Get</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; Get(const std::string &amp;key)</div><div class="ttdef"><b>Definition</b> <a href="#l00039">resdb_kv_client.cpp:39</a></div></div>
+<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a72cf313b6de6084626f0c2d0340f2d65"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65">sdk::ResDBKVClient::GetAllValues</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; GetAllValues()</div><div class="ttdef"><b>Definition</b> <a href="#l00067">resdb_kv_client.cpp:67</a></div></div>
+<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a7f92b83d183d949fbf4c4e3a473f10e3"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3">sdk::ResDBKVClient::SetWithSeq</a></div><div class="ttdeci">int64_t SetWithSeq(const std::string &amp;key, const std::string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="#l00039">resdb_kv_client.cpp:39</a></div></div>
+<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_a8d047515fb969dba17dca34ab1894725"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#a8d047515fb969dba17dca34ab1894725">sdk::ResDBKVClient::GetRange</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; GetRange(const std::string &amp;min_key, const std::string &amp;max_key)</div><div class="ttdef"><b>Definition</b> <a href="#l00079">resdb_kv_client.cpp:79</a></div></div>
+<div class="ttc" id="aclasssdk_1_1ResDBKVClient_html_ac044a0544987a55113176a29775045c9"><div class="ttname"><a href="../../dc/d12/classsdk_1_1ResDBKVClient.html#ac044a0544987a55113176a29775045c9">sdk::ResDBKVClient::Get</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; Get(const std::string &amp;key)</div><div class="ttdef"><b>Definition</b> <a href="#l00054">resdb_kv_client.cpp:54</a></div></div>
 <div class="ttc" id="anamespacesdk_html"><div class="ttname"><a href="../../d1/de2/namespacesdk.html">sdk</a></div><div class="ttdef"><b>Definition</b> <a href="../../d1/d69/crow__service_8cpp_source.html#l00051">crow_service.cpp:51</a></div></div>
 <div class="ttc" id="aresdb__kv__client_8h_html"><div class="ttname"><a href="../../d7/d70/resdb__kv__client_8h.html">resdb_kv_client.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

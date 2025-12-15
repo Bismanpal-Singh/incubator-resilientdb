@@ -121,23 +121,23 @@ $(function(){initNavTree('dc/d8a/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">06_error_handling</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1814"></a>
-autotoc_md1814</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1815"></a>
+autotoc_md1815</h2>
 <p>layout: default title: "Error Handling" parent: "FastAPI" </p>
-<h2><a class="anchor" id="autotoc_md1815"></a>
+<h2><a class="anchor" id="autotoc_md1816"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md1816"></a>
+<h1><a class="anchor" id="autotoc_md1817"></a>
 Chapter 6: Error Handling</h1>
 <p>Welcome back! In <a class="el" href="../../dd/dd7/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_205__dependency__injection.html">Chapter 5: Dependency Injection</a>, we learned how to structure our code using dependencies to manage common tasks like pagination or database sessions. This helps keep our code clean and reusable.</p>
 <p>But what happens when things don't go as planned? A user might request data that doesn't exist, or they might send invalid input. Our API needs a way to gracefully handle these situations and inform the client about what went wrong.</p>
 <p><b>Our Goal Today:</b> Learn how FastAPI helps us manage errors effectively, both for problems we expect (like "item not found") and for unexpected issues like invalid input data.</p>
-<h2><a class="anchor" id="autotoc_md1817"></a>
+<h2><a class="anchor" id="autotoc_md1818"></a>
 What Problem Does This Solve?</h2>
 <p>Imagine our online store API. We have an endpoint like <code>/items/{item_id}</code> to fetch details about a specific item. What should happen if a user tries to access <code>/items/9999</code> but there's no item with ID 9999 in our database?</p>
 <p>If we don't handle this, our application might crash or return a confusing, generic server error (like <code>500 Internal Server Error</code>). This isn't helpful for the person using our API. They need clear feedback: "The item you asked for doesn't exist."</p>
 <p>Similarly, if a user tries to <em>create</em> an item (<code>POST /items/</code>) but forgets to include the required <code>price</code> field in the JSON body, we shouldn't just crash. We need to tell them, "You forgot the price field!"</p>
 <p>FastAPI provides a structured way to handle these different types of errors, ensuring clear communication with the client. Think of it as setting up clear emergency procedures for your API.</p>
-<h2><a class="anchor" id="autotoc_md1818"></a>
+<h2><a class="anchor" id="autotoc_md1819"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b><code>HTTPException</code> for Expected Errors:</b><ul>
@@ -159,7 +159,7 @@ Key Concepts</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1819"></a>
+<h2><a class="anchor" id="autotoc_md1820"></a>
 Using <code>HTTPException</code> for Expected Errors</h2>
 <p>Let's solve our "item not found" problem using <code>HTTPException</code>.</p>
 <ol type="1">
@@ -167,11 +167,11 @@ Using <code>HTTPException</code> for Expected Errors</h2>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1820"></a>
+<h1><a class="anchor" id="autotoc_md1821"></a>
 main.py or your router file</h1>
 <p>from fastapi import FastAPI, HTTPException</p>
 <p>app = FastAPI() # Or use your APIRouter</p>
-<h1><a class="anchor" id="autotoc_md1821"></a>
+<h1><a class="anchor" id="autotoc_md1822"></a>
 Simple in-memory storage (like from Chapter 4)</h1>
 <p>fake_items_db = {1: {"name": "Foo"}, 2: {"name": "Bar"}} ```</p>
 <p><b>Explanation:</b> We import <code>HTTPException</code> directly from <code>fastapi</code>.</p>
@@ -180,13 +180,13 @@ Simple in-memory storage (like from Chapter 4)</h1>
 <p class="startli">```python @app.get("/items/{item_id}") async def read_item(item_id: int): </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1822"></a>
+<h1><a class="anchor" id="autotoc_md1823"></a>
 Check if the requested item_id exists in our "database"</h1>
 <p>if item_id not in fake_items_db: </p>
-<h1><a class="anchor" id="autotoc_md1823"></a>
+<h1><a class="anchor" id="autotoc_md1824"></a>
 If not found, raise HTTPException!</h1>
 <p>raise HTTPException(status_code=404, detail="Item not found")</p>
-<h1><a class="anchor" id="autotoc_md1824"></a>
+<h1><a class="anchor" id="autotoc_md1825"></a>
 If found, proceed normally</h1>
 <p>return {"item": fake_items_db[item_id]} ```</p>
 <p><b>Explanation:</b></p><ul>
@@ -210,7 +210,7 @@ If found, proceed normally</h1>
 </li>
 </ul>
 <p>FastAPI automatically catches the <code>HTTPException</code> you raised and sends the correct HTTP status code along with the <code>detail</code> message formatted as JSON.</p>
-<h2><a class="anchor" id="autotoc_md1825"></a>
+<h2><a class="anchor" id="autotoc_md1826"></a>
 Automatic Handling of <code>RequestValidationError</code></h2>
 <p>You've already seen this in action without realizing it! When you define Pydantic models for your request bodies or use type hints for path/query parameters, FastAPI automatically validates incoming data.</p>
 <p>Let's revisit the <code>create_item</code> example from <a class="el" href="../../d5/df9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_203__data__validation______serialization____pydantic__.html">Chapter 3: Data Validation &amp; Serialization (Pydantic)</a>:</p>
@@ -247,29 +247,29 @@ Automatic Handling of <code>RequestValidationError</code></h2>
 </li>
 </ul>
 <p>Notice that we didn't write any <code>try...except</code> blocks or <code>if</code> statements in <code>create_item</code> to handle these validation issues. FastAPI and Pydantic take care of it, providing detailed error messages that tell the client exactly what went wrong and where (<code>loc</code>). This is a huge time saver!</p>
-<h2><a class="anchor" id="autotoc_md1826"></a>
+<h2><a class="anchor" id="autotoc_md1827"></a>
 Custom Exception Handlers (A Quick Look)</h2>
 <p>Sometimes, you might want to handle specific errors in a unique way. Maybe you want to log a particular error to a monitoring service, or perhaps you need to return error responses in a completely custom format different from FastAPI's default.</p>
 <p>FastAPI allows you to register <b>exception handlers</b> using the <code>@app.exception_handler()</code> decorator.</p>
 <p><b>Example:</b> Imagine you have a custom error <code>UnicornNotFound</code> and want to return a <code>418 I'm a teapot</code> status code when it occurs.</p>
 <ol type="1">
 <li><p class="startli"><b>Define the Custom Exception:</b></p>
-<p class="startli"><code>python @section autotoc_md1827 Can be in your main file or a separate exceptions.py class UnicornNotFound(Exception): def __init__(self, name: str): self.name = name </code></p>
+<p class="startli"><code>python @section autotoc_md1828 Can be in your main file or a separate exceptions.py class UnicornNotFound(Exception): def __init__(self, name: str): self.name = name </code></p>
 </li>
 <li><p class="startli"><b>Define the Handler Function:</b></p>
 <p class="startli">```python </p>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1828"></a>
+<h1><a class="anchor" id="autotoc_md1829"></a>
 main.py</h1>
 <p>from fastapi import FastAPI, Request from fastapi.responses import JSONResponse </p>
-<h1><a class="anchor" id="autotoc_md1829"></a>
+<h1><a class="anchor" id="autotoc_md1830"></a>
 Assuming UnicornNotFound is defined above or imported</h1>
 <p>app = FastAPI()</p>
-<h1><a class="anchor" id="autotoc_md1830"></a>
+<h1><a class="anchor" id="autotoc_md1831"></a>
 Decorator registers this function to handle UnicornNotFound errors</h1>
 <p>@app.exception_handler(UnicornNotFound) async def unicorn_exception_handler(request: Request, exc: UnicornNotFound): </p>
-<h1><a class="anchor" id="autotoc_md1831"></a>
+<h1><a class="anchor" id="autotoc_md1832"></a>
 This function runs whenever UnicornNotFound is raised</h1>
 <p>return JSONResponse( status_code=418, # I'm a teapot! content={"message": f"Oops! Can't find unicorn named: {exc.name}."}, ) ```</p>
 <p><b>Explanation:</b></p><ul>
@@ -278,7 +278,7 @@ This function runs whenever UnicornNotFound is raised</h1>
 <li>It returns a <code>JSONResponse</code> with the desired status code (418) and a custom content dictionary.</li>
 </ul>
 <p><b>Raise the Custom Exception in a Path Operation:</b></p>
-<p><code>python @app.get("/unicorns/{name}") async def read_unicorn(name: str): if name == "yolo": @section autotoc_md1832 Raise our custom exception raise UnicornNotFound(name=name) return {"unicorn_name": name, "message": "Unicorn exists!"} </code></p>
+<p><code>python @app.get("/unicorns/{name}") async def read_unicorn(name: str): if name == "yolo": @section autotoc_md1833 Raise our custom exception raise UnicornNotFound(name=name) return {"unicorn_name": name, "message": "Unicorn exists!"} </code></p>
 <p><b>How it Behaves:</b></p>
 <ul>
 <li><b>Request:</b> <code>GET /unicorns/sparklehoof</code><ul>
@@ -291,7 +291,7 @@ This function runs whenever UnicornNotFound is raised</h1>
 </li>
 </ul>
 <p>Custom handlers provide flexibility, but for most common API errors, <code>HTTPException</code> and the automatic <code>RequestValidationError</code> handling are sufficient.</p>
-<h2><a class="anchor" id="autotoc_md1833"></a>
+<h2><a class="anchor" id="autotoc_md1834"></a>
 How it Works Under the Hood (Simplified)</h2>
 <p>When an error occurs during a request, FastAPI follows a process to decide how to respond:</p>
 <p><b>Scenario 1: Raising <code>HTTPException</code></b></p>
@@ -331,7 +331,7 @@ How it Works Under the Hood (Simplified)</h2>
 <li><b>Create Response:</b> It creates a <code>JSONResponse</code> with status code <code>422</code> and the formatted error details as the content.</li>
 <li><b>Send Response:</b> This 422 JSON response is sent back to the client. Your <code>create_item</code> function was never even called.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1834"></a>
+<h3><a class="anchor" id="autotoc_md1835"></a>
 Code Connections</h3>
 <ul>
 <li><b><code>fastapi.exceptions.HTTPException</code></b>: The class you import and raise for expected client errors. Defined in <code>fastapi/exceptions.py</code>. It inherits from <code>starlette.exceptions.HTTPException</code>.</li>
@@ -340,7 +340,7 @@ Code Connections</h3>
 <li><b><code>fastapi.exception_handlers.request_validation_exception_handler</code></b>: The default function that handles <code>RequestValidationError</code>. Defined in <code>fastapi/exception_handlers.py</code>. It calls <code>jsonable_encoder(exc.errors())</code> and creates a 422 <code>JSONResponse</code>.</li>
 <li>**<code>@app.exception_handler(ExceptionType)</code>**: The decorator used on the <code>FastAPI</code> app instance to register your own custom handler functions. The <code>exception_handler</code> method is part of the <code>FastAPI</code> class in <code>fastapi/applications.py</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1835"></a>
+<h2><a class="anchor" id="autotoc_md1836"></a>
 Conclusion</h2>
 <p>You've learned how FastAPI helps you manage errors gracefully!</p>
 <ul>

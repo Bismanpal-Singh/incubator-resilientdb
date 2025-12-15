@@ -121,16 +121,16 @@ $(function(){initNavTree('d3/da3/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_deepcrawlstrategy</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1459"></a>
-autotoc_md1459</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1460"></a>
+autotoc_md1460</h2>
 <p>layout: default title: "DeepCrawlStrategy" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1460"></a>
+<h2><a class="anchor" id="autotoc_md1461"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1461"></a>
+<h1><a class="anchor" id="autotoc_md1462"></a>
 Chapter 8: Exploring Websites - DeepCrawlStrategy</h1>
 <p>In <a class="el" href="../../dd/d0d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_207__crawlresult.html">Chapter 7: Understanding the Results - CrawlResult</a>, we saw the final report (<code>CrawlResult</code>) that Crawl4AI gives us after processing a single URL. This report contains cleaned content, links, metadata, and maybe even extracted data.</p>
 <p>But what if you want to explore a website <em>beyond</em> just the first page? Imagine you land on a blog's homepage. You don't just want the homepage content; you want to automatically discover and crawl all the individual blog posts linked from it. How can you tell Crawl4AI to act like an explorer, following links and venturing deeper into the website?</p>
-<h2><a class="anchor" id="autotoc_md1462"></a>
+<h2><a class="anchor" id="autotoc_md1463"></a>
 What Problem Does <code>DeepCrawlStrategy</code> Solve?</h2>
 <p>Think of the <code>AsyncWebCrawler.arun()</code> method we've used so far like visiting just the entrance hall of a vast library. You get information about that specific hall, but you don't automatically explore the adjoining rooms or different floors.</p>
 <p>What if you want to systematically explore the library? You need a plan:</p>
@@ -140,11 +140,11 @@ What Problem Does <code>DeepCrawlStrategy</code> Solve?</h2>
 <li>Do you have a map highlighting potentially interesting sections and prioritize visiting those first? (Prioritize promising paths)</li>
 </ul>
 <p><code>DeepCrawlStrategy</code> provides this <b>exploration plan</b>. It defines the logic for how Crawl4AI should discover and crawl new URLs starting from the initial one(s) by following the links it finds on each page. It turns the crawler from a single-page visitor into a website explorer.</p>
-<h2><a class="anchor" id="autotoc_md1463"></a>
+<h2><a class="anchor" id="autotoc_md1464"></a>
 What is <code>DeepCrawlStrategy</code>?</h2>
 <p><code>DeepCrawlStrategy</code> is a concept (a blueprint) in Crawl4AI that represents the <b>method or logic used to navigate and crawl multiple pages by following links</b>. It tells the crawler <em>which links</em> to follow and in <em>what order</em> to visit them.</p>
 <p>It essentially takes over the process when you call <code>arun()</code> if a deep crawl is requested, managing a queue or list of URLs to visit and coordinating the crawling of those URLs, potentially up to a certain depth or number of pages.</p>
-<h2><a class="anchor" id="autotoc_md1464"></a>
+<h2><a class="anchor" id="autotoc_md1465"></a>
 Different Exploration Plans: The Strategies</h2>
 <p>Crawl4AI provides several concrete exploration plans (implementations) for <code>DeepCrawlStrategy</code>:</p>
 <ol type="1">
@@ -183,7 +183,7 @@ Different Exploration Plans: The Strategies</h2>
 </li>
 </ul>
 <p>These act like instructions for the explorer: "Only explore rooms on this floor (filter)," "Ignore corridors marked 'Staff Only' (filter)," or "Check rooms marked with a star first (scorer)."</p>
-<h2><a class="anchor" id="autotoc_md1465"></a>
+<h2><a class="anchor" id="autotoc_md1466"></a>
 How to Use a <code>DeepCrawlStrategy</code></h2>
 <p>You enable deep crawling by adding a <code>DeepCrawlStrategy</code> instance to your <code>CrawlerRunConfig</code>. Let's try exploring a website layer by layer using <code>BFSDeepCrawlStrategy</code>, going only one level deep from the start page.</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter8_example_1.py</span></div>
@@ -248,7 +248,7 @@ How to Use a <code>DeepCrawlStrategy</code></h2>
 <li><b>Process Results:</b> Since we used <code>stream=True</code>, the return value is an asynchronous generator. We use <code>async for result in crawl_results_generator:</code> to loop through the <code>CrawlResult</code> objects as they are produced by the deep crawl. For each result, we print its status and depth.</li>
 </ol>
 <p>You'll see the output showing the crawl starting, then processing the initial page (<code>links/10/0</code> at depth 0), followed by the 10 linked pages (e.g., <code>9</code>, <code>8</code>, ... <code>0</code> at depth 1).</p>
-<h2><a class="anchor" id="autotoc_md1466"></a>
+<h2><a class="anchor" id="autotoc_md1467"></a>
 How It Works (Under the Hood)</h2>
 <p>How does simply putting a strategy in the config change <code>arun</code>'s behavior? It involves a bit of Python magic called a <b>decorator</b>.</p>
 <ol type="1">
@@ -296,7 +296,7 @@ How It Works (Under the Hood)</h2>
 <div class="line">    end</div>
 <div class="line">    Strategy--&gt;&gt;Decorator: Final result (List or Generator)</div>
 <div class="line">    Decorator--&gt;&gt;User: Final result</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1467"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1468"></a>
 Code Glimpse</h2>
 <p>Let's peek at the simplified structure:</p>
 <p><b>1. The Decorator (<code>deep_crawling/base_strategy.py</code>)</b></p>
@@ -473,7 +473,7 @@ Code Glimpse</h2>
 <div class="line"> </div>
 <div class="line">             current_level = next_level</div>
 <div class="line">    <span class="comment"># ... shutdown method ...</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1468"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1469"></a>
 Conclusion</h2>
 <p>You've learned about <code>DeepCrawlStrategy</code>, the component that turns Crawl4AI into a website explorer!</p>
 <ul>

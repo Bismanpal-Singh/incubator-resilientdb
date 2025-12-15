@@ -121,21 +121,21 @@ $(function(){initNavTree('dc/dee/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_agentlogger___monitor</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md3196"></a>
-autotoc_md3196</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md3197"></a>
+autotoc_md3197</h2>
 <p>layout: default title: "AgentLogger &amp; Monitor" parent: "SmolaAgents" </p>
-<h2><a class="anchor" id="autotoc_md3197"></a>
+<h2><a class="anchor" id="autotoc_md3198"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md3198"></a>
+<h1><a class="anchor" id="autotoc_md3199"></a>
 Chapter 8: AgentLogger &amp; Monitor - Observing Your Agent in Action</h1>
 <p>Welcome to the final chapter of the SmolaAgents tutorial! In <a class="el" href="../../d6/df3/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_207__agenttype.html">Chapter 7: AgentType</a>, we saw how <code>SmolaAgents</code> handles different kinds of data like text, images, and audio using specialized containers. Now that our agent can perform complex tasks (<a class="el" href="../../dc/d92/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_201__multistepagent.html">Chapter 1: MultiStepAgent</a>), use various <a class="el" href="../../d4/d89/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_203__tool.html">Tools</a>, remember its progress (<a class="el" href="../../d1/d59/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2SmolaAgents_204__agentmemory.html">Chapter 4: AgentMemory</a>), and even handle diverse data types, a new question arises: <b>How do we actually see what the agent is doing?</b></p>
 <p>What if the agent gets stuck in a loop? What if it uses the wrong tool or gives an unexpected answer? How can we peek inside its "mind" to understand its reasoning, track its actions, and maybe figure out what went wrong or how well it's performing?</p>
-<h2><a class="anchor" id="autotoc_md3199"></a>
+<h2><a class="anchor" id="autotoc_md3200"></a>
 The Problem: Flying Blind</h2>
 <p>Imagine driving a car with no dashboard. You wouldn't know your speed, fuel level, or if the engine was overheating. You'd be driving blind! Or imagine an airplane without its "black box" flight recorder – after an incident, it would be much harder to understand what happened.</p>
 <p><img src="https://img.icons8.com/ios/50/000000/car--v1.png" alt="Car with no dashboard" class="inline"/> ❓❓❓</p>
 <p>Running an AI agent without visibility is similar. Without seeing its internal steps, thoughts, and actions, debugging problems or understanding its behavior becomes incredibly difficult. We need a way to observe the agent in real-time and record its performance.</p>
-<h2><a class="anchor" id="autotoc_md3200"></a>
+<h2><a class="anchor" id="autotoc_md3201"></a>
 The Solution: The Dashboard (<code>AgentLogger</code>) and Black Box (<code>Monitor</code>)</h2>
 <p><code>SmolaAgents</code> provides two key components to give you this visibility:</p>
 <ol type="1">
@@ -154,7 +154,7 @@ The Solution: The Dashboard (<code>AgentLogger</code>) and Black Box (<code>Moni
 </li>
 </ol>
 <p>Both <code>AgentLogger</code> and <code>Monitor</code> are automatically set up and used by the <code>MultiStepAgent</code>, making observation easy!</p>
-<h2><a class="anchor" id="autotoc_md3201"></a>
+<h2><a class="anchor" id="autotoc_md3202"></a>
 <code>AgentLogger</code>: Your Real-Time Dashboard</h2>
 <p>The <code>AgentLogger</code> is your primary window into the agent's live execution. It makes the <b>Think -&gt; Act -&gt; Observe</b> cycle visible.</p>
 <p><b>How It's Used (Automatic!)</b></p>
@@ -233,15 +233,15 @@ The Solution: The Dashboard (<code>AgentLogger</code>) and Black Box (<code>Moni
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3202"></a>
+<h1><a class="anchor" id="autotoc_md3203"></a>
 &mdash; File: monitoring.py (Simplified AgentLogger) &mdash;</h1>
 <p>from enum import IntEnum from rich.console import Console from rich.panel import Panel from rich.syntax import Syntax from rich.rule import Rule </p>
-<h1><a class="anchor" id="autotoc_md3203"></a>
+<h1><a class="anchor" id="autotoc_md3204"></a>
 ... other rich imports ...</h1>
 <p>class LogLevel(IntEnum): OFF = -1 ERROR = 0 INFO = 1 DEBUG = 2</p>
 <p>YELLOW_HEX = "#d4b702" # Used for styling</p>
 <p>class AgentLogger: def <b>init</b>(self, level: LogLevel = LogLevel.INFO): self.level = level </p>
-<h1><a class="anchor" id="autotoc_md3204"></a>
+<h1><a class="anchor" id="autotoc_md3205"></a>
 The core object from the 'rich' library for printing</h1>
 <p>self.console = Console()</p>
 <p>def log(self, *args, level: LogLevel = LogLevel.INFO, **kwargs): """Logs a message if the level is sufficient.""" if level &lt;= self.level: self.console.print(*args, **kwargs)</p>
@@ -249,7 +249,7 @@ The core object from the 'rich' library for printing</h1>
 <p>def log_code(self, title: str, content: str, level: LogLevel = LogLevel.INFO): """Logs a Python code block with syntax highlighting.""" self.log( Panel(Syntax(content, lexer="python", ...), title=title, ...), level=level )</p>
 <p>def log_rule(self, title: str, level: LogLevel = LogLevel.INFO): """Logs a horizontal rule separator.""" self.log(Rule("[bold]" + title, style=YELLOW_HEX), level=level)</p>
 <p>def log_task(self, content: str, subtitle: str, title: Optional[str] = None, level: LogLevel = LogLevel.INFO): """Logs the initial task.""" self.log(Panel(f"\n[bold]{content}\n", title=title, subtitle=subtitle, ...), level=level)</p>
-<h1><a class="anchor" id="autotoc_md3205"></a>
+<h1><a class="anchor" id="autotoc_md3206"></a>
 ... other helper methods for specific formatting ...</h1>
 <p>```</p>
 <ul>
@@ -257,55 +257,55 @@ The core object from the 'rich' library for printing</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3206"></a>
+<h1><a class="anchor" id="autotoc_md3207"></a>
 &mdash; File: agents.py (Simplified Agent using Logger) &mdash;</h1>
 <p>from .monitoring import AgentLogger, LogLevel</p>
 <p>class MultiStepAgent: def <b>init</b>(self, ..., verbosity_level: LogLevel = LogLevel.INFO): </p>
-<h1><a class="anchor" id="autotoc_md3207"></a>
+<h1><a class="anchor" id="autotoc_md3208"></a>
 ... other setup ...</h1>
 <p>self.logger = AgentLogger(level=verbosity_level) </p>
-<h1><a class="anchor" id="autotoc_md3208"></a>
-...</h1>
-<p>def run(self, task: str, ...): </p>
 <h1><a class="anchor" id="autotoc_md3209"></a>
 ...</h1>
-<p>self.logger.log_task(content=self.task, ..., level=LogLevel.INFO) </p>
+<p>def run(self, task: str, ...): </p>
 <h1><a class="anchor" id="autotoc_md3210"></a>
+...</h1>
+<p>self.logger.log_task(content=self.task, ..., level=LogLevel.INFO) </p>
+<h1><a class="anchor" id="autotoc_md3211"></a>
 ... call _run ...</h1>
 <p>def _execute_step(self, task: str, memory_step: ActionStep): self.logger.log_rule(f"Step {self.step_number}", level=LogLevel.INFO) try: </p>
-<h1><a class="anchor" id="autotoc_md3211"></a>
-... (Think phase: LLM call) ...</h1>
 <h1><a class="anchor" id="autotoc_md3212"></a>
-... (Act phase: Execute tool/code) ...</h1>
+... (Think phase: LLM call) ...</h1>
 <h1><a class="anchor" id="autotoc_md3213"></a>
-Example for CodeAgent:</h1>
+... (Act phase: Execute tool/code) ...</h1>
 <h1><a class="anchor" id="autotoc_md3214"></a>
-self.logger.log_code("Executing code:", code_action, level=LogLevel.INFO)</h1>
+Example for CodeAgent:</h1>
 <h1><a class="anchor" id="autotoc_md3215"></a>
-observation = self.python_executor(code_action)</h1>
+self.logger.log_code("Executing code:", code_action, level=LogLevel.INFO)</h1>
 <h1><a class="anchor" id="autotoc_md3216"></a>
-Example for ToolCallingAgent:</h1>
+observation = self.python_executor(code_action)</h1>
 <h1><a class="anchor" id="autotoc_md3217"></a>
-self.logger.log(Panel(f"Calling tool: '{tool_name}' ..."), level=LogLevel.INFO)</h1>
+Example for ToolCallingAgent:</h1>
 <h1><a class="anchor" id="autotoc_md3218"></a>
-observation = self.execute_tool_call(tool_name, arguments)</h1>
+self.logger.log(Panel(f"Calling tool: '{tool_name}' ..."), level=LogLevel.INFO)</h1>
 <h1><a class="anchor" id="autotoc_md3219"></a>
+observation = self.execute_tool_call(tool_name, arguments)</h1>
+<h1><a class="anchor" id="autotoc_md3220"></a>
 ... (Observe phase) ...</h1>
 <p>self.logger.log(f"Observations: {observation}", level=LogLevel.INFO)</p>
-<h1><a class="anchor" id="autotoc_md3220"></a>
-... (Handle final answer) ...</h1>
 <h1><a class="anchor" id="autotoc_md3221"></a>
-if final_answer:</h1>
+... (Handle final answer) ...</h1>
 <h1><a class="anchor" id="autotoc_md3222"></a>
+if final_answer:</h1>
+<h1><a class="anchor" id="autotoc_md3223"></a>
 self.logger.log(f"Final answer: {final_answer}", style=f"bold {YELLOW_HEX}", level=LogLevel.INFO)</h1>
 <p>except AgentError as e: </p>
-<h1><a class="anchor" id="autotoc_md3223"></a>
+<h1><a class="anchor" id="autotoc_md3224"></a>
 Log errors using the logger's error method</h1>
 <p>action_step.error = e # Store error in memory self.logger.log_error(f"Error in step {self.step_number}: {e}") # Display error</p>
-<h1><a class="anchor" id="autotoc_md3224"></a>
+<h1><a class="anchor" id="autotoc_md3225"></a>
 ...</h1>
 <p>```</p>
-<h2><a class="anchor" id="autotoc_md3225"></a>
+<h2><a class="anchor" id="autotoc_md3226"></a>
 <code>Monitor</code>: Your Performance Black Box</h2>
 <p>While the <code>AgentLogger</code> shows you <em>what</em> the agent is doing, the <code>Monitor</code> tracks <em>how well</em> it's doing it in terms of performance.</p>
 <p><b>How It's Used (Automatic!)</b></p>
@@ -336,29 +336,29 @@ Log errors using the logger's error method</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3226"></a>
+<h1><a class="anchor" id="autotoc_md3227"></a>
 &mdash; File: monitoring.py (Simplified Monitor) &mdash;</h1>
 <p>from .memory import ActionStep # Needs access to step data from .models import Model # Needs access to model token counts from .monitoring import AgentLogger, LogLevel # Uses the logger to print</p>
 <p>class Monitor: def <b>init</b>(self, tracked_model: Model, logger: AgentLogger): self.step_durations = [] self.tracked_model = tracked_model # Reference to the agent's model self.logger = logger # Uses the logger to output metrics self.total_input_token_count = 0 self.total_output_token_count = 0 </p>
-<h1><a class="anchor" id="autotoc_md3227"></a>
+<h1><a class="anchor" id="autotoc_md3228"></a>
 ... potentially other metrics ...</h1>
 <p>def reset(self): """Resets metrics for a new run.""" self.step_durations = [] self.total_input_token_count = 0 self.total_output_token_count = 0</p>
 <p>def update_metrics(self, step_log: ActionStep): """Callback function called after each step.""" </p>
-<h1><a class="anchor" id="autotoc_md3228"></a>
+<h1><a class="anchor" id="autotoc_md3229"></a>
 1. Get duration from the step log</h1>
 <p>step_duration = step_log.duration self.step_durations.append(step_duration)</p>
 <p>console_outputs = f"[Step {len(self.step_durations)}: Duration {step_duration:.2f} seconds"</p>
-<h1><a class="anchor" id="autotoc_md3229"></a>
+<h1><a class="anchor" id="autotoc_md3230"></a>
 2. Get token counts from the model (if available)</h1>
 <p>input_tokens = getattr(self.tracked_model, "last_input_token_count", None) output_tokens = getattr(self.tracked_model, "last_output_token_count", None)</p>
 <p>if input_tokens is not None and output_tokens is not None: self.total_input_token_count += input_tokens self.total_output_token_count += output_tokens </p>
-<h1><a class="anchor" id="autotoc_md3230"></a>
+<h1><a class="anchor" id="autotoc_md3231"></a>
 4. Format metrics string</h1>
 <p>console_outputs += ( f"| Input tokens: {self.total_input_token_count:,}" f" | Output tokens: {self.total_output_token_count:,}" ) console_outputs += "]"</p>
-<h1><a class="anchor" id="autotoc_md3231"></a>
+<h1><a class="anchor" id="autotoc_md3232"></a>
 5. Log metrics using the logger (at DEBUG level)</h1>
 <p>self.logger.log(console_outputs, level=LogLevel.DEBUG) # Note: logs at DEBUG</p>
-<h1><a class="anchor" id="autotoc_md3232"></a>
+<h1><a class="anchor" id="autotoc_md3233"></a>
 ... methods to get totals, averages etc. ...</h1>
 <p>```</p>
 <ul>
@@ -366,35 +366,35 @@ Log errors using the logger's error method</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3233"></a>
+<h1><a class="anchor" id="autotoc_md3234"></a>
 &mdash; File: agents.py (Simplified Agent setup for Monitor) &mdash;</h1>
 <p>from .monitoring import Monitor from .memory import ActionStep</p>
 <p>class MultiStepAgent: def <b>init</b>(self, ..., model: Model, step_callbacks: Optional[List[Callable]] = None): </p>
-<h1><a class="anchor" id="autotoc_md3234"></a>
+<h1><a class="anchor" id="autotoc_md3235"></a>
 ... setup logger ...</h1>
 <p>self.model = model # Store the model self.monitor = Monitor(self.model, self.logger) # Create Monitor</p>
-<h1><a class="anchor" id="autotoc_md3235"></a>
+<h1><a class="anchor" id="autotoc_md3236"></a>
 Add monitor's update method to callbacks</h1>
 <p>self.step_callbacks = step_callbacks if step_callbacks is not None else [] self.step_callbacks.append(self.monitor.update_metrics) </p>
-<h1><a class="anchor" id="autotoc_md3236"></a>
+<h1><a class="anchor" id="autotoc_md3237"></a>
 ...</h1>
 <p>def _finalize_step(self, memory_step: ActionStep, step_start_time: float): """Called at the very end of each step.""" memory_step.end_time = time.time() memory_step.duration = memory_step.end_time - step_start_time</p>
-<h1><a class="anchor" id="autotoc_md3237"></a>
+<h1><a class="anchor" id="autotoc_md3238"></a>
 Call all registered callbacks, including monitor.update_metrics</h1>
 <p>for callback in self.step_callbacks: </p>
-<h1><a class="anchor" id="autotoc_md3238"></a>
+<h1><a class="anchor" id="autotoc_md3239"></a>
 Pass the completed step data to the callback</h1>
 <p>callback(memory_step) </p>
-<h1><a class="anchor" id="autotoc_md3239"></a>
-...</h1>
-<p>def run(self, ..., reset: bool = True): </p>
 <h1><a class="anchor" id="autotoc_md3240"></a>
 ...</h1>
-<p>if reset: self.memory.reset() self.monitor.reset() # Reset monitor metrics on new run </p>
+<p>def run(self, ..., reset: bool = True): </p>
 <h1><a class="anchor" id="autotoc_md3241"></a>
 ...</h1>
+<p>if reset: self.memory.reset() self.monitor.reset() # Reset monitor metrics on new run </p>
+<h1><a class="anchor" id="autotoc_md3242"></a>
+...</h1>
 <p>```</p>
-<h2><a class="anchor" id="autotoc_md3242"></a>
+<h2><a class="anchor" id="autotoc_md3243"></a>
 Conclusion</h2>
 <p>The <code>AgentLogger</code> and <code>Monitor</code> are your essential tools for observing and understanding your <code>SmolaAgents</code>.</p>
 <ul>

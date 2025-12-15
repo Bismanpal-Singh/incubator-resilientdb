@@ -121,17 +121,17 @@ $(function(){initNavTree('db/de6/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_memory</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1555"></a>
-autotoc_md1555</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1556"></a>
+autotoc_md1556</h2>
 <p>layout: default title: "Memory" parent: "CrewAI" </p>
-<h2><a class="anchor" id="autotoc_md1556"></a>
+<h2><a class="anchor" id="autotoc_md1557"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md1557"></a>
+<h1><a class="anchor" id="autotoc_md1558"></a>
 Chapter 7: Memory - Giving Your Crew Recall</h1>
 <p>In the <a class="el" href="../../da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_206__llm.html">previous chapter</a>, we looked at the Large Language Model (<a class="el" href="../../da/d0f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_206__llm.html">LLM</a>) – the "brain" that allows each <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a> to understand, reason, and generate text. Now we have agents that can think, perform <a class="el" href="../../d1/dae/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_203__task.html">Task</a>s using <a class="el" href="../../d0/dbf/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_204__tool.html">Tool</a>s, and follow a <a class="el" href="../../de/d7d/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_205__process.html">Process</a>.</p>
 <p>But imagine a team working on a complex project over several days. What if every morning, they completely forgot everything they discussed and learned the previous day? They'd waste a lot of time repeating work and asking the same questions. By default, AI agents often behave like this – they only remember the immediate conversation.</p>
 <p>How can we give our CrewAI team the ability to remember past information? That's where <b>Memory</b> comes in!</p>
-<h2><a class="anchor" id="autotoc_md1558"></a>
+<h2><a class="anchor" id="autotoc_md1559"></a>
 Why Do We Need Memory?</h2>
 <p>AI Agents, especially when working together in a <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a>, often need to build upon previous interactions or knowledge gained during their work. Without memory:</p>
 <ul>
@@ -141,7 +141,7 @@ Why Do We Need Memory?</h2>
 <li>Tracking specific details about key people, places, or concepts mentioned during the process becomes difficult.</li>
 </ul>
 <p><b>Problem Solved:</b> Memory provides <a class="el" href="../../d2/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_202__agent.html">Agent</a>s and the <a class="el" href="../../d4/d90/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2CrewAI_201__crew.html">Crew</a> with the ability to store and recall past interactions, information, and insights. It's like giving your AI team shared notes, a collective memory, or institutional knowledge.</p>
-<h2><a class="anchor" id="autotoc_md1559"></a>
+<h2><a class="anchor" id="autotoc_md1560"></a>
 What is Memory in CrewAI?</h2>
 <p>Think of Memory as the <b>storage system</b> for your Crew's experiences and knowledge. It allows the Crew to persist information beyond a single interaction or task execution. CrewAI implements different kinds of memory to handle different needs:</p>
 <ol type="1">
@@ -164,7 +164,7 @@ What is Memory in CrewAI?</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1560"></a>
+<h2><a class="anchor" id="autotoc_md1561"></a>
 How Does Memory Help?</h2>
 <p>Using memory makes your Crew more effective:</p>
 <ul>
@@ -174,7 +174,7 @@ How Does Memory Help?</h2>
 <li><b>Consistency (Entity):</b> Keeps track of important details about recurring topics or entities.</li>
 <li><b>Shared Understanding:</b> Helps create a common ground of knowledge for all agents in the Crew.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1561"></a>
+<h2><a class="anchor" id="autotoc_md1562"></a>
 Using Memory in Your Crew</h2>
 <p>The simplest way to start using memory is by enabling it when you define your <code>Crew</code>. Setting <code>memory=True</code> activates the core memory components (ShortTerm and Entity Memory) for context building within a run.</p>
 <p>Let's add memory to our trip planning <code>Crew</code>:</p>
@@ -213,7 +213,7 @@ Using Memory in Your Crew</h2>
 <li><b>LongTermMemory:</b> While <code>memory=True</code> sets up the <em>potential</em> for LTM, actively using it to learn across multiple runs often requires additional steps like task evaluation or explicit saving mechanisms, which are more advanced topics beyond this basic introduction. For now, focus on the benefits of STM and Entity Memory for within-run context.</li>
 </ul>
 <p>By just adding <code>memory=True</code>, your agents automatically get better at remembering what's going on <em>within the current job</em>.</p>
-<h2><a class="anchor" id="autotoc_md1562"></a>
+<h2><a class="anchor" id="autotoc_md1563"></a>
 How Memory Works Internally (Simplified)</h2>
 <p>So, what happens "under the hood" when <code>memory=True</code> and an agent starts a task?</p>
 <ol type="1">
@@ -259,13 +259,13 @@ How Memory Works Internally (Simplified)</h2>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1563"></a>
+<h1><a class="anchor" id="autotoc_md1564"></a>
 Simplified from crewai/crew.py</h1>
 <p>class Crew(BaseModel): memory: bool = Field(default=False, ...) _short_term_memory: Optional[InstanceOf[ShortTermMemory]] = PrivateAttr() _long_term_memory: Optional[InstanceOf[LongTermMemory]] = PrivateAttr() _entity_memory: Optional[InstanceOf[EntityMemory]] = PrivateAttr() </p>
-<h1><a class="anchor" id="autotoc_md1564"></a>
+<h1><a class="anchor" id="autotoc_md1565"></a>
 ... other fields ...</h1>
 <p>@model_validator(mode="after") def create_crew_memory(self) -&gt; "Crew": if self.memory: </p>
-<h1><a class="anchor" id="autotoc_md1565"></a>
+<h1><a class="anchor" id="autotoc_md1566"></a>
 Simplified: Initializes memory objects if memory=True</h1>
 <p>self._long_term_memory = LongTermMemory(...) self._short_term_memory = ShortTermMemory(crew=self, ...) self._entity_memory = EntityMemory(crew=self, ...) return self ```</p>
 <ul>
@@ -273,30 +273,30 @@ Simplified: Initializes memory objects if memory=True</h1>
 <p class="startli">```python </p>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1566"></a>
+<h1><a class="anchor" id="autotoc_md1567"></a>
 Simplified from crewai/memory/contextual/contextual_memory.py</h1>
 <p>class ContextualMemory: def <b>init</b>(self, stm: ShortTermMemory, ltm: LongTermMemory, em: EntityMemory, ...): self.stm = stm self.ltm = ltm self.em = em </p>
-<h1><a class="anchor" id="autotoc_md1567"></a>
+<h1><a class="anchor" id="autotoc_md1568"></a>
 ...</h1>
 <p>def build_context_for_task(self, task, context) -&gt; str: query = f"{task.description} {context}".strip() if not query: return ""</p>
 <p>memory_context = [] </p>
-<h1><a class="anchor" id="autotoc_md1568"></a>
+<h1><a class="anchor" id="autotoc_md1569"></a>
 Fetch relevant info from Short Term Memory</h1>
 <p>memory_context.append(self._fetch_stm_context(query)) </p>
-<h1><a class="anchor" id="autotoc_md1569"></a>
+<h1><a class="anchor" id="autotoc_md1570"></a>
 Fetch relevant info from Entity Memory</h1>
 <p>memory_context.append(self._fetch_entity_context(query)) </p>
-<h1><a class="anchor" id="autotoc_md1570"></a>
-Fetch relevant info from Long Term Memory (if applicable)</h1>
 <h1><a class="anchor" id="autotoc_md1571"></a>
+Fetch relevant info from Long Term Memory (if applicable)</h1>
+<h1><a class="anchor" id="autotoc_md1572"></a>
 memory_context.append(self._fetch_ltm_context(task.description))</h1>
 <p>return "\n".join(filter(None, memory_context))</p>
 <p>def _fetch_stm_context(self, query) -&gt; str: stm_results = self.stm.search(query) </p>
-<h1><a class="anchor" id="autotoc_md1572"></a>
+<h1><a class="anchor" id="autotoc_md1573"></a>
 ... format results ...</h1>
 <p>return formatted_results if stm_results else ""</p>
 <p>def _fetch_entity_context(self, query) -&gt; str: em_results = self.em.search(query) </p>
-<h1><a class="anchor" id="autotoc_md1573"></a>
+<h1><a class="anchor" id="autotoc_md1574"></a>
 ... format results ...</h1>
 <p>return formatted_results if em_results else "" ```</p>
 <ul>
@@ -307,7 +307,7 @@ memory_context.append(self._fetch_ltm_context(task.description))</h1>
 </li>
 </ul>
 <p>The key idea is that <code>memory=True</code> sets up these storage systems and the <code>ContextualMemory</code> orchestrator, which automatically enriches agent prompts with relevant remembered information.</p>
-<h2><a class="anchor" id="autotoc_md1574"></a>
+<h2><a class="anchor" id="autotoc_md1575"></a>
 Conclusion</h2>
 <p>You've learned about the crucial concept of <b>Memory</b> in CrewAI! Memory gives your agents the ability to recall past information, preventing them from being purely stateless. We explored the three main types:</p>
 <ul>

@@ -121,12 +121,12 @@ $(function(){initNavTree('dd/d67/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_beat__scheduler_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1082"></a>
-autotoc_md1082</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1083"></a>
+autotoc_md1083</h2>
 <p>layout: default title: "Beat (Scheduler)" parent: "Celery" </p>
-<h2><a class="anchor" id="autotoc_md1083"></a>
+<h2><a class="anchor" id="autotoc_md1084"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md1084"></a>
+<h1><a class="anchor" id="autotoc_md1085"></a>
 Chapter 7: Beat (Scheduler) - Celery's Alarm Clock</h1>
 <p>In the last chapter, <a class="el" href="../../d3/d55/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_206__result__backend.html">Chapter 6: Result Backend</a>, we learned how to track the status and retrieve the results of our background tasks. This is great when we manually trigger tasks from our application. But what if we want tasks to run automatically, without us needing to press a button every time?</p>
 <p>Maybe you need to:</p><ul>
@@ -135,7 +135,7 @@ Chapter 7: Beat (Scheduler) - Celery's Alarm Clock</h1>
 <li>Check the health of your external services every 5 minutes.</li>
 </ul>
 <p>How can you make Celery do these things on a regular schedule? Meet <b>Celery Beat</b>.</p>
-<h2><a class="anchor" id="autotoc_md1085"></a>
+<h2><a class="anchor" id="autotoc_md1086"></a>
 What Problem Does Beat Solve?</h2>
 <p>Imagine you have a task, say <code>send_daily_report()</code>, that needs to run every morning at 8:00 AM. How would you achieve this? You could try setting up a system <code>cron</code> job to call a Python script that sends the Celery task, but that adds another layer of complexity.</p>
 <p>Celery provides its own built-in solution: <b>Beat</b>.</p>
@@ -147,7 +147,7 @@ What Problem Does Beat Solve?</h2>
 <li>A regular Celery <a class="el" href="../../dc/d91/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_205__worker.html">Worker</a> then picks up the task from the broker and executes it.</li>
 </ol>
 <p>Beat doesn't run the tasks itself; it just <em>schedules</em> them by sending the messages at the right time.</p>
-<h2><a class="anchor" id="autotoc_md1086"></a>
+<h2><a class="anchor" id="autotoc_md1087"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b>Beat Process:</b> A separate Celery program you run (like <code>celery -A your_app beat</code>). It needs access to your Celery app's configuration.</li>
@@ -155,7 +155,7 @@ Key Concepts</h2>
 <li><b>Schedule Storage:</b> Beat needs to remember when each task was last run so it knows when it's due again. By default, it saves this information to a local file named <code>celerybeat-schedule</code> (using Python's <code>shelve</code> module).</li>
 <li><b>Ticker:</b> The heart of Beat. It's an internal loop that wakes up periodically, checks the schedule against the current time, and sends messages for any due tasks.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1087"></a>
+<h2><a class="anchor" id="autotoc_md1088"></a>
 How to Use Beat</h2>
 <p>Let's schedule two tasks:</p><ul>
 <li>Our <code>add</code> task from <a class="el" href="../../d5/db8/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Celery_203__task.html">Chapter 3: Task</a> to run every 15 seconds.</li>
@@ -298,7 +298,7 @@ How to Use Beat</h2>
 <div class="line">[2023-10-27 11:01:05,100: INFO/MainProcess] Task tasks.send_report[task-id-2] succeeded in 5.10s: &quot;Report daily-summary sent.&quot;</div>
 <div class="line">... and so on ...</div>
 </div><!-- fragment --><p>You have successfully set up scheduled tasks!</p>
-<h2><a class="anchor" id="autotoc_md1088"></a>
+<h2><a class="anchor" id="autotoc_md1089"></a>
 How It Works Internally (Simplified)</h2>
 <ol type="1">
 <li><b>Startup:</b> You run <code>celery -A celery_app beat</code>. The Beat process starts.</li>
@@ -341,7 +341,7 @@ How It Works Internally (Simplified)</h2>
 <div class="line">    Broker--&gt;&gt;Worker: Deliver message</div>
 <div class="line">    Worker-&gt;&gt;Worker: Execute task add(16, 16)</div>
 <div class="line">    Worker-&gt;&gt;Broker: Ack message complete</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1089"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1090"></a>
 Code Dive: Where Beat Lives</h2>
 <ul>
 <li><b>Command Line (<code>celery/bin/beat.py</code>):</b> Handles the <code>celery beat</code> command, parses arguments (<code>-A</code>, <code>-s</code>, <code>-S</code>, <code>--loglevel</code>), and creates/runs the <code>Beat</code> service object.</li>
@@ -394,7 +394,7 @@ Code Dive: Where Beat Lives</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># 4. Calculate minimum sleep time until next event</span></div>
 <div class="line">    <span class="keywordflow">return</span> min(remaining_times + [self.max_interval])</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1090"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1091"></a>
 Conclusion</h2>
 <p>Celery Beat is your tool for automating task execution within the Celery ecosystem.</p>
 <ul>

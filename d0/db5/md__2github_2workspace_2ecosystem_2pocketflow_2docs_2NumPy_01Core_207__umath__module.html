@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/db5/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_umath_module</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2582"></a>
-autotoc_md2582</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2583"></a>
+autotoc_md2583</h2>
 <p>layout: default title: "Umath Module" parent: "NumPy Core" </p>
-<h2><a class="anchor" id="autotoc_md2583"></a>
+<h2><a class="anchor" id="autotoc_md2584"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2584"></a>
+<h1><a class="anchor" id="autotoc_md2585"></a>
 Chapter 7: umath Module</h1>
 <p>Welcome to Chapter 7! In <a class="el" href="../../db/d8b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_206__multiarray__module.html">Chapter 6: multiarray Module</a>, we explored the core C engine that defines the <code>ndarray</code> object and handles fundamental operations like creating arrays and accessing elements. We saw that the actual power comes from C code.</p>
 <p>But what about the mathematical operations themselves? When you perform <code>np.sin(my_array)</code> or <code>array1 + array2</code>, which part of the C engine handles the actual sine calculation or the addition for <em>every single element</em>? This is where the concept of the <code>umath</code> module comes in.</p>
-<h2><a class="anchor" id="autotoc_md2585"></a>
+<h2><a class="anchor" id="autotoc_md2586"></a>
 What Problem Does <code>umath</code> Solve? Implementing Fast Array Math</h2>
 <p>Remember the <a class="el" href="../../d6/def/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2NumPy_01Core_203__ufunc____universal__function__.html">ufunc (Universal Function)</a> from Chapter 3? Ufuncs are NumPy's special functions designed to operate element-wise on arrays with incredible speed (like <code>np.add</code>, <code>np.sin</code>, <code>np.log</code>).</p>
 <p>Let's take a simple example:</p>
@@ -146,7 +146,7 @@ What Problem Does <code>umath</code> Solve? Implementing Fast Array Math</h2>
 <div class="line">[0.0000000e+00 1.0000000e+00 1.2246468e-16] # Note: pi value is approximate</div>
 </div><!-- fragment --><p>The Python function <code>np.sin</code> acts as a dispatcher. It needs to hand off the actual, heavy-duty work of calculating the sine for each element in the <code>angles</code> array to highly optimized code. Where does this optimized code live?</p>
 <p>Historically, the C code responsible for implementing the <em>loops and logic</em> of these mathematical ufuncs (like addition, subtraction, sine, cosine, logarithm, etc.) was contained within a dedicated C extension module called <code>umath</code>. It provided the fast, element-by-element computational kernels.</p>
-<h2><a class="anchor" id="autotoc_md2586"></a>
+<h2><a class="anchor" id="autotoc_md2587"></a>
 What is the <code>umath</code> Module (Concept)?</h2>
 <p>The <code>umath</code> module represents the part of NumPy's C core dedicated to implementing <b>universal functions (ufuncs)</b>. Think of it as NumPy's built-in, highly optimized math library specifically designed for element-wise operations on arrays.</p>
 <p><b>Key Points:</b></p>
@@ -158,7 +158,7 @@ What is the <code>umath</code> Module (Concept)?</h2>
 <li><b>Python Access (<code>numpy/core/umath.py</code>):</b> You don't usually interact with the C code directly. Instead, NumPy provides Python functions (like <code>np.add</code>, <code>np.sin</code>) in the Python file <code>numpy/core/umath.py</code>. These Python functions are wrappers that know how to find and trigger the correct C implementation within the <code>_multiarray_umath</code> extension module.</li>
 </ol>
 <p><b>Analogy:</b> Imagine <code>multiarray</code> builds the car chassis and engine block (<code>ndarray</code> structure). <code>umath</code> provides specialized, high-performance engine components like the fuel injectors for addition (<code>np.add</code>'s C code), the turbocharger for exponentiation (<code>np.exp</code>'s C code), and the precise valve timing for trigonometry (<code>np.sin</code>'s C code). The Python functions (<code>np.add</code>, <code>np.sin</code>) are the pedals and buttons you use to activate these components.</p>
-<h2><a class="anchor" id="autotoc_md2587"></a>
+<h2><a class="anchor" id="autotoc_md2588"></a>
 How it Works (Usage Perspective)</h2>
 <p>As a NumPy user, you typically trigger the <code>umath</code> C code indirectly by calling a ufunc:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
@@ -178,7 +178,7 @@ How it Works (Usage Perspective)</h2>
 <div class="fragment"><div class="line">Using np.add: [11 22 33]</div>
 <div class="line">Using + operator: [11 22 33]</div>
 </div><!-- fragment --><p>Both <code>np.add(a, b)</code> and <code>a + b</code> ultimately lead to NumPy executing the highly optimized C code associated with the addition ufunc, which conceptually belongs to the <code>umath</code> part of the core.</p>
-<h2><a class="anchor" id="autotoc_md2588"></a>
+<h2><a class="anchor" id="autotoc_md2589"></a>
 A Glimpse Under the Hood</h2>
 <p>When you call a ufunc like <code>np.add(a, b)</code>:</p>
 <ol type="1">
@@ -213,22 +213,22 @@ A Glimpse Under the Hood</h2>
 </div><!-- fragment --><p><b>Where is the Code?</b></p>
 <ul>
 <li><b>C Extension Module:</b> The compiled code lives in <code>_multiarray_umath.so</code> / <code>.pyd</code>.</li>
-<li><b>Ufunc Definition &amp; Generation:</b> The script <code>numpy/core/code_generators/generate_umath.py</code> is crucial. It contains definitions (like the <code>defdict</code> dictionary) that describe each ufunc: its name, number of inputs/outputs, identity element, the C functions to use for different type combinations (<code>TD</code> entries), and associated docstrings. This script generates C code (<code>__umath_generated.c</code>, which is then compiled) that sets up the ufunc objects and their internal loop tables. <code>python @section autotoc_md2589 Simplified snippet from generate_umath.py's defdict for 'add' 'add': Ufunc(2, 1, Zero, # nin=2, nout=1, identity=0 docstrings.get('numpy._core.umath.add'), # Docstring reference 'PyUFunc_AdditionTypeResolver', # Type resolution logic TD('?', ...), # Loop for booleans TD(no_bool_times_obj, dispatch=[...]), # Loops for numeric types @section autotoc_md2590 ... loops for datetime, object ... ), </code> This definition tells the generator how to build the <code>np.add</code> ufunc, including which C functions (often defined in other C files or generated from templates) handle addition for different data types.</li>
+<li><b>Ufunc Definition &amp; Generation:</b> The script <code>numpy/core/code_generators/generate_umath.py</code> is crucial. It contains definitions (like the <code>defdict</code> dictionary) that describe each ufunc: its name, number of inputs/outputs, identity element, the C functions to use for different type combinations (<code>TD</code> entries), and associated docstrings. This script generates C code (<code>__umath_generated.c</code>, which is then compiled) that sets up the ufunc objects and their internal loop tables. <code>python @section autotoc_md2590 Simplified snippet from generate_umath.py's defdict for 'add' 'add': Ufunc(2, 1, Zero, # nin=2, nout=1, identity=0 docstrings.get('numpy._core.umath.add'), # Docstring reference 'PyUFunc_AdditionTypeResolver', # Type resolution logic TD('?', ...), # Loop for booleans TD(no_bool_times_obj, dispatch=[...]), # Loops for numeric types @section autotoc_md2591 ... loops for datetime, object ... ), </code> This definition tells the generator how to build the <code>np.add</code> ufunc, including which C functions (often defined in other C files or generated from templates) handle addition for different data types.</li>
 <li><b>C Loop Implementations:</b> The actual C code performing the math often comes from template files (like <code>numpy/core/src/umath/loops.c.src</code>) or CPU-dispatch-specific files (like <code>numpy/core/src/umath/loops_arithm_fp.dispatch.c.src</code>). These <code>.src</code> files contain templates written in a C-like syntax that get processed to generate specific C code for various data types (e.g., generating <code>int32_add</code>, <code>int64_add</code>, <code>float32_add</code>, <code>float64_add</code> from a single addition template). The dispatch files allow NumPy to choose optimized code paths (using e.g., AVX2, AVX512 instructions) based on your CPU's capabilities at runtime.</li>
 <li><b>Python Wrappers:</b> <code>numpy/core/umath.py</code> provides the Python functions like <code>np.add</code>, <code>np.sin</code> that you call. It primarily imports these functions directly from the <code>_multiarray_umath</code> C extension module. ``&lsquo;python </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2591"></a>
+<h1><a class="anchor" id="autotoc_md2592"></a>
 From numpy/core/umath.py - Simplified</h1>
 <p>from . import _multiarray_umath from ._multiarray_umath import * # Imports C-defined ufuncs like 'add&rsquo;</p>
-<h1><a class="anchor" id="autotoc_md2592"></a>
-Functions like 'add', 'sin', 'log' are now available in this module's</h1>
 <h1><a class="anchor" id="autotoc_md2593"></a>
+Functions like 'add', 'sin', 'log' are now available in this module's</h1>
+<h1><a class="anchor" id="autotoc_md2594"></a>
 namespace, ready to be used via <code>np.add</code>, <code>np.sin</code>, etc.</h1>
 <p>``<code></p><ul>
 <li>**Namespace Setup:**</li>
 </ul>
 <p></code>numpy/core/__init__.py<code>imports from</code>numpy.core.umath&lt;tt&gt;(among others) to make functions likenp.add<code>easily accessible under the main</code>np` namespace.</p>
-<h2><a class="anchor" id="autotoc_md2594"></a>
+<h2><a class="anchor" id="autotoc_md2595"></a>
 Conclusion</h2>
 <p>You've now seen that the <code>umath</code> concept represents the implementation heart of NumPy's universal functions.</p>
 <ul>

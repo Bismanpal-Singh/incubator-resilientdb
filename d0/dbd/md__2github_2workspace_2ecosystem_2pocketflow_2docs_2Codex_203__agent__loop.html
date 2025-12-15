@@ -121,16 +121,16 @@ $(function(){initNavTree('d0/dbd/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">03_agent_loop</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1298"></a>
-autotoc_md1298</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1299"></a>
+autotoc_md1299</h2>
 <p>layout: default title: "Agent Loop" parent: "Codex" </p>
-<h2><a class="anchor" id="autotoc_md1299"></a>
+<h2><a class="anchor" id="autotoc_md1300"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md1300"></a>
+<h1><a class="anchor" id="autotoc_md1301"></a>
 Chapter 3: Agent Loop</h1>
 <p>In the <a class="el" href="../../d3/dac/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_202__input__handling____textbuffer__editor__.html">previous chapter</a>, we saw how Codex captures your commands and messages using a neat multi-line input editor. But once you hit Enter, where does that input <em>go</em>? What part of Codex actually understands your request, talks to the AI, and makes things happen?</p>
 <p>Meet the <b>Agent Loop</b>, the heart and brain of the Codex CLI.</p>
-<h2><a class="anchor" id="autotoc_md1301"></a>
+<h2><a class="anchor" id="autotoc_md1302"></a>
 What's the Big Idea? Like a Helpful Assistant</h2>
 <p>Imagine you have a very capable personal assistant. You give them a task, like "Find the latest sales report, summarize it, and email it to the team." Your assistant doesn't just magically do it all at once. They follow a process:</p>
 <ol type="1">
@@ -166,7 +166,7 @@ What's the Big Idea? Like a Helpful Assistant</h2>
 <li>Updating the conversation history with everything that happened.</li>
 </ol>
 <p>It's called a "loop" because it often goes back and forth between you, the AI, and tools (like the command line) until your request is fully handled.</p>
-<h2><a class="anchor" id="autotoc_md1302"></a>
+<h2><a class="anchor" id="autotoc_md1303"></a>
 How It Works: The Conversation Cycle</h2>
 <p>The Agent Loop orchestrates a cycle:</p>
 <div class="fragment"><div class="line">graph TD</div>
@@ -204,7 +204,7 @@ How It Works: The Conversation Cycle</h2>
 <li><b>Update State:</b> Adds the AI's message and any tool results to the conversation history. Shows updates in the UI.</li>
 <li><b>Loop:</b> If the task isn't finished (e.g., because a tool was used and the AI needs to react to the result), it sends the updated conversation back to the AI (Step 2). If the task <em>is</em> finished, it waits for your next input.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1303"></a>
+<h2><a class="anchor" id="autotoc_md1304"></a>
 Using the Agent Loop (From the UI's Perspective)</h2>
 <p>You don't directly interact with the <code>AgentLoop</code> class code when <em>using</em> Codex. Instead, the main UI component (<code>TerminalChat</code> in <code>terminal-chat.tsx</code>) creates and manages an <code>AgentLoop</code> instance.</p>
 <p>Think of the UI component holding the "remote control" for the Agent Loop assistant.</p>
@@ -272,7 +272,7 @@ Using the Agent Loop (From the UI's Perspective)</h2>
 <li><b>Updates:</b> The Agent Loop does its work, calling the <code>onItem</code> and <code>onLoading</code> callbacks whenever something changes. The UI listens to these callbacks and updates the display accordingly (setting state variables like <code>items</code> and <code>loading</code>, which causes React to re-render).</li>
 <li><b>Confirmation:</b> If the Agent Loop needs approval, it calls <code>getCommandConfirmation</code>. The UI pauses, shows the command review prompt, waits for your decision, and then returns the decision back to the Agent Loop, which then proceeds or stops based on your choice.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1304"></a>
+<h2><a class="anchor" id="autotoc_md1305"></a>
 Under the Hood: A Step-by-Step Flow</h2>
 <p>Let's trace our "hello world" example again, focusing on the interactions:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -306,7 +306,7 @@ Under the Hood: A Step-by-Step Flow</h2>
 <div class="line">    AgentLoop-&gt;&gt;AgentLoop: Sets loading=false (calls `onLoading(false)`)</div>
 <div class="line">    InkUI-&gt;&gt;User: Hides loading indicator, shows input prompt</div>
 </div><!-- fragment --><p>This diagram shows the back-and-forth orchestration performed by the Agent Loop, coordinating between the UI, the AI model, and the command execution system.</p>
-<h2><a class="anchor" id="autotoc_md1305"></a>
+<h2><a class="anchor" id="autotoc_md1306"></a>
 Inside <code>agent-loop.ts</code></h2>
 <p>The core logic lives in <code>codex-cli/src/utils/agent/agent-loop.ts</code>. Let's peek at a <em>very</em> simplified structure:</p>
 <div class="fragment"><div class="line">// File: codex-cli/src/utils/agent/agent-loop.ts (Simplified)</div>
@@ -439,7 +439,7 @@ Inside <code>agent-loop.ts</code></h2>
 <li><b>Finally:</b> Once the <code>while</code> loop finishes (meaning the AI didn't request any more tools in its last response), it signals loading is done (<code>onLoading(false)</code>).</li>
 </ul>
 <p>This loop ensures that the conversation flows logically, handling text, tool requests, user approvals, and tool results in a structured way.</p>
-<h2><a class="anchor" id="autotoc_md1306"></a>
+<h2><a class="anchor" id="autotoc_md1307"></a>
 Conclusion</h2>
 <p>The Agent Loop is the central orchestrator within Codex. It acts like a diligent assistant, taking your requests, interacting with the powerful AI model, managing tools like shell commands, ensuring safety through approvals, and keeping the conversation state updated. It connects the <a class="el" href="../../dd/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_201__terminal__ui____ink__components__.html">Terminal UI</a> where you interact, the <a class="el" href="../../d3/dac/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_202__input__handling____textbuffer__editor__.html">Input Handling</a> that captures your text, the AI model that provides intelligence, and the systems that actually execute actions (<a class="el" href="../../dd/deb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Codex_206__command__execution______sandboxing.html">Command Execution &amp; Sandboxing</a>).</p>
 <p>Understanding the Agent Loop helps you see how Codex manages the complex back-and-forth required to turn your natural language requests into concrete actions. But when the Agent Loop wants to run a command suggested by the AI, how does Codex decide whether to ask for your permission first? That crucial safety mechanism is the topic of our next chapter.</p>

@@ -121,17 +121,17 @@ $(function(){initNavTree('dd/db1/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">09_communication_transports__stdio__sse__websocket__memory_</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2490"></a>
-autotoc_md2490</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2491"></a>
+autotoc_md2491</h2>
 <p>layout: default title: "Communication Transports" parent: "MCP Python SDK" </p>
-<h2><a class="anchor" id="autotoc_md2491"></a>
+<h2><a class="anchor" id="autotoc_md2492"></a>
 nav_order: 9</h2>
-<h1><a class="anchor" id="autotoc_md2492"></a>
+<h1><a class="anchor" id="autotoc_md2493"></a>
 Chapter 9: Communication Transports (Stdio, SSE, WebSocket, Memory)</h1>
 <p>Welcome to the final chapter of our introductory journey into the <code>MCP Python SDK</code>! In <a class="el" href="../../da/d7b/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_208__client__server__sesd1331743b9f6969725fa6462195d377b.html">Chapter 8: Client/Server Sessions (<code>ClientSession</code>, <code>ServerSession</code>)</a>, we learned how <code>Session</code> objects manage the ongoing conversation and state for a single connection between a client and a server, like dedicated phone operators handling a call.</p>
 <p>But how do the messages actually <em>travel</em> over that phone line? If the client and server are different programs, possibly on different computers, what's the physical wire or digital equivalent carrying the signals?</p>
 <p>Imagine our standardized MCP messages (<a class="el" href="../../de/dcd/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_207__mcp__protocol__types.html">Chapter 7: MCP Protocol Types</a>) are like perfectly formatted letters. We need a delivery service to actually move these letters between the sender and receiver. This is where <b>Communication Transports</b> come in.</p>
-<h2><a class="anchor" id="autotoc_md2493"></a>
+<h2><a class="anchor" id="autotoc_md2494"></a>
 What are Communication Transports? The Delivery Service</h2>
 <p>Communication Transports define the <b>actual mechanisms</b> used to send the serialized MCP messages (those structured JSON strings) back and forth between the client and server processes.</p>
 <p>Think of them as different <b>delivery services</b> you can choose from:</p>
@@ -158,7 +158,7 @@ What are Communication Transports? The Delivery Service</h2>
 </li>
 </ol>
 <p>These transports are the concrete implementations that bridge the gap between the abstract <code>Session</code> objects (which manage the <em>conversation</em>) and the physical reality of sending bytes (the <em>delivery</em>).</p>
-<h2><a class="anchor" id="autotoc_md2494"></a>
+<h2><a class="anchor" id="autotoc_md2495"></a>
 How Transports are Used (Often Indirectly)</h2>
 <p>The good news is that if you're using <code>FastMCP</code> (<a class="el" href="../../d8/d5c/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_202__fastmcp__server______fastmcp____.html">Chapter 2</a>) and the <code>mcp</code> command-line tool (<a class="el" href="../../d2/d9f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2MCP_01Python_01SDK_201__cli______mcp____command__.html">Chapter 1</a>), you often <b>don't need to worry about explicitly choosing or configuring the transport</b>. The tools handle it for common scenarios:</p>
 <ul>
@@ -167,7 +167,7 @@ How Transports are Used (Often Indirectly)</h2>
 <li><b><code>mcp install ...</code> (for Claude Desktop)</b>: This usually configures Claude to launch your server using <code>uv run ... mcp run your_server.py</code>, again defaulting to <b><code>stdio</code></b> communication between Claude and your server process.</li>
 </ul>
 <p>So, for many typical development and integration tasks, <code>stdio</code> is the default and works behind the scenes.</p>
-<h2><a class="anchor" id="autotoc_md2495"></a>
+<h2><a class="anchor" id="autotoc_md2496"></a>
 Using Transports Programmatically (A Glimpse)</h2>
 <p>While <code>mcp run</code> handles <code>stdio</code> automatically, what if you wanted to build a <em>custom</em> server application that listens over WebSockets? Or write tests using the <code>memory</code> transport? The SDK provides tools for this.</p>
 <p>You typically use an <code>async context manager</code> provided by the SDK for the specific transport. These managers handle setting up the communication channel and yield a pair of streams (<code>read_stream</code>, <code>write_stream</code>) that the <code>ClientSession</code> or <code>ServerSession</code> can use.</p>
@@ -280,7 +280,7 @@ Using Transports Programmatically (A Glimpse)</h2>
 <div class="line">            tg.cancel_scope.cancel()</div>
 <div class="line">        print(<span class="stringliteral">&quot;Test: Finished.&quot;</span>)</div>
 </div><!-- fragment --><p><b>Explanation:</b> <code>create_client_server_memory_streams()</code> creates pairs of connected in-memory queues. The server writes to <code>server_write</code>, which sends messages to <code>client_read</code>. The client writes to <code>client_write</code>, which sends messages to <code>server_read</code>. This allows direct, in-process communication for testing without actual pipes or network sockets.</p>
-<h2><a class="anchor" id="autotoc_md2496"></a>
+<h2><a class="anchor" id="autotoc_md2497"></a>
 How Transports Work Under the Hood (Stdio Example)</h2>
 <p>Let's focus on the simplest case: <code>stdio</code>. How does the <code>stdio_server</code> context manager actually work?</p>
 <ol type="1">
@@ -336,7 +336,7 @@ How Transports Work Under the Hood (Stdio Example)</h2>
 <div class="line">    ClientStdio-&gt;&gt;ClientStdio: Parse &amp; validate JSONRPCMessage</div>
 <div class="line">    ClientStdio-&gt;&gt;-ClientSess: Send message via read_stream_writer</div>
 </div><!-- fragment --><p>This shows how the transport layers (<code>ClientStdio</code>, <code>ServerStdio</code>) act as intermediaries, translating between the Session's memory streams and the actual process I/O pipes (<code>stdin</code>/<code>stdout</code>). The other transports (SSE, WebSocket, Memory) perform analogous translation tasks for their respective communication mechanisms.</p>
-<h2><a class="anchor" id="autotoc_md2497"></a>
+<h2><a class="anchor" id="autotoc_md2498"></a>
 Diving into the Code (Briefly!)</h2>
 <p>Let's look at the structure inside the transport files.</p>
 <p><b><code>server/stdio.py</code> (Simplified <code>stdio_server</code>)</b></p>
@@ -399,7 +399,7 @@ Diving into the Code (Briefly!)</h2>
 <div class="line">        <span class="keywordflow">yield</span> client_streams, server_streams</div>
 <div class="line">    <span class="comment"># Streams are automatically closed on exit</span></div>
 </div><!-- fragment --><p>These snippets illustrate the pattern: set up the external communication (or fake it with memory streams), create internal memory streams for the Session, start background tasks to bridge the two, and yield the internal streams.</p>
-<h2><a class="anchor" id="autotoc_md2498"></a>
+<h2><a class="anchor" id="autotoc_md2499"></a>
 Conclusion</h2>
 <p>Congratulations on reaching the end of this introductory series! You've learned about Communication Transports – the crucial delivery services that move MCP messages between clients and servers.</p>
 <ul>

@@ -121,16 +121,16 @@ $(function(){initNavTree('dd/d7e/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_request___response_models</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2920"></a>
-autotoc_md2920</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2921"></a>
+autotoc_md2921</h2>
 <p>layout: default title: "Request &amp; Response Models" parent: "Requests" </p>
-<h2><a class="anchor" id="autotoc_md2921"></a>
+<h2><a class="anchor" id="autotoc_md2922"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md2922"></a>
+<h1><a class="anchor" id="autotoc_md2923"></a>
 Chapter 2: What Happens When You Order? Request &amp; Response Models</h1>
 <p>In <a class="el" href="../../d8/da9/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Requests_201__functional__api.html">Chapter 1: The Simplest Way - The Functional API</a>, we saw how easy it is to fetch a webpage or send data using simple functions like <code>requests.get()</code> and <code>requests.post()</code>. We also noticed that these functions return something called a <code>Response</code> object.</p>
 <p>But what exactly <em>is</em> that <code>Response</code> object? And what happens behind the scenes when <code>requests</code> sends your request? Just like ordering food involves more than just shouting your order and getting a meal, web requests have structured steps and data carriers. Understanding these helps you use <code>requests</code> more effectively.</p>
-<h2><a class="anchor" id="autotoc_md2923"></a>
+<h2><a class="anchor" id="autotoc_md2924"></a>
 Why Models? The Need for Structure</h2>
 <p>Imagine ordering takeout again. You don't just tell the restaurant "food!"; you give them specific details: "One large pepperoni pizza, delivery to 123 Main St." The restaurant then prepares exactly that and delivers it back to you with a receipt.</p>
 <p>Web requests work similarly. You need to tell the server:</p><ul>
@@ -144,7 +144,7 @@ Why Models? The Need for Structure</h2>
 <li><em>The actual stuff</em> you asked for (the content, like HTML or JSON).</li>
 </ul>
 <p><code>Requests</code> uses special Python objects to hold all this information in an organized way. These are the <b>Request and Response Models</b>.</p>
-<h2><a class="anchor" id="autotoc_md2924"></a>
+<h2><a class="anchor" id="autotoc_md2925"></a>
 The Main Characters: Request, PreparedRequest, and Response</h2>
 <p>Think of the process like ordering at a restaurant:</p>
 <ol type="1">
@@ -162,7 +162,7 @@ The Main Characters: Request, PreparedRequest, and Response</h2>
 </li>
 </ol>
 <p>Most of the time, you'll interact primarily with the <code>Response</code> object. But knowing about <code>Request</code> and <code>PreparedRequest</code> helps understand what <code>requests</code> is doing for you.</p>
-<h2><a class="anchor" id="autotoc_md2925"></a>
+<h2><a class="anchor" id="autotoc_md2926"></a>
 Working with the <code>Response</code> Object</h2>
 <p>Let's revisit our <code>requests.get()</code> example from Chapter 1 and see what useful things are inside the <code>response</code> object we get back.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> requests</div>
@@ -215,7 +215,7 @@ Working with the <code>Response</code> Object</h2>
 <li><code> **</code>response.json()<code>**: A convenient method that tries to parse the</code>response.text` as JSON and returns a Python dictionary or list. It raises an error if the content isn't valid JSON.</li>
 </ol>
 <p>The <code>Response</code> object neatly packages all the server's reply information for you to use.</p>
-<h2><a class="anchor" id="autotoc_md2926"></a>
+<h2><a class="anchor" id="autotoc_md2927"></a>
 How It Works Internally: From Request to Response</h2>
 <p>When you call <code>requests.get(url)</code>, the following happens under the hood (simplified):</p>
 <ol type="1">
@@ -337,7 +337,7 @@ How It Works Internally: From Request to Response</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># ... other properties like .ok, .is_redirect, and methods like .raise_for_status() ...</span></div>
 </div><!-- fragment --><p>Understanding these models gives you a clearer picture of how <code>requests</code> turns your simple function call into a network operation and packages the result neatly for you.</p>
-<h2><a class="anchor" id="autotoc_md2927"></a>
+<h2><a class="anchor" id="autotoc_md2928"></a>
 Conclusion</h2>
 <p>You've learned about the core data carriers in <code>Requests</code>:</p><ul>
 <li><code>Request</code>: Your initial intent.</li>

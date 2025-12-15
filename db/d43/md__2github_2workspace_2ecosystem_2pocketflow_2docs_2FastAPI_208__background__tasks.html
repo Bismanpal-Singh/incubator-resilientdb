@@ -121,15 +121,15 @@ $(function(){initNavTree('db/d43/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">08_background_tasks</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1850"></a>
-autotoc_md1850</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1851"></a>
+autotoc_md1851</h2>
 <p>layout: default title: "Background Tasks" parent: "FastAPI" </p>
-<h2><a class="anchor" id="autotoc_md1851"></a>
+<h2><a class="anchor" id="autotoc_md1852"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md1852"></a>
+<h1><a class="anchor" id="autotoc_md1853"></a>
 Chapter 8: Background Tasks</h1>
 <p>Welcome back! In <a class="el" href="../../d9/d09/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2FastAPI_207__security__utilities.html">Chapter 7: Security Utilities</a>, we learned how to protect our API endpoints using FastAPI's security features. Now, let's explore how to perform actions <em>after</em> we've already sent a response back to the user.</p>
-<h2><a class="anchor" id="autotoc_md1853"></a>
+<h2><a class="anchor" id="autotoc_md1854"></a>
 What Problem Does This Solve?</h2>
 <p>Imagine a user registers on your website. When they submit their registration form, your API endpoint needs to:</p>
 <ol type="1">
@@ -141,7 +141,7 @@ What Problem Does This Solve?</h2>
 <p>Creating the user (step 1) is quick and essential before confirming success. But sending emails or notifications (steps 2 and 3) can sometimes be slow. Should the user have to wait several extra seconds just for the emails to be sent before they see the "Success!" message? Probably not! It would be much better if the API could send the "Success!" response immediately after creating the user, and then handle sending the emails <em>in the background</em>.</p>
 <p>This is exactly what <b>Background Tasks</b> allow you to do in FastAPI. They let you define operations that need to happen <em>after</em> the response has been sent to the client, ensuring your users get a fast response time for the main action.</p>
 <p><b>Analogy:</b> Think of your path operation function as having a conversation with the user (sending the response). Once the main conversation is finished, you might hand off a follow-up task (like mailing a letter) to an assistant to complete later, so you don't keep the user waiting. Background Tasks are like that helpful assistant.</p>
-<h2><a class="anchor" id="autotoc_md1854"></a>
+<h2><a class="anchor" id="autotoc_md1855"></a>
 Key Concepts</h2>
 <ol type="1">
 <li><b><code>BackgroundTasks</code> Object:</b> A special object provided by FastAPI that holds a list of tasks to be run later.</li>
@@ -149,7 +149,7 @@ Key Concepts</h2>
 <li><b><code>add_task()</code> Method:</b> You use the <code>add_task()</code> method on the <code>BackgroundTasks</code> object to schedule a function to run in the background. You provide the function itself and any arguments it needs. Example: <code>background_tasks.add_task(send_welcome_email, user.email, user.name)</code>.</li>
 <li><b>Post-Response Execution:</b> FastAPI (specifically, the underlying Starlette framework) ensures that all functions added via <code>add_task()</code> are executed <em>only after</em> the response has been successfully sent back to the client.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1855"></a>
+<h2><a class="anchor" id="autotoc_md1856"></a>
 Using Background Tasks</h2>
 <p>Let's create a simple example. Imagine we want to write a message to a log file <em>after</em> sending a notification response to the user.</p>
 <p><b>Step 1: Import <code>BackgroundTasks</code></b></p>
@@ -206,7 +206,7 @@ Using Background Tasks</h2>
 <li><b>Background Execution:</b> <em>After</em> the response above has been sent, look at your Uvicorn console output. You will see the message: <code> Log written: Notification sent to: test@example.com </code> Also, check your project directory. A file named <code>log.txt</code> will have been created (or appended to) with the content: <code> Notification sent to: test@example.com </code></li>
 </ol>
 <p>This demonstrates that the <code>write_log</code> function ran <em>after</em> the client received the success message, preventing any delay for the user.</p>
-<h2><a class="anchor" id="autotoc_md1856"></a>
+<h2><a class="anchor" id="autotoc_md1857"></a>
 How it Works Under the Hood (Simplified)</h2>
 <p>What's happening behind the scenes when you use <code>BackgroundTasks</code>?</p>
 <ol type="1">
@@ -242,7 +242,7 @@ How it Works Under the Hood (Simplified)</h2>
 <div class="line">    TaskFunc-&gt;&gt;TaskFunc: Write to log.txt</div>
 <div class="line">    TaskFunc--&gt;&gt;-BGExecutor: Task finished</div>
 <div class="line">    BGExecutor--&gt;&gt;-FastAPIApp: All tasks finished</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1857"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1858"></a>
 Code Connections</h3>
 <ul>
 <li><b><code>fastapi.BackgroundTasks</code></b>: This class (in <code>fastapi/background.py</code>) inherits directly from <code>starlette.background.BackgroundTasks</code>. It mostly just provides type hints and documentation specific to FastAPI.</li>
@@ -251,7 +251,7 @@ Code Connections</h3>
 <li><b><code>starlette.middleware.exceptions.ExceptionMiddleware</code> (and potentially others):</b> Starlette's middleware stack, particularly around exception handling and response sending, is responsible for checking if a <code>BackgroundTasks</code> object exists on the response object after the main endpoint code has run. If tasks exist, the middleware ensures they are executed <em>after</em> the response is sent using <code>anyio.create_task_group().start_soon()</code> or similar mechanisms. See <code>starlette.responses.Response.__call__</code>.</li>
 </ul>
 <p>Essentially, FastAPI provides a convenient way (via dependency injection) to access Starlette's background task functionality.</p>
-<h2><a class="anchor" id="autotoc_md1858"></a>
+<h2><a class="anchor" id="autotoc_md1859"></a>
 Conclusion</h2>
 <p>You've learned how to use FastAPI's <code>BackgroundTasks</code> to perform operations <em>after</em> sending a response to the client!</p>
 <ul>

@@ -1,5 +1,9 @@
 var NAVTREEINDEX8 =
 {
+"d7/d18/classresdb_1_1MessageManager.html#a403152c19643d50a4a01b8d951e51467":[1,0,2,33,7],
+"d7/d18/classresdb_1_1MessageManager.html#a432c9c62670ddc407e64bc711ec0cfdd":[0,0,16,37,9],
+"d7/d18/classresdb_1_1MessageManager.html#a432c9c62670ddc407e64bc711ec0cfdd":[1,0,2,33,9],
+"d7/d18/classresdb_1_1MessageManager.html#a4cf2194e60da0708bcc87d09c2a4a133":[0,0,16,37,23],
 "d7/d18/classresdb_1_1MessageManager.html#a4cf2194e60da0708bcc87d09c2a4a133":[1,0,2,33,23],
 "d7/d18/classresdb_1_1MessageManager.html#a51c41cf615eb49275343c989d5a568b1":[0,0,16,37,0],
 "d7/d18/classresdb_1_1MessageManager.html#a51c41cf615eb49275343c989d5a568b1":[1,0,2,33,0],
@@ -222,6 +226,7 @@ var NAVTREEINDEX8 =
 "d7/de4/classResDBKVClient.html#a03b1a9dfd82967cc4950317c361ce346":[1,0,18,4],
 "d7/de4/classResDBKVClient.html#a3613a034c72764871dd814ee8ce93959":[1,0,18,0],
 "d7/de4/classResDBKVClient.html#a72cf313b6de6084626f0c2d0340f2d65":[1,0,18,2],
+"d7/de4/classResDBKVClient.html#a7f92b83d183d949fbf4c4e3a473f10e3":[1,0,18,5],
 "d7/de4/classResDBKVClient.html#a8d047515fb969dba17dca34ab1894725":[1,0,18,3],
 "d7/de4/classResDBKVClient.html#ac044a0544987a55113176a29775045c9":[1,0,18,1],
 "d7/dea/namespaceget-pip.html":[0,0,8],
@@ -244,10 +249,5 @@ var NAVTREEINDEX8 =
 "d8/d15/classresdb_1_1utxo_1_1Transaction.html#a34fa079e01e9a8d6490f6bf0481f7fc5":[1,0,2,4,1,4],
 "d8/d15/classresdb_1_1utxo_1_1Transaction.html#a4905ab43d66b58cb9ef5bafc3594153d":[0,0,16,8,1,2],
 "d8/d15/classresdb_1_1utxo_1_1Transaction.html#a4905ab43d66b58cb9ef5bafc3594153d":[1,0,2,4,1,2],
-"d8/d15/classresdb_1_1utxo_1_1Transaction.html#a8f9a773d8da46dc0e48c69a148924328":[0,0,16,8,1,3],
-"d8/d15/classresdb_1_1utxo_1_1Transaction.html#a8f9a773d8da46dc0e48c69a148924328":[1,0,2,4,1,3],
-"d8/d15/classresdb_1_1utxo_1_1Transaction.html#ae7ead5b8fa45702f413889aa17124cb1":[0,0,16,8,1,0],
-"d8/d15/classresdb_1_1utxo_1_1Transaction.html#ae7ead5b8fa45702f413889aa17124cb1":[1,0,2,4,1,0],
-"d8/d15/classresdb_1_1utxo_1_1Transaction.html#aeb24bbaa077dde47e6eb182863f1639f":[0,0,16,8,1,1],
-"d8/d15/classresdb_1_1utxo_1_1Transaction.html#aeb24bbaa077dde47e6eb182863f1639f":[1,0,2,4,1,1]
+"d8/d15/classresdb_1_1utxo_1_1Transaction.html#a8f9a773d8da46dc0e48c69a148924328":[0,0,16,8,1,3]
 };

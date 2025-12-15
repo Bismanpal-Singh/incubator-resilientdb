@@ -121,21 +121,21 @@ $(function(){initNavTree('dd/d0d/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_crawlresult</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1448"></a>
-autotoc_md1448</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1449"></a>
+autotoc_md1449</h2>
 <p>layout: default title: "CrawlResult" parent: "Crawl4AI" </p>
-<h2><a class="anchor" id="autotoc_md1449"></a>
+<h2><a class="anchor" id="autotoc_md1450"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md1450"></a>
+<h1><a class="anchor" id="autotoc_md1451"></a>
 Chapter 7: Understanding the Results - CrawlResult</h1>
 <p>In the previous chapter, <a class="el" href="../../d1/d07/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Crawl4AI_206__extractionstrategy.html">Chapter 6: Getting Specific Data - ExtractionStrategy</a>, we learned how to teach Crawl4AI to act like an analyst, extracting specific, structured data points from a webpage using an <code>ExtractionStrategy</code>. We've seen how Crawl4AI can fetch pages, clean them, filter them, and even extract precise information.</p>
 <p>But after all that work, where does all the gathered information go? When you ask the <code>AsyncWebCrawler</code> to crawl a URL using <code>arun()</code>, what do you actually get back?</p>
-<h2><a class="anchor" id="autotoc_md1451"></a>
+<h2><a class="anchor" id="autotoc_md1452"></a>
 What Problem Does <code>CrawlResult</code> Solve?</h2>
 <p>Imagine you sent a research assistant to the library (a website) with a set of instructions: "Find this book (URL), make a clean copy of the relevant chapter (clean HTML/Markdown), list all the cited references (links), take photos of the illustrations (media), find the author and publication date (metadata), and maybe extract specific quotes (structured data)."</p>
 <p>When the assistant returns, they wouldn't just hand you a single piece of paper. They'd likely give you a folder containing everything you asked for: the clean copy, the list of references, the photos, the metadata notes, and the extracted quotes, all neatly organized. They might also include a note if they encountered any problems (errors).</p>
 <p><code>CrawlResult</code> is exactly this <b>final report folder</b> or <b>delivery package</b>. It's a single object that neatly contains <em>all</em> the information Crawl4AI gathered and processed for a specific URL during a crawl operation. Instead of getting lots of separate pieces of data back, you get one convenient container.</p>
-<h2><a class="anchor" id="autotoc_md1452"></a>
+<h2><a class="anchor" id="autotoc_md1453"></a>
 What is <code>CrawlResult</code>?</h2>
 <p><code>CrawlResult</code> is a Python object (specifically, a Pydantic model, which is like a super-powered dictionary) that acts as a data container. It holds the results of a single crawl task performed by <code>AsyncWebCrawler.arun()</code> or one of the results from <code>arun_many()</code>.</p>
 <p>Think of it as a toolbox filled with different tools and information related to the crawled page.</p>
@@ -178,7 +178,7 @@ What is <code>CrawlResult</code>?</h2>
 <li>**</li>
 </ul>
 <p>redirected_url` (string):** If the original URL redirected, this shows the final URL the crawler landed on.</p>
-<h2><a class="anchor" id="autotoc_md1453"></a>
+<h2><a class="anchor" id="autotoc_md1454"></a>
 Accessing the <code>CrawlResult</code></h2>
 <p>You get a <code>CrawlResult</code> object back every time you <code>await</code> a call to <code>crawler.arun()</code>:</p>
 <div class="fragment"><div class="line"><span class="comment"># chapter7_example_1.py</span></div>
@@ -208,7 +208,7 @@ Accessing the <code>CrawlResult</code></h2>
 <li>This <code>result</code> variable is our <code>CrawlResult</code> object.</li>
 </ol>
 <p>If you use <code>crawler.arun_many()</code>, it returns a list where each item is a <code>CrawlResult</code> object for one of the requested URLs (or an async generator if <code>stream=True</code>).</p>
-<h2><a class="anchor" id="autotoc_md1454"></a>
+<h2><a class="anchor" id="autotoc_md1455"></a>
 Exploring the Attributes: Using the Toolbox</h2>
 <p>Once you have the <code>result</code> object, you can access its attributes using dot notation (e.g., <code>result.success</code>, <code>result.markdown</code>).</p>
 <p><b>1. Checking for Success (Most Important!)</b></p>
@@ -355,7 +355,7 @@ Exploring the Attributes: Using the Toolbox</h2>
 <li>We check if <code>result.screenshot</code> is not <code>None</code> to see if the file path exists.</li>
 <li>We check if <code>result.pdf</code> is not <code>None</code> to see if the PDF data (bytes) was captured.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1455"></a>
+<h2><a class="anchor" id="autotoc_md1456"></a>
 How is <code>CrawlResult</code> Created? (Under the Hood)</h2>
 <p>You don't interact with the <code>CrawlResult</code> constructor directly. The <code>AsyncWebCrawler</code> creates it for you at the very end of the <code>arun</code> process, typically inside its internal <code>aprocess_html</code> method (or just before returning if fetching from cache).</p>
 <p>Here's a simplified sequence:</p>
@@ -369,7 +369,7 @@ How is <code>CrawlResult</code> Created? (Under the Hood)</h2>
 <li><b>Instantiate:</b> It creates the <code>CrawlResult</code> object, passing all the gathered data into its constructor.</li>
 <li><b>Return:</b> It returns this fully populated <code>CrawlResult</code> object to your code.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1456"></a>
+<h2><a class="anchor" id="autotoc_md1457"></a>
 Code Glimpse (<code>models.py</code>)</h2>
 <p>The <code>CrawlResult</code> is defined in the <code>crawl4ai/models.py</code> file. It uses Pydantic, a library that helps define data structures with type hints and validation. Here's a simplified view:</p>
 <div class="fragment"><div class="line"><span class="comment"># Simplified from crawl4ai/models.py</span></div>
@@ -428,7 +428,7 @@ Code Glimpse (<code>models.py</code>)</h2>
 <li>Some attributes are themselves complex objects defined by other Pydantic models (like <code>media: Media</code>, <code>links: Links</code>).</li>
 <li>The <code>markdown</code> field uses a common pattern (property wrapping a private attribute) to provide the <code>MarkdownGenerationResult</code> object while maintaining some backward compatibility. You access it simply as <code>result.markdown</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1457"></a>
+<h2><a class="anchor" id="autotoc_md1458"></a>
 Conclusion</h2>
 <p>You've now met the <code>CrawlResult</code> object – the final, comprehensive report delivered by Crawl4AI after processing a URL.</p>
 <ul>

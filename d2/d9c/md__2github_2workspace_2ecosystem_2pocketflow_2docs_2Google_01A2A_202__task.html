@@ -121,17 +121,17 @@ $(function(){initNavTree('d2/d9c/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">02_task</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md1968"></a>
-autotoc_md1968</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md1969"></a>
+autotoc_md1969</h2>
 <p>layout: default title: "Task" parent: "Google A2A" </p>
-<h2><a class="anchor" id="autotoc_md1969"></a>
+<h2><a class="anchor" id="autotoc_md1970"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md1970"></a>
+<h1><a class="anchor" id="autotoc_md1971"></a>
 Chapter 2: Task - The AI's Work Order</h1>
 <p>In the <a class="el" href="../../d7/d4e/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_201__agent__card.html">previous chapter</a>, we learned how to find an AI agent and read its "business card" – the <b>Agent Card</b> – to understand what it can do and how to contact it. Think of it like finding a translator's contact information.</p>
 <p>But just knowing the translator exists isn't enough. You need to actually <em>give them something to translate</em>! How do you formally request work from an A2A agent?</p>
 <p>That's where the <b>Task</b> comes in. It solves the problem of <b>requesting and tracking work</b>.</p>
-<h2><a class="anchor" id="autotoc_md1971"></a>
+<h2><a class="anchor" id="autotoc_md1972"></a>
 What is a Task?</h2>
 <p>Imagine you run a busy workshop. When a customer comes in wanting something built or fixed, you don't just rely on a verbal request. You create a <b>work order</b> or a <b>job ticket</b>. This ticket contains:</p>
 <ol type="1">
@@ -149,7 +149,7 @@ What is a Task?</h2>
 <li><b>Results:</b> When finished, it holds the output, called <b>Artifacts</b> (e.g., the translated text "Bonjour le monde").</li>
 </ol>
 <p>So, if our "Translator Agent" receives a Task asking for a translation, that Task object will contain the text to translate, track whether the agent is currently translating it, and eventually hold the French translation once it's done.</p>
-<h2><a class="anchor" id="autotoc_md1972"></a>
+<h2><a class="anchor" id="autotoc_md1973"></a>
 Creating and Sending a Task</h2>
 <p>How does a client (like your application, or another agent) actually create and send a Task to an agent server? It uses a specific command defined by the A2A protocol, usually called <code>tasks/send</code>.</p>
 <p>Let's say our client found the "Translator Agent" from Chapter 1 and knows its <code>url</code> is <code><a href="http://translator-agent.com/a2a">http://translator-agent.com/a2a</a></code>. The client wants to translate "hello".</p>
@@ -203,7 +203,7 @@ Creating and Sending a Task</h2>
 <div class="fragment"><div class="line">Sending task a1b2c3d4-e5f6-7890-abcd-ef1234567890 to http://translator-agent.com/a2a</div>
 <div class="line">Task created! ID: a1b2c3d4-e5f6-7890-abcd-ef1234567890, State: submitted</div>
 </div><!-- fragment --><p>Now the client knows the task was received and has its unique ID (<code>a1b2c3d4-...</code>). It can use this ID later to check the status or get the final result.</p>
-<h2><a class="anchor" id="autotoc_md1973"></a>
+<h2><a class="anchor" id="autotoc_md1974"></a>
 Task Lifecycle: States</h2>
 <p>A task doesn't just get created and instantly completed. It goes through different stages, represented by its <code>state</code> field. Here are the main states:</p>
 <ul>
@@ -216,7 +216,7 @@ Task Lifecycle: States</h2>
 <li><code>unknown</code>: The state couldn't be determined.</li>
 </ul>
 <p>These states allow the client to understand the progress of their request. For long-running tasks, the agent might even send updates as the state changes (we'll cover this in <a class="el" href="../../d0/d60/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2Google_01A2A_207__streaming__communication____sse__.html">Chapter 7: Streaming Communication (SSE)</a>).</p>
-<h2><a class="anchor" id="autotoc_md1974"></a>
+<h2><a class="anchor" id="autotoc_md1975"></a>
 Under the Hood: How a Task is Handled</h2>
 <p>Let's trace what happens when the client sends that <code>tasks/send</code> request:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -253,7 +253,7 @@ Under the Hood: How a Task is Handled</h2>
 <li><b>Server Completes:</b> Once the translation is done, the server updates the task's state to <code>completed</code> and adds the result ("Bonjour") as an <code>Artifact</code> in the task record within the store.</li>
 </ol>
 <p>The client can later use the Task ID (<code>T1</code>) to fetch the updated Task object (using a different command like <code>tasks/get</code>) and retrieve the final translation from the <code>artifacts</code>.</p>
-<h3><a class="anchor" id="autotoc_md1975"></a>
+<h3><a class="anchor" id="autotoc_md1976"></a>
 Key Data Structures</h3>
 <p>The definition of these structures can be found in the protocol specification and helper libraries:</p>
 <ul>
@@ -289,7 +289,7 @@ Key Data Structures</h3>
 <div class="line">// Example Artifact containing translated text</div>
 <div class="line">// artifact = { parts: [ { type: &quot;text&quot;, text: &quot;Bonjour le monde&quot; } ] }</div>
 </div><!-- fragment --><p>This structure acts as the digital "work order" that travels between the client and the agent, carrying the request, tracking progress, and holding the final result.</p>
-<h2><a class="anchor" id="autotoc_md1976"></a>
+<h2><a class="anchor" id="autotoc_md1977"></a>
 Conclusion</h2>
 <p>The <b>Task</b> is the fundamental unit of work in the A2A protocol. It's how one agent asks another to do something. Think of it as a formal job request or work order that:</p>
 <ul>

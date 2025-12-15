@@ -10,5 +10,6 @@ var classresdb_1_1TransactionManager =
     [ "IsOutOfOrder", "df/d01/classresdb_1_1TransactionManager.html#af59c30af5760a407b53b7a7e14f1e1ba", null ],
     [ "NeedResponse", "df/d01/classresdb_1_1TransactionManager.html#ac314189b56cc00ea67255df26fde171d", null ],
     [ "ParseData", "df/d01/classresdb_1_1TransactionManager.html#a0b2e79c38be3c2b7b548723b852d0a74", null ],
+    [ "ParseData", "df/d01/classresdb_1_1TransactionManager.html#a8ef921fb18ed981105d9e7eac2d034e5", null ],
     [ "Prepare", "df/d01/classresdb_1_1TransactionManager.html#ac130f3d0068ec9d9f688d9a514df51d1", null ]
 ];

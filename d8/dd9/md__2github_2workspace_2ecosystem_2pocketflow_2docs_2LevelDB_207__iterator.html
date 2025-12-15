@@ -121,21 +121,21 @@ $(function(){initNavTree('d8/dd9/md__2github_2workspace_2ecosystem_2pocketflow_2
   <div class="headertitle"><div class="title">07_iterator</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md2314"></a>
-autotoc_md2314</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md2315"></a>
+autotoc_md2315</h2>
 <p>layout: default title: "Iterator" parent: "LevelDB" </p>
-<h2><a class="anchor" id="autotoc_md2315"></a>
+<h2><a class="anchor" id="autotoc_md2316"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md2316"></a>
+<h1><a class="anchor" id="autotoc_md2317"></a>
 Chapter 7: Iterator - Your Guide Through the Database</h1>
 <p>Welcome back! In <a class="el" href="../../d2/d8f/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_206__version______versionset.html">Chapter 6: Version &amp; VersionSet</a>, we learned how LevelDB keeps track of all the live SSTable files using <code>Version</code> objects and the <code>VersionSet</code>. This catalog helps LevelDB efficiently find a single key by looking first in the <a class="el" href="../../d4/de4/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_202__memtable.html">MemTable</a> and then pinpointing the right <a class="el" href="../../d2/dbb/md__2github_2workspace_2ecosystem_2pocketflow_2docs_2LevelDB_201__table______sstable______tablecache.html">SSTables</a> to check.</p>
 <p>But what if you don't want just <em>one</em> key? What if you want to see <em>all</em> the key-value pairs in the database, or all the keys within a specific range?</p>
-<h2><a class="anchor" id="autotoc_md2317"></a>
+<h2><a class="anchor" id="autotoc_md2318"></a>
 What's the Problem? Scanning Multiple Keys</h2>
 <p>Imagine you have a database storing user scores, with keys like <code>score:userA</code>, <code>score:userB</code>, <code>score:userC</code>, etc. How would you find all the users whose usernames start with 'user'? Or how would you list all scores from highest to lowest?</p>
 <p>Calling <code>db-&gt;Get()</code> repeatedly for every possible key isn't practical or efficient. We need a way to easily <b>scan</b> or <b>traverse</b> through the key-value pairs stored in the database, in sorted order.</p>
 <p>Furthermore, this scan needs to be smart. It has to combine the data from the current MemTable (the fast notepad), potentially an older immutable MemTable, and all the different SSTable files on disk. It also needs to correctly handle situations where a key was updated or deleted – showing you only the <em>latest</em> live version of the data, just like <code>Get</code> does.</p>
-<h2><a class="anchor" id="autotoc_md2318"></a>
+<h2><a class="anchor" id="autotoc_md2319"></a>
 Iterator: Your Database Research Assistant</h2>
 <p>LevelDB provides the <code>Iterator</code> concept to solve this. Think of an <code>Iterator</code> as a <b>super-smart research assistant</b>.</p>
 <p>You tell the assistant what you're looking for (e.g., "start from the beginning" or "find keys starting with 'user'"). The assistant then efficiently looks through the current notepad (<code>MemTable</code>), the previous notepad (<code>imm_</code>), and all the relevant books on the shelves (<code>SSTables</code>), using the latest catalog (<code>Version</code>).</p>
@@ -147,7 +147,7 @@ Iterator: Your Database Research Assistant</h2>
 <li><b>Provide a Snapshot:</b> An iterator typically operates on a consistent snapshot of the database. Data added <em>after</em> the iterator was created won't suddenly appear during your scan.</li>
 </ol>
 <p>The main iterator you interact with, obtained via <code>db-&gt;NewIterator()</code>, is often implemented internally by a class called <code>DBIter</code>. <code>DBIter</code> coordinates the work of lower-level iterators.</p>
-<h2><a class="anchor" id="autotoc_md2319"></a>
+<h2><a class="anchor" id="autotoc_md2320"></a>
 How to Use an Iterator</h2>
 <p>Using an iterator is quite straightforward. Here's a typical pattern:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;leveldb/db.h&quot;</span></div>
@@ -210,7 +210,7 @@ How to Use an Iterator</h2>
 <li><b><code>delete it;</code>:</b> Crucially, you <b>must</b> delete the iterator when you're done with it to free up resources. If you used an explicit snapshot, release it too.</li>
 </ol>
 <p>This simple interface lets you scan through potentially vast amounts of data spread across memory and disk files without needing to know the complex details of where each piece resides.</p>
-<h2><a class="anchor" id="autotoc_md2320"></a>
+<h2><a class="anchor" id="autotoc_md2321"></a>
 Under the Hood: Merging and Filtering</h2>
 <p>How does the iterator provide this unified, sorted view? It doesn't load everything into memory! Instead, it uses a clever strategy involving <b>merging</b> and <b>filtering</b>.</p>
 <ol type="1">
@@ -270,7 +270,7 @@ Under the Hood: Merging and Filtering</h2>
 <div class="line">    Note right of DBIter: DBIter skips older versions or deleted keys</div>
 <div class="line">    DBIter-&gt;&gt;MergingIter: Next() to find next user key&#39;s latest version</div>
 <div class="line">    DBIter--&gt;&gt;App: Iterator positioned at next valid entry</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2321"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2322"></a>
 Code Dive: <code>DBImpl::NewIterator</code> and <code>DBIter</code></h2>
 <p>Let's look at how this is initiated in the code.</p>
 <p><b>1. Creating the Iterator (<code>db_impl.cc</code>)</b></p>
@@ -444,7 +444,7 @@ Code Dive: <code>DBImpl::NewIterator</code> and <code>DBIter</code></h2>
 <li>If the current entry from <code>iter_</code> was skipped for any reason, the loop continues by calling <code>iter_-&gt;Next()</code>.</li>
 </ul>
 <p>This careful dance ensures that <code>DBIter</code> only exposes the correct, latest, non-deleted user key/value pairs according to the snapshot sequence number, while efficiently merging data from all underlying sources.</p>
-<h2><a class="anchor" id="autotoc_md2322"></a>
+<h2><a class="anchor" id="autotoc_md2323"></a>
 Conclusion</h2>
 <p>LevelDB's <code>Iterator</code> provides a powerful and convenient way to scan through key-value pairs. It acts like a smart assistant, giving you a unified, sorted view across data stored in the <code>MemTable</code> and numerous <code>SSTable</code> files.</p>
 <p>Under the hood, it uses a <code>MergingIterator</code> to combine multiple sorted sources and the <code>DBIter</code> wrapper to filter out deleted entries and older versions based on sequence numbers and the requested snapshot.</p>
