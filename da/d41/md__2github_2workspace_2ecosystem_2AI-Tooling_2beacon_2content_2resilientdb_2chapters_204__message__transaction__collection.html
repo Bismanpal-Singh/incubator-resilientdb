@@ -121,17 +121,17 @@ $(function(){initNavTree('da/d41/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">04_message_transaction_collection</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md130"></a>
-autotoc_md130</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md109"></a>
+autotoc_md109</h2>
 <p>layout: default title: 'Chapter 4: Message/Transaction Collection' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md131"></a>
+<h2><a class="anchor" id="autotoc_md110"></a>
 nav_order: 4</h2>
-<h1><a class="anchor" id="autotoc_md132"></a>
+<h1><a class="anchor" id="autotoc_md111"></a>
 Chapter 4: Message/Transaction Collection</h1>
 <p>In <a class="el" href="../../d8/d4e/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2content_2resilientdb_2chapters_203__consensus__management.html">Chapter 3: Consensus Management</a>, we saw how the replicas in ResilientDB use a process like PBFT (Pre-Prepare, Prepare, Commit) to agree on the order of transactions. This involves a <em>lot</em> of messages flying back and forth between replicas for <em>each</em> transaction!</p>
 <p>Imagine dozens of transactions being processed concurrently. For transaction #51, Replica A needs to collect Prepare votes. For transaction #52, it might be collecting Commit votes. For transaction #53, it just received the Pre-Prepare proposal. How does a replica keep track of all these different messages for all these different transactions without getting confused?</p>
 <p>Welcome to Chapter 4! We'll explore the components responsible for organizing this potential chaos: <b>Message/Transaction Collection</b>, primarily handled by <code>TransactionCollector</code> and <code>MessageManager</code>.</p>
-<h2><a class="anchor" id="autotoc_md133"></a>
+<h2><a class="anchor" id="autotoc_md112"></a>
 The Challenge: Organizing Consensus Messages</h2>
 <p>Think about the PBFT process from Chapter 3:</p>
 <ol type="1">
@@ -148,7 +148,7 @@ The Challenge: Organizing Consensus Messages</h2>
 <li>Finally, trigger the execution of the transaction for sequence <code>N</code> once it's fully confirmed (Committed).</li>
 </ul>
 <p>Doing this efficiently for potentially thousands of transactions simultaneously requires a dedicated system.</p>
-<h2><a class="anchor" id="autotoc_md134"></a>
+<h2><a class="anchor" id="autotoc_md113"></a>
 Meet the Organizers: <code>TransactionCollector</code> and <code>MessageManager</code></h2>
 <p>ResilientDB uses two main components for this task:</p>
 <ol type="1">
@@ -166,7 +166,7 @@ Meet the Organizers: <code>TransactionCollector</code> and <code>MessageManager<
 </li>
 </ol>
 <p>Together, <code>MessageManager</code> routes the incoming messages, and <code>TransactionCollector</code> does the detailed work of counting and state tracking for each individual transaction sequence.</p>
-<h2><a class="anchor" id="autotoc_md135"></a>
+<h2><a class="anchor" id="autotoc_md114"></a>
 How It Works: Following a Transaction's Messages</h2>
 <p>Let's trace how messages for a specific transaction (say, sequence number <code>N=100</code>) are handled:</p>
 <p><b>Scenario:</b> Replica A is processing transaction <code>N=100</code>.</p>
@@ -278,7 +278,7 @@ How It Works: Following a Transaction's Messages</h2>
 <div class="line">    end</div>
 <div class="line">    TC--&gt;&gt;-MM: Return status code</div>
 </div><!-- fragment --><p>This diagram shows how <code>MessageManager</code> acts as the router, <code>TransactionCollector</code> does the counting and state management for a specific sequence number, and finally triggers the <code>TransactionExecutor</code>.</p>
-<h2><a class="anchor" id="autotoc_md136"></a>
+<h2><a class="anchor" id="autotoc_md115"></a>
 Under the Hood: <code>MessageManager</code> and <code>LockFreeCollectorPool</code></h2>
 <p>The <code>MessageManager</code> is initialized with the system configuration, a <code>TransactionManager</code> (for execution logic), a <code>CheckPointManager</code>, and system info. Crucially, it creates the <code>TransactionExecutor</code> and the <code>LockFreeCollectorPool</code>.</p>
 <div class="fragment"><div class="line"><span class="comment">// Simplified from platform/consensus/ordering/pbft/message_manager.cpp</span></div>
@@ -329,7 +329,7 @@ Under the Hood: <code>MessageManager</code> and <code>LockFreeCollectorPool</cod
 <div class="line">      future_seq, executor_, <span class="comment">/*...*/</span>);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This pooling mechanism allows <code>MessageManager</code> to quickly find the right <code>TransactionCollector</code> for any given sequence number within its processing window.</p>
-<h2><a class="anchor" id="autotoc_md137"></a>
+<h2><a class="anchor" id="autotoc_md116"></a>
 Conclusion</h2>
 <p>You've now explored the vital organizational layer of ResilientDB's consensus process!</p>
 <ul>

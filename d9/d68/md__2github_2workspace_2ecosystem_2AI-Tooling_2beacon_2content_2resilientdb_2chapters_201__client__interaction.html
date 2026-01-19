@@ -121,12 +121,12 @@ $(function(){initNavTree('d9/d68/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">01_client_interaction</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md100"></a>
-autotoc_md100</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md79"></a>
+autotoc_md79</h2>
 <p>layout: default title: 'Chapter 1: Client Interaction' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md101"></a>
+<h2><a class="anchor" id="autotoc_md80"></a>
 nav_order: 1</h2>
-<h1><a class="anchor" id="autotoc_md102"></a>
+<h1><a class="anchor" id="autotoc_md81"></a>
 Chapter 1: Client Interaction</h1>
 <p>Welcome to your first step in understanding ResilientDB! Imagine ResilientDB is a powerful, secure, and reliable database system run by a team of computers working together. How do you, as a user or an application developer, talk to this system? You can't just shout commands into the void! You need a defined way to communicate, like using a customer service counter at a bank or an API (Application Programming Interface) for a website.</p>
 <p>This chapter introduces the <b>Client Interaction</b> layer of ResilientDB. It's the set of tools and libraries that act as that "customer service counter" or API, allowing you to:</p>
@@ -135,7 +135,7 @@ Chapter 1: Client Interaction</h1>
 <li>Receive results back from the network.</li>
 </ul>
 <p>Think of it as the official "front door" for interacting with ResilientDB, hiding all the complex machinery working behind the scenes.</p>
-<h2><a class="anchor" id="autotoc_md103"></a>
+<h2><a class="anchor" id="autotoc_md82"></a>
 Why Do We Need Special Clients?</h2>
 <p>ResilientDB isn't just one program running on one computer. It's a <em>distributed</em> system, meaning multiple computers (called replicas or nodes) work together to store data and agree on changes. Sending a simple request like "store this value" involves:</p>
 <ol type="1">
@@ -146,7 +146,7 @@ Why Do We Need Special Clients?</h2>
 <li>Getting a confirmation or result back.</li>
 </ol>
 <p>Doing all this manually would be complicated and error-prone! The Client Interaction layer provides tools (<b>Clients</b>) that handle these steps for you.</p>
-<h2><a class="anchor" id="autotoc_md104"></a>
+<h2><a class="anchor" id="autotoc_md83"></a>
 Meet the ResilientDB Clients: Different Counters for Different Tasks</h2>
 <p>ResilientDB offers different types of clients, each specialized for a particular kind of interaction, just like a bank might have different counters for deposits, loans, or inquiries.</p>
 <ol type="1">
@@ -169,7 +169,7 @@ Meet the ResilientDB Clients: Different Counters for Different Tasks</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md105"></a>
+<h2><a class="anchor" id="autotoc_md84"></a>
 The Foundation: <code>TransactionConstructor</code></h2>
 <p>While we have specialized clients (<code><a class="el" href="../../d6/da5/classKVClient.html">KVClient</a></code>, <code><a class="el" href="../../dc/d2f/classUTXOClient.html">UTXOClient</a></code>, <code><a class="el" href="../../d5/df9/classContractClient.html">ContractClient</a></code>), they all share common tasks: creating the request message in the right format, sending it over the network, and handling the response.</p>
 <p>The <code>TransactionConstructor</code> is a fundamental building block (a base class in programming terms) that provides this core functionality. Each specific client (<code><a class="el" href="../../d6/da5/classKVClient.html">KVClient</a></code>, etc.) builds upon <code>TransactionConstructor</code> to handle the details of its specific task.</p>
@@ -206,7 +206,7 @@ The Foundation: <code>TransactionConstructor</code></h2>
 <div class="ttc" id="aclassresdb_1_1TransactionConstructor_html_ac1de2bffadf5aad20407b7999f7b1b9c"><div class="ttname"><a href="../../d0/da5/classresdb_1_1TransactionConstructor.html#ac1de2bffadf5aad20407b7999f7b1b9c">resdb::TransactionConstructor::TransactionConstructor</a></div><div class="ttdeci">TransactionConstructor(const ResDBConfig &amp;config)</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dfc/transaction__constructor_8cpp_source.html#l00026">transaction_constructor.cpp:26</a></div></div>
 <div class="ttc" id="anamespaceresdb_html"><div class="ttname"><a href="../../d5/d10/namespaceresdb.html">resdb</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d85/chain__state_8cpp_source.html#l00024">chain_state.cpp:24</a></div></div>
 </div><!-- fragment --><p>This code shows that <code>TransactionConstructor</code> takes the ResilientDB network configuration (<code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code>) and provides <code>SendRequest</code> methods. It uses something called <code>NetChannel</code> internally, which we'll explore more in the next chapter about Network Communication (ReplicaCommunicator / ServiceNetwork).</p>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md85"></a>
 How it Works: A <code>KVClient</code> Example (Set &amp; Get)</h2>
 <p>Let's walk through a simple example: storing and retrieving a greeting using <code><a class="el" href="../../d6/da5/classKVClient.html">KVClient</a></code>.</p>
 <p><b>Goal:</b> Store the key <code>"greeting"</code> with the value <code>"Hello ResilientDB!"</code> and then retrieve it.</p>
@@ -313,7 +313,7 @@ How it Works: A <code>KVClient</code> Example (Set &amp; Get)</h2>
 <div class="line">    Note right of Client: Extracts value from KVResponse</div>
 <div class="line">    Client--&gt;&gt;-UserApp: Return value (&quot;Hello!&quot;)</div>
 </div><!-- fragment --><p>The key takeaway is that <code><a class="el" href="../../d6/da5/classKVClient.html">KVClient</a></code> and <code>TransactionConstructor</code> work together to hide the complexities of network communication, consensus ([Consensus Management (ConsensusManager)](03_consensus_management)), transaction execution ([<a class="el" href="../../df/d28/classTransaction.html">Transaction</a> Execution (TransactionManager / TransactionExecutor)](05_transaction_execution__transactionmanager)), and storage ([Storage Layer (Storage / LevelDB / MemoryDB)](06_storage_layer)).</p>
-<h2><a class="anchor" id="autotoc_md107"></a>
+<h2><a class="anchor" id="autotoc_md86"></a>
 Making it Easy: Python Example</h2>
 <p>ResilientDB also provides Python bindings, making it accessible for Python developers without needing to write C++.</p>
 <div class="fragment"><div class="line"><span class="comment"># From api/kv_operation.py (slightly annotated)</span></div>
@@ -354,7 +354,7 @@ Making it Easy: Python Example</h2>
 <div class="line">    <span class="keywordflow">else</span>:</div>
 <div class="line">        print(<span class="stringliteral">&quot;\nFailed to set value using Python.&quot;</span>)</div>
 </div><!-- fragment --><p>This Python code uses the <code>pybind_kv</code> module, which internally calls the C++ <code><a class="el" href="../../d6/da5/classKVClient.html">KVClient</a></code> functions (<code>Set</code> and <code>Get</code>) that we discussed earlier. It provides a simple, high-level interface for Python users. Notice the <code>config_path</code> - this tells the client how to find the ResilientDB network nodes, a topic covered in ResilientDB Configuration (ResDBConfig).</p>
-<h2><a class="anchor" id="autotoc_md108"></a>
+<h2><a class="anchor" id="autotoc_md87"></a>
 Conclusion</h2>
 <p>You've learned about the crucial Client Interaction layer in ResilientDB. It's the bridge between your application and the powerful distributed network.</p>
 <ul>

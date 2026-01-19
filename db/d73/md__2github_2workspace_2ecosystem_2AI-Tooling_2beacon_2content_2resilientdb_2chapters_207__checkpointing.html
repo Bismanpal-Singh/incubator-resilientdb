@@ -121,12 +121,12 @@ $(function(){initNavTree('db/d73/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">07_checkpointing</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md161"></a>
-autotoc_md161</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md140"></a>
+autotoc_md140</h2>
 <p>layout: default title: 'Chapter 7: Checkpointing &amp; Recovery' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md162"></a>
+<h2><a class="anchor" id="autotoc_md141"></a>
 nav_order: 7</h2>
-<h1><a class="anchor" id="autotoc_md163"></a>
+<h1><a class="anchor" id="autotoc_md142"></a>
 Chapter 7: Checkpointing &amp; Recovery</h1>
 <p>In the previous chapter, <a class="el" href="../../db/d99/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2content_2resilientdb_2chapters_206__storage__layer.html">Chapter 6: Storage Layer)</a>, we learned how ResilientDB actually saves data using components like <code>ResLevelDB</code> (for disk storage) or <code>MemoryDB</code> (for memory storage). This ensures that when we execute a transaction like <code>Set("myKey", "myValue")</code>, the change is recorded.</p>
 <p>But what happens if a replica (one of the computers running ResilientDB) suddenly crashes or needs to be restarted? When it comes back online, how does it catch up with all the transactions it missed? Simply replaying <em>every single transaction</em> from the very beginning could take a very long time, especially if the system has been running for weeks or months! Also, the log of all past messages (Chapter 4) would grow forever, eventually filling up the disk.</p>
@@ -141,14 +141,14 @@ Chapter 7: Checkpointing &amp; Recovery</h1>
 <li><code>CheckPointManager</code>: Coordinates taking periodic "save points" (checkpoints) of the database state that all replicas agree on.</li>
 <li><code>Recovery</code>: Manages writing down important actions (like consensus messages) into a journal (log file) and uses these logs along with checkpoints to restore a node's state after a restart.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md164"></a>
+<h2><a class="anchor" id="autotoc_md143"></a>
 Why Checkpointing and Recovery?</h2>
 <ol type="1">
 <li><b>Prevent Infinite Logs:</b> The consensus process (Chapter 3) generates many messages (Pre-Prepare, Prepare, Commit) for each transaction. Storing all these messages forever would consume huge amounts of disk space. Checkpointing allows replicas to agree that "we all know the state up to transaction #1,000,000 is correct," so they can safely delete older messages and log entries before that point.</li>
 <li><b>Speed Up Recovery:</b> If a node crashes and restarts, loading the latest agreed-upon checkpoint is much faster than re-processing every transaction from the beginning. The node only needs to replay the transactions and messages that occurred <em>after</em> the last checkpoint using the recovery logs.</li>
 </ol>
 <p><b>Analogy:</b> Imagine taking meeting minutes. Instead of keeping one massive document with every word ever spoken, you periodically summarize the key decisions and outcomes (a checkpoint). If someone joins late, they can read the latest summary and then catch up on the discussion since that summary (recovery log) instead of reading the entire history.</p>
-<h2><a class="anchor" id="autotoc_md165"></a>
+<h2><a class="anchor" id="autotoc_md144"></a>
 Meet the Save Game Coordinator: <code>CheckPointManager</code></h2>
 <p>The <code>CheckPointManager</code> is responsible for orchestrating the process of creating these agreed-upon save points, called <b>stable checkpoints</b>.</p>
 <p><b>Key Jobs:</b></p>
@@ -160,7 +160,7 @@ Meet the Save Game Coordinator: <code>CheckPointManager</code></h2>
 <li><b>Inform Others:</b> It provides the latest stable checkpoint number (<code>GetStableCheckpoint</code>) to other components like <code>Recovery</code> so they know which old logs can be cleaned up.</li>
 </ol>
 <p><b>Analogy:</b> The <code>CheckPointManager</code> is like the game asking all players, "Everyone agrees we've reached Level 5 with 1000 gold, right? Send proof!" Once enough players send proof confirming the same state, the game declares "Level 5, 1000 gold" as an official save point.</p>
-<h2><a class="anchor" id="autotoc_md166"></a>
+<h2><a class="anchor" id="autotoc_md145"></a>
 How Checkpointing Works (Simplified)</h2>
 <p>Let's say the checkpoint interval (<code>CheckPointWaterMark</code>) is 100 sequences.</p>
 <ol type="1">
@@ -192,7 +192,7 @@ How Checkpointing Works (Simplified)</h2>
 </li>
 <li><b>Result:</b> <code>current_stable_seq_</code> now holds the sequence number of the latest agreed-upon save point (e.g., 100).</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md167"></a>
+<h2><a class="anchor" id="autotoc_md146"></a>
 Meet the Journal Keeper &amp; Restorer: <code>Recovery</code></h2>
 <p>The <code>Recovery</code> component handles two main jobs:</p>
 <ol type="1">
@@ -200,7 +200,7 @@ Meet the Journal Keeper &amp; Restorer: <code>Recovery</code></h2>
 <li><b>State Restoration:</b> When a replica starts, the <code>Recovery</code> component reads the last known stable checkpoint (obtained from <code>CheckPointManager</code>) and then reads the WAL files <em>after</em> that checkpoint. It replays the messages found in the WAL to bring the replica's consensus state back up to speed quickly.</li>
 </ol>
 <p><b>Analogy:</b> The <code>Recovery</code> component is like keeping a detailed diary (WAL) of every important step you take after your last game save (checkpoint). If the game crashes, you load the save, read your diary from that point onwards, and quickly re-do those steps to get back to where you were.</p>
-<h2><a class="anchor" id="autotoc_md168"></a>
+<h2><a class="anchor" id="autotoc_md147"></a>
 How Recovery Works (Simplified)</h2>
 <p><b>1. Logging Messages (Write-Ahead Log):</b></p>
 <p>The <code>ConsensusManager</code> passes relevant incoming consensus messages to <code>Recovery::AddRequest</code>.</p>
@@ -378,7 +378,7 @@ How Recovery Works (Simplified)</h2>
 <div class="line">  LOG(INFO) &lt;&lt; <span class="stringliteral">&quot;Finished reading recovery log: &quot;</span> &lt;&lt; path;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><code>ReadLogs</code> first determines the latest stable checkpoint (<code>GetRecoveryFiles</code> finds the checkpoint number from the log filenames). It then iterates through the necessary log files. <code>ReadLogsFromFiles</code> reads the log data chunk by chunk, parses the messages, and crucially, uses the provided <code>call_back</code> function to send any message with a sequence number <em>greater than</em> the <code>ckpt</code> back to the consensus layer (Chapter 3) for processing. This rebuilds the node's state efficiently.</p>
-<h2><a class="anchor" id="autotoc_md169"></a>
+<h2><a class="anchor" id="autotoc_md148"></a>
 How They Work Together</h2>
 <div class="fragment"><div class="line">sequenceDiagram</div>
 <div class="line">    participant NodeA as Replica Node A</div>
@@ -423,7 +423,7 @@ How They Work Together</h2>
 <div class="line">    Note over NodeA: ConsensusManager processes Seq 101 msg, state restored.</div>
 <div class="line">    Recov--&gt;&gt;-NodeA: Recovery Complete</div>
 </div><!-- fragment --><p>This diagram shows the interplay: <code>Recovery</code> logs messages during normal operation. <code>CheckPointManager</code> determines stable checkpoints. <code>Recovery</code> uses this information to finalize old log files. On restart, <code>Recovery</code> reads logs <em>after</em> the last stable checkpoint and replays them via the callback to quickly catch up.</p>
-<h2><a class="anchor" id="autotoc_md170"></a>
+<h2><a class="anchor" id="autotoc_md149"></a>
 Conclusion</h2>
 <p>Checkpointing and Recovery are essential for the long-term stability and efficiency of ResilientDB.</p>
 <ul>

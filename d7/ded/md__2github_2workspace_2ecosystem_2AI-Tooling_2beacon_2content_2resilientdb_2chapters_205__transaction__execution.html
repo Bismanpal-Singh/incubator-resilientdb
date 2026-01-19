@@ -121,17 +121,17 @@ $(function(){initNavTree('d7/ded/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">05_transaction_execution</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md139"></a>
-autotoc_md139</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md118"></a>
+autotoc_md118</h2>
 <p>layout: default title: 'Chapter 5: <a class="el" href="../../df/d28/classTransaction.html">Transaction</a> Execution' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md140"></a>
+<h2><a class="anchor" id="autotoc_md119"></a>
 nav_order: 5</h2>
-<h1><a class="anchor" id="autotoc_md141"></a>
+<h1><a class="anchor" id="autotoc_md120"></a>
 Chapter 5: Transaction Execution</h1>
 <p>In the previous chapter, <a class="el" href="../../da/d41/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2content_2resilientdb_2chapters_204__message__transaction__collection.html">Chapter 4: Message/Transaction Collection</a>, we saw how ResilientDB meticulously collects and organizes all the messages related to a specific transaction until consensus is reached and the transaction is declared <code>READY_EXECUTE</code>. It's like all the managers have finally approved an important company decision (like purchasing new equipment).</p>
 <p>But approval is just one step! Someone actually needs to <em>act</em> on that decision – place the order, update the inventory, and record the purchase in the company's books. Similarly, once ResilientDB replicas agree on a transaction (e.g., "Store the key 'UserScore' with the value '1000'"), something needs to actually <em>perform</em> that change in the database state.</p>
 <p>Welcome to Chapter 5! We'll explore the <b><a class="el" href="../../df/d28/classTransaction.html">Transaction</a> Execution</b> layer. This is where the agreed-upon transactions meet the actual database, making the changes permanent.</p>
-<h2><a class="anchor" id="autotoc_md142"></a>
+<h2><a class="anchor" id="autotoc_md121"></a>
 The Need for Execution: Making Changes Happen</h2>
 <p>Imagine ResilientDB is a shared, super-secure accounting ledger run by a committee (the replicas).</p>
 <ul>
@@ -146,7 +146,7 @@ The Need for Execution: Making Changes Happen</h2>
 <li>The correct logic is applied based on the <em>type</em> of transaction (e.g., updating a key-value store is different from transferring a digital token).</li>
 <li>The database state accurately reflects the history of agreed-upon operations.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md143"></a>
+<h2><a class="anchor" id="autotoc_md122"></a>
 Meet the Execution Team: <code>TransactionExecutor</code> and <code>TransactionManager</code></h2>
 <p>Two key components work together to handle execution:</p>
 <ol type="1">
@@ -164,7 +164,7 @@ Meet the Execution Team: <code>TransactionExecutor</code> and <code>TransactionM
 </li>
 </ol>
 <p>The <code>TransactionExecutor</code> coordinates <em>when</em> to execute, while the specific <code>TransactionManager</code> implementation decides <em>how</em> to execute.</p>
-<h2><a class="anchor" id="autotoc_md144"></a>
+<h2><a class="anchor" id="autotoc_md123"></a>
 How It Works: Executing a Key-Value Transaction</h2>
 <p>Let's follow a simple <code>Set("myKey", "myValue")</code> transaction after it has been agreed upon by consensus (sequence number <code>N=101</code>) and marked <code>READY_EXECUTE</code> by the <code>TransactionCollector</code> from Chapter 4.</p>
 <ol type="1">
@@ -197,7 +197,7 @@ How It Works: Executing a Key-Value Transaction</h2>
 </li>
 <li><b>Response:</b> The result (success/failure, or data for a <code>GET</code>) bubbles back up. <code>TransactionExecutor</code> receives the <code>BatchUserResponse</code> and uses its <code>post_exec_func_</code> callback to potentially send a reply back to the original client proxy or perform other actions.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md145"></a>
+<h2><a class="anchor" id="autotoc_md124"></a>
 Visualizing the Flow</h2>
 <p>Here's a simplified sequence diagram showing the execution of sequence number <code>N</code>:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -226,7 +226,7 @@ Visualizing the Flow</h2>
 <div class="line">    TxMgr--&gt;&gt;-ExecThr: Execution Result (Response Data)</div>
 <div class="line">    Note over ExecThr: Handle response (call post_exec_func_)</div>
 </div><!-- fragment --><p>This diagram shows the handoff from collection (<code>TC</code>) to the executor (<code>TxExec</code>), the internal ordering and execution threads, the call to the specific manager (<code>TxMgr</code>), and the final interaction with the <code>Storage</code> layer.</p>
-<h2><a class="anchor" id="autotoc_md146"></a>
+<h2><a class="anchor" id="autotoc_md125"></a>
 Different Specialists: <code>KVExecutor</code>, <code>UTXOExecutor</code>, <code>ContractExecutor</code></h2>
 <p>ResilientDB uses the <code>TransactionManager</code> interface to support different application types. Each inherits from the base <code>TransactionManager</code> and provides its own <code>ExecuteData</code> or <code>ExecuteBatch</code> logic:</p>
 <ul>
@@ -286,7 +286,7 @@ Different Specialists: <code>KVExecutor</code>, <code>UTXOExecutor</code>, <code
 </div><!-- fragment --></li>
 </ul>
 <p>The beauty of this design is that the <code>TransactionExecutor</code> doesn't need to know the specifics of KV, UTXO, or Contracts. It just needs a <code>TransactionManager</code> object and calls its standard <code>ExecuteBatch</code> method. The specific implementation handles the rest. This is configured when ResilientDB starts, based on the desired mode of operation (see Chapter 8: ResilientDB Configuration (ResDBConfig)).</p>
-<h2><a class="anchor" id="autotoc_md147"></a>
+<h2><a class="anchor" id="autotoc_md126"></a>
 Conclusion</h2>
 <p>You've now seen how ResilientDB takes transactions that have been agreed upon and actually applies their changes to the database state!</p>
 <ul>

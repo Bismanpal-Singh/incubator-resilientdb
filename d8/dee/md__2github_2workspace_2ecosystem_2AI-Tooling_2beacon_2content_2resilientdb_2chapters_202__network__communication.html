@@ -121,12 +121,12 @@ $(function(){initNavTree('d8/dee/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">02_network_communication</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md110"></a>
-autotoc_md110</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md89"></a>
+autotoc_md89</h2>
 <p>layout: default title: 'Chapter 2: Network Communication' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md111"></a>
+<h2><a class="anchor" id="autotoc_md90"></a>
 nav_order: 2</h2>
-<h1><a class="anchor" id="autotoc_md112"></a>
+<h1><a class="anchor" id="autotoc_md91"></a>
 Chapter 2: Network Communication</h1>
 <p>In <a class="el" href="../../d9/d68/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2content_2resilientdb_2chapters_201__client__interaction.html">Chapter 1: Client Interaction</a>, we learned how you, as a user or application, can talk to ResilientDB using special "Client" tools. You package your request (like storing data) and send it off using something like <code><a class="el" href="../../d6/da5/classKVClient.html">KVClient</a></code>.</p>
 <p>But where does that request <em>go</em>? And how do the different computers (replicas) that make up the ResilientDB network talk to <em>each other</em> to process your request and agree on the result?</p>
@@ -141,7 +141,7 @@ Chapter 2: Network Communication</h1>
 <li><code>ReplicaCommunicator</code>: Handles sending messages <em>between</em> the ResilientDB replicas. (The Postal Service)</li>
 <li><code>ServiceNetwork</code>: Handles listening for and receiving <em>incoming</em> messages, both from clients and other replicas. (The Telephone Network Operator)</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md113"></a>
+<h2><a class="anchor" id="autotoc_md92"></a>
 Why is Network Communication Important?</h2>
 <p>ResilientDB is a <em>distributed</em> system. This means it doesn't run on just one computer. Instead, a team of computers (replicas) work together. To work together, they <em>must</em> communicate constantly over the network.</p>
 <p>Imagine you and your friends are trying to decide on a movie to watch tonight.</p>
@@ -152,7 +152,7 @@ Why is Network Communication Important?</h2>
 <li>Eventually, enough friends agree, and someone sends a final message: "Okay, SciFi Movie X it is!" (like a replica sending a response back to the client).</li>
 </ul>
 <p>Without a reliable way to send and receive these messages, the group could never agree! ResilientDB needs its own robust communication system for the replicas to coordinate.</p>
-<h2><a class="anchor" id="autotoc_md114"></a>
+<h2><a class="anchor" id="autotoc_md93"></a>
 Sending Messages Between Replicas: <code>ReplicaCommunicator</code></h2>
 <p>The <code>ReplicaCommunicator</code> is responsible for sending messages <em>from</em> one replica <em>to</em> other replicas in the network. It's like the postal service handling outgoing mail.</p>
 <p><b>Key Jobs:</b></p>
@@ -184,7 +184,7 @@ Sending Messages Between Replicas: <code>ReplicaCommunicator</code></h2>
 <div class="line">replica_communicator-&gt;SendMessage(private_message, <span class="comment">/* node_id = */</span> 2);</div>
 <div class="ttc" id="areplica__communicator_8h_html"><div class="ttname"><a href="../../d0/dd9/replica__communicator_8h.html">replica_communicator.h</a></div></div>
 </div><!-- fragment --><p>This code shows how simple it is <em>to use</em> the <code>ReplicaCommunicator</code>. You create your message (<code>my_transaction_proposal</code> or <code>private_message</code>) and call either <code>BroadCast</code> or <code>SendMessage</code>. The communicator handles the rest!</p>
-<h2><a class="anchor" id="autotoc_md115"></a>
+<h2><a class="anchor" id="autotoc_md94"></a>
 Listening for Incoming Messages: <code>ServiceNetwork</code></h2>
 <p>While <code>ReplicaCommunicator</code> handles <em>sending</em> messages, <code>ServiceNetwork</code> handles <em>receiving</em> them. Each replica runs a <code>ServiceNetwork</code> instance that acts like its ear to the world (or network, in this case!).</p>
 <p><b>Key Jobs:</b></p>
@@ -223,7 +223,7 @@ Listening for Incoming Messages: <code>ServiceNetwork</code></h2>
 <div class="ttc" id="aservice__interface_8h_html"><div class="ttname"><a href="../../db/dca/service__interface_8h.html">service_interface.h</a></div></div>
 <div class="ttc" id="aservice__network_8h_html"><div class="ttname"><a href="../../d2/d22/service__network_8h.html">service_network.h</a></div></div>
 </div><!-- fragment --><p>This code creates the <code>ServiceNetwork</code>, telling it <em>where</em> to listen (<code>config</code>) and <em>who</em> to pass messages to (<code>my_service_handler</code>). Calling <code>Run()</code> starts the listening loop.</p>
-<h2><a class="anchor" id="autotoc_md116"></a>
+<h2><a class="anchor" id="autotoc_md95"></a>
 How They Work Together: A Simple Flow</h2>
 <p>Let's trace a <em>very</em> simplified path of a client request:</p>
 <ol type="1">
@@ -255,7 +255,7 @@ How They Work Together: A Simple Flow</h2>
 <div class="line">    Note over RepA_SN: Receives Vote &amp; processes consensus</div>
 <div class="line">    RepA_SN--&gt;&gt;-Client: Send Response (Success)</div>
 </div><!-- fragment --><p>This diagram simplifies heavily, but it shows the interplay: <code>ServiceNetwork</code> receives, <code>ReplicaCommunicator</code> sends between replicas.</p>
-<h2><a class="anchor" id="autotoc_md117"></a>
+<h2><a class="anchor" id="autotoc_md96"></a>
 Under the Hood: Code Glimpses</h2>
 <p>Let's peek at some simplified code structures.</p>
 <p><b>1. <code>ReplicaCommunicator</code> Sending a Message:</b></p>
@@ -366,7 +366,7 @@ Under the Hood: Code Glimpses</h2>
 <ul>
 <li><b><code>AsyncAcceptor</code> (More Complex, Non-Blocking):</b> Uses asynchronous I/O (like Boost.Asio) to handle many connections concurrently without blocking threads per connection. When data arrives, it calls a callback function (<code>AcceptorHandler</code> in <code>ServiceNetwork</code>) which then usually puts the data onto the <code>input_queue_</code>. The end result for <code>InputProcess</code> is similar.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md118"></a>
+<h2><a class="anchor" id="autotoc_md97"></a>
 Conclusion</h2>
 <p>You've now seen the vital communication layer of ResilientDB!</p>
 <ul>

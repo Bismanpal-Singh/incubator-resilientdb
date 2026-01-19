@@ -121,17 +121,17 @@ $(function(){initNavTree('d8/d4e/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">03_consensus_management</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md120"></a>
-autotoc_md120</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md99"></a>
+autotoc_md99</h2>
 <p>layout: default title: 'Chapter 3: Consensus Management' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md121"></a>
+<h2><a class="anchor" id="autotoc_md100"></a>
 nav_order: 3</h2>
-<h1><a class="anchor" id="autotoc_md122"></a>
+<h1><a class="anchor" id="autotoc_md101"></a>
 Chapter 3: Consensus Management</h1>
 <p>In the previous chapter, <a class="el" href="../../d8/dee/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2content_2resilientdb_2chapters_202__network__communication.html">Chapter 2: Network Communication</a>, we learned how the different computers (replicas) in the ResilientDB network reliably send and receive messages using components like <code>ReplicaCommunicator</code> and <code>ServiceNetwork</code>. It's like having a dependable postal service and phone system.</p>
 <p>But <em>what</em> important conversations are happening over these communication lines? How do the replicas use these messages to agree on the single, correct order of operations, even if some of them are slow, faulty, or even trying to cheat?</p>
 <p>Welcome to Chapter 3! We'll dive into the brain of the agreement process: <b>Consensus Management</b>, primarily handled by the <code>ConsensusManager</code>.</p>
-<h2><a class="anchor" id="autotoc_md123"></a>
+<h2><a class="anchor" id="autotoc_md102"></a>
 The Need for Agreement: Why Consensus?</h2>
 <p>Imagine a shared digital bulletin board where several people can post notes (transactions). Everyone needs to see the <em>same notes</em> in the <em>same order</em>.</p>
 <ul>
@@ -141,7 +141,7 @@ The Need for Agreement: Why Consensus?</h2>
 </ul>
 <p>A simple database running on one computer doesn't have these problems. But ResilientDB is a <em>distributed</em> database, run by a team of replicas. To maintain a consistent and trustworthy database state across all replicas, they <em>must</em> agree on the exact sequence of transactions. This process of reaching agreement in a distributed system, especially one where some participants might be unreliable or malicious (these are called "Byzantine faults"), is called <b>consensus</b>.</p>
 <p>ResilientDB uses sophisticated algorithms like <b>Practical Byzantine Fault Tolerance (PBFT)</b> to achieve this. PBFT is designed to work correctly even if a certain number of replicas (up to <code>f</code> out of <code>3f+1</code> total replicas) are behaving incorrectly.</p>
-<h2><a class="anchor" id="autotoc_md124"></a>
+<h2><a class="anchor" id="autotoc_md103"></a>
 Meet the Chief Negotiator: <code>ConsensusManager</code></h2>
 <p>The <code>ConsensusManager</code> is the core component within each ResilientDB replica responsible for implementing and orchestrating the consensus algorithm (like PBFT).</p>
 <p><b>Analogy:</b> Think of the <code>ConsensusManager</code> as the <b>chief negotiator</b> or <b>meeting facilitator</b> in a high-stakes meeting (ordering transactions). Its job is to:</p>
@@ -152,7 +152,7 @@ Meet the Chief Negotiator: <code>ConsensusManager</code></h2>
 <li>Announce the final, agreed-upon order so the transaction can be executed.</li>
 </ol>
 <p>It's the engine that drives the replicas towards a unified view of the transaction history.</p>
-<h2><a class="anchor" id="autotoc_md125"></a>
+<h2><a class="anchor" id="autotoc_md104"></a>
 How Consensus Works (A Simplified PBFT View)</h2>
 <p>PBFT works in phases, involving message exchanges between replicas. Here's a simplified overview:</p>
 <ol type="1">
@@ -163,7 +163,7 @@ How Consensus Works (A Simplified PBFT View)</h2>
 <li><b>Execute (Decision):</b> Each replica waits until it receives enough (<code>2f+1</code>) matching <code>COMMIT</code> messages for sequence number N. This forms the final proof ("Committed" certificate) that the transaction is agreed upon by the network. The replica now knows the transaction is finalized in the agreed order. It can safely execute the transaction (e.g., actually update the key 'A' to '10') and potentially store the result. This execution step is handled by components discussed in Chapter 5: Transaction Execution (TransactionManager / TransactionExecutor).</li>
 </ol>
 <p>This multi-phase process ensures that even if the Primary is malicious or some Backups are faulty, the honest replicas will eventually agree on the same order for valid transactions.</p>
-<h2><a class="anchor" id="autotoc_md126"></a>
+<h2><a class="anchor" id="autotoc_md105"></a>
 Code Sneak Peek: The <code>ConsensusManagerPBFT</code></h2>
 <p>ResilientDB implements PBFT consensus within the <code><a class="el" href="../../d3/d20/classConsensusManagerPBFT.html">ConsensusManagerPBFT</a></code> class. It inherits from a base <code>ConsensusManager</code> and handles the specifics of PBFT.</p>
 <p>One of the key functions is <code>ConsensusCommit</code>. This function acts like the central dispatcher within the <code><a class="el" href="../../d3/d20/classConsensusManagerPBFT.html">ConsensusManagerPBFT</a></code>. When a message related to consensus arrives from the network (via the <code>ServiceNetwork</code> from Chapter 2), it's eventually passed to this function.</p>
@@ -231,7 +231,7 @@ Code Sneak Peek: The <code>ConsensusManagerPBFT</code></h2>
 <li>The <code>commitment_</code> object (an instance of the <code>Commitment</code> class) is particularly important, as it manages the core state machine of the PBFT protocol (tracking the pre-prepare, prepare, and commit phases for each transaction).</li>
 </ul>
 <p>This shows how <code><a class="el" href="../../d3/d20/classConsensusManagerPBFT.html">ConsensusManagerPBFT</a></code> acts as a coordinator, receiving messages and delegating the detailed processing to specialized sub-components.</p>
-<h2><a class="anchor" id="autotoc_md127"></a>
+<h2><a class="anchor" id="autotoc_md106"></a>
 Internal Implementation Walkthrough</h2>
 <p>Let's visualize the simplified PBFT flow for a client request:</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -299,7 +299,7 @@ Internal Implementation Walkthrough</h2>
 <li><code>TransactionManager</code> (passed in as <code>executor</code>): This is the link to actually executing the transaction once consensus is reached (Chapter 5).</li>
 </ul>
 <p>The <code><a class="el" href="../../d3/d20/classConsensusManagerPBFT.html">ConsensusManagerPBFT</a></code> acts as the high-level coordinator, relying on these specialized components to handle the details of each part of the consensus process.</p>
-<h2><a class="anchor" id="autotoc_md128"></a>
+<h2><a class="anchor" id="autotoc_md107"></a>
 Conclusion</h2>
 <p>You've now learned about the critical role of the <b>Consensus Manager (<code><a class="el" href="../../d3/d20/classConsensusManagerPBFT.html">ConsensusManagerPBFT</a></code>)</b> in ResilientDB. It's the engine that ensures all replicas agree on the order of transactions, providing the foundation for the database's reliability and fault tolerance.</p>
 <ul>

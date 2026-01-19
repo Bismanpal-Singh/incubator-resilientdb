@@ -121,17 +121,17 @@ $(function(){initNavTree('d2/d39/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">08_resilientdb_configuration</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md172"></a>
-autotoc_md172</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md151"></a>
+autotoc_md151</h2>
 <p>layout: default title: 'Chapter 8: ResilientDB Configuration' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md173"></a>
+<h2><a class="anchor" id="autotoc_md152"></a>
 nav_order: 8</h2>
-<h1><a class="anchor" id="autotoc_md174"></a>
+<h1><a class="anchor" id="autotoc_md153"></a>
 Chapter 8: ResilientDB Configuration</h1>
 <p>You've journeyed through the heart of ResilientDB! We started with how applications talk to the system ([Chapter 1: Client Interaction](01_client_interaction)), how messages travel ([Chapter 2: Network Communication](02_network_communication)), how agreement is reached ([Chapter 3: Consensus Management](03_consensus_management)), how messages are organized ([Chapter 4: Message/Transaction Collection](04_message_transaction_collection)), how transactions are executed ([Chapter 5: <a class="el" href="../../df/d28/classTransaction.html">Transaction</a> Execution](05_transaction_execution)), how data is stored ([Chapter 6: Storage Layer](06_storage_layer)), and how the system saves progress and recovers from crashes ([Chapter 7: Checkpointing &amp; Recovery](07_checkpointing)).</p>
 <p>Now, think about setting up a new ResilientDB network or connecting a client to an existing one. How does a replica know which other computers are part of the network? How does a client know where to send its requests? How does the system know which security keys to use, or how long to wait for consensus messages?</p>
 <p>Welcome to the final chapter of our core concepts tour! We'll explore <b>ResilientDB Configuration</b>, managed primarily through the <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object.</p>
-<h2><a class="anchor" id="autotoc_md175"></a>
+<h2><a class="anchor" id="autotoc_md154"></a>
 Why Do We Need Configuration?</h2>
 <p>Imagine you're setting up a new computer game to play online with friends. Before you can start, you need to configure some settings:</p>
 <ul>
@@ -146,12 +146,12 @@ Why Do We Need Configuration?</h2>
 <li>What are the "rules of engagement" for communication and agreement?</li>
 </ul>
 <p>This setup information is provided through <b>configuration</b>.</p>
-<h2><a class="anchor" id="autotoc_md176"></a>
+<h2><a class="anchor" id="autotoc_md155"></a>
 Meet the Settings Menu: <code>ResDBConfig</code></h2>
 <p>The <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object acts like the central <b>settings menu</b> for a ResilientDB node or client. It holds all the crucial parameters needed to start up and participate correctly.</p>
 <p><b>Analogy:</b> Think of <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> as the sheet of instructions and addresses you'd give to a new team member joining a project. It tells them who else is on the team, their contact details, the project deadlines, and the procedures to follow.</p>
 <p>Without this configuration, a node would be isolated and wouldn't know how to connect, communicate, or participate in the consensus process.</p>
-<h2><a class="anchor" id="autotoc_md177"></a>
+<h2><a class="anchor" id="autotoc_md156"></a>
 What's Inside the Settings Menu (<code>ResDBConfig</code>)?</h2>
 <p>The <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object bundles several key pieces of information:</p>
 <ol type="1">
@@ -186,12 +186,12 @@ What's Inside the Settings Menu (<code>ResDBConfig</code>)?</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md178"></a>
+<h2><a class="anchor" id="autotoc_md157"></a>
 Setting Up: Loading the Configuration</h2>
 <p>How does the <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object get filled with all this information? Usually, it's loaded from files when a node or client starts up.</p>
 <ol type="1">
 <li><b>The Config Files:</b><ul>
-<li><b>Replica List (<code>config.config</code> or similar):</b> A simple text file listing the ID, IP, and port of each replica. <code> @section autotoc_md179 Example config.config 0 127.0.0.1 12345 1 127.0.0.1 12346 2 127.0.0.1 12347 3 127.0.0.1 12348 </code></li>
+<li><b>Replica List (<code>config.config</code> or similar):</b> A simple text file listing the ID, IP, and port of each replica. <code> @section autotoc_md158 Example config.config 0 127.0.0.1 12345 1 127.0.0.1 12346 2 127.0.0.1 12347 3 127.0.0.1 12348 </code></li>
 <li><b>Main Configuration (<code>config.json</code>):</b> A JSON file containing more detailed settings, including performance parameters, feature flags, and potentially replica info grouped by region. <code>json // Example simplified config.json fragment { "self_region_id": 1, "region": [ { "region_id": 1, "replica_info": [ { "id": 0, "ip": "127.0.0.1", "port": 12345 }, { "id": 1, "ip": "127.0.0.1", "port": 12346 }, { "id": 2, "ip": "127.0.0.1", "port": 12347 }, { "id": 3, "ip": "127.0.0.1", "port": 12348 } ] } ], "max_process_txn": 1024, "view_change_timeout_ms": 30000, "is_performance_running": false } </code></li>
 <li><b>Key/Certificate Files:</b> Separate binary files containing the node's private key (<code>private.key</code>) and certificate (<code>cert.cert</code>).</li>
 </ul>
@@ -210,7 +210,7 @@ Setting Up: Loading the Configuration</h2>
 <p class="startli">This code shows functions reading the different file types (text list, JSON, binary keys) and using the data to construct a <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object.</p>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md180"></a>
+<h2><a class="anchor" id="autotoc_md159"></a>
 Using the Configuration</h2>
 <p>Once created, the <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object is passed around to many other components when they are initialized.</p>
 <ul>
@@ -255,7 +255,7 @@ Using the Configuration</h2>
 </li>
 </ul>
 <p>The <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code> object acts as a read-only container passed to components needing setup parameters.</p>
-<h2><a class="anchor" id="autotoc_md181"></a>
+<h2><a class="anchor" id="autotoc_md160"></a>
 Code Glimpse: The <code>ResDBConfig</code> Class</h2>
 <p>Let's look at the structure of the class itself.</p>
 <div class="fragment"><div class="line"><span class="comment">// Simplified from platform/config/resdb_config.h</span></div>
@@ -353,7 +353,7 @@ Code Glimpse: The <code>ResDBConfig</code> Class</h2>
 <div class="line">}</div>
 <div class="ttc" id="aclassResDBConfig_html_ae104228f4beabff79900152b8b78271f"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ae104228f4beabff79900152b8b78271f">ResDBConfig::ResDBConfig</a></div><div class="ttdeci">ResDBConfig(const std::vector&lt; ReplicaInfo &gt; &amp;replicas, const ReplicaInfo &amp;self_info, ResConfigData config_data=ResConfigData())</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d41/resdb__config_8cpp_source.html#l00026">resdb_config.cpp:26</a></div></div>
 </div><!-- fragment --><p>The constructor initializes the member variables from the passed-in data. It also handles extracting the correct replica list from the potentially region-based <code>ResConfigData</code> and sets sensible defaults for parameters if they are missing.</p>
-<h2><a class="anchor" id="autotoc_md182"></a>
+<h2><a class="anchor" id="autotoc_md161"></a>
 Conclusion</h2>
 <p>You've now learned about <code><a class="el" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></code>, the essential <b>settings menu</b> for ResilientDB.</p>
 <ul>

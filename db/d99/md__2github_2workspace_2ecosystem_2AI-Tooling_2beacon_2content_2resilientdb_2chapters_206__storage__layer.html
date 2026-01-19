@@ -121,18 +121,18 @@ $(function(){initNavTree('db/d99/md__2github_2workspace_2ecosystem_2AI-Tooling_2
   <div class="headertitle"><div class="title">06_storage_layer</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md149"></a>
-autotoc_md149</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md128"></a>
+autotoc_md128</h2>
 <p>layout: default title: 'Chapter 6: Storage Layer' parent: 'ResilientDB' </p>
-<h2><a class="anchor" id="autotoc_md150"></a>
+<h2><a class="anchor" id="autotoc_md129"></a>
 nav_order: 6</h2>
-<h1><a class="anchor" id="autotoc_md151"></a>
+<h1><a class="anchor" id="autotoc_md130"></a>
 Chapter 6: Storage Layer</h1>
 <p>In the previous chapter, <a class="el" href="../../d7/ded/md__2github_2workspace_2ecosystem_2AI-Tooling_2beacon_2content_2resilientdb_2chapters_205__transaction__execution.html">Chapter 5: Transaction Execution</a>, we saw how ResilientDB takes agreed-upon transactions and executes them using specialists like <code>KVExecutor</code> or <code><a class="el" href="../../d2/d1d/classUTXOExecutor.html">UTXOExecutor</a></code>. For example, the <code>KVExecutor</code> handles a command like <code>Set("myKey", "myValue")</code>.</p>
 <p>But where does that <code>myValue</code> actually get stored so that it isn't lost when the computer restarts? And how can we retrieve it later using <code>Get("myKey")</code>?</p>
 <p>Welcome to Chapter 6! We're diving into the <b>Storage Layer</b>. This is the component that handles the actual saving and loading of data – the blockchain state and transaction history.</p>
 <p>Think of the Storage Layer as the <b>filing cabinet or hard drive</b> of ResilientDB. After the committee (Chapter 3) agrees on a decision and the specialist (Chapter 5) knows <em>what</em> change to make, the Storage Layer is responsible for actually <em>writing it down</em> and putting it in the right place.</p>
-<h2><a class="anchor" id="autotoc_md152"></a>
+<h2><a class="anchor" id="autotoc_md131"></a>
 Why Do We Need a Storage Layer?</h2>
 <p>Imagine you're using ResilientDB as a super-reliable notepad. You tell it to remember "Meeting at 3 PM".</p>
 <ul>
@@ -142,7 +142,7 @@ Why Do We Need a Storage Layer?</h2>
 <p>We need <b>persistence</b> – the ability to save data in a way that survives restarts. This usually means writing to a hard disk drive (HDD) or solid-state drive (SSD).</p>
 <p>However, sometimes, especially during testing or for specific high-speed scenarios, we might prioritize speed over durability. We might want to store data directly in the computer's fast memory (RAM), even if it gets lost on restart.</p>
 <p>The Storage Layer provides an abstraction to handle both needs: reliable disk storage and fast memory storage.</p>
-<h2><a class="anchor" id="autotoc_md153"></a>
+<h2><a class="anchor" id="autotoc_md132"></a>
 The Blueprint: The <code>Storage</code> Interface</h2>
 <p>ResilientDB defines a standard "blueprint" for how storage should work, called the <code>Storage</code> interface (defined in <code><a class="el" href="../../d8/d6b/storage_8h.html">chain/storage/storage.h</a></code>). This interface lists the basic operations any storage engine must support, like:</p>
 <ul>
@@ -181,7 +181,7 @@ The Blueprint: The <code>Storage</code> Interface</h2>
 <div class="ttc" id="aclassresdb_1_1Storage_html_a8d2a1873cd805da6a6adde8ad11a9b25"><div class="ttname"><a href="../../d2/d14/classresdb_1_1Storage.html#a8d2a1873cd805da6a6adde8ad11a9b25">resdb::Storage::GetValue</a></div><div class="ttdeci">virtual std::string GetValue(const std::string &amp;key)=0</div></div>
 <div class="ttc" id="anamespaceresdb_html"><div class="ttname"><a href="../../d5/d10/namespaceresdb.html">resdb</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d85/chain__state_8cpp_source.html#l00024">chain_state.cpp:24</a></div></div>
 </div><!-- fragment --><p>This code defines the basic contract. Any class that claims to be a <code>Storage</code> provider <em>must</em> provide implementations for these <code>virtual</code> functions (indicated by <code>= 0</code>).</p>
-<h2><a class="anchor" id="autotoc_md154"></a>
+<h2><a class="anchor" id="autotoc_md133"></a>
 The Implementations: Different Ways to Store Data</h2>
 <p>ResilientDB comes with different implementations (librarians who follow the job description) of the <code>Storage</code> interface:</p>
 <ol type="1">
@@ -200,7 +200,7 @@ The Implementations: Different Ways to Store Data</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md155"></a>
+<h2><a class="anchor" id="autotoc_md134"></a>
 How is Storage Used? (Example: <code>KVExecutor</code>)</h2>
 <p>Remember the <code>KVExecutor</code> from Chapter 5? It needs to store the key-value data somewhere. When it's created, it's given an instance of a <code>Storage</code> object (which could be <code>ResLevelDB</code> or <code>MemoryDB</code> depending on the configuration).</p>
 <div class="fragment"><div class="line"><span class="comment">// Simplified from executor/kv/kv_executor.cpp</span></div>
@@ -227,7 +227,7 @@ How is Storage Used? (Example: <code>KVExecutor</code>)</h2>
 <div class="ttc" id="akv__executor_8h_html"><div class="ttname"><a href="../../d1/d72/kv__executor_8h.html">kv_executor.h</a></div></div>
 <div class="ttc" id="astorage_8h_html"><div class="ttname"><a href="../../d8/d6b/storage_8h.html">storage.h</a></div></div>
 </div><!-- fragment --><p>The <code>KVExecutor</code> code doesn't need to know the specific <em>type</em> of storage. It just calls the methods defined in the <code>Storage</code> interface (<code>storage_-&gt;SetValue</code>, <code>storage_-&gt;GetValue</code>). This makes the <code>KVExecutor</code> flexible – it can work with any storage backend that follows the <code>Storage</code> blueprint.</p>
-<h2><a class="anchor" id="autotoc_md156"></a>
+<h2><a class="anchor" id="autotoc_md135"></a>
 Internal Implementation Walkthrough</h2>
 <p>Let's see what happens when <code>KVExecutor</code> calls <code>storage_-&gt;SetValue("myKey", "myValue")</code>:</p>
 <ol type="1">
@@ -260,7 +260,7 @@ Internal Implementation Walkthrough</h2>
 <div class="line"> </div>
 <div class="line">    StoreIF--&gt;&gt;KVE: Return status (e.g., 0)</div>
 </div><!-- fragment --><p>This diagram shows how the <code>KVExecutor</code> interacts with the abstract <code>Storage</code> interface, and how the call is routed to the correct implementation (<code>ResLevelDB</code> or <code>MemoryDB</code>).</p>
-<h2><a class="anchor" id="autotoc_md157"></a>
+<h2><a class="anchor" id="autotoc_md136"></a>
 Diving Deeper into Code</h2>
 <p>Let's look at simplified versions of the implementations.</p>
 <p><b><code>ResLevelDB</code> (Disk Storage):</b></p>
@@ -373,7 +373,7 @@ Diving Deeper into Code</h2>
 <div class="ttc" id="aclassresdb_1_1storage_1_1MemoryDB_html_aee61c5a005d19be384ebd0ad0391e1ff"><div class="ttname"><a href="../../da/d75/classresdb_1_1storage_1_1MemoryDB.html#aee61c5a005d19be384ebd0ad0391e1ff">resdb::storage::MemoryDB::SetValue</a></div><div class="ttdeci">int SetValue(const std::string &amp;key, const std::string &amp;value)</div><div class="ttdef"><b>Definition</b> <a href="../../dc/dee/memory__db_8cpp_source.html#l00031">memory_db.cpp:31</a></div></div>
 <div class="ttc" id="anamespaceresdb_1_1storage_html_af746efcdd125b19e8c880e4712fc6a51"><div class="ttname"><a href="../../dd/dae/namespaceresdb_1_1storage.html#af746efcdd125b19e8c880e4712fc6a51">resdb::storage::NewMemoryDB</a></div><div class="ttdeci">std::unique_ptr&lt; Storage &gt; NewMemoryDB()</div><div class="ttdef"><b>Definition</b> <a href="../../dc/dee/memory__db_8cpp_source.html#l00027">memory_db.cpp:27</a></div></div>
 </div><!-- fragment --><p>Here, <code>SetValue</code> just assigns the value to the key in the <code>kv_map_</code>, and <code>GetValue</code> looks up the key in the map. It's fast but, crucially, <code>kv_map_</code> exists only in RAM and disappears when the program stops.</p>
-<h2><a class="anchor" id="autotoc_md158"></a>
+<h2><a class="anchor" id="autotoc_md137"></a>
 Choosing Your Storage</h2>
 <p>So, which one should you use?</p>
 <ul>
@@ -382,7 +382,7 @@ Choosing Your Storage</h2>
 <li>For <b>performance testing</b> or specific applications where maximum speed is needed and persistence isn't the top priority, <code>MemoryDB</code> might be considered.</li>
 </ul>
 <p>How do you tell ResilientDB which storage to use? This is typically done through configuration files, which we'll explore in Chapter 8: ResilientDB Configuration (ResDBConfig).</p>
-<h2><a class="anchor" id="autotoc_md159"></a>
+<h2><a class="anchor" id="autotoc_md138"></a>
 Conclusion</h2>
 <p>You've now learned about the Storage Layer, the foundation where ResilientDB keeps its data!</p>
 <ul>
