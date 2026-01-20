@@ -37,6 +37,10 @@ var namespaces_dup =
     [ "flow", "d9/de2/namespaceflow.html", [
       [ "create_tutorial_flow", "d9/de2/namespaceflow.html#ab7059c6fbc8a2c59d6990ee02f4676f5", null ]
     ] ],
+    [ "generate_keys", "df/d46/namespacegenerate__keys.html", [
+      [ "generate_keypair", "df/d46/namespacegenerate__keys.html#a895b1686b34c6fd55431e2e79f958cfe", null ],
+      [ "main", "df/d46/namespacegenerate__keys.html#a5b26af04231262dfae58c35cd7236834", null ]
+    ] ],
     [ "generate_mulregion_config", "df/d44/namespacegenerate__mulregion__config.html", [
       [ "GenerateJsonConfig", "df/d44/namespacegenerate__mulregion__config.html#aecd97f51038d5f4f2d9763bad807efcb", null ],
       [ "files", "df/d44/namespacegenerate__mulregion__config.html#af21cc9094201404d11e3ffe1b1dca000", null ]
