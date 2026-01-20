@@ -16,8 +16,6 @@
 # under the License.    
 
 
-from crypt import methods
-from curses import meta
 from .transport import Transport
 from .offchain import prepare_transaction, fulfill_transaction
 from .utils import normalize_nodes
